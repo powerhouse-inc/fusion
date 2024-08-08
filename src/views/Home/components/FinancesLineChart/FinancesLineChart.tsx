@@ -290,10 +290,12 @@ const Wrapper = styled('div')(({ theme }) => ({
 
   [theme.breakpoints.up('tablet_768')]: {
     flexDirection: 'row',
+    gap: 24,
   },
 
   [theme.breakpoints.up('desktop_1280')]: {
     flexDirection: 'column',
+    gap: 32,
   },
 }));
 
@@ -352,6 +354,7 @@ const LegendContainer = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('desktop_1280')]: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    padding: '16px 24px',
   },
 }));
 
