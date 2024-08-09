@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import type { Roadmap } from '@/core/models/interfaces/roadmaps';
 import type { SwiperRef } from 'swiper/react';
@@ -21,29 +21,40 @@ const useRoadmapSection = (roadmapsData: Roadmap[]) => {
     }
   };
 
-  useEffect(() => {
+  const adjustSectionsHeights = (timeout: number, isInit: boolean) => {
     const titleContainer = document.getElementsByClassName('title-container');
-    const coordinatorsContainer = document.getElementsByClassName('coordinators-container');
     const latestKeyResultsContainer = document.getElementsByClassName('latest-key-results-container');
 
-    const titles = Array.from(titleContainer).sort((prevDiv, nextDiv) => nextDiv.clientHeight - prevDiv.clientHeight);
-    const coordinators = Array.from(coordinatorsContainer).sort(
-      (prevDiv, nextDiv) => nextDiv.clientHeight - prevDiv.clientHeight
-    );
-    const latestKeyResults = Array.from(latestKeyResultsContainer).sort(
-      (prevDiv, nextDiv) => nextDiv.clientHeight - prevDiv.clientHeight
-    );
+    const titles = Array.from(titleContainer);
+    const latestKeyResults = Array.from(latestKeyResultsContainer);
 
     for (const titleDiv of titles) {
-      (titleDiv as HTMLDivElement).style.minHeight = `${titles[0].getBoundingClientRect().height}px`;
+      (titleDiv as HTMLDivElement).style.height = 'auto';
     }
-    for (const coordinatorDiv of coordinators) {
-      (coordinatorDiv as HTMLDivElement).style.minHeight = `${coordinators[0].getBoundingClientRect().height}px`;
+    for (const latestKeyResultDiv of latestKeyResults) {
+      (latestKeyResultDiv as HTMLDivElement).style.height = 'auto';
     }
-    for (const keyResultDiv of latestKeyResults) {
-      (keyResultDiv as HTMLDivElement).style.minHeight = `${latestKeyResults[0].getBoundingClientRect().height}px`;
-    }
-  }, []);
+
+    setTimeout(() => {
+      titles.sort(
+        (prevDiv, nextDiv) => nextDiv.getBoundingClientRect().height - prevDiv.getBoundingClientRect().height
+      );
+      latestKeyResults.sort(
+        (prevDiv, nextDiv) => nextDiv.getBoundingClientRect().height - prevDiv.getBoundingClientRect().height
+      );
+
+      for (const titleDiv of titles) {
+        (titleDiv as HTMLDivElement).style.height = `${titles[0].getBoundingClientRect().height}px`;
+      }
+      for (const latestKeyResultDiv of latestKeyResults) {
+        (latestKeyResultDiv as HTMLDivElement).style.height = `${latestKeyResults[0].getBoundingClientRect().height}px`;
+      }
+
+      if (isInit && document.readyState !== 'complete') {
+        adjustSectionsHeights(250, true);
+      }
+    }, timeout);
+  };
 
   return {
     tabs,
@@ -51,6 +62,7 @@ const useRoadmapSection = (roadmapsData: Roadmap[]) => {
     swiperRef,
     activeTab,
     handleActiveTab,
+    adjustSectionsHeights,
   };
 };
 
