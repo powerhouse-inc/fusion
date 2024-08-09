@@ -3,8 +3,9 @@ import Link from 'next/link';
 import Activity from 'public/assets/svg/activity.svg';
 import ThemeLight from 'public/assets/svg/light_mode.svg';
 import Login from 'public/assets/svg/login.svg';
-import Makerdao from 'public/assets/svg/makerdao.svg';
-import LogoText from 'public/assets/svg/makerdao_text.svg';
+import SkyLogoDeskDark from 'public/assets/svg/sky-desk-dark.svg';
+import SkyLogoDesk from 'public/assets/svg/sky-desk.svg';
+import SkyLogoMobile from 'public/assets/svg/sky-mobile.svg';
 import ThemeDark from 'public/assets/svg/theme.svg';
 import React from 'react';
 import CustomSelect from '@/components/CustomSelect/CustomSelect';
@@ -42,13 +43,11 @@ const TopBarNavigation: FC<Props> = ({ className }) => {
           <LeftSection>
             <LinkStyled href="/">
               <LogoContainerMobile>
-                <Makerdao />
+                <SkyLogoMobile />
               </LogoContainerMobile>
             </LinkStyled>
             <LinkStyled href="/">
-              <LogoContainerDesk>
-                <LogoText />
-              </LogoContainerDesk>
+              <LogoContainerDesk>{isLight ? <SkyLogoDesk /> : <SkyLogoDeskDark />}</LogoContainerDesk>
             </LinkStyled>
             <SelectContainer>
               <StyledCustomSelect
@@ -162,44 +161,40 @@ const Container = styled('nav')(({ theme }) => ({
 const NavContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   backgroundColor: theme.palette.isLight ? '#FFFFFF' : '#1B1E24',
-  boxShadow: theme.palette.isLight ? '1px 4px 15px 0px rgba(74, 88, 115, 0.15)' : '1px rgba(74, 88, 115, 0.15)',
-  padding: 16,
+  boxShadow: theme.palette.isLight
+    ? '1px 4px 15px 0px rgba(74, 88, 115, 0.15)'
+    : '1px 4px 15px 0px rgba(74, 88, 115, 0.15)',
+  padding: '8px 16px',
 
   width: '100%',
   justifyContent: 'space-between',
   alignItems: 'center',
   [theme.breakpoints.up('tablet_768')]: {
     borderRadius: 16,
+    padding: '12px 16px',
     minHeight: 72,
   },
   [theme.breakpoints.up('desktop_1024')]: {
-    padding: '24px 32px',
+    padding: '15px 32px',
     height: 72,
   },
   [theme.breakpoints.up('desktop_1440')]: {
-    padding: '24px 40px',
+    padding: '15px 40px',
   },
 }));
 
 const LogoContainerMobile = styled('div')(({ theme }) => ({
   display: 'flex',
-  width: 56,
-  height: 29,
+  width: 48,
+  height: 48,
 
-  '& path': {
-    fill: theme.palette.isLight ? theme.palette.colors.slate[700] : theme.palette.colors.charcoal[100],
-  },
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'none',
   },
 }));
 const LogoContainerDesk = styled('div')(({ theme }) => ({
   display: 'none',
-  width: 172,
-  height: 24,
-  '& path': {
-    fill: theme.palette.isLight ? theme.palette.colors.slate[700] : theme.palette.colors.charcoal[100],
-  },
+
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'flex',
   },
@@ -217,9 +212,9 @@ const LeftSection = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   gap: 8,
-
+  alignItems: 'center',
   [theme.breakpoints.up('tablet_768')]: {
-    gap: 16,
+    gap: 24,
   },
   [theme.breakpoints.up('desktop_1024')]: {
     gap: 'revert',
