@@ -9,9 +9,9 @@ import SkyLogoMobile from 'public/assets/svg/sky-mobile.svg';
 import ThemeDark from 'public/assets/svg/theme.svg';
 import React from 'react';
 import CustomSelect from '@/components/CustomSelect/CustomSelect';
-import PrimaryButton from '@/components/PrimaryButton/PrimaryButton';
 import { siteRoutes } from '@/config/routes';
 import { zIndexEnum } from '@/core/enums/zIndexEnum';
+import SkyBottom from '../SkyBottom/SkyBottom';
 import LinkNavBar from './LinkNavBar';
 import MenuUserOptions from './MenuUser/MenuUserOptions';
 import { useTopBarNavigation } from './useTopBarNavigation';
@@ -270,7 +270,7 @@ const LoginContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const StyledButton = styled(PrimaryButton)({
+const StyledButton = styled(SkyBottom)({
   padding: '4px 24px',
   lineHeight: '0px',
 });
