@@ -25,7 +25,7 @@ const Footer = () => (
         ))}
       </FooterColumnLink>
       <ContactSection>
-        <FooterContact {...contactMakerDAO} />
+        <FooterContactSky {...contactMakerDAO} />
         <FooterContact {...contactPowerhouse} />
       </ContactSection>
     </FooterContainer>
@@ -181,4 +181,12 @@ const CookiePolicy = styled(Link)(({ theme }) => ({
   lineHeight: '22px',
   textDecoration: 'none',
 }));
+
+const FooterContactSky = styled(FooterContact)({
+  '& > svg:first-of-type': {
+    width: 48,
+    height: 48,
+  },
+});
+
 export default Footer;
