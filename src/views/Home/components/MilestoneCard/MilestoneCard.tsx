@@ -1,4 +1,4 @@
-import { styled } from '@mui/material';
+import { styled, useMediaQuery } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 
 import ExternalLink from '@ses/components/ExternalLink/ExternalLink';
@@ -7,6 +7,7 @@ import AvatarPlaceholderIcon from 'public/assets/svg/avatar_placeholder.svg';
 import Card from '@/components/Card/Card';
 import InternalLinkButton from '@/components/InternalLinkButton/InternalLinkButton';
 
+import SESTooltip from '@/components/SESTooltip/SESTooltip';
 import { siteRoutes } from '@/config/routes';
 import type { Maybe } from '@/core/models/interfaces/generics';
 import type { Milestone } from '@/core/models/interfaces/roadmaps';
@@ -16,6 +17,7 @@ import { progressPercentage } from '@/views/RoadmapMilestones/utils';
 
 import useMilestoneCard from './useMilestoneCard';
 
+import type { Theme } from '@mui/material';
 import type { FC } from 'react';
 
 interface MilestoneCardProps {
@@ -36,10 +38,15 @@ const MilestoneCard: FC<MilestoneCardProps> = ({ slug, milestoneData }) => {
 
   const progress = progressPercentage(milestoneData.scope?.progress);
 
+  const coordinators = milestoneData.coordinators?.slice(0, 2);
+  const otherCoordinatorsNumber = milestoneData.coordinators?.length - coordinators.length;
+
   const keyResults = milestoneData.scope?.deliverables
     ?.map((deliverableData) => deliverableData.keyResults)
     ?.flat()
     ?.slice(0, 3);
+
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
 
   return (
     <Container>
@@ -55,7 +62,6 @@ const MilestoneCard: FC<MilestoneCardProps> = ({ slug, milestoneData }) => {
       </Header>
       <TitleContainer className="title-container">
         <Title>{milestoneData.title}</Title>
-        <Abstract>{milestoneData.abstract}</Abstract>
       </TitleContainer>
       <Progress>
         <ProgressTitleWrapper>
@@ -71,10 +77,10 @@ const MilestoneCard: FC<MilestoneCardProps> = ({ slug, milestoneData }) => {
           <ProgressLabel progress={progress}>{usLocalizedNumber(progress * 100, 0)}%</ProgressLabel>
         </ProgressBarContainer>
       </Progress>
-      <CoordinatorsContainer className="coordinators-container">
+      <CoordinatorsContainer>
         <CoordinatorsTitle>Coordinators</CoordinatorsTitle>
         <Coordinators>
-          {milestoneData.coordinators?.map((coordinatorData) => (
+          {coordinators.map((coordinatorData) => (
             <CoordinatorAvatarContainer key={coordinatorData.id}>
               {coordinatorData.imageUrl === 'N/A' ? (
                 <CoordinatorAvatar>
@@ -86,24 +92,56 @@ const MilestoneCard: FC<MilestoneCardProps> = ({ slug, milestoneData }) => {
               <CoordinatorName>{coordinatorData.name}</CoordinatorName>
             </CoordinatorAvatarContainer>
           ))}
+          {otherCoordinatorsNumber > 0 && (
+            <SESTooltip
+              content={
+                <OtherCoordinators>
+                  {milestoneData.coordinators?.map(
+                    (coordinatorData, index) =>
+                      index > 1 && (
+                        <CoordinatorAvatarContainer key={coordinatorData.id}>
+                          <CoordinatorAvatar>
+                            <AvatarPlaceholderIcon />
+                          </CoordinatorAvatar>
+                          <CoordinatorName>{coordinatorData.name}</CoordinatorName>
+                        </CoordinatorAvatarContainer>
+                      )
+                  )}
+                </OtherCoordinators>
+              }
+              placement="bottom-start"
+              showAsModal
+            >
+              <CoordinatorAvatarContainer>
+                <CoordinatorAvatar>
+                  <AvatarPlaceholderIcon />
+                </CoordinatorAvatar>
+                <CoordinatorName>+{otherCoordinatorsNumber}</CoordinatorName>
+              </CoordinatorAvatarContainer>
+            </SESTooltip>
+          )}
         </Coordinators>
       </CoordinatorsContainer>
       <LatestKeyResultsContainer className="latest-key-results-container">
-        <LatestKeyResultsTitle>Latest Key Results</LatestKeyResultsTitle>
-        {keyResults.map((keyResultData) => (
-          <KeyResult key={keyResultData.id}>
-            {keyResultData.link ? (
-              <KeyResultLink href={keyResultData.link} wrapText>
-                {keyResultData.title}
-              </KeyResultLink>
-            ) : (
-              <NoKeyResultLink>
-                <span>{keyResultData.title}</span>
-                <Todo>Todo</Todo>
-              </NoKeyResultLink>
-            )}
-          </KeyResult>
-        ))}
+        <LatestKeyResultsTitle>
+          {keyResults.length === 0 && isMobile ? 'No Key Results' : 'Latest Key Results'}
+        </LatestKeyResultsTitle>
+        {keyResults.length === 0 && !isMobile && <NoLatestKeyResults>No Key Results</NoLatestKeyResults>}
+        {keyResults.length > 0 &&
+          keyResults.map((keyResultData) => (
+            <KeyResult key={keyResultData.id}>
+              {keyResultData.link ? (
+                <KeyResultLink href={keyResultData.link} wrapText>
+                  {keyResultData.title}
+                </KeyResultLink>
+              ) : (
+                <NoKeyResultLink>
+                  <span>{keyResultData.title}</span>
+                  <Todo>Todo</Todo>
+                </NoKeyResultLink>
+              )}
+            </KeyResult>
+          ))}
       </LatestKeyResultsContainer>
     </Container>
   );
@@ -190,7 +228,6 @@ const StyledInternalLinkButton = styled(InternalLinkButton)(({ theme }) => ({
 const TitleContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  flex: '1 0 0',
   gap: 4,
   margin: '8px 8px 0px',
   padding: '4px 8px',
@@ -205,14 +242,11 @@ const Title = styled('h4')(({ theme }) => ({
   fontSize: 14,
   lineHeight: '24px',
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
-}));
-
-const Abstract = styled('p')(({ theme }) => ({
-  margin: 0,
-  fontWeight: 500,
-  fontSize: 12,
-  lineHeight: '18px',
-  color: theme.palette.isLight ? theme.palette.colors.gray[500] : theme.palette.colors.gray[600],
+  display: '-webkit-box',
+  WebkitLineClamp: 2,
+  WebkitBoxOrient: 'vertical',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
 }));
 
 const Progress = styled('div')(({ theme }) => ({
@@ -255,7 +289,7 @@ const ProgressBarContainer = styled('div')(({ theme }) => ({
 const ProgressBar = styled('div', {
   shouldForwardProp: (prop) => prop !== 'progress',
 })<ElementWithProgress>(({ theme, progress }) => ({
-  width: `${progress * 100}%`,
+  width: `max(${progress * 100}%, ${progress === 0 ? 0 : 0.5}px)`,
   height: 16,
   borderRadius: `4px ${progress === 1 ? '4px 4px' : '0px 0px'} 4px`,
 
@@ -332,7 +366,6 @@ const StatusLabel = styled('span', {
 const CoordinatorsContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  flex: '1 0 0',
   gap: 8,
   margin: '4px 8px 0px',
   padding: 8,
@@ -351,7 +384,6 @@ const CoordinatorsTitle = styled('h4')(({ theme }) => ({
 
 const Coordinators = styled('div')(() => ({
   display: 'flex',
-  flexWrap: 'wrap',
   gap: 16,
 }));
 
@@ -359,6 +391,10 @@ const CoordinatorAvatarContainer = styled('div')(() => ({
   display: 'flex',
   alignItems: 'center',
   gap: 4,
+
+  '&:nth-of-type(3)': {
+    cursor: 'pointer',
+  },
 }));
 
 const CoordinatorAvatar = styled(Avatar)(({ theme }) => ({
@@ -380,13 +416,21 @@ const CoordinatorName = styled('span')(({ theme }) => ({
   fontWeight: 600,
   fontSize: 14,
   lineHeight: '22px',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.charcoal[400],
+}));
+
+const OtherCoordinators = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 8,
 }));
 
 const LatestKeyResultsContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  flex: '1 0 0',
   gap: 8,
   margin: '4px 8px 0px',
   padding: 8,
@@ -401,6 +445,14 @@ const LatestKeyResultsTitle = styled('h4')(({ theme }) => ({
   fontSize: 12,
   lineHeight: '18px',
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[600],
+}));
+
+const NoLatestKeyResults = styled('span')(({ theme }) => ({
+  fontWeight: 500,
+  fontSize: 14,
+  lineHeight: '18px',
+  color: theme.palette.isLight ? theme.palette.colors.gray[500] : theme.palette.colors.slate[400],
+  textAlign: 'center',
 }));
 
 const KeyResult = styled('li')(() => ({
