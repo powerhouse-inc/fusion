@@ -9,12 +9,15 @@ import BarChartLine from 'public/assets/svg/bar_chart_line.svg';
 import BlueLines from 'public/assets/svg/blue_lines.svg';
 import Circle from 'public/assets/svg/circle.svg';
 import CircleInfo from 'public/assets/svg/circle_info.svg';
+import Clock from 'public/assets/svg/clock.svg';
 import Close from 'public/assets/svg/close.svg';
+import Comments from 'public/assets/svg/comments.svg';
 import DAI from 'public/assets/svg/dai.svg';
 import DiscordIcon from 'public/assets/svg/discord.svg';
 import Ellipsis from 'public/assets/svg/ellipsis.svg';
 import Expand from 'public/assets/svg/expand.svg';
 import ExternalLink from 'public/assets/svg/external_link.svg';
+import Fire from 'public/assets/svg/fire.svg';
 import Forum from 'public/assets/svg/forum.svg';
 import FusionArrowCollapse from 'public/assets/svg/fusion_arrow_collapse.svg';
 import FusionArrowExpand from 'public/assets/svg/fusion_arrow_expand.svg';
@@ -36,6 +39,7 @@ import PersonSquare from 'public/assets/svg/person_square.svg';
 import PowerhouseIcon from 'public/assets/svg/powerhouse.svg';
 import RedditIcon from 'public/assets/svg/reddit.svg';
 import ThemeIcon from 'public/assets/svg/theme.svg';
+import ThumbsUp from 'public/assets/svg/thumbs_up.svg';
 import TwitterIcon from 'public/assets/svg/twitter.svg';
 import X from 'public/assets/svg/x.svg';
 import YoutubeIcon from 'public/assets/svg/youtube.svg';
@@ -204,5 +208,21 @@ export const iconsPowerHose = [
   {
     Icon: Arrow,
     title: 'arrow',
+  },
+  {
+    Icon: ThumbsUp,
+    title: 'thumbs_up',
+  },
+  {
+    Icon: Comments,
+    title: 'comments',
+  },
+  {
+    Icon: Clock,
+    title: 'clock',
+  },
+  {
+    Icon: Fire,
+    title: 'fire',
   },
 ];

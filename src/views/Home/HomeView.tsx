@@ -13,7 +13,6 @@ import GovernanceSection from './components/GovernanceSection/GovernanceSection'
 import HeaderCard from './components/HeaderCard/HeaderCard';
 import RoadmapSection from './components/RoadmapSection/RoadmapSection';
 import { headerCardData, sectionsData } from './staticData';
-import useHomeView from './useHomeView';
 import type { FormattedFinancesData } from './api/finances';
 import type { RevenueAndSpendingRecords } from './api/revenueAndSpending';
 import type { FC } from 'react';
@@ -32,43 +31,39 @@ const HomeView: FC<HomeViewProps> = ({
   teams,
   governanceProposals,
   roadmaps,
-}) => {
-  useHomeView();
-
-  return (
-    <HomeViewContainer>
-      <SEOHead
-        title="Homepage"
-        description="Homepage description"
-        image={{
-          src: toAbsoluteURL('/assets/img/social-385x200.png'),
-          width: 385,
-          height: 200,
-        }}
-        twitterImage={toAbsoluteURL('/assets/img/social-1200x630.png')}
-      />
-      <Container>
-        <HeaderCard />
-        <Section id={headerCardData.buttonTexts[0].toLowerCase()}>
-          <FinancesSection revenueAndSpendingData={revenueAndSpendingData} financesData={financesData} />
-        </Section>
-        <Section id={headerCardData.buttonTexts[1].toLowerCase()}>
-          <GovernanceSection governanceProposals={governanceProposals} />
-        </Section>
-        <Section id={headerCardData.buttonTexts[2].toLowerCase()}>
-          <SectionTitle>{sectionsData.titles[2]}</SectionTitle>
-          <ContainerMargin>
-            <ContributorsSection teams={teams} />
-          </ContainerMargin>
-        </Section>
-        <Section id={headerCardData.buttonTexts[3].toLowerCase()}>
-          <SectionTitle>{sectionsData.titles[3]}</SectionTitle>
-          <RoadmapSection roadmaps={roadmaps} />
-        </Section>
-      </Container>
-    </HomeViewContainer>
-  );
-};
+}) => (
+  <HomeViewContainer>
+    <SEOHead
+      title="Homepage"
+      description="Homepage description"
+      image={{
+        src: toAbsoluteURL('/assets/img/social-385x200.png'),
+        width: 385,
+        height: 200,
+      }}
+      twitterImage={toAbsoluteURL('/assets/img/social-1200x630.png')}
+    />
+    <Container>
+      <HeaderCard />
+      <Section id={headerCardData.buttonTexts[0].toLowerCase()}>
+        <FinancesSection revenueAndSpendingData={revenueAndSpendingData} financesData={financesData} />
+      </Section>
+      <Section id={headerCardData.buttonTexts[1].toLowerCase()}>
+        <GovernanceSection governanceProposals={governanceProposals} />
+      </Section>
+      <Section id={headerCardData.buttonTexts[2].toLowerCase()}>
+        <SectionTitle>{sectionsData.titles[2]}</SectionTitle>
+        <ContainerMargin>
+          <ContributorsSection teams={teams} />
+        </ContainerMargin>
+      </Section>
+      <Section id={headerCardData.buttonTexts[3].toLowerCase()}>
+        <SectionTitle>{sectionsData.titles[3]}</SectionTitle>
+        <RoadmapSection roadmaps={roadmaps} />
+      </Section>
+    </Container>
+  </HomeViewContainer>
+);
 
 export default HomeView;
 
