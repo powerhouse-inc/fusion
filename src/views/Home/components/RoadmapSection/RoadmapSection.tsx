@@ -87,8 +87,11 @@ const RoadmapSection: FC<RoadmapSectionProps> = ({ roadmaps }) => {
             modules={[Pagination]}
             centerInsufficientSlides
             {...swiperOptions}
+            onInit={() => {
+              adjustSectionsHeights();
+            }}
             onBreakpoint={() => {
-              adjustSectionsHeights(100);
+              adjustSectionsHeights();
             }}
           >
             {roadmaps[activeRoadmap]?.milestones.map((milestoneData) => (

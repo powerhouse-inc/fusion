@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import type { Roadmap } from '@/core/models/interfaces/roadmaps';
 import type { SwiperRef } from 'swiper/react';
@@ -21,40 +21,34 @@ const useRoadmapSection = (roadmapsData: Roadmap[]) => {
     }
   };
 
-  const adjustSectionsHeights = (timeout: number) => {
+  const adjustSectionsHeights = () => {
     const titleContainer = document.getElementsByClassName('title-container');
     const latestKeyResultsContainer = document.getElementsByClassName('latest-key-results-container');
 
     const titles = Array.from(titleContainer);
-    const latestKeyResults = Array.from(latestKeyResultsContainer);
-
     for (const titleDiv of titles) {
       (titleDiv as HTMLDivElement).style.height = 'auto';
     }
+    const maxTitleDiv = titles.reduce((prevDiv, currentDiv) =>
+      prevDiv.getBoundingClientRect().height > currentDiv.getBoundingClientRect().height ? prevDiv : currentDiv
+    );
+    for (const titleDiv of titles) {
+      (titleDiv as HTMLDivElement).style.height = `${maxTitleDiv.getBoundingClientRect().height - 8}px`;
+    }
+
+    const latestKeyResults = Array.from(latestKeyResultsContainer);
     for (const latestKeyResultDiv of latestKeyResults) {
       (latestKeyResultDiv as HTMLDivElement).style.height = 'auto';
     }
-
-    setTimeout(() => {
-      titles.sort(
-        (prevDiv, nextDiv) => nextDiv.getBoundingClientRect().height - prevDiv.getBoundingClientRect().height
-      );
-      latestKeyResults.sort(
-        (prevDiv, nextDiv) => nextDiv.getBoundingClientRect().height - prevDiv.getBoundingClientRect().height
-      );
-
-      for (const titleDiv of titles) {
-        (titleDiv as HTMLDivElement).style.height = `${titles[0].getBoundingClientRect().height}px`;
-      }
-      for (const latestKeyResultDiv of latestKeyResults) {
-        (latestKeyResultDiv as HTMLDivElement).style.height = `${latestKeyResults[0].getBoundingClientRect().height}px`;
-      }
-    }, timeout);
+    const maxLatestKeyResultDiv = latestKeyResults.reduce((prevDiv, currentDiv) =>
+      prevDiv.getBoundingClientRect().height > currentDiv.getBoundingClientRect().height ? prevDiv : currentDiv
+    );
+    for (const latestKeyResultDiv of latestKeyResults) {
+      (latestKeyResultDiv as HTMLDivElement).style.height = `${
+        maxLatestKeyResultDiv.getBoundingClientRect().height - 16
+      }px`;
+    }
   };
-
-  useEffect(() => {
-    adjustSectionsHeights(100);
-  });
 
   return {
     tabs,
