@@ -274,6 +274,9 @@ const ExternalButtonContainer = styled('div')(({ theme }) => ({
   [theme.breakpoints.between('tablet_768', 'desktop_1024')]: {
     marginTop: 16,
   },
+  [theme.breakpoints.up('desktop_1280')]: {
+    marginTop: 24,
+  },
 }));
 
 const FilterButtonTabStyled = styled(FilterButtonTab)({

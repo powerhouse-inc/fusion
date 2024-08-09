@@ -1,5 +1,6 @@
 import { styled, useMediaQuery, useTheme } from '@mui/material';
 import ReactECharts from 'echarts-for-react';
+import { type FC } from 'react';
 import { usLocalizedNumber } from '@/core/utils/humanization';
 import { replaceAllNumberLetOneBeforeDot } from '@/core/utils/string';
 import type { BarChartSeries } from '@/views/Finances/utils/types';
@@ -7,7 +8,6 @@ import useFinancesLineChart from './useFinancesLineChart';
 import type { FormattedFinancesData, MetricKey } from '../../api/finances';
 import type { Theme } from '@mui/material';
 import type { EChartsOption } from 'echarts-for-react';
-import type { FC } from 'react';
 
 interface FinancesLineChartProps {
   financesData: FormattedFinancesData;
@@ -17,7 +17,11 @@ interface FinancesLineChartProps {
 const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedMetric }) => {
   const { financesLineChartRef } = useFinancesLineChart();
   const theme = useTheme();
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.between('mobile_375', 'tablet_768'));
+  const isTable = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
+  const isDesk1024 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1024', 'desktop_1280'));
+  const isDesk1280 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1280', 'desktop_1440'));
+  const isDesk1440 = useMediaQuery((theme: Theme) => theme.breakpoints.up('desktop_1440'));
 
   const series = [
     {
@@ -141,13 +145,13 @@ const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedM
       },
     },
   ];
-
   const options: EChartsOption = {
     grid: {
       top: 8,
       right: 10,
       bottom: 20,
-      left: isMobile ? 40 : 45,
+      left: isMobile ? 40 : isDesk1280 ? 50 : isDesk1440 ? 50 : 45,
+      width: isMobile ? '85%' : isTable ? 330 : isDesk1024 ? 470 : isDesk1280 ? 595 : 645,
     },
     tooltip: {
       show: true,
@@ -221,12 +225,22 @@ const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedM
         fontSize: isMobile ? 12 : 14,
         lineHeight: isMobile ? 16 : 19,
         color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[400],
+        interval: 0,
       },
       boundaryGap: false,
+      splitLine: {
+        show: true,
+        lineStyle: {
+          color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[400],
+          type: 'line',
+          width: 1,
+        },
+      },
     },
     yAxis: {
       splitLine: {
         lineStyle: {
+          type: 'line',
           color: theme.palette.isLight ? theme.palette.colors.gray[300] : theme.palette.colors.slate[300],
         },
       },
@@ -237,7 +251,8 @@ const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedM
         },
       },
       axisLabel: {
-        margin: 8,
+        width: 48,
+        margin: 16,
         fontFamily: 'OpenSansCondensed, san-serif',
         fontWeight: 700,
         fontSize: isMobile ? 12 : 14,
@@ -290,10 +305,12 @@ const Wrapper = styled('div')(({ theme }) => ({
 
   [theme.breakpoints.up('tablet_768')]: {
     flexDirection: 'row',
+    gap: 24,
   },
 
   [theme.breakpoints.up('desktop_1280')]: {
     flexDirection: 'column',
+    gap: 32,
   },
 }));
 
@@ -303,9 +320,10 @@ const ChartContainer = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   justifyContent: 'center',
   width: '100%',
+  alignItems: 'center',
+  minWidth: 300,
   height: 216,
   marginTop: 8,
-
   [theme.breakpoints.up('tablet_768')]: {
     width: 385,
     minWidth: 385,
@@ -313,19 +331,20 @@ const ChartContainer = styled('div')(({ theme }) => ({
   },
 
   [theme.breakpoints.up('desktop_1024')]: {
-    width: 540,
-    minWidth: 540,
+    width: 526,
+    minWidth: 526,
   },
 
   [theme.breakpoints.up('desktop_1280')]: {
-    width: 480,
-    minWidth: 480,
+    width: 655,
+    minWidth: 655,
     height: 360,
   },
 
   [theme.breakpoints.up('desktop_1440')]: {
-    width: 520,
-    minWidth: 520,
+    width: 704,
+    minWidth: 704,
+    height: 360,
   },
 }));
 
@@ -352,6 +371,7 @@ const LegendContainer = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('desktop_1280')]: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    padding: '16px 24px',
   },
 }));
 
