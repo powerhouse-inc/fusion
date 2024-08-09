@@ -72,6 +72,7 @@ export default ForumOverview;
 
 const ForumCard = styled(Card)(() => ({
   boxShadow: 'none',
+  overflow: 'hidden',
   borderTopLeftRadius: 0,
 }));
 
@@ -80,7 +81,7 @@ const HeaderTop = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   gap: 8,
   padding: '8px 16px',
-  background: theme.palette.isLight ? theme.palette.colors.slate[50] : 'red',
+  background: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
 
   [theme.breakpoints.up('tablet_768')]: {
     flexDirection: 'row',
@@ -103,10 +104,10 @@ const Text = styled('p')(({ theme }) => ({
   fontSize: 12,
   fontWeight: 500,
   lineHeight: '18px',
-  color: theme.palette.isLight ? theme.palette.colors.gray[900] : 'red',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
 
   '& span': {
-    color: theme.palette.isLight ? theme.palette.colors.gray[600] : 'red',
+    color: theme.palette.colors.gray[600],
   },
 
   [theme.breakpoints.up('desktop_1024')]: {
