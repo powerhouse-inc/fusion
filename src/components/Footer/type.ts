@@ -22,4 +22,5 @@ export interface FooterContact {
   subtitle: string;
   Icon: FC<SVGProps<SVGElement>>;
   links: TypeIconFooter[];
+  className?: string;
 }

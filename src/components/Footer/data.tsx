@@ -1,12 +1,12 @@
 import { styled } from '@mui/material';
 import DiscordIcon from 'public/assets/svg/discord.svg';
 import GithubIcon from 'public/assets/svg/github.svg';
-import MakerdaoIcon from 'public/assets/svg/makerdao.svg';
 import ConnectIcon from 'public/assets/svg/makerdao_connect.svg';
 import FusionIcon from 'public/assets/svg/makerdao_fusion.svg';
 import SwitchboardIcon from 'public/assets/svg/makerdao_switchboard.svg';
 import PowerhouseIcon from 'public/assets/svg/powerhouse.svg';
 import RedditIcon from 'public/assets/svg/reddit.svg';
+import SkyIcon from 'public/assets/svg/sky-footer.svg';
 import X from 'public/assets/svg/x.svg';
 import YoutubeIcon from 'public/assets/svg/youtube.svg';
 import type { FooterContact, LinkCategory, TypeIconFooter } from './type';
@@ -67,7 +67,7 @@ const linkCategory: LinkCategory[] = [
     ],
   },
   {
-    name: 'MakerDAO Tools',
+    name: 'Sky DAO tools',
     links: [
       {
         label: 'Connect',
@@ -135,9 +135,9 @@ const iconsPowerhouse: TypeIconFooter[] = [
 ];
 
 const contactMakerDAO: FooterContact = {
-  title: 'Contact MakerDAO',
+  title: 'Contact Sky',
   subtitle: 'Official Community Channels',
-  Icon: MakerdaoIcon,
+  Icon: SkyIcon,
   links: iconsMakerDAO,
 };
 

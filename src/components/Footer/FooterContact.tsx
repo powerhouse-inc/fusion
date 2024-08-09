@@ -2,8 +2,8 @@ import { styled } from '@mui/material';
 import { FooterLinks } from './FooterLinks';
 import type { FooterContact as FooterContactProps } from './type';
 
-export const FooterContact = ({ title, subtitle, Icon, links }: FooterContactProps) => (
-  <ContactCard>
+export const FooterContact = ({ title, subtitle, Icon, links, className }: FooterContactProps) => (
+  <ContactCard className={className}>
     <Icon width={45} height={45} />
     <ContactCardBody>
       <Title>{title}</Title>
