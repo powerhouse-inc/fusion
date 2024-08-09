@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import type { Roadmap } from '@/core/models/interfaces/roadmaps';
 import type { SwiperRef } from 'swiper/react';
@@ -21,7 +21,7 @@ const useRoadmapSection = (roadmapsData: Roadmap[]) => {
     }
   };
 
-  const adjustSectionsHeights = (timeout: number, isInit: boolean) => {
+  const adjustSectionsHeights = (timeout: number) => {
     const titleContainer = document.getElementsByClassName('title-container');
     const latestKeyResultsContainer = document.getElementsByClassName('latest-key-results-container');
 
@@ -49,12 +49,12 @@ const useRoadmapSection = (roadmapsData: Roadmap[]) => {
       for (const latestKeyResultDiv of latestKeyResults) {
         (latestKeyResultDiv as HTMLDivElement).style.height = `${latestKeyResults[0].getBoundingClientRect().height}px`;
       }
-
-      if (isInit && document.readyState !== 'complete') {
-        adjustSectionsHeights(250, true);
-      }
     }, timeout);
   };
+
+  useEffect(() => {
+    adjustSectionsHeights(100);
+  });
 
   return {
     tabs,
