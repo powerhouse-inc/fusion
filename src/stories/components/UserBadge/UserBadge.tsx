@@ -35,28 +35,28 @@ const UserBadge: React.FC<Props> = ({ onClick, username, style, isOpen }) => (
 export default UserBadge;
 
 const Container = styled('div')(({ theme }) => ({
-  background: theme.palette.isLight ? theme.palette.colors.charcoal[900] : theme.palette.colors.charcoal[100],
+  backgroundColor: theme.palette.isLight ? '#504DFF' : '#504DFF',
+
   border: theme.palette.isLight ? '1px solid #D4D9E1' : '1px solid #343442',
   borderRadius: 8,
   padding: '5px 8px 5px 8px',
   position: 'relative',
   display: 'none',
-
   alignItems: 'center',
   width: 'fit-content',
   height: 32,
   cursor: 'pointer',
   ':hover': {
-    backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[700] : theme.palette.colors.charcoal[100],
-    color: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.slate[400],
+    backgroundColor: theme.palette.isLight ? '#403ECC;' : '#615EFF',
+    color: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.slate[50],
   },
   ':disabled': {
-    backgroundColor: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[900],
-    color: theme.palette.isLight ? theme.palette.colors.gray[500] : theme.palette.colors.slate[400],
+    backgroundColor: theme.palette.isLight ? 'rgba(80, 77, 255, 0.50)' : 'rgba(80, 77, 255, 0.50)',
+    color: theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.charcoal[500],
     cursor: 'not-allowed',
     ':hover': {
-      backgroundColor: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[900],
-      color: theme.palette.isLight ? theme.palette.colors.gray[500] : theme.palette.colors.slate[400],
+      backgroundColor: theme.palette.isLight ? 'rgba(80, 77, 255, 0.50)' : 'rgba(80, 77, 255, 0.50)',
+      color: theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.charcoal[500],
     },
   },
 
@@ -72,7 +72,7 @@ const Container = styled('div')(({ theme }) => ({
 }));
 
 const UserName = styled('div')(({ theme }) => ({
-  color: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.slate[400],
+  color: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.slate[50],
   fontWeight: 600,
   fontSize: 14,
   lineHeight: '22px',
@@ -83,10 +83,11 @@ const CircleAvatarStyledWithoutName = styled(CircleAvatar)(({ theme }) => ({
   height: 35,
   minWidth: 35,
   minHeight: 35,
+
   backgroundColor: theme.palette.isLight ? theme.palette.colors.charcoal[900] : theme.palette.colors.charcoal[100],
   border: `1px solid ${theme.palette.isLight ? '#D4D9E1' : '#708390'}`,
   cursor: 'pointer',
-  color: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.slate[400],
+  color: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.slate[50],
   fontSize: 14,
   display: 'flex',
   [theme.breakpoints.up('tablet_768')]: {
@@ -115,17 +116,16 @@ const IconContainer = styled('div')<{ isOpen: boolean }>(({ isOpen, theme }) => 
   transition: 'transform 0.3s ease-in-out',
 
   '& path': {
-    fill: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.slate[400],
+    fill: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.slate[50],
   },
 }));
 
 const LoginContainerIcon = styled('div')(({ theme }) => ({
-  // width: 10.67,
   display: 'flex',
   width: 16,
   height: 16,
   '& path': {
-    fill: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.slate[400],
+    fill: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.slate[50],
   },
 }));
 
