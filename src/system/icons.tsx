@@ -38,6 +38,8 @@ import MemoCheck from 'public/assets/svg/memo_check.svg';
 import PersonSquare from 'public/assets/svg/person_square.svg';
 import PowerhouseIcon from 'public/assets/svg/powerhouse.svg';
 import RedditIcon from 'public/assets/svg/reddit.svg';
+import SkyLogoDesk from 'public/assets/svg/sky-desk.svg';
+import SkyLogoMobile from 'public/assets/svg/sky-mobile.svg';
 import ThemeIcon from 'public/assets/svg/theme.svg';
 import ThumbsUp from 'public/assets/svg/thumbs_up.svg';
 import TwitterIcon from 'public/assets/svg/twitter.svg';
@@ -224,5 +226,13 @@ export const iconsPowerHose = [
   {
     Icon: Fire,
     title: 'fire',
+  },
+  {
+    Icon: SkyLogoDesk,
+    title: 'logo_desk',
+  },
+  {
+    Icon: SkyLogoMobile,
+    title: 'logo_mobile',
   },
 ];
