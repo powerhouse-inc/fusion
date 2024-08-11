@@ -23,8 +23,7 @@ interface RoadmapSectionProps {
 }
 
 const RoadmapSection: FC<RoadmapSectionProps> = ({ roadmaps }) => {
-  const { tabs, activeRoadmapRef, swiperRef, activeTab, handleActiveTab, adjustSectionsHeights } =
-    useRoadmapSection(roadmaps);
+  const { tabs, activeRoadmapRef, swiperRef, activeTab, handleActiveTab } = useRoadmapSection(roadmaps);
   const activeRoadmap = activeRoadmapRef.current;
 
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
@@ -45,11 +44,6 @@ const RoadmapSection: FC<RoadmapSectionProps> = ({ roadmaps }) => {
         spaceBetween: 8,
       },
       1280: {
-        slidesPerView: 4,
-        slidesPerGroup: 4,
-        spaceBetween: 0,
-      },
-      1440: {
         slidesPerView: 4,
         slidesPerGroup: 4,
         spaceBetween: 0,
@@ -82,18 +76,7 @@ const RoadmapSection: FC<RoadmapSectionProps> = ({ roadmaps }) => {
         </MobileMilestoneCardsContainer>
       ) : (
         <SwiperContainer>
-          <Swiper
-            ref={swiperRef}
-            modules={[Pagination]}
-            centerInsufficientSlides
-            {...swiperOptions}
-            onInit={() => {
-              adjustSectionsHeights();
-            }}
-            onBreakpoint={() => {
-              adjustSectionsHeights();
-            }}
-          >
+          <Swiper ref={swiperRef} modules={[Pagination]} centerInsufficientSlides {...swiperOptions}>
             {roadmaps[activeRoadmap]?.milestones.map((milestoneData) => (
               <SwiperSlide key={milestoneData.id}>
                 <MilestoneCardContainer>
@@ -121,14 +104,10 @@ const Container = styled('div')(({ theme }) => ({
   },
 }));
 
-const MobileMilestoneCardsContainer = styled('div')(({ theme }) => ({
+const MobileMilestoneCardsContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-
-  [theme.breakpoints.up('tablet_768')]: {
-    display: 'none',
-  },
 }));
 
 const MobileMilestoneCardsDivider = styled('div')(({ theme }) => ({
@@ -165,11 +144,11 @@ const Description = styled('h3')(({ theme }) => ({
 }));
 
 const SwiperContainer = styled('div')(({ theme }) => ({
-  display: 'none',
   position: 'relative',
   margin: '0px -8px',
 
   '& .swiper-slide': {
+    boxSizing: 'border-box',
     height: 'auto',
     marginBottom: 8,
   },
@@ -206,10 +185,6 @@ const SwiperContainer = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.isLight
       ? `${theme.palette.colors.gray[900]} !important`
       : `${theme.palette.colors.slate[50]} !important`,
-  },
-
-  [theme.breakpoints.up('tablet_768')]: {
-    display: 'block',
   },
 }));
 

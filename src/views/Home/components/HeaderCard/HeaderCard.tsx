@@ -214,7 +214,7 @@ const MobileMenu = styled('div', {
 })<StyledContainerProps>(({ theme, isExpanded, isMobileMenuExpanded }) => ({
   position: 'absolute',
   top: `calc(100% - ${isExpanded ? 64 : 88}px)`,
-  width: 295,
+  width: 'calc(100% - 48px)',
   display: 'flex',
   flexDirection: 'column',
   gap: 16,
@@ -257,9 +257,11 @@ const Buttons = styled('div', {
 })<StyledContainerProps>(({ theme, isExpanded }) => ({
   display: 'flex',
   justifyContent: 'space-between',
+  gap: 24,
   marginTop: isExpanded ? 40 : 0,
 
   [theme.breakpoints.up('desktop_1280')]: {
+    gap: 32,
     marginTop: isExpanded ? 32 : 0,
   },
 }));
@@ -272,6 +274,7 @@ const HeaderButton = styled(Button, {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+  flex: '1 0 0',
   padding: 8,
   fontWeight: 600,
   fontSize: 16,
