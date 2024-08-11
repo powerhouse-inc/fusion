@@ -1,6 +1,8 @@
 import { ForumCategories } from '@/views/Home/components/GovernanceSection/ForumOverview/categories';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+// This endpoint work as a proxy to the MakerDAO Forum Discourse API
+// If we fetch the data directly from the client, we get a CORS error
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     const id = req.query.id as string;
