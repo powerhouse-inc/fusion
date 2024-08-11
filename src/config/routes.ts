@@ -28,4 +28,7 @@ export const siteRoutes = {
   adminProfile: '/auth/manage/my-profile',
   userProfile: '/auth/user-profile',
   // TODO: add the accounts routes
+
+  // local api
+  forumApi: (id: string) => `/api/forum?id=${id}`,
 };

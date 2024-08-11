@@ -177,6 +177,8 @@ const dictionary = [
   'deepmerge',
   'Rtnd',
   'ethers',
+  'conserver',
+  'conservers',
 ];
 
 module.exports = dictionary;

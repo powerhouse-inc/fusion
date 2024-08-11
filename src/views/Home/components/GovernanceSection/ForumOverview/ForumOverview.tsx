@@ -1,50 +1,31 @@
 import { styled } from '@mui/material';
 import { useState } from 'react';
+import useSWRImmutable from 'swr/immutable';
 import Card from '@/components/Card/Card';
 import ExternalLinkButton from '@/components/ExternalLinkButton/ExternalLinkButton';
-import BulletIcon from '@/components/FancyTabs/BulletIcon';
 import FancyTabs from '@/components/FancyTabs/FancyTabs';
 import ShadowWrapper from '@/components/FancyTabs/ShadowWrapper';
+import type { Topic } from '@/views/Home/api/forum';
+import { getForumPosts } from '@/views/Home/api/forum';
 import ForumPost from '../ForumPost/ForumPost';
+import ForumPostSkeleton from '../ForumPost/ForumPostSkeleton';
+import { ForumCategories } from './categories';
 
 const ForumOverview = () => {
-  const [activeTab, setActiveTab] = useState<string>('4');
+  const [activeTab, setActiveTab] = useState<string>(ForumCategories[0].id.toString());
+  const { isLoading, data } = useSWRImmutable<Topic[]>(['forum', activeTab], ([, id]) => getForumPosts(id as string));
+
+  const posts = data?.slice(0, 5);
+  const biggerLikes = posts?.reduce((acc, post) => (post.like_count > acc ? post.like_count : acc), 0);
 
   return (
     <ShadowWrapper>
       <FancyTabs
-        tabs={[
-          {
-            id: '1',
-            title: 'Popular',
-            icon: <BulletIcon color="green" />,
-          },
-          {
-            id: '2',
-            title: 'Onboarding',
-            icon: <BulletIcon color="charcoal" />,
-          },
-          {
-            id: '3',
-            title: 'Finances',
-            icon: <BulletIcon color="green" />,
-          },
-          {
-            id: '4',
-            title: 'Governance',
-            icon: <BulletIcon color="purple" />,
-          },
-          {
-            id: '5',
-            title: 'Atlas',
-            icon: <BulletIcon color="orange" />,
-          },
-          {
-            id: '6',
-            title: 'Teams',
-            icon: <BulletIcon color="blue" />,
-          },
-        ]}
+        tabs={ForumCategories.map((category) => ({
+          id: category.id.toString(),
+          title: category.tabLabel,
+          icon: category.icon,
+        }))}
         activeTab={activeTab}
         onTabChange={(tab: string) => setActiveTab(tab)}
       />
@@ -58,10 +39,18 @@ const ForumOverview = () => {
         </HeaderTop>
 
         <PostList>
-          <ForumPost />
-          <ForumPost />
-          <ForumPost />
-          <ForumPost />
+          {isLoading && (
+            <>
+              <ForumPostSkeleton />
+              <ForumPostSkeleton />
+              <ForumPostSkeleton />
+              <ForumPostSkeleton />
+              <ForumPostSkeleton />
+            </>
+          )}
+          {posts?.map((post) => (
+            <ForumPost key={post.id} post={post} isPopular={!!biggerLikes && post.like_count === biggerLikes} />
+          ))}
         </PostList>
       </ForumCard>
     </ShadowWrapper>
