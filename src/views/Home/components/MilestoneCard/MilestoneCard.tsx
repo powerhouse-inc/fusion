@@ -33,6 +33,10 @@ interface ElementWithStatus {
   status: Maybe<DeliverableSetStatus>;
 }
 
+interface ElementWithTotal {
+  total?: number;
+}
+
 const MilestoneCard: FC<MilestoneCardProps> = ({ slug, milestoneData }) => {
   const { statusLabel } = useMilestoneCard(milestoneData.scope?.status);
 
@@ -81,7 +85,7 @@ const MilestoneCard: FC<MilestoneCardProps> = ({ slug, milestoneData }) => {
         <CoordinatorsTitle>Coordinators</CoordinatorsTitle>
         <Coordinators>
           {coordinators.map((coordinatorData) => (
-            <CoordinatorAvatarContainer key={coordinatorData.id}>
+            <CoordinatorAvatarContainer key={coordinatorData.id} total={milestoneData.coordinators?.length}>
               {coordinatorData.imageUrl === 'N/A' ? (
                 <CoordinatorAvatar>
                   <AvatarPlaceholderIcon />
@@ -228,6 +232,7 @@ const StyledInternalLinkButton = styled(InternalLinkButton)(({ theme }) => ({
 const TitleContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
+  maxHeight: 58,
   gap: 4,
   margin: '8px 8px 0px',
   padding: '4px 8px',
@@ -387,7 +392,9 @@ const Coordinators = styled('div')(() => ({
   gap: 16,
 }));
 
-const CoordinatorAvatarContainer = styled('div')(() => ({
+const CoordinatorAvatarContainer = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'total',
+})<ElementWithTotal>(({ total }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: 4,
@@ -395,6 +402,28 @@ const CoordinatorAvatarContainer = styled('div')(() => ({
   '&:nth-of-type(3)': {
     cursor: 'pointer',
   },
+
+  ...(total === 1 && {
+    '&:first-of-type': {
+      maxWidth: '100%',
+    },
+  }),
+
+  ...(total === 2 && {
+    '&:first-of-type, &:last-of-type': {
+      maxWidth: 'calc(50% - 8px)',
+    },
+  }),
+
+  ...(total !== undefined &&
+    total > 2 && {
+      '&:first-of-type': {
+        maxWidth: 'calc(60% - 50px)',
+      },
+      '&:nth-of-type(2)': {
+        maxWidth: 'calc(40% - 30px)',
+      },
+    }),
 }));
 
 const CoordinatorAvatar = styled(Avatar)(({ theme }) => ({
@@ -431,6 +460,7 @@ const OtherCoordinators = styled('div')(() => ({
 const LatestKeyResultsContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
+  maxHeight: 114,
   gap: 8,
   margin: '4px 8px 0px',
   padding: 8,
