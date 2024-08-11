@@ -47,8 +47,8 @@ const FinancesBarChart: FC<FinancesBarChartProps> = ({ revenueAndSpendingData })
       series.daiSpent.push(record.daiSpent);
 
       makerLineData.push([
-        { coord: [index, revenueAndSpendingData[year].annualProfit] },
-        { coord: [index + 1, revenueAndSpendingData[year].annualProfit] },
+        { coord: [index === years.length - 1 ? index - 1 : index, revenueAndSpendingData[year].annualProfit] },
+        { coord: [index === years.length - 1 ? index : index + 1, revenueAndSpendingData[year].annualProfit] },
       ]);
     });
 
@@ -63,7 +63,6 @@ const FinancesBarChart: FC<FinancesBarChartProps> = ({ revenueAndSpendingData })
   const series = [
     {
       data: chartSeries.psm,
-
       type: 'bar',
       stack: 'revenue',
       name: 'psm',
@@ -162,7 +161,6 @@ const FinancesBarChart: FC<FinancesBarChartProps> = ({ revenueAndSpendingData })
       trigger: 'axis',
       borderRadius: 12,
       backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
-
       axisPointer: {
         type: 'shadow',
         shadowStyle: {
@@ -232,7 +230,6 @@ const FinancesBarChart: FC<FinancesBarChartProps> = ({ revenueAndSpendingData })
           if (value === 0 && index === 0) {
             return value.toString();
           }
-
           return replaceAllNumberLetOneBeforeDot(value, true);
         },
       },
@@ -265,18 +262,6 @@ const Container = styled('div')(({ theme }) => ({
   width: '100%',
   height: 216,
   marginTop: 8,
-
-  '& svg path:nth-of-type(39)': {
-    transform: 'translateX(-5%)',
-  },
-
-  '& svg path:nth-of-type(40), & svg path:nth-of-type(41)': {
-    transform: 'translateX(-10%)',
-  },
-
-  '& svg path:nth-of-type(42)': {
-    transform: 'translateX(12.5%)',
-  },
 
   [theme.breakpoints.up('tablet_768')]: {
     width: 385,
