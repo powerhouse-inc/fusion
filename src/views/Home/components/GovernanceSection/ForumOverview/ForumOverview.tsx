@@ -66,7 +66,7 @@ const ForumCard = styled(Card)(({ theme }) => ({
   borderTopRightRadius: 0,
 
   [theme.breakpoints.up('tablet_768')]: {
-    borderRadius: 12,
+    borderTopRightRadius: 12,
   },
 }));
 
