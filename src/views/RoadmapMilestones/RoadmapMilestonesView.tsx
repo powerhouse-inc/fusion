@@ -38,7 +38,7 @@ const RoadmapMilestonesView: React.FC<RoadmapMilestonesViewProps> = ({ roadmap }
             href: '#',
           },
           {
-            label: 'Powerhouse Roadmap 2024',
+            label: roadmap.title,
             href: siteRoutes.roadmapMilestones(roadmap.slug),
           },
         ]}
