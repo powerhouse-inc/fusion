@@ -35,7 +35,6 @@ const Container = styled('div')({
 const Title = styled('h3')(({ theme }) => ({
   fontFamily: 'Inter, sans-serif',
   margin: '0 0 0px',
-
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   fontSize: 20,
   fontWeight: 700,
