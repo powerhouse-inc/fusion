@@ -34,12 +34,12 @@ const RoadmapMilestonesView: React.FC<RoadmapMilestonesViewProps> = ({ roadmap }
       <Breadcrumb
         items={[
           {
-            label: 'Roadmap',
+            label: 'Roadmaps',
             href: '#',
           },
           {
             label: 'Powerhouse Roadmap 2024',
-            href: siteRoutes.roadmapMilestones('ph-2024'),
+            href: siteRoutes.roadmapMilestones(roadmap.slug),
           },
         ]}
       />
