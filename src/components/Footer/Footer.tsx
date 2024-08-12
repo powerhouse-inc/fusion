@@ -93,10 +93,14 @@ const FooterColumnLink = styled('div')(({ theme }) => ({
   },
 }));
 
-const FooterColumn = styled('div')({
+const FooterColumn = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-});
+  minWidth: 140,
+  [theme.breakpoints.up('tablet_768')]: {
+    minWidth: 'revert',
+  },
+}));
 
 const FooterLink = styled('a')(({ theme }) => ({
   margin: '5px 0',
