@@ -194,37 +194,37 @@ const ContainerDiv = styled('div')<{ buttonType?: string; showIcon: boolean; lab
       background: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.charcoal[800],
 
       '& div': {
-        color: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[300],
+        color: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[300],
         fontWeight: 600,
       },
 
       '& path': {
-        fill: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[300],
+        fill: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[300],
       },
       ':hover': {
         padding: '4px 8px 4px 24px',
         background: theme.palette.isLight ? theme.palette.colors.gray[800] : theme.palette.colors.charcoal[800],
         border: theme.palette.isLight
-          ? `1px solid ${theme.palette.colors.charcoal[700]}`
+          ? `1px solid ${theme.palette.colors.sky[900]}`
           : `1px solid ${theme.palette.colors.charcoal[600]}`,
         '& div': {
-          color: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.charcoal[200],
+          color: theme.palette.isLight ? theme.palette.colors.sky[900] : theme.palette.colors.charcoal[200],
           fontWeight: 600,
         },
         '& path': {
-          fill: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.charcoal[200],
+          fill: theme.palette.isLight ? theme.palette.colors.sky[900] : theme.palette.colors.charcoal[200],
         },
       },
       ':active': {
         background: theme.palette.isLight ? theme.palette.colors.gray[700] : theme.palette.colors.charcoal[700],
         border: theme.palette.isLight
-          ? `1px solid ${theme.palette.colors.charcoal[600]}`
+          ? `1px solid ${theme.palette.colors.sky[700]}`
           : `1px solid ${theme.palette.colors.charcoal[500]}`,
         '& div': {
-          color: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[300],
+          color: theme.palette.isLight ? theme.palette.colors.sky[100] : theme.palette.colors.charcoal[300],
         },
         '& path': {
-          fill: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[300],
+          fill: theme.palette.isLight ? theme.palette.colors.sky[100] : theme.palette.colors.charcoal[300],
         },
       },
     }),
