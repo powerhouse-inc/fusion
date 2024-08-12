@@ -4,6 +4,7 @@ import { FeatureFlagsProvider } from '@ses/core/context/FeatureFlagsProvider';
 import { withoutSBPadding } from '@ses/core/utils/storybook/decorators';
 import { createThemeModeVariants } from '@ses/core/utils/storybook/factories';
 import { featureFlags } from 'feature-flags/feature-flags';
+import { SWRConfig, unstable_serialize as unstableSerialize } from 'swr';
 import { EcosystemActorBuilder } from '@/core/businessLogic/builders/actors/actorsBuilder';
 import { TeamScopeEnum } from '@/core/enums/actorScopeEnum';
 import { TeamRole } from '@/core/enums/teamRole';
@@ -12,6 +13,7 @@ import { ResourceType, TeamCategory, TeamStatus } from '@/core/models/interfaces
 import { DefaultRoadmap } from '@/views/RoadmapMilestones/staticData';
 import { defaultSocials } from '../EcosystemActorsIndex/utils/utils';
 import HomeView from './HomeView';
+import { ForumCategories } from './components/GovernanceSection/ForumOverview/categories';
 import { financesDataMocked } from './staticData';
 import type { HomeViewProps } from './HomeView';
 import type { Meta } from '@storybook/react';
@@ -25,6 +27,7 @@ const meta: Meta<typeof HomeView> = {
       viewports: [375, 768, 1024, 1280, 1440],
       pauseAnimationAtEnd: true,
     },
+    date: new Date('2024-08-10T04:14:00.000Z'),
   },
 };
 
@@ -333,6 +336,69 @@ const variantsArgs = [
         .build(),
     ] as Team[],
     roadmaps: [{ ...DefaultRoadmap }],
+    fallback: {
+      [unstableSerialize(['forum', ForumCategories[0].id.toString()])]: [
+        {
+          id: 20686,
+          title: 'About the General Discussion category',
+          slug: 'about-the-general-discussion-category',
+          posts_count: 1,
+          reply_count: 0,
+          created_at: '2023-04-28T14:34:30.799Z',
+          tags: [],
+          like_count: 7,
+          category_id: 89,
+        },
+        {
+          id: 24844,
+          title: 'WBTC Changes and Risk Mitigation - 10 August 2024',
+          slug: 'wbtc-changes-and-risk-mitigation-10-august-2024',
+          posts_count: 7,
+          reply_count: 0,
+          created_at: '2024-08-10T13:28:50.194Z',
+          // eslint-disable-next-line spellcheck/spell-checker
+          tags: ['wbtc', 'sparklend', 'wbtc-b', 'wbtc-c', 'wbtc-a'],
+          like_count: 10,
+          category_id: 89,
+        },
+        {
+          id: 21272,
+          // eslint-disable-next-line spellcheck/spell-checker
+          title: 'DAO Resolution for the purpose of retaining Perkins Coie LLP as counsel',
+          // eslint-disable-next-line spellcheck/spell-checker
+          slug: 'dao-resolution-for-the-purpose-of-retaining-perkins-coie-llp-as-counsel',
+          posts_count: 32,
+          reply_count: 16,
+          created_at: '2023-07-01T20:01:55.803Z',
+          tags: [],
+          like_count: 54,
+          category_id: 89,
+        },
+        {
+          id: 24784,
+          title: 'First Wave Integrator Program',
+          slug: 'first-wave-integrator-program',
+          posts_count: 3,
+          reply_count: 0,
+          created_at: '2024-07-31T12:38:34.796Z',
+          tags: [],
+          like_count: 6,
+          category_id: 89,
+        },
+        {
+          id: 24824,
+          title: 'BlockTower Credit - Monthly Report (07/1/24 - 07/31/24)',
+          slug: 'blocktower-credit-monthly-report-07-1-24-07-31-24',
+          posts_count: 1,
+          reply_count: 0,
+          created_at: '2024-08-07T17:13:56.593Z',
+          // eslint-disable-next-line spellcheck/spell-checker
+          tags: ['mips', 'rwa', 'blocktower'],
+          like_count: 0,
+          category_id: 89,
+        },
+      ],
+    },
   },
 ];
 
@@ -340,7 +406,9 @@ const [[LightMode, DarkMode]] = createThemeModeVariants(
   (props) => (
     <FeatureFlagsProvider enabledFeatures={featureFlags[CURRENT_ENVIRONMENT]}>
       <AppLayout>
-        <HomeView {...props} />
+        <SWRConfig value={{ fallback: props.fallback }}>
+          <HomeView {...props} />
+        </SWRConfig>
       </AppLayout>
     </FeatureFlagsProvider>
   ),

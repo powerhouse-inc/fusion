@@ -1,37 +1,51 @@
 import { styled } from '@mui/material';
+import { DateTime } from 'luxon';
 import ExternalLinkButton from '@/components/ExternalLinkButton/ExternalLinkButton';
 import BulletIcon from '@/components/FancyTabs/BulletIcon';
+import type { Topic } from '@/views/Home/api/forum';
 import ForumInfoChip from '../ForumInfoChip/ForumInfoChip';
+import { ForumCategories } from '../ForumOverview/categories';
 
-const ForumPost: React.FC = () => (
-  <PostCard>
-    <DescriptionContainer>
-      <Title>Spell Crafting Q&A | Tuesday, January 30 at 4:30pm UTC</Title>
-      <Tags>
-        <Tag>
-          <BulletIcon color="purple" /> Governance
-        </Tag>
-        <Tag>
-          <BulletIcon color="gray" /> atlas-workshops
-        </Tag>
-        <Tag>
-          <BulletIcon color="gray" /> gait
-        </Tag>
-      </Tags>
-    </DescriptionContainer>
-    <Stats>
-      <ForumInfoChip type="likes" value="3" popular />
-      <ForumInfoChip type="replies" value="15" />
-      <ForumInfoChip type="date" value="15" />
+interface ForumPostProps {
+  post: Topic;
+  isPopular?: boolean;
+}
 
-      <ExternalLinkButton href="https://forum.makerdao.com/" />
-    </Stats>
-  </PostCard>
-);
+const ForumPost: React.FC<ForumPostProps> = ({ post, isPopular = false }) => {
+  const date = DateTime.utc().diff(DateTime.fromISO(post.created_at), 'days').days;
+  const category = ForumCategories.find((category) => category.id === post.category_id);
+
+  return (
+    <PostCard>
+      <DescriptionContainer>
+        <Title>{post.title}</Title>
+        <Tags>
+          {category && (
+            <Tag>
+              {category.id !== ForumCategories[0].id ? category.icon : <BulletIcon color="red" />} {category.category}
+            </Tag>
+          )}
+          {post.tags.map((tag) => (
+            <Tag key={tag}>
+              <BulletIcon color="gray" /> {tag}
+            </Tag>
+          ))}
+        </Tags>
+      </DescriptionContainer>
+      <Stats>
+        <ForumInfoChip type="likes" value={post.like_count} popular={isPopular} />
+        <ForumInfoChip type="replies" value={post.posts_count - 1} />
+        <ForumInfoChip type="date" value={`${Math.floor(date)}d`} />
+
+        <ExternalLinkButton href={`https://forum.makerdao.com/t/${post.slug}/${post.id}`} />
+      </Stats>
+    </PostCard>
+  );
+};
 
 export default ForumPost;
 
-const PostCard = styled('div')(({ theme }) => ({
+export const PostCard = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   borderRadius: 12,
@@ -46,7 +60,7 @@ const PostCard = styled('div')(({ theme }) => ({
   },
 }));
 
-const DescriptionContainer = styled('div')(({ theme }) => ({
+export const DescriptionContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -97,8 +111,9 @@ const Title = styled('div')(({ theme }) => ({
   },
 }));
 
-const Tags = styled('div')(() => ({
+export const Tags = styled('div')(() => ({
   display: 'flex',
+  flexWrap: 'wrap',
   gap: 8,
 }));
 

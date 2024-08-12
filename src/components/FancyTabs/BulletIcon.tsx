@@ -10,6 +10,7 @@ const colors: Record<string, string> = {
   blue: colorPalette.blue[600],
   blueDark: colorPalette.blue[900],
   charcoalDark: colorPalette.charcoal[500],
+  red: colorPalette.red[900],
 };
 
 interface BulletIconProps {
