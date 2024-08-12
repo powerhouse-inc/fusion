@@ -11,7 +11,7 @@ const Footer = () => (
     <FooterContainer>
       <FooterColumnLink>
         {linkCategory.map(({ name, links }) => (
-          <FooterColumn>
+          <FooterColumn key={name}>
             <FooterColumnTitle>{name}</FooterColumnTitle>
             <FooterLinkWrapper>
               {links.map(({ label, link, Icon }) => (

@@ -70,6 +70,7 @@ const ProposalCard = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('tablet_768')]: {
     boxShadow: 'unset',
     flexDirection: 'row',
+    border: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.charcoal[800]}`,
   },
 }));
 
@@ -83,9 +84,14 @@ const DescriptionContainer = styled('div')(({ theme }) => ({
   background: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.charcoal[900],
   padding: 7,
 
+  [theme.breakpoints.up('tablet_768')]: {
+    border: 'unset',
+    background: 'unset',
+  },
+
   [theme.breakpoints.up('desktop_1280')]: {
     padding: 15,
-    gap: 16,
+    gap: 12,
   },
 
   [theme.breakpoints.up('desktop_1440')]: {
@@ -183,6 +189,7 @@ const Info = styled('div')(({ theme }) => ({
 
   [theme.breakpoints.up('desktop_1280')]: {
     gap: 32,
+    padding: '0 15px 0 8px',
   },
 
   [theme.breakpoints.up('desktop_1440')]: {

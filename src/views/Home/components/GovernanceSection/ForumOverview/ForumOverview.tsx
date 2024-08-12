@@ -59,10 +59,15 @@ const ForumOverview = () => {
 
 export default ForumOverview;
 
-const ForumCard = styled(Card)(() => ({
+const ForumCard = styled(Card)(({ theme }) => ({
   boxShadow: 'none',
   overflow: 'hidden',
   borderTopLeftRadius: 0,
+  borderTopRightRadius: 0,
+
+  [theme.breakpoints.up('tablet_768')]: {
+    borderTopRightRadius: 12,
+  },
 }));
 
 const HeaderTop = styled('div')(({ theme }) => ({

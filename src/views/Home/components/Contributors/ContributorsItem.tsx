@@ -75,7 +75,7 @@ const ContributorsItem: FC<Props> = ({ contributor, className, hasDefaultColors 
                   <Label>Category</Label>
                   <ContainerCategories>
                     {contributor.category?.map((category) => (
-                      <CategoryChip category={category as TeamCategory} />
+                      <CategoryChip key={category} category={category as TeamCategory} />
                     ))}
                   </ContainerCategories>
                 </ContainerCategoryMobile>

@@ -17,7 +17,7 @@ const Proposals: React.FC<ProposalsProps> = ({ governanceProposals }) => {
     <ProposalsContainer>
       {activeProposals.length > 0 && (
         <SectionContainer>
-          <SectionHeader>
+          <SectionHeader isMain>
             <span>Active Executive Proposals</span>
             <ExternalLinkButton href="https://vote.makerdao.com/">Go to Makervote</ExternalLinkButton>
           </SectionHeader>
@@ -60,15 +60,15 @@ const ProposalsContainer = styled(Card)(() => ({
 
 const SectionContainer = styled('section')(() => ({}));
 
-const SectionHeader = styled('div')(({ theme }) => ({
+const SectionHeader = styled('div')<{ isMain?: boolean }>(({ theme, isMain = false }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
   padding: '8px 16px',
   background: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
-  fontSize: 16,
-  fontWeight: 600,
-  lineHeight: '24px',
+  fontSize: isMain ? 18 : 16,
+  fontWeight: isMain ? 700 : 600,
+  lineHeight: isMain ? '120%' : '24px',
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.slate[50],
 
   [theme.breakpoints.up('tablet_768')]: {
