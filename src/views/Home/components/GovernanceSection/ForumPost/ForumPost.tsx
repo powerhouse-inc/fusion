@@ -74,6 +74,7 @@ export const DescriptionContainer = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('tablet_768')]: {
     padding: 8,
     border: 'unset',
+    background: 'unset',
     minWidth: 340,
   },
 
