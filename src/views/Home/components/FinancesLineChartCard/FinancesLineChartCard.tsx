@@ -90,9 +90,9 @@ const FinancesLineChartCard: FC<FinancesLineChartCardProps> = ({ financesData })
 
       <FinancesLineChart financesData={financesData} selectedMetric={selectedMetric} />
 
-      <ExternalButtonContainer>
-        <InternalLinkButton label="Realized Expenses" buttonType="primary" href={siteRoutes.finances('/scopes')} />
-      </ExternalButtonContainer>
+      <InternalButtonContainer>
+        <InternalLinkButton label="Realized Expenses" buttonType="primary" href={siteRoutes.finances('scopes')} />
+      </InternalButtonContainer>
     </Container>
   );
 };
@@ -137,6 +137,7 @@ const FilterContainer = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('desktop_1280')]: {
     flexDirection: 'column',
     gap: 8,
+    marginBottom: 0,
   },
 }));
 
@@ -262,13 +263,18 @@ const TabButton = styled(Button, {
   },
 }));
 
-const ExternalButtonContainer = styled('div')(({ theme }) => ({
+const InternalButtonContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   marginTop: 24,
 
   '& > a': {
     padding: '2px 14px 2px 22px',
+
+    '&:hover': {
+      paddingTop: 2,
+      paddingBottom: 2,
+    },
   },
 
   [theme.breakpoints.between('tablet_768', 'desktop_1024')]: {

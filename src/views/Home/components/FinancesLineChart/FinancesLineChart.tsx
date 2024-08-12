@@ -18,7 +18,7 @@ const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedM
   const { financesLineChartRef } = useFinancesLineChart();
   const theme = useTheme();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.between('mobile_375', 'tablet_768'));
-  const isTable = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
+  const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
   const isDesk1024 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1024', 'desktop_1280'));
   const isDesk1280 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1280', 'desktop_1440'));
   const isDesk1440 = useMediaQuery((theme: Theme) => theme.breakpoints.up('desktop_1440'));
@@ -151,7 +151,7 @@ const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedM
       right: 10,
       bottom: 20,
       left: isMobile ? 40 : isDesk1280 ? 50 : isDesk1440 ? 50 : 45,
-      width: isMobile ? '85%' : isTable ? 330 : isDesk1024 ? 470 : isDesk1280 ? 595 : 645,
+      width: isMobile ? 'calc(100% - 50px)' : isTablet ? 330 : isDesk1024 ? 470 : isDesk1280 ? 595 : 645,
     },
     tooltip: {
       show: true,
@@ -262,7 +262,6 @@ const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedM
           if (value === 0 && index === 0) {
             return value.toString();
           }
-
           return replaceAllNumberLetOneBeforeDot(value, true);
         },
       },
@@ -283,7 +282,6 @@ const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedM
           opts={{ renderer: 'svg' }}
         />
       </ChartContainer>
-
       <LegendContainer>
         {series.map((item) => (
           <LegendItem key={item.name}>
@@ -324,10 +322,12 @@ const ChartContainer = styled('div')(({ theme }) => ({
   minWidth: 300,
   height: 216,
   marginTop: 8,
+
   [theme.breakpoints.up('tablet_768')]: {
     width: 385,
     minWidth: 385,
-    height: 253,
+    height: 261,
+    marginTop: 0,
   },
 
   [theme.breakpoints.up('desktop_1024')]: {
@@ -339,6 +339,7 @@ const ChartContainer = styled('div')(({ theme }) => ({
     width: 655,
     minWidth: 655,
     height: 360,
+    marginTop: 8,
   },
 
   [theme.breakpoints.up('desktop_1440')]: {
@@ -371,6 +372,7 @@ const LegendContainer = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('desktop_1280')]: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    marginTop: 16,
     padding: '16px 24px',
   },
 }));
