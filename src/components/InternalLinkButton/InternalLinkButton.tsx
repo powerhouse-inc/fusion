@@ -66,7 +66,7 @@ const ContainerLink = styled(Link)<{ buttonType?: string; showIcon: boolean; lab
     border: '1px solid transparent',
 
     '& path': {
-      fill: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.charcoal[300],
+      fill: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[300],
     },
 
     ':hover': {
@@ -74,58 +74,58 @@ const ContainerLink = styled(Link)<{ buttonType?: string; showIcon: boolean; lab
       padding: '4px 8px 4px 24px',
       border: '1px solid transparent',
       '& div': {
-        color: theme.palette.isLight ? theme.palette.colors.gray[600] : theme.palette.colors.charcoal[100],
+        color: theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.charcoal[100],
       },
       '& path': {
-        fill: theme.palette.isLight ? theme.palette.colors.gray[600] : theme.palette.colors.charcoal[100],
+        fill: theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.charcoal[100],
       },
     },
     ':active': {
       border: theme.palette.isLight
-        ? `1px solid ${theme.palette.colors.slate[100]}`
+        ? `1px solid ${theme.palette.colors.sky[400]}`
         : `1px solid ${theme.palette.colors.charcoal[700]}`,
       '& div': {
-        color: theme.palette.isLight ? theme.palette.colors.gray[700] : theme.palette.colors.charcoal[100],
+        color: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[100],
       },
       '& path': {
-        fill: theme.palette.isLight ? theme.palette.colors.gray[700] : theme.palette.colors.charcoal[100],
+        fill: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[100],
       },
     },
     ...(buttonType === 'secondary' && {
       background: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.charcoal[800],
 
       '& div': {
-        color: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[300],
+        color: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[300],
         fontWeight: 600,
       },
 
       '& path': {
-        fill: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[300],
+        fill: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[300],
       },
       ':hover': {
         padding: '4px 8px 4px 24px',
         background: theme.palette.isLight ? theme.palette.colors.gray[800] : theme.palette.colors.charcoal[800],
         border: theme.palette.isLight
-          ? `1px solid ${theme.palette.colors.charcoal[700]}`
+          ? `1px solid ${theme.palette.colors.sky[900]}`
           : `1px solid ${theme.palette.colors.charcoal[600]}`,
         '& div': {
-          color: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.charcoal[200],
+          color: theme.palette.isLight ? theme.palette.colors.sky[900] : theme.palette.colors.charcoal[200],
           fontWeight: 600,
         },
         '& path': {
-          fill: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.charcoal[200],
+          fill: theme.palette.isLight ? theme.palette.colors.sky[900] : theme.palette.colors.charcoal[200],
         },
       },
       ':active': {
         background: theme.palette.isLight ? theme.palette.colors.gray[700] : theme.palette.colors.charcoal[700],
         border: theme.palette.isLight
-          ? `1px solid ${theme.palette.colors.charcoal[600]}`
+          ? `1px solid ${theme.palette.colors.sky[700]}`
           : `1px solid ${theme.palette.colors.charcoal[500]}`,
         '& div': {
-          color: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[300],
+          color: theme.palette.isLight ? theme.palette.colors.sky[100] : theme.palette.colors.charcoal[300],
         },
         '& path': {
-          fill: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[300],
+          fill: theme.palette.isLight ? theme.palette.colors.sky[100] : theme.palette.colors.charcoal[300],
         },
       },
     }),
@@ -136,17 +136,17 @@ const ContainerLink = styled(Link)<{ buttonType?: string; showIcon: boolean; lab
         ':hover': {
           padding: '4px 8px 4px 24px',
           '& path': {
-            fill: theme.palette.isLight ? theme.palette.colors.gray[600] : theme.palette.colors.charcoal[100],
+            fill: theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.charcoal[100],
           },
         },
         ':active': {
           background: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
           border: theme.palette.isLight
-            ? `1px solid ${theme.palette.colors.slate[100]}`
+            ? `1px solid ${theme.palette.colors.sky[400]}`
             : `1px solid ${theme.palette.colors.charcoal[700]}`,
 
           '& path': {
-            fill: theme.palette.isLight ? theme.palette.colors.gray[700] : theme.palette.colors.charcoal[100],
+            fill: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[100],
           },
         },
       }),
@@ -164,9 +164,8 @@ const ContainerDiv = styled('div')<{ buttonType?: string; showIcon: boolean; lab
     background: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
     gap: 8,
     border: '1px solid transparent',
-
     '& path': {
-      fill: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.charcoal[300],
+      fill: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[300],
     },
 
     ':hover': {
@@ -174,21 +173,21 @@ const ContainerDiv = styled('div')<{ buttonType?: string; showIcon: boolean; lab
       padding: '4px 8px 4px 24px',
       border: '1px solid transparent',
       '& div': {
-        color: theme.palette.isLight ? theme.palette.colors.gray[600] : theme.palette.colors.charcoal[100],
+        color: theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.charcoal[100],
       },
       '& path': {
-        fill: theme.palette.isLight ? theme.palette.colors.gray[600] : theme.palette.colors.charcoal[100],
+        fill: theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.charcoal[100],
       },
     },
     ':active': {
       border: theme.palette.isLight
-        ? `1px solid ${theme.palette.colors.slate[100]}`
+        ? `1px solid ${theme.palette.colors.sky[400]}`
         : `1px solid ${theme.palette.colors.charcoal[700]}`,
       '& div': {
-        color: theme.palette.isLight ? theme.palette.colors.gray[700] : theme.palette.colors.charcoal[100],
+        color: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[100],
       },
       '& path': {
-        fill: theme.palette.isLight ? theme.palette.colors.gray[700] : theme.palette.colors.charcoal[100],
+        fill: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[100],
       },
     },
     ...(buttonType === 'secondary' && {
@@ -258,7 +257,7 @@ const Text = styled('div')(({ theme }) => ({
   size: 16,
   flexDirection: 'row',
   lineHeight: '24px',
-  color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.charcoal[300],
+  color: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[300],
 }));
 
 const IconContainer = styled('div')({
