@@ -3,10 +3,10 @@ import { SEOHead } from '@ses/components/SEOHead/SEOHead';
 import { siteRoutes } from '@ses/config/routes';
 import { toAbsoluteURL } from '@ses/core/utils/urls';
 import React from 'react';
+import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
 import type { Roadmap } from '@/core/models/interfaces/roadmaps';
-import Breadcrumb from './components/Breadcrumb/Breadcrumb';
 import PageHeader from './components/PageHeader/PageHeader';
 import DetailsSection from './components/sections/DetailsSection/DetailsSection';
 import OverviewSection from './components/sections/OverviewSection/OverviewSection';
@@ -34,12 +34,12 @@ const RoadmapMilestonesView: React.FC<RoadmapMilestonesViewProps> = ({ roadmap }
       <Breadcrumb
         items={[
           {
-            label: 'Roadmaps',
-            url: '#',
+            label: 'Roadmap',
+            href: '#',
           },
           {
-            label: roadmap.title,
-            url: siteRoutes.roadmapMilestones(roadmap.slug),
+            label: 'Powerhouse Roadmap 2024',
+            href: siteRoutes.roadmapMilestones('ph-2024'),
           },
         ]}
       />
