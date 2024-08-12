@@ -94,12 +94,8 @@ const MainContainer = styled('div')(({ theme }) => ({
   top: 64,
   width: '100%',
   background: theme.palette.isLight ? '#FFFFFF' : '#25273D',
-
-  backgroundImage: theme.palette.isLight ? 'url(/assets/img/Subheader.png)' : 'url(/assets/img/Subheader-dark.png)',
   backgroundSize: 'cover',
-
   zIndex: 3,
-
   [lightTheme.breakpoints.between('mobile_375', 'tablet_768')]: {
     borderBottom: theme.palette.isLight ? '1px solid #B6EDE7' : '1px solid #027265',
   },

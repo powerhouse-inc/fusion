@@ -3,12 +3,15 @@ import { useHeaderSummary } from '@ses/core/hooks/useHeaderSummary';
 import { ProjectStatus } from '@ses/core/models/interfaces/projects';
 import { useRouter } from 'next/router';
 import { useMemo, useRef, useState } from 'react';
+import type { Team } from '@/core/models/interfaces/team';
+import { useBreadcrumbTeamPager } from '@/views/EcosystemActorAbout/hooks';
 import ProjectStatusChip from './components/ProjectStatusChip/ProjectStatusChip';
 import type { Theme } from '@mui/material';
 import type { MultiSelectItem } from '@ses/components/CustomMultiSelect/CustomMultiSelect';
 import type { Project } from '@ses/core/models/interfaces/projects';
 
-const useActorProjectsContainer = (projects: Project[]) => {
+const useActorProjectsContainer = (projects: Project[], actors: Team[], actor: Team) => {
+  const pager = useBreadcrumbTeamPager(actor, actors);
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
   const { height, showHeader } = useHeaderSummary(ref, router.query.code as string);
@@ -85,6 +88,7 @@ const useActorProjectsContainer = (projects: Project[]) => {
     handleResetFilters,
     filteredProjects,
     filteredSupporterProjects,
+    pager,
   };
 };
 

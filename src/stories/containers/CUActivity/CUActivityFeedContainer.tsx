@@ -74,7 +74,6 @@ const Container = styled('div')(({ theme }) => ({
 
   flex: 1,
   backgroundColor: theme.palette.isLight ? '#FFFFFF' : '#000000',
-  backgroundImage: theme.palette.isLight ? 'url(/assets/img/bg-page.png)' : 'url(/assets/img/bg-page-dark.png)',
   backgroundAttachment: 'fixed',
   backgroundSize: 'cover',
   paddingBottom: '79px',

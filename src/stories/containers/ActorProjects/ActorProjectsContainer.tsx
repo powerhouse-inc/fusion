@@ -3,11 +3,14 @@ import { SEOHead } from '@ses/components/SEOHead/SEOHead';
 import { siteRoutes } from '@ses/config/routes';
 import { toAbsoluteURL } from '@ses/core/utils/urls';
 import React from 'react';
+import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
+import TeamBreadcrumbContent from '@/components/Breadcrumb/CustomContents/TeamBreadcrumbContent';
 import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
+import TeamHeader from '@/components/TeamHeader/TeamHeader';
 import Information from '@/components/icons/information';
+import { ResourceType } from '@/core/models/interfaces/types';
 import SESTooltipLegacy from '@/stories/components/SESTooltipLegacy/SESTooltipLegacy';
-import ActorSummary from '../../../views/EcosystemActorAbout/components/ActorSummary/ActorSummary';
 import PageSubheader from './components/PageSubheader/PageSubheader';
 import ProjectList from './components/ProjectList/ProjectList';
 import useActorProjectsContainer from './useActorProjectsContainer';
@@ -22,9 +25,6 @@ interface ActorProjectsContainerProps {
 
 const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, actors, projects }) => {
   const {
-    height,
-    ref,
-    showHeader,
     isMobile,
     isFilterCollapsedOnMobile,
     handleToggleFilterOnMobile,
@@ -36,7 +36,8 @@ const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, 
     handleResetFilters,
     filteredProjects,
     filteredSupporterProjects,
-  } = useActorProjectsContainer(projects);
+    pager,
+  } = useActorProjectsContainer(projects, actors, actor);
 
   return (
     <PageWrapper hasImageBackground>
@@ -53,9 +54,43 @@ const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, 
         }}
         canonicalURL={siteRoutes.ecosystemActorProjects(actor.shortCode)}
       />
-      <ActorSummary actors={actors} showHeader={showHeader} ref={ref} trailingAddress={['Projects']} />
+      <Breadcrumb
+        items={[
+          {
+            label: 'Contributors',
+            href: siteRoutes.contributors,
+          },
+          {
+            label: 'Ecosystem Actors',
+            href: siteRoutes.ecosystemActors,
+            number: actors.length,
+          },
+          {
+            label: actor.name,
+            href: siteRoutes.ecosystemActorAbout(actor.shortCode),
+          },
+          {
+            label: 'Projects',
+            href: siteRoutes.ecosystemActorAbout(actor.shortCode),
+          },
+        ]}
+        rightContent={
+          <TeamBreadcrumbContent
+            team={ResourceType.EcosystemActor}
+            currentPage={pager.currentPage}
+            totalPages={pager.totalPages}
+            pagerProps={{
+              hasNext: pager.hasNext,
+              hasPrevious: pager.hasPrevious,
+              onNext: pager.onNext,
+              onPrevious: pager.onPrevious,
+            }}
+          />
+        }
+      />
+      <TeamHeader team={actor} />
       <Container>
-        <ContainerAllData marginTop={height}>
+        <ContainerAllData>
           <ContainerResponsive>
             <PageSubheader
               isMobile={isMobile}
@@ -105,23 +140,18 @@ const PageWrapper = styled(PageContainer)({
   paddingTop: 0,
 });
 
-const ContainerAllData = styled('div')<{ marginTop: number }>(({ marginTop, theme }) => ({
+const ContainerAllData = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
   zIndex: -1,
-  marginTop,
-  [theme.breakpoints.up('tablet_768')]: {
-    marginTop: 40 + marginTop,
-  },
+  marginTop: 24,
 }));
 
 const ContainerResponsive = styled('div')(({ theme }) => ({
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-  marginTop: 96,
-
   [theme.breakpoints.down('desktop_1024')]: {
     width: '100%',
   },

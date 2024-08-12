@@ -134,7 +134,6 @@ const Container = styled('div')<{ isLight: boolean }>(({ theme }) => ({
   paddingTop: 64,
   width: '100%',
   backgroundColor: theme.palette.isLight ? '#FFFFFF' : '#000000',
-  backgroundImage: theme.palette.isLight ? 'url(/assets/img/bg-page.png)' : 'url(/assets/img/bg-page-dark.png)',
   backgroundAttachment: 'fixed',
   backgroundSize: 'cover',
 }));

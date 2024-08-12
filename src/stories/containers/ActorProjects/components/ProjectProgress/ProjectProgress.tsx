@@ -1,26 +1,20 @@
-import styled from '@emotion/styled';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
+import { styled } from '@mui/material';
 import React from 'react';
-import type { WithIsLight } from '@ses/core/utils/typesHelpers';
 
 interface ProjectProgressProps {
   percentage: number;
 }
 
-const ProjectProgress: React.FC<ProjectProgressProps> = ({ percentage }) => {
-  const { isLight } = useThemeContext();
-
-  return (
-    <ProgressContainer>
-      <ProgressBar progress={percentage * 100} isLight={isLight} />
-      <Label isLight={isLight}>{percentage * 100}%</Label>
-    </ProgressContainer>
-  );
-};
+const ProjectProgress: React.FC<ProjectProgressProps> = ({ percentage }) => (
+  <ProgressContainer>
+    <ProgressBar progress={percentage * 100} />
+    <Label>{percentage * 100}%</Label>
+  </ProgressContainer>
+);
 
 export default ProjectProgress;
 
-const ProgressContainer = styled.div({
+const ProgressContainer = styled('div')({
   display: 'flex',
   alignItems: 'center',
   gap: 8,
@@ -28,15 +22,13 @@ const ProgressContainer = styled.div({
   width: '100%',
 });
 
-const ProgressBar = styled.div<WithIsLight & { progress: number }>(({ isLight, progress }) => ({
+const ProgressBar = styled('div')<{ progress: number }>(({ progress, theme }) => ({
   position: 'relative',
   height: '100%',
   width: '100%',
   borderRadius: 6,
   overflow: 'hidden',
-  background: isLight ? '#ECF1F3' : '#1E2C37',
-  boxShadow: isLight ? '2px 4px 7px 0px rgba(26, 171, 155, 0.25)' : 'none',
-
+  background: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.slate[600],
   '&:before': {
     content: '""',
     display: 'block',
@@ -46,15 +38,15 @@ const ProgressBar = styled.div<WithIsLight & { progress: number }>(({ isLight, p
     bottom: 0,
     borderRadius: 6,
     width: `${progress}%`,
-    background: isLight ? '#1AAB9B' : '#2DC1B1',
+    background: theme.palette.colors.sky[1000],
   },
 }));
 
-const Label = styled.div<WithIsLight>(({ isLight }) => ({
+const Label = styled('div')(({ theme }) => ({
   width: 44,
   minWidth: 44,
   fontSize: 14,
   lineHeight: 'normal',
   textAlign: 'right',
-  color: isLight ? '#231536' : '#D2D4EF',
+  color: theme.palette.isLight ? '#231536' : '#D2D4EF',
 }));

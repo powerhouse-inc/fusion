@@ -22,7 +22,6 @@ const PageBackground = styled('div')<{ hasImageBackground: boolean }>(({ theme, 
 
   ...(hasImageBackground && {
     backgroundColor: theme.palette.isLight ? '#FFFFFF' : '#000000',
-    backgroundImage: theme.palette.isLight ? 'url(/assets/img/bg-page.png)' : 'url(/assets/img/bg-page-dark.png)',
     backgroundAttachment: 'fixed',
     backgroundSize: 'cover',
   }),

@@ -115,4 +115,19 @@ export const colorPalette = {
   background: {
     dm: '#1B1E24',
   },
+
+  sky: {
+    100: '#EEEEFF',
+    200: '#DCDBFF',
+    300: '#CBCAFF',
+    400: '#B9B8FF',
+    500: '#A8A6FF',
+    600: '#9694FF',
+    700: '#8583FF',
+    800: '#7371FF',
+    900: '#625FFF',
+    1000: '#504DFF',
+    1100: '#403ECC',
+    1200: '#302E99',
+  },
 };
