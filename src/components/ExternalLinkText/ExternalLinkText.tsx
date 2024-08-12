@@ -27,22 +27,24 @@ const StyledLink = styled(Link)(({ theme }) => ({
   fontSize: 14,
   lineHeight: '18px',
   fontWeight: 500,
-  color: theme.palette.colors.blue[700],
+  color: theme.palette.colors.sky[1000],
   textDecoration: 'none',
 
   '& svg': {
     verticalAlign: 'middle',
   },
-
+  '& path': {
+    fill: theme.palette.colors.sky[1000],
+  },
   [theme.breakpoints.up('desktop_1280')]: {
     fontSize: 16,
   },
 
   '&:hover': {
-    color: theme.palette.isLight ? theme.palette.colors.blue[800] : theme.palette.colors.blue[600],
+    color: theme.palette.isLight ? theme.palette.colors.sky[1000] : '#615EFF',
 
     '& path': {
-      fill: theme.palette.isLight ? theme.palette.colors.blue[800] : theme.palette.colors.blue[600],
+      fill: theme.palette.isLight ? theme.palette.colors.sky[1000] : '#615EFF',
     },
   },
 }));
@@ -54,7 +56,7 @@ const Li = styled('li')(({ theme }) => ({
     width: 6,
     height: 6,
     borderRadius: 6,
-    background: theme.palette.colors.blue[700],
+    background: theme.palette.colors.sky[1000],
     position: 'absolute',
     left: 0,
     marginTop: 9,
@@ -62,7 +64,7 @@ const Li = styled('li')(({ theme }) => ({
 
   '&:hover': {
     '&::before': {
-      background: theme.palette.isLight ? theme.palette.colors.blue[800] : theme.palette.colors.blue[600],
+      background: theme.palette.isLight ? theme.palette.colors.sky[1000] : '#615EFF',
     },
   },
 }));
