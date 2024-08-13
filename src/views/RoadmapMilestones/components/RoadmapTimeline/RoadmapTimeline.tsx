@@ -78,7 +78,7 @@ const RoadmapTimeline: React.FC<RoadmapTimelineProps> = ({ milestones }) => {
 
 export default RoadmapTimeline;
 
-const MobileTimeline = styled('div')(() => ({
+const MobileTimeline = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 24,
@@ -93,7 +93,7 @@ const MobileTimeline = styled('div')(() => ({
     left: '50%',
     width: 5,
     height: '100%',
-    background: '#6EDBD0',
+    background: theme.palette.isLight ? theme.palette.colors.blue[700] : theme.palette.colors.blue[900],
   },
 }));
 
@@ -141,7 +141,9 @@ const Up = styled('div')<{ shouldAddPadding: boolean }>(({ theme, shouldAddPaddi
   display: 'flex',
   justifyContent: 'center',
   gap: 24,
-  borderBottom: `2.5px solid ${theme.palette.isLight ? '#B6EDE7' : '#06554C'}`,
+  borderBottom: `2.5px solid ${
+    theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.gray[900]
+  }`,
   ...(shouldAddPadding && { paddingRight: 'calc(12.5% - 12px)' }),
 
   [theme.breakpoints.up('desktop_1280')]: {
@@ -165,7 +167,7 @@ const Down = styled('div')<{ shouldAddPadding: boolean }>(({ theme, shouldAddPad
   display: 'flex',
   justifyContent: 'center',
   gap: 24,
-  borderTop: `2.5px solid ${theme.palette.isLight ? '#B6EDE7' : '#06554C'}`,
+  borderTop: `2.5px solid ${theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.gray[900]}`,
   ...(shouldAddPadding && { paddingLeft: 'calc(12.5% - 12px)' }),
 
   [theme.breakpoints.up('desktop_1280')]: {
@@ -203,7 +205,7 @@ const CardWrapper = styled('div')<{ isStarted: boolean }>(({ theme, isStarted })
     left: 'calc(50% - 1px)',
     width: 2,
     height: 32,
-    background: theme.palette.isLight ? '#1AAB9B' : '#06554C',
+    background: theme.palette.colors.sky[1000],
   },
 
   '&:after': {
@@ -214,13 +216,7 @@ const CardWrapper = styled('div')<{ isStarted: boolean }>(({ theme, isStarted })
     width: 12,
     height: 12,
     borderRadius: '50%',
-    border: `2px solid ${theme.palette.isLight ? '#1AAB9B' : '#06554C'}`,
-    background: isStarted
-      ? theme.palette.isLight
-        ? '#1AAB9B'
-        : '#06554C'
-      : theme.palette.isLight
-      ? '#fff'
-      : '#10191F',
+    border: `2px solid ${theme.palette.colors.sky[1000]}`,
+    background: isStarted ? theme.palette.colors.sky[1000] : theme.palette.isLight ? '#fff' : '#10191F',
   },
 }));
