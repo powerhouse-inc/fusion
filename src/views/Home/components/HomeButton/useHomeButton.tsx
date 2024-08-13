@@ -5,14 +5,16 @@ const useHomeButton = () => {
   const scrollY = useScrollPosition();
 
   useEffect(() => {
-    const homeButton = document.querySelector('.home-button') as HTMLDivElement;
-    const header = document.querySelector('#home') as HTMLElement;
-    if (scrollY > header.getBoundingClientRect().height + 100) {
-      homeButton.style.display = 'flex';
-    } else {
-      homeButton.style.display = 'none';
+    const homeButton = document.querySelector('.home-button');
+    const header = document.querySelector('#home');
+    if (homeButton !== null && header !== null) {
+      if (scrollY > header.getBoundingClientRect().height + 100) {
+        (homeButton as HTMLDivElement).style.display = 'flex';
+      } else {
+        (homeButton as HTMLDivElement).style.display = 'none';
+      }
     }
-  });
+  }, [scrollY]);
 };
 
 export default useHomeButton;
