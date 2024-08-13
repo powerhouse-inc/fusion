@@ -9,7 +9,7 @@ interface MilestoneLinkProps {
 }
 
 const MilestoneLink: React.FC<MilestoneLinkProps> = ({ roadmapSlug, code }) => {
-  const isLight = useTheme().palette.isLight;
+  const theme = useTheme();
 
   return (
     <LinkCard href={`${siteRoutes.roadmapMilestones(roadmapSlug)}#${code}`}>
@@ -18,7 +18,7 @@ const MilestoneLink: React.FC<MilestoneLinkProps> = ({ roadmapSlug, code }) => {
         <Code>{code}</Code>
       </TextBox>
       <ArrowContainer>
-        <ArrowNavigationForCards width={24} height={24} fill={isLight ? '#434358' : '#B7A6CD'} />
+        <ArrowNavigationForCards width={24} height={24} fill={theme.palette.colors.sky[1000]} />
       </ArrowContainer>
     </LinkCard>
   );
