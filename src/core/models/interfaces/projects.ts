@@ -60,7 +60,6 @@ export interface Project {
 
 export interface SupportedProjects extends Omit<Project, 'deliverables' | '__typename' | 'owner'> {
   __typename: 'SupportedProjects';
-  // todo: check supported deliverables type
   projectOwner: Owner;
   supportedDeliverables: [Deliverable];
   supportedKeyResults: [KeyResult];

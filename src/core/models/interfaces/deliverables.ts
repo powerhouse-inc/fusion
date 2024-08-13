@@ -5,7 +5,7 @@ export interface KeyResult {
   id: string;
   title: string;
   link: string;
-  parentIdRef: string;
+  parentIdRef?: string;
 }
 
 export enum DeliverableStatus {
