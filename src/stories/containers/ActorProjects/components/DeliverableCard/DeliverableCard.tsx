@@ -78,6 +78,9 @@ const DeliverableCard: React.FC<DeliverableCardProps> = ({
             (deliverable as MDeliverable).budgetAnchor.project.code &&
             (deliverable as MDeliverable).budgetAnchor.project.title && (
               <ProjectLink
+                href={`${siteRoutes.ecosystemActorProjects('PH')}#${
+                  (deliverable as MDeliverable).budgetAnchor.project.code
+                }`}
                 code={(deliverable as MDeliverable).budgetAnchor.project.code}
                 name={(deliverable as MDeliverable).budgetAnchor.project.title}
               />

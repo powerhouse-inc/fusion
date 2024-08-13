@@ -106,6 +106,6 @@ const ArrowContainer = styled('div')(({ theme }) => ({
 
 const Arrow = styled(ArrowNavigationForCards)(({ theme }) => ({
   '& path': {
-    fill: theme.palette.isLight ? '#434358' : '#B7A6CD',
+    fill: theme.palette.colors.sky[1000],
   },
 }));

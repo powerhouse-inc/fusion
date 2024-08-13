@@ -1,8 +1,6 @@
-import styled from '@emotion/styled';
-import { useMediaQuery } from '@mui/material';
+import { styled, useMediaQuery } from '@mui/material';
 import { LinkButton } from '@ses/components/LinkButton/LinkButton';
 import { siteRoutes } from '@ses/config/routes';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
 import { ButtonType } from '@ses/core/enums/buttonTypeEnum';
 import {
   isProject,
@@ -10,7 +8,6 @@ import {
   type Project,
   type SupportedProjects,
 } from '@ses/core/models/interfaces/projects';
-import lightTheme from '@ses/styles/theme/themes';
 import Image from 'next/image';
 import React, { useCallback, useMemo, useState } from 'react';
 import type { OwnerRef } from '@/core/models/interfaces/roadmaps';
@@ -22,7 +19,7 @@ import ProjectProgress from '../ProjectProgress/ProjectProgress';
 import ProjectStatusChip from '../ProjectStatusChip/ProjectStatusChip';
 import SupportedTeamsAvatarGroup from '../SupportedTeamsAvatarGroup/SupportedTeamsAvatarGroup';
 import ViewAllButton from '../ViewAllButton/ViewAllButton';
-import type { WithIsLight } from '@ses/core/utils/typesHelpers';
+import type { Theme } from '@mui/material';
 
 interface ProjectCardProps {
   project: Project | SupportedProjects;
@@ -42,8 +39,7 @@ export function splitInRows<T = unknown>(arr: T[], rowLength: number): T[][] {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
-  const { isLight } = useThemeContext();
-  const isUpDesktop1280 = useMediaQuery(lightTheme.breakpoints.up('desktop_1280'));
+  const isUpDesktop1280 = useMediaQuery((theme: Theme) => theme.breakpoints.up('desktop_1280'));
 
   const [deliverableViewMode, setDeliverableViewMode] = useState<DeliverableViewMode>('compacted');
   const handleChangeDeliverableViewMode = useCallback((viewMode: DeliverableViewMode) => {
@@ -90,12 +86,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const deliverablesRows = splitInRows(deliverables, isUpDesktop1280 ? 3 : 2);
 
   return (
-    <Card isLight={isLight}>
+    <Card id={project.code}>
       <MainContent>
         <ProjectHeader>
           <NameContainer>
             <TitleContainer>
-              <ProjectCode>{project.code}</ProjectCode> <ProjectTitle isLight={isLight}>{project.title}</ProjectTitle>
+              <ProjectCode>{project.code}</ProjectCode> <ProjectTitle>{project.title}</ProjectTitle>
             </TitleContainer>
             <BudgetTypeBadge budgetType={project.budgetType} />
           </NameContainer>
@@ -119,10 +115,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             </ImageContainer>
             <DataContainer showDeliverablesBelow={showDeliverablesBelow}>
               {(!isUpDesktop1280 || showDeliverablesBelow) && statusSection}
-              <Description isLight={isLight}>{project.abstract}</Description>
+              <Description>{project.abstract}</Description>
               {isSupportedProjects(project) && (
                 <ViewEcosystem
-                  isLight={isLight}
                   href={siteRoutes.ecosystemActorAbout(project.projectOwner.code ?? '')}
                   buttonType={ButtonType.Default}
                   label="View Ecosystem Actor"
@@ -132,16 +127,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           </LeftColumn>
           <RightColumn>
             <DeliverableTitleContainer>
-              <DeliverablesTitle isLight={isLight}>
-                {showAllDeliverables ? 'All' : 'Highlighted'} Deliverables
-              </DeliverablesTitle>
+              <DeliverablesTitle>{showAllDeliverables ? 'All' : 'Highlighted'} Deliverables</DeliverablesTitle>
               <DeliverableViewModeToggle
                 deliverableViewMode={deliverableViewMode}
                 onChangeDeliverableViewMode={handleChangeDeliverableViewMode}
               />
             </DeliverableTitleContainer>
 
-            <GrayBackground isLight={isLight} showBackground={showGrayBackground}>
+            <GrayBackground showBackground={showGrayBackground}>
               <DeliverablesContainer showDeliverablesBelow={showDeliverablesBelow}>
                 {deliverablesRows.map((row) =>
                   row.map((deliverable) => (
@@ -187,87 +180,87 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
 export default ProjectCard;
 
-const Card = styled.article<WithIsLight>(({ isLight }) => ({
-  overflow: 'hidden',
-  background: isLight ? '#fff' : '#10191F',
+const Card = styled('article')(({ theme }) => ({
+  background: theme.palette.isLight ? '#fff' : '#10191F',
   borderRadius: 6,
-  border: `1px solid ${isLight ? '#e6e6e6' : '#10191F'}`,
-  boxShadow: isLight
+  border: `1px solid ${theme.palette.isLight ? '#e6e6e6' : '#10191F'}`,
+  boxShadow: theme.palette.isLight
     ? '0px 1px 3px 0px rgba(190, 190, 190, 0.25), 0px 20px 40px 0px rgba(219, 227, 237, 0.40)'
     : ' 0px 1px 3px 0px rgba(30, 23, 23, 0.25), 0px 20px 40px -40px rgba(7, 22, 40, 0.40)',
+  scrollMarginTop: 150,
 }));
 
-const MainContent = styled.div({
+const MainContent = styled('div')(({ theme }) => ({
   padding: '15px 15px 23px 15px',
 
-  [lightTheme.breakpoints.up('desktop_1024')]: {
+  [theme.breakpoints.up('desktop_1024')]: {
     padding: '15px 23px 23px 23px',
   },
 
-  [lightTheme.breakpoints.up('desktop_1440')]: {
+  [theme.breakpoints.up('desktop_1440')]: {
     padding: '15px 31px 31px 31px',
   },
-});
+}));
 
-const ProjectHeader = styled.div({
+const ProjectHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 7,
 
-  [lightTheme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     alignSelf: 'stretch',
   },
-});
+}));
 
-const NameContainer = styled.div({
+const NameContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'flex-start',
   alignSelf: 'stretch',
 
-  [lightTheme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     justifyContent: 'normal',
     alignItems: 'center',
     gap: 8,
   },
-});
+}));
 
-const TitleContainer = styled.div({
+const TitleContainer = styled('div')(({ theme }) => ({
   lineHeight: '17px',
 
-  [lightTheme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     gap: 8,
   },
-});
+}));
 
-const ProjectCode = styled.span({
+const ProjectCode = styled('span')(({ theme }) => ({
   color: '#9FAFB9',
   fontSize: 14,
   fontWeight: 700,
   lineHeight: 'normal',
   textTransform: 'uppercase',
 
-  [lightTheme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     fontSize: 20,
     fontWeight: 600,
     letterSpacing: 0.4,
   },
 
-  [lightTheme.breakpoints.up('desktop_1024')]: {
+  [theme.breakpoints.up('desktop_1024')]: {
     fontSize: 24,
   },
-});
+}));
 
-const ProjectTitle = styled.span<WithIsLight>(({ isLight }) => ({
-  color: isLight ? '#25273D' : '#D2D4EF',
+const ProjectTitle = styled('span')(({ theme }) => ({
+  color: theme.palette.isLight ? '#25273D' : '#D2D4EF',
   fontSize: 14,
   fontWeight: 500,
   lineHeight: '18px',
 
-  [lightTheme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     fontSize: 20,
     fontWeight: 600,
     letterSpacing: 0.4,
@@ -275,24 +268,24 @@ const ProjectTitle = styled.span<WithIsLight>(({ isLight }) => ({
     marginLeft: 3,
   },
 
-  [lightTheme.breakpoints.up('desktop_1024')]: {
+  [theme.breakpoints.up('desktop_1024')]: {
     fontSize: 24,
   },
 }));
 
-const ParticipantsContainer = styled.div({
+const ParticipantsContainer = styled('div')({
   display: 'flex',
   alignItems: 'center',
   gap: 8,
 });
 
-const Row = styled.div<{ showDeliverablesBelow: boolean }>(({ showDeliverablesBelow }) => ({
+const Row = styled('div')<{ showDeliverablesBelow: boolean }>(({ theme, showDeliverablesBelow }) => ({
   display: 'flex',
   flexDirection: 'column',
   marginTop: 16,
   gap: 24,
 
-  [lightTheme.breakpoints.up('desktop_1280')]: {
+  [theme.breakpoints.up('desktop_1280')]: {
     marginTop: 32,
 
     ...(!showDeliverablesBelow && {
@@ -302,57 +295,57 @@ const Row = styled.div<{ showDeliverablesBelow: boolean }>(({ showDeliverablesBe
   },
 
   ...(!showDeliverablesBelow && {
-    [lightTheme.breakpoints.up('desktop_1440')]: {
+    [theme.breakpoints.up('desktop_1440')]: {
       gap: 64,
     },
   }),
 }));
 
-const LeftColumn = styled.div<{ showDeliverablesBelow: boolean }>(({ showDeliverablesBelow }) => ({
+const LeftColumn = styled('div')<{ showDeliverablesBelow: boolean }>(({ theme, showDeliverablesBelow }) => ({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
   maxWidth: '100%',
 
-  [lightTheme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     flexDirection: 'row',
     gap: 16,
   },
 
-  [lightTheme.breakpoints.up('desktop_1024')]: {
+  [theme.breakpoints.up('desktop_1024')]: {
     gap: 24,
   },
 
   ...(showDeliverablesBelow
     ? {
-        [lightTheme.breakpoints.up('desktop_1440')]: {
+        [theme.breakpoints.up('desktop_1440')]: {
           gap: 64,
         },
       }
     : {
-        [lightTheme.breakpoints.up('desktop_1280')]: {
+        [theme.breakpoints.up('desktop_1280')]: {
           flexDirection: 'column',
           flex: 0.632,
         },
 
-        [lightTheme.breakpoints.up('desktop_1440')]: {
+        [theme.breakpoints.up('desktop_1440')]: {
           flex: 0.639,
         },
       }),
 }));
 
-const RightColumn = styled.div({
+const RightColumn = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
   gap: 16,
 
-  [lightTheme.breakpoints.up('desktop_1280')]: {
+  [theme.breakpoints.up('desktop_1280')]: {
     flex: 1,
   },
-});
+}));
 
-const ImageContainer = styled.div<{ isBigger: boolean }>(({ isBigger }) => ({
+const ImageContainer = styled('div')<{ isBigger: boolean }>(({ theme, isBigger }) => ({
   position: 'relative',
   width: '100%',
   height: 175,
@@ -363,31 +356,31 @@ const ImageContainer = styled.div<{ isBigger: boolean }>(({ isBigger }) => ({
     objectFit: 'cover',
   },
 
-  [lightTheme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     height: 256,
     minHeight: 256,
     flex: 1,
   },
 
   ...(isBigger && {
-    [lightTheme.breakpoints.up('desktop_1280')]: {
+    [theme.breakpoints.up('desktop_1280')]: {
       height: 320,
       minHeight: 320,
     },
   }),
 
-  [lightTheme.breakpoints.up('desktop_1440')]: {
+  [theme.breakpoints.up('desktop_1440')]: {
     maxWidth: 578,
   },
 }));
 
-const DataContainer = styled.div<{ showDeliverablesBelow: boolean }>(({ showDeliverablesBelow }) => ({
+const DataContainer = styled('div')<{ showDeliverablesBelow: boolean }>(({ theme, showDeliverablesBelow }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 16,
   marginTop: 16,
 
-  [lightTheme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     alignSelf: 'stretch',
     justifyContent: 'center',
     alignItems: 'flex-start',
@@ -395,12 +388,12 @@ const DataContainer = styled.div<{ showDeliverablesBelow: boolean }>(({ showDeli
     marginTop: 0,
   },
 
-  [lightTheme.breakpoints.up('desktop_1280')]: {
+  [theme.breakpoints.up('desktop_1280')]: {
     justifyContent: showDeliverablesBelow ? 'center' : 'flex-start',
   },
 }));
 
-const StatusData = styled.div<{ showDeliverablesBelow: boolean }>(({ showDeliverablesBelow }) => ({
+const StatusData = styled('div')<{ showDeliverablesBelow: boolean }>(({ theme, showDeliverablesBelow }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: 16,
@@ -408,19 +401,19 @@ const StatusData = styled.div<{ showDeliverablesBelow: boolean }>(({ showDeliver
   justifyContent: 'space-between',
 
   ...(showDeliverablesBelow && {
-    [lightTheme.breakpoints.up('desktop_1280')]: {
+    [theme.breakpoints.up('desktop_1280')]: {
       justifyContent: 'normal',
       gap: 64,
     },
   }),
 }));
 
-const ProgressContainer = styled.div({
+const ProgressContainer = styled('div')({
   maxWidth: 256,
   width: '100%',
 });
 
-const Description = styled.p<WithIsLight>(({ isLight }) => ({
+const Description = styled('p')(({ theme }) => ({
   display: '-webkit-box',
   '-webkit-box-orient': 'vertical',
   '-webkit-line-clamp': '8',
@@ -429,74 +422,73 @@ const Description = styled.p<WithIsLight>(({ isLight }) => ({
   textOverflow: 'ellipsis',
   alignSelf: 'stretch',
   margin: 0,
-  color: isLight ? '#231536' : '#D2D4EF',
+  color: theme.palette.isLight ? '#231536' : '#D2D4EF',
   fontSize: 14,
   lineHeight: 'normal',
 
-  [lightTheme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     fontSize: 16,
     lineHeight: '22px',
   },
 }));
 
-const DeliverableTitleContainer = styled.div({
+const DeliverableTitleContainer = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   alignSelf: 'stretch',
   gap: 16,
-});
+}));
 
-const DeliverablesTitle = styled.div<WithIsLight>(({ isLight }) => ({
-  color: isLight ? '#231536' : '#D2D4EF',
+const DeliverablesTitle = styled('div')(({ theme }) => ({
+  color: theme.palette.isLight ? '#231536' : '#D2D4EF',
   fontSize: 16,
   fontWeight: 600,
   lineHeight: 'normal',
   letterSpacing: 0.4,
 
-  [lightTheme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     fontSize: 20,
   },
 }));
 
-const GrayBackground = styled.div<WithIsLight & { showBackground: boolean }>(({ isLight, showBackground }) => ({
+const GrayBackground = styled('div')<{ showBackground: boolean }>(({ theme, showBackground }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 16,
   background: showBackground
-    ? isLight
+    ? theme.palette.isLight
       ? 'linear-gradient(0deg, #F6F8F9 85.04%, rgba(246, 248, 249, 0.00) 121.04%)'
       : 'none'
     : 'none',
   padding: '8px 16px 24px 16px',
-  margin: '-8px -16px -24px -16px',
+  margin: '-8px -15px -23px -15px',
+  borderBottomLeftRadius: 6,
+  borderBottomRightRadius: 6,
 
-  [lightTheme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('desktop_1024')]: {
+    gap: 24,
     padding: '8px 23px 23px 23px',
     margin: '-8px -23px -23px -23px',
   },
 
-  [lightTheme.breakpoints.up('desktop_1024')]: {
-    gap: 24,
-  },
-
-  [lightTheme.breakpoints.up('desktop_1280')]: {
+  [theme.breakpoints.up('desktop_1280')]: {
     gap: 16,
   },
 
-  [lightTheme.breakpoints.up('desktop_1440')]: {
+  [theme.breakpoints.up('desktop_1440')]: {
     gap: 24,
     padding: '8px 31px 31px 31px',
     margin: '-8px -31px -31px -31px',
   },
 }));
 
-const DeliverablesContainer = styled.div<{ showDeliverablesBelow: boolean }>(({ showDeliverablesBelow }) => ({
+const DeliverablesContainer = styled('div')<{ showDeliverablesBelow: boolean }>(({ theme, showDeliverablesBelow }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 16,
 
-  [lightTheme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     flexDirection: 'row',
     flexWrap: 'wrap',
 
@@ -507,7 +499,7 @@ const DeliverablesContainer = styled.div<{ showDeliverablesBelow: boolean }>(({ 
   },
 
   ...(showDeliverablesBelow && {
-    [lightTheme.breakpoints.up('desktop_1024')]: {
+    [theme.breakpoints.up('desktop_1024')]: {
       gap: 24,
 
       '& > *': {
@@ -515,7 +507,7 @@ const DeliverablesContainer = styled.div<{ showDeliverablesBelow: boolean }>(({ 
       },
     },
 
-    [lightTheme.breakpoints.up('desktop_1280')]: {
+    [theme.breakpoints.up('desktop_1280')]: {
       gap: 16,
 
       '& > *': {
@@ -524,7 +516,7 @@ const DeliverablesContainer = styled.div<{ showDeliverablesBelow: boolean }>(({ 
     },
   }),
 
-  [lightTheme.breakpoints.up('desktop_1440')]: {
+  [theme.breakpoints.up('desktop_1440')]: {
     gap: 24,
 
     '& > *': {
@@ -539,15 +531,15 @@ const DeliverablesContainer = styled.div<{ showDeliverablesBelow: boolean }>(({ 
   },
 }));
 
-const ViewEcosystem = styled(LinkButton)<WithIsLight>(({ isLight }) => ({
-  borderColor: isLight ? '#D4D9E1' : '#708390',
+const ViewEcosystem = styled(LinkButton)(({ theme }) => ({
+  borderColor: theme.palette.isLight ? '#D4D9E1' : '#708390',
   borderRadius: '22px',
   fontFamily: 'Inter, sans serif',
   fontStyle: 'normal',
   padding: '7px 23px',
 
   '& > div': {
-    color: isLight ? '#31424E' : '#ADAFD4',
+    color: theme.palette.isLight ? '#31424E' : '#ADAFD4',
     fontWeight: 500,
     fontSize: 14,
     lineHeight: '18px',
@@ -557,7 +549,7 @@ const ViewEcosystem = styled(LinkButton)<WithIsLight>(({ isLight }) => ({
   },
 
   '&:hover': {
-    background: isLight ? '#F6F8F9' : '#10191F',
-    border: `1px solid ${isLight ? '#ECF1F3' : '#1E2C37'}}`,
+    background: theme.palette.isLight ? '#F6F8F9' : '#10191F',
+    border: `1px solid ${theme.palette.isLight ? '#ECF1F3' : '#1E2C37'}}`,
   },
 }));

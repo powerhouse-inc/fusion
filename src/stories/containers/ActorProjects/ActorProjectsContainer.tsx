@@ -40,7 +40,7 @@ const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, 
   } = useActorProjectsContainer(projectsData, actors, actor);
 
   return (
-    <PageWrapper hasImageBackground>
+    <PageWrapper>
       <SEOHead
         title={'MakerDAO Ecosystem Actors | Projects'}
         description={
