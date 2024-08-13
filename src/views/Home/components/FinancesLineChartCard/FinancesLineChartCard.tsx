@@ -17,10 +17,12 @@ interface TabButtonProps extends ButtonProps {
 
 interface FinancesLineChartCardProps {
   financesData: FormattedFinancesData;
+  years: string[];
 }
 
-const FinancesLineChartCard: FC<FinancesLineChartCardProps> = ({ financesData }) => {
+const FinancesLineChartCard: FC<FinancesLineChartCardProps> = ({ financesData, years }) => {
   useFinancesLineChart();
+
   const { activeTab, handleActiveTab } = useFinancesLineChartCard();
 
   const [realizedExpensesFilter, setRealizedExpensesFilter] = useState<'Actuals' | 'Payments'>('Payments');
@@ -88,7 +90,7 @@ const FinancesLineChartCard: FC<FinancesLineChartCardProps> = ({ financesData })
         </FilterGroupContainer>
       </FilterContainer>
 
-      <FinancesLineChart financesData={financesData} selectedMetric={selectedMetric} />
+      <FinancesLineChart financesData={financesData} selectedMetric={selectedMetric} years={years} />
 
       <InternalButtonContainer>
         <InternalLinkButton label="Realized Expenses" buttonType="primary" href={siteRoutes.finances('scopes')} />

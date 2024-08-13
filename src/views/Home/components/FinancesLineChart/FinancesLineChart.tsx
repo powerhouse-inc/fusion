@@ -12,9 +12,10 @@ import type { EChartsOption } from 'echarts-for-react';
 interface FinancesLineChartProps {
   financesData: FormattedFinancesData;
   selectedMetric: MetricKey;
+  years: string[];
 }
 
-const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedMetric }) => {
+const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedMetric, years }) => {
   const { financesLineChartRef } = useFinancesLineChart();
   const theme = useTheme();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.between('mobile_375', 'tablet_768'));
@@ -149,7 +150,7 @@ const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedM
     grid: {
       top: 8,
       right: 10,
-      bottom: 20,
+      bottom: 40,
       left: isMobile ? 40 : isDesk1280 ? 50 : isDesk1440 ? 50 : 45,
       width: isMobile ? 'calc(100% - 50px)' : isTablet ? 330 : isDesk1024 ? 470 : isDesk1280 ? 595 : 645,
     },
@@ -209,7 +210,24 @@ const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedM
       },
     },
     xAxis: {
-      data: ['Q1', 'Q2', 'Q3', 'Q4', 'Q1', 'Q2', 'Q3', 'Q4', 'Q1', 'Q2', 'Q3', 'Q4', 'Q1', 'Q2', 'Q3', 'Q4'],
+      data: [
+        `Q1-${years[0]}`,
+        'Q2',
+        'Q3',
+        'Q4',
+        `Q1-${years[1]}`,
+        'Q2',
+        'Q3',
+        'Q4',
+        `Q1-${years[2]}`,
+        'Q2',
+        'Q3',
+        'Q4',
+        `Q1-${years[3]}`,
+        'Q2',
+        'Q3',
+        'Q4',
+      ],
       axisLine: {
         lineStyle: {
           color: theme.palette.isLight ? theme.palette.colors.gray[300] : theme.palette.colors.slate[300],
@@ -226,6 +244,39 @@ const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedM
         lineHeight: isMobile ? 16 : 19,
         color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[400],
         interval: 0,
+        formatter: function (value: string) {
+          const [quarterly, year] = value.split('-');
+
+          if (year) {
+            return `{quarterly|${quarterly}}\n{year|${year}}`;
+          }
+
+          return quarterly;
+        },
+        rich: {
+          quarterly: {
+            verticalAlign: 'top',
+            fontSize: isMobile ? 12 : 14,
+            fontWeight: 700,
+            lineHeight: 22,
+            interval: 0,
+            padding: isMobile ? [2, 0, 20, 12] : isTablet ? [2, -1, 22, 16] : [2, 0, 20, 20],
+
+            fontFamily: 'OpenSansCondensed, san-serif',
+            color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[400],
+            backgroundColor: {
+              image: theme.palette.isLight ? '/assets/img/line.png' : '/assets/img/line_dark.png',
+            },
+          },
+          year: {
+            fontSize: isMobile ? 10 : 14,
+            fontFamily: 'OpenSansCondensed, san-serif',
+            fontWeight: 700,
+            color: theme.palette.isLight ? theme.palette.colors.gray[500] : theme.palette.colors.gray[600],
+            lineHeight: 22,
+            padding: isMobile ? [0, 0, 10, 20] : isTablet ? [0, 0, 10, 32] : [0, 0, 10, 32],
+          },
+        },
       },
       boundaryGap: false,
       splitLine: {
