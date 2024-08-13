@@ -11,6 +11,7 @@ import FinancesSection from './components/FinancesSection/FinancesSection';
 import { SectionTitle } from './components/FinancesSectionTitle/FinancesSectionTitle';
 import GovernanceSection from './components/GovernanceSection/GovernanceSection';
 import HeaderCard from './components/HeaderCard/HeaderCard';
+import HomeButton from './components/HomeButton/HomeButton';
 import RoadmapSection from './components/RoadmapSection/RoadmapSection';
 import { headerCardData, sectionsData } from './staticData';
 import type { FormattedFinancesData } from './api/finances';
@@ -64,6 +65,7 @@ const HomeView: FC<HomeViewProps> = ({
         <SectionTitle>{sectionsData.titles[3]}</SectionTitle>
         <RoadmapSection roadmaps={roadmaps} />
       </Section>
+      <HomeButton />
     </Container>
   </HomeViewContainer>
 );
