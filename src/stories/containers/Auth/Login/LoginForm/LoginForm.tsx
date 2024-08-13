@@ -1,6 +1,5 @@
 import { styled, useMediaQuery } from '@mui/material';
 import { CustomButton } from '@ses/components/CustomButton/CustomButton';
-import { CustomLink } from '@ses/components/CustomLink/CustomLink';
 import TextInput from '@ses/components/TextInput/TextInput';
 import { useThemeContext } from '@ses/core/context/ThemeContext';
 import lightTheme from '@ses/styles/theme/themes';
@@ -9,6 +8,7 @@ import MakerDao from 'public/assets/svg/makerdao_connect.svg';
 import SkyLogoDeskDark from 'public/assets/svg/sky-desk-dark.svg';
 import SkyLogoDesk from 'public/assets/svg/sky-desk.svg';
 import React from 'react';
+import ExternalLinkText from '@/components/ExternalLinkText/ExternalLinkText';
 import type { FormikProps } from 'formik';
 
 export type LoginFormProps = {
@@ -86,21 +86,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, clearErrors, hasUserInactiv
       </Form>
       <RequestContainer>
         <RequestText>Don't have your Log In credentials yet?</RequestText>
-        <CustomLink
-          href="https://discord.gg/UJpfgQDA"
-          style={{
-            fontWeight: 500,
-            fontSize: '16px',
-            lineHeight: '18px',
-            letterSpacing: 'normal',
-            marginLeft: 0,
-          }}
-          iconHeight={10}
-          iconWidth={10}
-          target="_blank"
-        >
+        <ExternalLinkText href="https://discord.gg/UJpfgQDA" asLi={false}>
           Request Access
-        </CustomLink>
+        </ExternalLinkText>
       </RequestContainer>
     </Container>
   );
