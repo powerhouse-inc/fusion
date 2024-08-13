@@ -44,6 +44,35 @@ const useHeaderCard = () => {
     handleIsExpanded(isExpandedCopy);
   }, [isFunctionalTrackingAccepted, isExpandedFromLocalStorage, isExpandedCopy]);
 
+  useEffect(() => {
+    const sections = [
+      document.getElementById('finances'),
+      document.getElementById('governance'),
+      document.getElementById('contributors'),
+      document.getElementById('roadmap'),
+    ];
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        e.isIntersecting && window.history.replaceState(null, '', `#${e.target.id}`);
+      });
+    }, observerOptions);
+
+    sections?.forEach((s) => {
+      s && observer.observe(s);
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   return {
     isExpanded,
     handleIsExpanded: handleIsExpandedCopy,
