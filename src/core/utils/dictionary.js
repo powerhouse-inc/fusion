@@ -179,6 +179,7 @@ const dictionary = [
   'ethers',
   'conserver',
   'conservers',
+  'Sky’s',
   'rebranded',
 ];
 
