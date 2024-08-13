@@ -13,7 +13,7 @@ interface Props {
 const TabDescriptions: FC<Props> = ({ contributorsDescription, isLegacy }) => (
   <Container isLegacy={isLegacy}>
     {contributorsDescription.map((contributor) => (
-      <ContributorDescription contributor={contributor} isLegacy={isLegacy} />
+      <ContributorDescription contributor={contributor} isLegacy={isLegacy} key={contributor.name} />
     ))}
   </Container>
 );

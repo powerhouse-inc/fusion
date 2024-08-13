@@ -62,6 +62,7 @@ const ContributorsSection: FC<Props> = ({ teams }) => {
                 <ContainerContributors>
                   {contributors.map((contributor) => (
                     <ContributorsItem
+                      key={contributor.shortCode}
                       contributor={contributor}
                       hasDefaultColors={hasDefaultColors}
                       textDefault={textDefault}

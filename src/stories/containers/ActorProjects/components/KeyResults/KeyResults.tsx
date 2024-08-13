@@ -201,7 +201,7 @@ const Todo = styled('div')(({ theme }) => ({
   borderRadius: 4,
 }));
 
-const KeyLink = styled(ExternalLink)(() => ({
+const KeyLink = styled(ExternalLink)(({ theme }) => ({
   fontSize: 16,
   fontWeight: 500,
   lineHeight: '18px',
@@ -230,6 +230,6 @@ const KeyLink = styled(ExternalLink)(() => ({
     width: 6,
     height: 6,
     borderRadius: '50%',
-    background: '#447AFB',
+    background: theme.palette.colors.sky[1000],
   },
 }));
