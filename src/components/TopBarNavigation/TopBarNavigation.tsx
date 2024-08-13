@@ -67,8 +67,8 @@ const TopBarNavigation: FC<Props> = ({ className }) => {
             </SelectContainer>
           </LeftSection>
           <CenterLinks>
-            {Object.values(getMenusAvailable).map((link, index) => (
-              <LinkNavBar href={link.link} label={link.title} selected={activeItem} key={index} />
+            {Object.values(getMenusAvailable).map((link) => (
+              <LinkNavBar href={link.link} label={link.title} selected={activeItem} key={link.title} />
             ))}
           </CenterLinks>
           <RightSection>
