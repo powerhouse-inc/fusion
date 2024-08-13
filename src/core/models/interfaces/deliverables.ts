@@ -1,9 +1,11 @@
+import type { Maybe } from './generics';
 import type { OwnerRef, Progress } from './roadmaps';
 
 export interface KeyResult {
   id: string;
   title: string;
   link: string;
+  parentIdRef: string;
 }
 
 export enum DeliverableStatus {
@@ -26,7 +28,7 @@ export interface BudgetAnchorProject {
   deliverableBudget: number;
 }
 
-export interface Deliverable {
+export interface MDeliverable {
   id: string;
   title: string;
 
@@ -40,3 +42,28 @@ export interface Deliverable {
   owner: OwnerRef;
   budgetAnchor: BudgetAnchorProject;
 }
+
+export interface Deliverable {
+  id: string;
+  title: string;
+
+  code: string;
+  description: string;
+  keyResults: KeyResult[];
+
+  status: DeliverableStatus;
+  progress: Progress;
+
+  owner: OwnerRef;
+  milestone: string;
+}
+
+export interface IncrementedDeliverable extends Deliverable {
+  milestoneOverride: Maybe<{
+    roadmapSlug: string;
+    code: string;
+  }>;
+}
+
+export const isMDeliverable = (deliverable: Deliverable | MDeliverable): deliverable is MDeliverable =>
+  'workProgress' in deliverable;

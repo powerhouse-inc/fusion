@@ -1,4 +1,4 @@
-import type { Deliverable } from './deliverables';
+import type { Deliverable, KeyResult } from './deliverables';
 
 export enum BudgetType {
   CONTINGENCY = 'CONTINGENCY',
@@ -45,6 +45,7 @@ export interface Percentage {
 export type Progress = StoryPoints | Percentage;
 
 export interface Project {
+  __typename: 'Project';
   id: string;
   owner: Owner;
   code: string;
@@ -57,6 +58,20 @@ export interface Project {
   deliverables: Deliverable[];
 }
 
-export interface ProjectsCollectionState {
-  projects: [Project];
+export interface SupportedProjects extends Omit<Project, 'deliverables' | '__typename' | 'owner'> {
+  __typename: 'SupportedProjects';
+  // todo: check supported deliverables type
+  projectOwner: Owner;
+  supportedDeliverables: [Deliverable];
+  supportedKeyResults: [KeyResult];
 }
+
+export interface ProjectsAndSupportedProjects {
+  projects: [Project];
+  supportedProjects: [SupportedProjects];
+}
+
+export const isProject = (project: Project | SupportedProjects): project is Project => project.__typename === 'Project';
+
+export const isSupportedProjects = (project: Project | SupportedProjects): project is SupportedProjects =>
+  project.__typename === 'SupportedProjects';

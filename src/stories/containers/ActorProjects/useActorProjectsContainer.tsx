@@ -8,9 +8,9 @@ import { useBreadcrumbTeamPager } from '@/views/EcosystemActorAbout/hooks';
 import ProjectStatusChip from './components/ProjectStatusChip/ProjectStatusChip';
 import type { Theme } from '@mui/material';
 import type { MultiSelectItem } from '@ses/components/CustomMultiSelect/CustomMultiSelect';
-import type { Project } from '@ses/core/models/interfaces/projects';
+import type { ProjectsAndSupportedProjects } from '@ses/core/models/interfaces/projects';
 
-const useActorProjectsContainer = (projects: Project[], actors: Team[], actor: Team) => {
+const useActorProjectsContainer = (projectsData: ProjectsAndSupportedProjects, actors: Team[], actor: Team) => {
   const pager = useBreadcrumbTeamPager(actor, actors);
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
@@ -24,17 +24,17 @@ const useActorProjectsContainer = (projects: Project[], actors: Team[], actor: T
     {
       id: ProjectStatus.TODO,
       content: <ProjectStatusChip status={ProjectStatus.TODO} isSmall />,
-      count: projects.filter((project) => project.status === ProjectStatus.TODO).length,
+      count: projectsData.projects.filter((project) => project.status === ProjectStatus.TODO).length,
     },
     {
       id: ProjectStatus.INPROGRESS,
       content: <ProjectStatusChip status={ProjectStatus.INPROGRESS} isSmall />,
-      count: projects.filter((project) => project.status === ProjectStatus.INPROGRESS).length,
+      count: projectsData.projects.filter((project) => project.status === ProjectStatus.INPROGRESS).length,
     },
     {
       id: ProjectStatus.FINISHED,
       content: <ProjectStatusChip status={ProjectStatus.FINISHED} isSmall />,
-      count: projects.filter((project) => project.status === ProjectStatus.FINISHED).length,
+      count: projectsData.projects.filter((project) => project.status === ProjectStatus.FINISHED).length,
     },
   ] as MultiSelectItem[];
 
@@ -55,22 +55,22 @@ const useActorProjectsContainer = (projects: Project[], actors: Team[], actor: T
 
   const filteredProjects = useMemo(
     () =>
-      projects.filter(
+      projectsData.projects.filter(
         (project) =>
-          project.title.toLocaleLowerCase().includes(searchQuery) &&
+          project.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
           (activeStatuses.length === 0 || activeStatuses.includes(project.status))
       ),
-    [activeStatuses, projects, searchQuery]
+    [activeStatuses, projectsData, searchQuery]
   );
 
   const filteredSupporterProjects = useMemo(
     () =>
-      projects.filter(
+      projectsData.supportedProjects.filter(
         (project) =>
-          project.title.toLocaleLowerCase().includes(searchQuery) &&
+          project.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
           (activeStatuses.length === 0 || activeStatuses.includes(project.status))
       ),
-    [activeStatuses, projects, searchQuery]
+    [activeStatuses, projectsData, searchQuery]
   );
 
   return {

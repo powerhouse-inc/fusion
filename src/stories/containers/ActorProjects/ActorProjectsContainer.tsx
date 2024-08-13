@@ -14,16 +14,16 @@ import SESTooltipLegacy from '@/stories/components/SESTooltipLegacy/SESTooltipLe
 import PageSubheader from './components/PageSubheader/PageSubheader';
 import ProjectList from './components/ProjectList/ProjectList';
 import useActorProjectsContainer from './useActorProjectsContainer';
-import type { Project } from '@ses/core/models/interfaces/projects';
+import type { ProjectsAndSupportedProjects } from '@ses/core/models/interfaces/projects';
 import type { Team } from '@ses/core/models/interfaces/team';
 
 interface ActorProjectsContainerProps {
   actors: Team[];
   actor: Team;
-  projects: Project[];
+  projectsData: ProjectsAndSupportedProjects;
 }
 
-const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, actors, projects }) => {
+const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, actors, projectsData }) => {
   const {
     isMobile,
     isFilterCollapsedOnMobile,
@@ -37,7 +37,7 @@ const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, 
     filteredProjects,
     filteredSupporterProjects,
     pager,
-  } = useActorProjectsContainer(projects, actors, actor);
+  } = useActorProjectsContainer(projectsData, actors, actor);
 
   return (
     <PageWrapper hasImageBackground>
@@ -107,7 +107,7 @@ const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, 
             <ProjectList projects={filteredProjects} />
 
             {/* TODO: instead of `projects.length` it should be `supportedProjects.length` once it is integrated with the API */}
-            {(filteredProjects.length > 0 || filteredSupporterProjects.length > 0) && projects.length > 0 && (
+            {(filteredProjects.length > 0 || filteredSupporterProjects.length > 0) && (
               <>
                 <SupportedProjects>
                   <span>Projects supported by {actor.name}</span>
