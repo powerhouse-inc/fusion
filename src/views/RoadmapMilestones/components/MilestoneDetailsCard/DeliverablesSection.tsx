@@ -5,12 +5,12 @@ import DeliverableViewModeToggle from '@ses/containers/ActorProjects/components/
 import { splitInRows } from '@ses/containers/ActorProjects/components/ProjectCard/ProjectCard';
 import ViewAllButton from '@ses/containers/ActorProjects/components/ViewAllButton/ViewAllButton';
 import { useState } from 'react';
-import type { Deliverable } from '@/core/models/interfaces/deliverables';
+import type { MDeliverable } from '@/core/models/interfaces/deliverables';
 import type { DeliverableViewMode } from '@ses/containers/ActorProjects/components/ProjectCard/ProjectCard';
 
 interface DeliverablesSectionProps {
   minimal?: boolean;
-  deliverables: Deliverable[];
+  deliverables: MDeliverable[];
 }
 
 const SEARCH_FEATURE_ENABLED = false;
