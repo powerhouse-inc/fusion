@@ -43,6 +43,7 @@ const HomeView: FC<HomeViewProps> = ({
       }}
       twitterImage={toAbsoluteURL('/assets/img/social-1200x630.png')}
     />
+
     <Container>
       <section id="home">
         <HeaderCard />
@@ -69,8 +70,14 @@ const HomeView: FC<HomeViewProps> = ({
 
 export default HomeView;
 
-const HomeViewContainer = styled(PageContainer)(() => ({
+const HomeViewContainer = styled(PageContainer)(({ theme }) => ({
   marginTop: 24,
+  backgroundImage: theme.palette.isLight
+    ? 'url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI4MzgiIHZpZXdCb3g9IjAgMCAxNDQwIDgzOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCiAgICA8cmVjdCBvcGFjaXR5PSIwLjUiIHdpZHRoPSIxNDQwIiBoZWlnaHQ9IjgzOCIgZmlsbD0idXJsKCNwYWludDBfcmFkaWFsXzY4OTNfMjQzMjQpIiBmaWxsLW9wYWNpdHk9IjAuNCIvPg0KICAgIDxkZWZzPg0KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0icGFpbnQwX3JhZGlhbF82ODkzXzI0MzI0IiBjeD0iMCIgY3k9IjAiIHI9IjEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBncmFkaWVudFRyYW5zZm9ybT0idHJhbnNsYXRlKDE0NDAgNDE5KSByb3RhdGUoLTE4MCkgc2NhbGUoNjI4IDYxMS43NTQpIj4NCiAgICA8c3RvcCBzdG9wLWNvbG9yPSIjRUM2MEREIiBzdG9wLW9wYWNpdHk9IjAuNiIvPg0KICAgIDxzdG9wIG9mZnNldD0iMC41IiBzdG9wLWNvbG9yPSIjRkRCNEZGIiBzdG9wLW9wYWNpdHk9IjAuNiIvPg0KICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI0ZEQjRGRiIgc3RvcC1vcGFjaXR5PSIwIi8+DQogICAgPC9yYWRpYWxHcmFkaWVudD4NCiAgICA8L2RlZnM+DQogICAgPC9zdmc+DQogICAg")'
+    : 'url("data:image/svg+xml;base64,DQo8c3ZnIHdpZHRoPSIxNDQwIiBoZWlnaHQ9IjgzOCIgdmlld0JveD0iMCAwIDE0NDAgODM4IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPg0KICAgIDxyZWN0IG9wYWNpdHk9IjAuMiIgd2lkdGg9IjE0NDAiIGhlaWdodD0iODM4IiBmaWxsPSJ1cmwoI3BhaW50MF9yYWRpYWxfNjg3NF85MTYyKSIgZmlsbC1vcGFjaXR5PSIwLjYiLz4NCiAgICA8ZGVmcz4NCiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50MF9yYWRpYWxfNjg3NF85MTYyIiBjeD0iMCIgY3k9IjAiIHI9IjEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBncmFkaWVudFRyYW5zZm9ybT0idHJhbnNsYXRlKDE0NDAgNDE5KSByb3RhdGUoMTgwKSBzY2FsZSg0ODUgNTg1LjY2NykiPg0KICAgIDxzdG9wIHN0b3AtY29sb3I9IiNFQzYwREQiIHN0b3Atb3BhY2l0eT0iMC40Ii8+DQogICAgPHN0b3Agb2Zmc2V0PSIwLjUiIHN0b3AtY29sb3I9IiNGREI0RkYiIHN0b3Atb3BhY2l0eT0iMC40Ii8+DQogICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjRkRCNEZGIiBzdG9wLW9wYWNpdHk9IjAiLz4NCiAgICA8L3JhZGlhbEdyYWRpZW50Pg0KICAgIDwvZGVmcz4NCiAgICA8L3N2Zz4=")',
+  backgroundAttachment: 'fixed',
+  backgroundPosition: 'right',
+  backgroundSize: 'cover',
 }));
 
 const Section = styled('section')(({ theme }) => ({

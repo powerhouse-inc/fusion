@@ -5,10 +5,10 @@ import request, { ClientError } from 'graphql-request';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
-import lightTheme from '../../../../../styles/theme/themes';
 import { GRAPHQL_ENDPOINT } from '../../../../config/endpoints';
 import { useAuthContext } from '../../../../core/context/AuthContext';
 import { LOGIN_REQUEST } from './LoginAPI';
+import type { Theme } from '@mui/material';
 
 const validationSchema = yup.object({
   username: yup.string().required('Username is required'),
@@ -21,8 +21,8 @@ export const useLogin = () => {
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [hasUserInactive, setHasUserInactive] = useState<boolean>(false);
-  const isMobile = useMediaQuery(lightTheme.breakpoints.down('table_834'));
-  const isTable = useMediaQuery(lightTheme.breakpoints.between('table_834', 'desktop_1194'));
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('table_834'));
+  const isTable = useMediaQuery((theme: Theme) => theme.breakpoints.between('table_834', 'desktop_1194'));
 
   const shouldKeepOpenModal = router.pathname === siteRoutes.login && isMobile;
 

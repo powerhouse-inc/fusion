@@ -31,17 +31,17 @@ export const getScopeOfWorkState = async () => {
                   title
                   link
                 }
-                #workProgress {
-                #  ... on StoryPoints {
-                #    __typename
-                #    total
-                #    completed
-                #  }
-                #  ... on Percentage {
-                #    __typename
-                #    value
-                #  }
-                #}
+                workProgress {
+                  ... on StoryPoints {
+                    __typename
+                    total
+                    completed
+                  }
+                  ... on Percentage {
+                    __typename
+                    value
+                  }
+                }
                 budgetAnchor {
                   project {
                     code
@@ -59,15 +59,15 @@ export const getScopeOfWorkState = async () => {
                 }
               }
               status
-              #progress {
-              #  ... on StoryPoints {
-              #    total
-              #    completed
-              #  }
-              #  ... on Percentage {
-              #    value
-              #  }
-              #}
+              progress {
+                ... on StoryPoints {
+                  total
+                  completed
+                }
+                ... on Percentage {
+                  value
+                }
+              }
               totalDeliverables
               deliverablesCompleted
             }

@@ -76,7 +76,7 @@ const TextProgress = styled('span')(({ theme }) => ({
   color: theme.palette.isLight ? '#231536' : '#D2D4EF',
 
   '& span:nth-child(1)': {
-    color: '#1AAB9B',
+    color: theme.palette.isLight ? theme.palette.colors.blue[700] : theme.palette.colors.blue[900],
   },
 
   '& span:nth-child(2)': {

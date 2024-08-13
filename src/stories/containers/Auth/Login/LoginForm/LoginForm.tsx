@@ -1,13 +1,14 @@
-import styled from '@emotion/styled';
-import { useMediaQuery } from '@mui/material';
+import { styled, useMediaQuery } from '@mui/material';
 import { CustomButton } from '@ses/components/CustomButton/CustomButton';
 import { CustomLink } from '@ses/components/CustomLink/CustomLink';
 import TextInput from '@ses/components/TextInput/TextInput';
 import { useThemeContext } from '@ses/core/context/ThemeContext';
 import lightTheme from '@ses/styles/theme/themes';
-import Image from 'next/image';
+import Link from 'next/link';
+import MakerDao from 'public/assets/svg/makerdao_connect.svg';
+import SkyLogoDeskDark from 'public/assets/svg/sky-desk-dark.svg';
+import SkyLogoDesk from 'public/assets/svg/sky-desk.svg';
 import React from 'react';
-import type { WithIsLight } from '@ses/core/utils/typesHelpers';
 import type { FormikProps } from 'formik';
 
 export type LoginFormProps = {
@@ -25,11 +26,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, clearErrors, hasUserInactiv
 
   return (
     <Container>
-      <Image src={'/assets/img/ses-logo-64x64.png'} alt="logo" width={64} height={64} />
-      <Title isLight={isLight}>Log In</Title>
-      <Description isLight={isLight}>
-        Enter your username and password to get access to the administration area.
-      </Description>
+      <LinkStyled href="/">
+        <LogoContainerDesk>{isLight ? <MakerDao /> : <MakerDao />}</LogoContainerDesk>
+        <LogoContainerDesk>{isLight ? <SkyLogoDeskDark /> : <SkyLogoDesk />}</LogoContainerDesk>
+      </LinkStyled>
+      <Title>Log In</Title>
+      <Description>Enter your username and password to get access to the administration area.</Description>
       <Form
         onSubmit={(e) => {
           e.preventDefault();
@@ -82,9 +84,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, clearErrors, hasUserInactiv
           />
         </ButtonWrapper>
       </Form>
-
       <RequestContainer>
-        <RequestText isLight={isLight}>Don't have your Log In credentials yet?</RequestText>
+        <RequestText>Don't have your Log In credentials yet?</RequestText>
         <CustomLink
           href="https://discord.gg/UJpfgQDA"
           style={{
@@ -107,19 +108,19 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, clearErrors, hasUserInactiv
 
 export default LoginForm;
 
-const Container = styled.div({
+const Container = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
 });
 
-const Title = styled.h1<WithIsLight>(({ isLight }) => ({
+const Title = styled('h1')(({ theme }) => ({
   fontWeight: 600,
   fontSize: 24,
   lineHeight: '29px',
   textAlign: 'center',
   letterSpacing: 0.4,
-  color: isLight ? '#231536' : '#D2D4EF',
+  color: theme.palette.isLight ? '#231536' : '#D2D4EF',
   marginTop: 24,
   marginBottom: 0,
 
@@ -130,12 +131,12 @@ const Title = styled.h1<WithIsLight>(({ isLight }) => ({
   },
 }));
 
-const Description = styled.h3<WithIsLight>(({ isLight }) => ({
+const Description = styled('h3')(({ theme }) => ({
   fontWeight: 400,
   fontSize: 16,
   lineHeight: '22px',
   textAlign: 'center',
-  color: isLight ? '#231536' : '#D2D4EF',
+  color: theme.palette.isLight ? '#231536' : '#D2D4EF',
   marginBottom: 42,
   maxWidth: 294,
 
@@ -149,11 +150,11 @@ const Description = styled.h3<WithIsLight>(({ isLight }) => ({
   },
 }));
 
-export const ButtonWrapper = styled.div({
+export const ButtonWrapper = styled('div')({
   alignSelf: 'flex-end',
 });
 
-export const InputsWrapper = styled.div({
+export const InputsWrapper = styled('div')({
   width: '100%',
   marginBottom: 40,
 
@@ -162,13 +163,13 @@ export const InputsWrapper = styled.div({
   },
 });
 
-export const Form = styled.form({
+export const Form = styled('form')({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
 });
 
-const RequestContainer = styled.div({
+const RequestContainer = styled('div')({
   display: 'block',
   width: '100%',
   textAlign: 'center',
@@ -179,10 +180,21 @@ const RequestContainer = styled.div({
   },
 });
 
-const RequestText = styled.div<WithIsLight>(({ isLight }) => ({
+const RequestText = styled('div')(({ theme }) => ({
   fontWeight: 400,
   fontSize: 16,
   lineHeight: '22px',
   marginBottom: 2,
-  color: isLight ? '#231536' : '#D2D4EF',
+  color: theme.palette.isLight ? '#231536' : '#D2D4EF',
+}));
+
+const LinkStyled = styled(Link)({
+  display: 'flex',
+});
+
+const LogoContainerDesk = styled('div')(({ theme }) => ({
+  display: 'flex',
+  '& path:first-of-type': {
+    fill: theme.palette.isLight ? '#050505' : theme.palette.colors.charcoal[100],
+  },
 }));
