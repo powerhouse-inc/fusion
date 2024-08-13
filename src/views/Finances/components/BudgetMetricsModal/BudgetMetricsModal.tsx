@@ -47,14 +47,14 @@ const BudgetMetricsModal: React.FC = () => {
               <MetricItem>
                 <MetricTitle>Forecast</MetricTitle>
                 <MetricDescription>
-                  The amount forecasted to be spent in a period, as self reported by the corresponding team.
+                  The amount forecasted to be spent in a period, as self-reported by the corresponding team.
                 </MetricDescription>
               </MetricItem>
 
               <MetricItem>
                 <MetricTitle>Actuals</MetricTitle>
                 <MetricDescription>
-                  The actual amount spent or received in a period, as self reported by the corresponding team.
+                  The actual amount spent or received in a period, as self-reported by the corresponding team.
                 </MetricDescription>
               </MetricItem>
 
@@ -64,7 +64,7 @@ const BudgetMetricsModal: React.FC = () => {
               </MetricItem>
 
               <MetricItem>
-                <MetricTitle>Payments Off-Chain Incl</MetricTitle>
+                <MetricTitle>Payments Off-Chain Included</MetricTitle>
                 <MetricDescription>
                   Expense transactions based on the on-chain data combined with self-reported off-chain account
                   balances.

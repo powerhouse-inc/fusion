@@ -32,8 +32,8 @@ const TitleFilterComponent: React.FC<Props> = ({
       tooltip={
         <TooltipContent>
           <p>
-            Explore MakerDAO's financial evolution in detail with this advanced line chart, which offers both cumulative
-            and flat perspectives on expenses.
+            Explore Sky's financial evolution in detail with this advanced line chart, which offers both cumulative and
+            flat perspectives on expenses.
           </p>
           <p>
             Select the 'Absolute Cumulative' mode for a continuous tally from inception, providing a comprehensive

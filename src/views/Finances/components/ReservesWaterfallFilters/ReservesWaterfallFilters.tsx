@@ -45,7 +45,7 @@ const ReservesWaterfallFilters: React.FC<FiltersProps> = ({
         title={title}
         tooltip={
           <TooltipContent>
-            <p>Monitor the dynamics of MakerDAO's reserves with precision using this interactive financial chart.</p>
+            <p>Monitor the dynamics of Sky's reserves with precision using this interactive financial chart.</p>
             <p>
               It displays detailed inflows, outflows, and net balances, providing a clear picture of fiscal health.
               Customize the analysis by filtering specific data points and adjusting the timeline to suit your needs.{' '}

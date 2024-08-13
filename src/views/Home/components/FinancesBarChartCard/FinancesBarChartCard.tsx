@@ -21,7 +21,7 @@ interface FinancesBarChartCardProps {
 
 const FinancesBarChartCard: FC<FinancesBarChartCardProps> = ({ revenueAndSpendingData }) => (
   <Container>
-    <Title>MakerDAO Finances</Title>
+    <Title>Sky Ecosystem Finances</Title>
     <FinancesBarChartContainer>
       <div>
         <AnnualProfit>

@@ -6,7 +6,7 @@ const LatestUpdatesSection: React.FC = () => (
   <Content id="section-latest-updates">
     <SectionHeader
       title="Latest Updates"
-      subtitle="MakerDAO’s Endgame is transforming to enhance growth, resilience, and accessibility, aiming to expand the Dai supply significantly. It introduces sustainable yield farming through SubDAO tokens, creating a dynamic and adaptable ecosystem. The plan includes launching new tokens, enhancing user experience with a new website and app, and initiating a Lockstake Engine for governance engagement."
+      subtitle="Sky's Endgame is transforming to enhance growth, resilience, and accessibility, aiming to expand the SkyDollar supply significantly. It introduces sustainable token rewards, creating a dynamic and adaptable ecosystem. The plan includes launching new tokens, enhancing user experience with a new website and app, savings and rewards, and initiating a Lockstake Engine for governance engagement"
     />
 
     <Timeline>
