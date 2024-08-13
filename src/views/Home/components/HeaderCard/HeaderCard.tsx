@@ -138,19 +138,17 @@ const Container = styled('div', {
   flexDirection: 'column',
   padding: `${isExpanded ? 32 : 48}px 24px 88px`,
   borderRadius: 12,
-  backgroundPosition: '68% 50%',
+  backgroundPosition: '50% 50%',
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
-  backgroundImage: 'url(/assets/img/home/header-card-background-dark.jpg)',
+  backgroundImage: 'url(/assets/img/home/header-card-background.jpg)',
 
   [theme.breakpoints.up('tablet_768')]: {
     padding: '32px 24px',
-    backgroundPosition: '28% 50%',
   },
 
   [theme.breakpoints.up('desktop_1280')]: {
     padding: 32,
-    backgroundPosition: '50% 68%',
   },
 }));
 
@@ -165,10 +163,10 @@ const ToggleButton = styled(IconButton)(({ theme }) => ({
   alignItems: 'center',
   padding: 4,
   borderRadius: 6,
-  backgroundColor: 'rgba(243, 245, 247, 0.20)',
+  backgroundColor: 'rgba(255, 255, 255, 0.20)',
 
   '&:hover, &:active, &:focus': {
-    backgroundColor: 'rgba(243, 245, 247, 0.20)',
+    backgroundColor: 'rgba(255, 255, 255, 0.20)',
   },
 
   '& > svg path': {
@@ -219,9 +217,9 @@ const MobileMenu = styled('div', {
   flexDirection: 'column',
   gap: 16,
   padding: isMobileMenuExpanded ? '8px 16px 16px' : '8px 16px',
-  border: `1px solid ${theme.palette.colors.slate[50]}`,
+  border: `1px solid ${theme.palette.colors.green[200]}`,
   borderRadius: 12,
-  backgroundColor: '#1E1D21',
+  backgroundColor: theme.palette.colors.gray[200],
   boxShadow: headerCardData.buttonShadows[0],
 }));
 
@@ -243,12 +241,12 @@ const MobileHeaderButton = styled(Button)(({ theme }) => ({
   lineHeight: '24px',
   textTransform: 'none',
   borderRadius: 0,
-  color: theme.palette.colors.slate[50],
-  backgroundColor: '#1E1D21',
+  color: theme.palette.colors.gray[900],
+  backgroundColor: theme.palette.colors.gray[200],
   cursor: 'default',
 
   '&:hover, &:active, &:focus': {
-    backgroundColor: '#1E1D21',
+    backgroundColor: theme.palette.colors.gray[200],
   },
 }));
 
@@ -280,10 +278,10 @@ const HeaderButton = styled(Button, {
   fontSize: 16,
   lineHeight: '24px',
   textTransform: 'none',
-  border: `1px solid ${theme.palette.colors.slate[index === 0 ? 50 : 200]}`,
+  border: `1px solid ${index === 0 ? theme.palette.colors.green[200] : theme.palette.colors.slate[50]}`,
   borderRadius: 12,
-  color: theme.palette.colors.slate[index === 0 ? 50 : 200],
-  backgroundColor: '#1E1D21',
+  color: theme.palette.colors.gray[index === 0 ? 900 : 500],
+  backgroundColor: index === 0 ? theme.palette.colors.gray[200] : theme.palette.colors.slate[50],
   boxShadow: headerCardData.buttonShadows[index * 2],
 
   '& .MuiButton-endIcon': {
@@ -293,22 +291,22 @@ const HeaderButton = styled(Button, {
     marginRight: 0,
 
     '& > svg path': {
-      fill: theme.palette.colors.slate[index === 0 ? 50 : 200],
+      fill: theme.palette.colors.gray[index === 0 ? 900 : 500],
     },
   },
 
   '&:hover': {
-    color: theme.palette.colors.slate[50],
-    backgroundColor: '#1E1D21',
+    color: theme.palette.colors.gray[900],
+    backgroundColor: index === 0 ? theme.palette.colors.gray[200] : theme.palette.colors.slate[50],
     boxShadow: headerCardData.buttonShadows[index * 2 + 1],
 
     '& .MuiButton-endIcon > svg path': {
-      fill: theme.palette.colors.slate[50],
+      fill: theme.palette.colors.gray[900],
     },
   },
 
   '&:active, &:focus': {
-    backgroundColor: '#1E1D21',
+    backgroundColor: index === 0 ? theme.palette.colors.gray[200] : theme.palette.colors.slate[50],
   },
 
   [theme.breakpoints.up('desktop_1024')]: {
