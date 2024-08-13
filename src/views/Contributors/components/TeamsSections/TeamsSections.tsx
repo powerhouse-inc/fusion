@@ -12,12 +12,17 @@ export interface TeamType {
 
 interface TeamsSectionsProps {
   sectionName: string;
+  subTitle: string;
   teams: TeamType[];
 }
 
-const TeamsSections: React.FC<TeamsSectionsProps> = ({ sectionName, teams }) => (
+const TeamsSections: React.FC<TeamsSectionsProps> = ({ sectionName, teams, subTitle }) => (
   <SectionContainer>
-    <Title>{sectionName}</Title>
+    <TitleSubtitleContainer>
+      <Title>{sectionName}</Title>
+
+      <SubTitle>{subTitle}</SubTitle>
+    </TitleSubtitleContainer>
 
     {teams.map((team) => (
       <TeamTypeCard
@@ -51,4 +56,16 @@ const Title = styled('h2')(({ theme }) => ({
     fontSize: 20,
     lineHeight: '24px',
   },
+}));
+
+const SubTitle = styled('div')(({ theme }) => ({
+  fontSize: 18,
+  lineHeight: '21.6px',
+  color: theme.palette.isLight ? theme.palette.colors.gray[500] : theme.palette.colors.gray[600],
+}));
+
+const TitleSubtitleContainer = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 8,
 }));

@@ -179,6 +179,7 @@ const dictionary = [
   'ethers',
   'conserver',
   'conservers',
+  'rebranded',
 ];
 
 module.exports = dictionary;

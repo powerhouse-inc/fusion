@@ -13,9 +13,17 @@ const ContributorsView: React.FC = () => (
     />
     <Container>
       <SectionsContainer>
-        <TeamsSections sectionName="Current Contributors" teams={currentTeams} />
+        <TeamsSections
+          sectionName="Current Contributors"
+          teams={currentTeams}
+          subTitle="These are the Current Contributors in the Sky Ecosystem."
+        />
 
-        <TeamsSections sectionName="Legacy Contributors" teams={legacyTeams} />
+        <TeamsSections
+          sectionName="Legacy Contributors"
+          teams={legacyTeams}
+          subTitle="These Teams contributed to the MakerDAO, later rebranded to Sky Ecosystem."
+        />
       </SectionsContainer>
     </Container>
   </ContributorsPageContainer>
