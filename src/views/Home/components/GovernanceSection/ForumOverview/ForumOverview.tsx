@@ -32,7 +32,7 @@ const ForumOverview = () => {
       <ForumCard>
         <HeaderTop>
           <Text>
-            <span>Maker Forum:</span> Decision-making frameworks, including proposal discussions, voting mechanisms, and
+            <span>Sky Forum:</span> Decision-making frameworks, including proposal discussions, voting mechanisms, and
             policy updates.
           </Text>
           <ExternalLinkButton href="https://forum.makerdao.com/">Go to Forum</ExternalLinkButton>

@@ -3,7 +3,7 @@ import type { FormattedFinancesData } from './api/finances';
 export const headerCardData = {
   title: 'MakerDAO Dashboard',
   description:
-    "Welcome to the MakerDAO Dashboard, your hub for key insights into MakerDAO's finances, governance, teams, and roadmaps. Get up-to-date data and explore strategic developments to stay informed about MakerDAO’s progress and future plans.",
+    "Welcome to the Sky Fusion Dashboard, your hub for key insights into Sky Ecosystem's finances, governance, teams, and roadmaps. Get up-to-date data and explore strategic developments to stay informed about Sky’s progress and plans.",
   buttonTexts: ['Finances', 'Governance', 'Contributors', 'Roadmap'],
   buttonLinks: ['#finances', '#governance', '#contributors', '#roadmap'],
   buttonShadows: [

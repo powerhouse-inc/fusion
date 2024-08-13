@@ -73,7 +73,7 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
           <TitleContainer>
             {/* Page title */}
             {levelNumber === 1 ? (
-              <FirstLevelTitle>MakerDAO Finances</FirstLevelTitle>
+              <FirstLevelTitle>Sky Ecosystem Finances</FirstLevelTitle>
             ) : (
               <NthTitleBox>
                 <IconTitleWithCode
@@ -86,8 +86,8 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
             <TitleDescription levelNumber={levelNumber}>
               {levelNumber === 1 ? (
                 <p>
-                  The MakerDAO finances section offers a complete breakdown of budget and expenditure data for
-                  contributor teams since the DAO's launch in 2021.
+                  The Sky finances section offers a complete breakdown of budget and expenditure data for contributor
+                  teams since the DAO's launch in 2021.
                 </p>
               ) : (
                 description

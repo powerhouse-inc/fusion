@@ -52,7 +52,8 @@ const EcosystemActorsIndexView: React.FC<Props> = ({ actors, stories = false }) 
           <SubTitle>What are Ecosystem Actors? </SubTitle>
           <Description>
             <StyledParagraphOne>
-              Ecosystem Actors serve as external entities offering valuable services to both Maker Core and SubDAOs.
+              Ecosystem Actors serve as external entities offering valuable services to both Sky and Stars in the Sky
+              Ecosystem.
               <span>
                 These actors are further classified into two categories: Advisory Ecosystem Actors and Active Ecosystem
                 Actors.

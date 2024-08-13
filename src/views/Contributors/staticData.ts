@@ -6,7 +6,7 @@ export const currentTeams = [
     type: 'team',
     name: 'Ecosystem Actors',
     description:
-      "Ecosystem Actors undertake key projects like feature development and marketing under guidelines that promote the MakerDAO ecosystem's growth. They facilitate vital operational activities, ensuring alignment with ecosystem goals.",
+      "Ecosystem Actors undertake key projects like feature development and marketing under guidelines that promote the Sky Ecosystem's growth. They facilitate vital operational activities, ensuring alignment with ecosystem goals.",
     teams: 24,
     href: siteRoutes.ecosystemActors,
   },
@@ -22,7 +22,7 @@ export const currentTeams = [
     type: 'contributor',
     name: 'Keepers',
     description:
-      'Keepers manage crucial financial operations within MakerDAO, ensuring the stability and efficiency of the Dai stablecoin and overall ecosystem health. Their actions directly impact the economic resilience of the MakerDAO.',
+      'Keepers manage crucial financial operations within Sky, ensuring the stability and efficiency of the SkyDollar and overall Sky Ecosystem health. Their actions directly impact the economic resilience of the Sky.',
     teams: 4,
     href: siteRoutes.finances('scopes/PRO/KPRS?year=2024'),
   },
