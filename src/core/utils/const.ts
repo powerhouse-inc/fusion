@@ -6,4 +6,4 @@ export const MAKER_BURN_LINK = 'https://makerburn.com/#/expenses/core-units';
 export const LOCAL_STORAGE_AUTH_KEY = 'auth';
 export const DELEGATE_PAGE = 'https://vote.makerdao.com/delegates';
 export const UMBRAL_CHART_WATERFALL = 1;
-export const CONNECT = process.env.NEXT_PUBLIC_CONNECT ?? '';
+export const CONNECT = 'https://connect.sky.money/ ';
