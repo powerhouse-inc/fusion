@@ -172,6 +172,10 @@ const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedM
         const shortAmount = params.length > 10;
         const flexDirection = shortAmount ? 'row' : 'column';
         const gap = 8;
+        if (params.every((item) => item.value === 0)) {
+          return '';
+        }
+        const noZeroValues = params.filter((item) => item.value !== 0);
         return `
           <div style="background-color:${
             theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800]
@@ -179,10 +183,10 @@ const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedM
           theme.palette.isLight ? theme.fusionShadows.graphShadow : 'none'
         };padding:8px 16px 8px 16px;min-width:194px;overflow:auto;border-radius:12px; font-family:Inter ,sans-serif">
             <div style="margin-bottom:8px;font-size:16px;font-weight:600;color:#8391A7";line-height:24px;>${
-              params?.[0]?.name
+              noZeroValues?.[0]?.name
             }</div>
             <div style="display:flex;flex-direction:${flexDirection};gap:${gap}px;min-width:194px;max-width:450px;flex-wrap:wrap;">
-              ${params
+              ${noZeroValues
                 .reverse()
                 .map(
                   (item) =>
