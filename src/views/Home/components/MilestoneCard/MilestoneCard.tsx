@@ -1,5 +1,4 @@
 import { styled, useMediaQuery } from '@mui/material';
-import Avatar from '@mui/material/Avatar';
 
 import ExternalLink from '@ses/components/ExternalLink/ExternalLink';
 import AvatarPlaceholderIcon from 'public/assets/svg/avatar_placeholder.svg';
@@ -86,12 +85,13 @@ const MilestoneCard: FC<MilestoneCardProps> = ({ slug, milestoneData }) => {
         <Coordinators>
           {coordinators.map((coordinatorData) => (
             <CoordinatorAvatarContainer key={coordinatorData.id} total={milestoneData.coordinators?.length}>
-              {coordinatorData.imageUrl === 'N/A' ? (
-                <CoordinatorAvatar>
-                  <AvatarPlaceholderIcon />
-                </CoordinatorAvatar>
+              {coordinatorData.imageUrl === 'N/A' ||
+              coordinatorData.imageUrl === null ||
+              coordinatorData.imageUrl === undefined ||
+              coordinatorData.imageUrl.trim() === '' ? (
+                <CoordinatorAvatar />
               ) : (
-                <CoordinatorAvatar alt={coordinatorData.name} src={coordinatorData.imageUrl} />
+                <CoordinatorImage alt={coordinatorData.name} src={coordinatorData.imageUrl} />
               )}
               <CoordinatorName>{coordinatorData.name}</CoordinatorName>
             </CoordinatorAvatarContainer>
@@ -104,9 +104,7 @@ const MilestoneCard: FC<MilestoneCardProps> = ({ slug, milestoneData }) => {
                     (coordinatorData, index) =>
                       index > 1 && (
                         <CoordinatorAvatarContainer key={coordinatorData.id}>
-                          <CoordinatorAvatar>
-                            <AvatarPlaceholderIcon />
-                          </CoordinatorAvatar>
+                          <CoordinatorAvatar />
                           <CoordinatorName>{coordinatorData.name}</CoordinatorName>
                         </CoordinatorAvatarContainer>
                       )
@@ -117,9 +115,7 @@ const MilestoneCard: FC<MilestoneCardProps> = ({ slug, milestoneData }) => {
               showAsModal
             >
               <CoordinatorAvatarContainer>
-                <CoordinatorAvatar>
-                  <AvatarPlaceholderIcon />
-                </CoordinatorAvatar>
+                <CoordinatorAvatar />
                 <CoordinatorName>+{otherCoordinatorsNumber}</CoordinatorName>
               </CoordinatorAvatarContainer>
             </SESTooltip>
@@ -189,17 +185,29 @@ const Code = styled('h3')(({ theme }) => ({
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
 }));
 
-const StyledInternalLinkButton = styled(InternalLinkButton)(() => ({
+const StyledInternalLinkButton = styled(InternalLinkButton)(({ theme }) => ({
   padding: 0,
   fontSize: 14,
 
   '&:hover': {
     gap: 8,
     padding: 0,
+
+    '& div:first-of-type': {
+      color: theme.palette.isLight ? theme.palette.colors.charcoal[900] : theme.palette.colors.charcoal[100],
+    },
+
+    '& div:last-of-type > svg path': {
+      fill: theme.palette.isLight ? theme.palette.colors.charcoal[900] : theme.palette.colors.charcoal[100],
+    },
   },
 
   '&:active, &:focus': {
     borderColor: 'transparent',
+  },
+
+  '& div:first-of-type': {
+    color: theme.palette.isLight ? theme.palette.colors.charcoal[800] : theme.palette.colors.charcoal[200],
   },
 
   '& div:last-of-type': {
@@ -209,6 +217,10 @@ const StyledInternalLinkButton = styled(InternalLinkButton)(() => ({
     '& > svg': {
       width: 20,
       height: 20,
+
+      '& path': {
+        fill: theme.palette.isLight ? theme.palette.colors.charcoal[800] : theme.palette.colors.charcoal[200],
+      },
     },
   },
 }));
@@ -410,19 +422,22 @@ const CoordinatorAvatarContainer = styled('div', {
     }),
 }));
 
-const CoordinatorAvatar = styled(Avatar)(({ theme }) => ({
+const CoordinatorAvatar = styled(AvatarPlaceholderIcon)(({ theme }) => ({
   width: 24,
   height: 24,
 
-  '& > svg': {
-    fill: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[800],
-    '& rect': {
-      fill: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[800],
-    },
-    '& path': {
-      fill: theme.palette.isLight ? theme.palette.colors.charcoal[600] : theme.palette.colors.charcoal[500],
-    },
+  '& rect': {
+    fill: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700],
   },
+  '& path': {
+    fill: theme.palette.isLight ? theme.palette.colors.charcoal[600] : theme.palette.colors.charcoal[400],
+  },
+}));
+
+const CoordinatorImage = styled('img')(() => ({
+  width: 24,
+  height: 24,
+  borderRadius: '50%',
 }));
 
 const CoordinatorName = styled('span')(({ theme }) => ({
