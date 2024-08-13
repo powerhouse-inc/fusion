@@ -34,11 +34,11 @@ const CircularBarBase = styled(CircularProgress)(({ theme }) => ({
   color: theme.palette.mode === 'light' ? '#ECF1F3' : '#31424E',
 }));
 
-const CircularBarProgress = styled(CircularProgress)(() => ({
+const CircularBarProgress = styled(CircularProgress)(({ theme }) => ({
   animationDuration: '550ms',
   position: 'absolute',
   left: 0,
-  color: '#1AAB9B',
+  color: theme.palette.isLight ? theme.palette.colors.blue[700] : theme.palette.colors.blue[900],
 }));
 
 const LabelContainer = styled('div')(({ theme }) => ({

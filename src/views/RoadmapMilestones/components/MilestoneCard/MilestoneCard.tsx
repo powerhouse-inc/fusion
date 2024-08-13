@@ -343,7 +343,7 @@ const ProgressBar = styled('div')<{ progress: number }>(({ theme, progress }) =>
     content: '""',
     position: 'absolute',
     borderRadius: 6,
-    background: '#1AAB9B',
+    background: theme.palette.isLight ? theme.palette.colors.blue[700] : theme.palette.colors.blue[900],
     height: '100%',
     width: `${progress * 100}%`,
   },
