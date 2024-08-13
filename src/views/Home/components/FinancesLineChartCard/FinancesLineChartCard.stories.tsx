@@ -20,6 +20,7 @@ export default meta;
 const variantsArgs = [
   {
     financesData: financesDataMocked,
+    years: ['2021', '2022', '2023', '2024'],
   },
 ];
 

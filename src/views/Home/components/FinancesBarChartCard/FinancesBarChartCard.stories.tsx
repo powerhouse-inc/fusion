@@ -52,6 +52,7 @@ const variantsArgs = [
         annualProfit: 145000,
       },
     },
+    years: ['2021', '2022', '2023', '2024'],
   },
 ];
 
