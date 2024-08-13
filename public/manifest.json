@@ -1,6 +1,6 @@
 {
-  "name": "MakerDAO Expenses",
-  "short_name": "Expenses",
+  "name": "Sky Fusion Dashboard",
+  "short_name": "Sky Fusion",
   "category": "finance",
   "description": "MakerDAO dashboard for transparent financial data reporting and insights",
   "display": "standalone",
