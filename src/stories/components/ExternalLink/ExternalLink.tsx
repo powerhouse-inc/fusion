@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import { styled } from '@mui/material';
 import React from 'react';
 import ExternalLinkArrow from '../svg/external-link-arrow';
 
@@ -26,12 +26,16 @@ const ExternalLink: React.FC<ExternalLinkProps> = ({
 
 export default ExternalLink;
 
-const Link = styled.a({
+const Link = styled('a')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: 4,
-  color: '#447AFB',
+  color: theme.palette.colors.sky[1000],
   textDecoration: 'none',
   fontWeight: 500,
   lineHeight: '18px',
-});
+
+  '& path': {
+    fill: theme.palette.colors.sky[1000],
+  },
+}));

@@ -62,6 +62,7 @@ const ContributorsSection: FC<Props> = ({ teams }) => {
                 <ContainerContributors>
                   {contributors.map((contributor) => (
                     <ContributorsItem
+                      key={contributor.shortCode}
                       contributor={contributor}
                       hasDefaultColors={hasDefaultColors}
                       textDefault={textDefault}
@@ -122,12 +123,12 @@ const ContributorInformation = styled(Card)(() => ({
   overFlow: 'hidden',
 }));
 
-const CardTabs = styled(Card)<{ isLegacy: boolean }>(({ isLegacy, theme }) => ({
+const CardTabs = styled(Card)<{ isLegacy: boolean }>(({ theme }) => ({
   borderTopLeftRadius: 0,
   boxShadow: 'none',
   height: 'calc(100% - 32px)',
   backgroundColor: theme.palette.isLight ? '#FFF' : theme.palette.colors.charcoal[900],
-  padding: isLegacy ? '8px 8px' : '8px 0px',
+  padding: 0,
 }));
 
 const TabsDescriptions = styled('div')(({ theme }) => ({

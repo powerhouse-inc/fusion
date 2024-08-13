@@ -65,8 +65,8 @@ const HomeView: FC<HomeViewProps> = ({
         <SectionTitle>{sectionsData.titles[3]}</SectionTitle>
         <RoadmapSection roadmaps={roadmaps} />
       </Section>
-      <HomeButton />
     </Container>
+    <HomeButton />
   </HomeViewContainer>
 );
 

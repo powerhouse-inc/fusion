@@ -63,14 +63,8 @@ const EcosystemActorsIndexView: React.FC<Props> = ({ actors, stories = false }) 
               <StyledParagraph>
                 Active Ecosystem Actors work according to the specifications of Scope Alignment Artifacts to receive
                 funding for performing specific projects such as developing new features, data collection, marketing,
-                growth, and other operational activities that benefit the Maker Ecosystem.
+                growth, and other operational
               </StyledParagraph>
-            )}
-            {showTextDesk && (
-              <StyledParagraphThere>
-                In contrast, Advisory Council Member Ecosystem Actors engage in research and offer guidance to the DAO,
-                contributing to the refinement of Scopes Artifacts and their underlying procedures.
-              </StyledParagraphThere>
             )}
           </Description>
         </ContainerText>
@@ -204,13 +198,6 @@ const StyledParagraph = styled('p')({
   fontWeight: 400,
   [lightTheme.breakpoints.up('tablet_768')]: {
     marginTop: 18,
-  },
-});
-const StyledParagraphThere = styled(StyledParagraph)({
-  marginTop: 22,
-  marginBottom: 0,
-  [lightTheme.breakpoints.up('tablet_768')]: {
-    marginTop: 20,
   },
 });
 

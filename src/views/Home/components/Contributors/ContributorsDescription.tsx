@@ -69,10 +69,10 @@ const LinkArrow = styled('div')<{ isLegacy: boolean }>(({ theme, isLegacy }) => 
   '& path': {
     fill: isLegacy
       ? theme.palette.isLight
-        ? theme.palette.colors.gray[600]
+        ? theme.palette.colors.sky[1000]
         : theme.palette.colors.slate[100]
       : theme.palette.isLight
-      ? theme.palette.colors.gray[600]
+      ? theme.palette.colors.sky[1000]
       : theme.palette.colors.slate[50],
   },
 }));

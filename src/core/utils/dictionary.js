@@ -180,6 +180,7 @@ const dictionary = [
   'conserver',
   'conservers',
   'Sky’s',
+  'rebranded',
 ];
 
 module.exports = dictionary;
