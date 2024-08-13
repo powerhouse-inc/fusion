@@ -1,7 +1,7 @@
 import type { FormattedFinancesData } from './api/finances';
 
 export const headerCardData = {
-  title: 'MakerDAO Dashboard',
+  title: 'Sky Fusion Dashboard',
   description:
     "Welcome to the Sky Fusion Dashboard, your hub for key insights into Sky Ecosystem's finances, governance, teams, and roadmaps. Get up-to-date data and explore strategic developments to stay informed about Sky’s progress and plans.",
   buttonTexts: ['Finances', 'Governance', 'Contributors', 'Roadmap'],
