@@ -504,7 +504,7 @@ const KeyResultLink = styled(ExternalLink)(({ theme }) => ({
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    color: theme.palette.colors.blue[700],
+    color: theme.palette.colors.sky[1000],
   },
 
   '& svg': {
@@ -512,7 +512,7 @@ const KeyResultLink = styled(ExternalLink)(({ theme }) => ({
     minHeight: 10,
 
     '& path': {
-      fill: theme.palette.colors.blue[700],
+      fill: theme.palette.colors.sky[1000],
     },
   },
 
@@ -525,7 +525,7 @@ const KeyResultLink = styled(ExternalLink)(({ theme }) => ({
     width: 6,
     height: 6,
     borderRadius: '50%',
-    background: theme.palette.colors.blue[700],
+    background: theme.palette.colors.sky[1000],
   },
 }));
 
