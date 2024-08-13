@@ -32,7 +32,7 @@ const Container = styled(Link)<{ isLegacy: boolean }>(({ theme, isLegacy }) => (
   flexDirection: 'column',
   position: 'relative',
   overflow: 'hidden',
-  padding: isLegacy ? '0px 8px' : '0px 16px',
+  padding: isLegacy ? '0px 8px' : '0px 8px',
   gap: 4,
   ':hover': {
     backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : '#292E38',
