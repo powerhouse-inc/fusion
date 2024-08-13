@@ -23,6 +23,7 @@ import FusionArrowCollapse from 'public/assets/svg/fusion_arrow_collapse.svg';
 import FusionArrowExpand from 'public/assets/svg/fusion_arrow_expand.svg';
 import FusionArrowSelectDown from 'public/assets/svg/fusion_arrow_select_down.svg';
 import FusionArrowSelectUp from 'public/assets/svg/fusion_arrow_select_up.svg';
+import FusionArrowUp from 'public/assets/svg/fusion_arrow_up.svg';
 import GithubIcon from 'public/assets/svg/github.svg';
 import GlobeWWW from 'public/assets/svg/globe_www.svg';
 import InfoOutlined from 'public/assets/svg/info_outlined.svg';
@@ -234,5 +235,9 @@ export const iconsPowerHose = [
   {
     Icon: SkyLogoMobile,
     title: 'logo_mobile',
+  },
+  {
+    Icon: FusionArrowUp,
+    title: 'fusion_arrow_up',
   },
 ];
