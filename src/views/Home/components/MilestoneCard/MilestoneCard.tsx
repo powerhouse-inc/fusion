@@ -1,5 +1,4 @@
 import { styled, useMediaQuery } from '@mui/material';
-import Avatar from '@mui/material/Avatar';
 
 import ExternalLink from '@ses/components/ExternalLink/ExternalLink';
 import AvatarPlaceholderIcon from 'public/assets/svg/avatar_placeholder.svg';
@@ -86,12 +85,13 @@ const MilestoneCard: FC<MilestoneCardProps> = ({ slug, milestoneData }) => {
         <Coordinators>
           {coordinators.map((coordinatorData) => (
             <CoordinatorAvatarContainer key={coordinatorData.id} total={milestoneData.coordinators?.length}>
-              {coordinatorData.imageUrl === 'N/A' ? (
-                <CoordinatorAvatar>
-                  <AvatarPlaceholderIcon />
-                </CoordinatorAvatar>
+              {coordinatorData.imageUrl === 'N/A' ||
+              coordinatorData.imageUrl === null ||
+              coordinatorData.imageUrl === undefined ||
+              coordinatorData.imageUrl.trim() === '' ? (
+                <CoordinatorAvatar />
               ) : (
-                <CoordinatorAvatar alt={coordinatorData.name} src={coordinatorData.imageUrl} />
+                <CoordinatorImage alt={coordinatorData.name} src={coordinatorData.imageUrl} />
               )}
               <CoordinatorName>{coordinatorData.name}</CoordinatorName>
             </CoordinatorAvatarContainer>
@@ -104,9 +104,14 @@ const MilestoneCard: FC<MilestoneCardProps> = ({ slug, milestoneData }) => {
                     (coordinatorData, index) =>
                       index > 1 && (
                         <CoordinatorAvatarContainer key={coordinatorData.id}>
-                          <CoordinatorAvatar>
-                            <AvatarPlaceholderIcon />
-                          </CoordinatorAvatar>
+                          {coordinatorData.imageUrl === 'N/A' ||
+                          coordinatorData.imageUrl === null ||
+                          coordinatorData.imageUrl === undefined ||
+                          coordinatorData.imageUrl.trim() === '' ? (
+                            <CoordinatorAvatar />
+                          ) : (
+                            <CoordinatorImage alt={coordinatorData.name} src={coordinatorData.imageUrl} />
+                          )}
                           <CoordinatorName>{coordinatorData.name}</CoordinatorName>
                         </CoordinatorAvatarContainer>
                       )
@@ -117,9 +122,7 @@ const MilestoneCard: FC<MilestoneCardProps> = ({ slug, milestoneData }) => {
               showAsModal
             >
               <CoordinatorAvatarContainer>
-                <CoordinatorAvatar>
-                  <AvatarPlaceholderIcon />
-                </CoordinatorAvatar>
+                <CoordinatorAvatar />
                 <CoordinatorName>+{otherCoordinatorsNumber}</CoordinatorName>
               </CoordinatorAvatarContainer>
             </SESTooltip>
@@ -410,19 +413,22 @@ const CoordinatorAvatarContainer = styled('div', {
     }),
 }));
 
-const CoordinatorAvatar = styled(Avatar)(({ theme }) => ({
+const CoordinatorAvatar = styled(AvatarPlaceholderIcon)(({ theme }) => ({
   width: 24,
   height: 24,
 
-  '& > svg': {
-    fill: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[800],
-    '& rect': {
-      fill: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[800],
-    },
-    '& path': {
-      fill: theme.palette.isLight ? theme.palette.colors.charcoal[600] : theme.palette.colors.charcoal[500],
-    },
+  '& rect': {
+    fill: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700],
   },
+  '& path': {
+    fill: theme.palette.isLight ? theme.palette.colors.charcoal[600] : theme.palette.colors.charcoal[400],
+  },
+}));
+
+const CoordinatorImage = styled('img')(() => ({
+  width: 24,
+  height: 24,
+  borderRadius: '50%',
 }));
 
 const CoordinatorName = styled('span')(({ theme }) => ({
