@@ -189,29 +189,17 @@ const Code = styled('h3')(({ theme }) => ({
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
 }));
 
-const StyledInternalLinkButton = styled(InternalLinkButton)(({ theme }) => ({
+const StyledInternalLinkButton = styled(InternalLinkButton)(() => ({
   padding: 0,
   fontSize: 14,
 
   '&:hover': {
     gap: 8,
     padding: 0,
-
-    '& div:first-of-type': {
-      color: theme.palette.isLight ? theme.palette.colors.charcoal[900] : theme.palette.colors.charcoal[100],
-    },
-
-    '& div:last-of-type > svg path': {
-      fill: theme.palette.isLight ? theme.palette.colors.charcoal[900] : theme.palette.colors.charcoal[100],
-    },
   },
 
   '&:active, &:focus': {
     borderColor: 'transparent',
-  },
-
-  '& div:first-of-type': {
-    color: theme.palette.isLight ? theme.palette.colors.charcoal[800] : theme.palette.colors.charcoal[200],
   },
 
   '& div:last-of-type': {
@@ -221,10 +209,6 @@ const StyledInternalLinkButton = styled(InternalLinkButton)(({ theme }) => ({
     '& > svg': {
       width: 20,
       height: 20,
-
-      '& path': {
-        fill: theme.palette.isLight ? theme.palette.colors.charcoal[800] : theme.palette.colors.charcoal[200],
-      },
     },
   },
 }));

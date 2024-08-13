@@ -43,7 +43,7 @@ const TitleSection = styled('div')(({ theme }) => ({
   fontSize: 12,
   fontWeight: 500,
   lineHeight: '18px',
-  padding: '8px 16px',
+  padding: '8px 8px',
   borderTopRightRadius: 12,
   background: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
 }));
