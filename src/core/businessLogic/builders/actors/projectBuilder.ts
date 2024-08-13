@@ -7,6 +7,7 @@ export class ProjectBuilder {
 
   constructor() {
     this._project = {
+      __typename: 'Project',
       id: '',
       code: '',
       owner: {} as Owner,

@@ -12,7 +12,7 @@ export class DeliverableBuilder {
       title: '',
       description: '',
       status: DeliverableStatus.TODO,
-      workProgress: {},
+      progress: {},
       owner: {},
       keyResults: [] as KeyResult[],
     } as Deliverable;
@@ -39,7 +39,7 @@ export class DeliverableBuilder {
   }
 
   withProgress(progress: Progress): DeliverableBuilder {
-    this._deliverable.workProgress = progress;
+    this._deliverable.progress = progress;
     return this;
   }
 

@@ -4,8 +4,8 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import SESTooltip from '@/components/SESTooltip/SESTooltip';
 import { siteRoutes } from '@/config/routes';
-import type { Deliverable } from '@/core/models/interfaces/deliverables';
-import { DeliverableStatus } from '@/core/models/interfaces/deliverables';
+import type { Deliverable, IncrementedDeliverable, MDeliverable } from '@/core/models/interfaces/deliverables';
+import { DeliverableStatus, isMDeliverable } from '@/core/models/interfaces/deliverables';
 import DeliverablePercentageBar from '../DeliverablePercentageBar/DeliverablePercentageBar';
 import DeliverableStatusChip from '../DeliverableStatusChip/DeliverableStatusChip';
 import DeliverableStoryPointsBar from '../DeliverableStoryPointsBar/DeliverableStoryPointsBar';
@@ -17,7 +17,7 @@ import type { DeliverableViewMode } from '../ProjectCard/ProjectCard';
 import type { Theme } from '@mui/material';
 
 interface DeliverableCardProps {
-  deliverable: Deliverable;
+  deliverable: Deliverable | MDeliverable;
   viewMode: DeliverableViewMode;
   maxKeyResultsOnRow: number;
   isProjectCard?: boolean;
@@ -32,6 +32,7 @@ const DeliverableCard: React.FC<DeliverableCardProps> = ({
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const [expanded, setExpanded] = useState<boolean>(false);
   const handleToggleExpand = () => setExpanded((prev) => !prev);
+  const deliverableProgress = isMDeliverable(deliverable) ? deliverable.workProgress : deliverable.progress;
 
   return (
     <Card fitContent={!isMobile && viewMode === 'compacted' && !expanded}>
@@ -50,14 +51,11 @@ const DeliverableCard: React.FC<DeliverableCardProps> = ({
       <ProgressContainer>
         <DeliverableStatusChip status={deliverable.status} />
         {deliverable.status === DeliverableStatus.IN_PROGRESS &&
-          deliverable.workProgress &&
-          (deliverable.workProgress.__typename === 'Percentage' ? (
-            <DeliverablePercentageBar percentage={deliverable.workProgress.value} />
+          deliverableProgress &&
+          (deliverableProgress.__typename === 'Percentage' ? (
+            <DeliverablePercentageBar percentage={deliverableProgress.value} />
           ) : (
-            <DeliverableStoryPointsBar
-              total={deliverable.workProgress.total}
-              completed={deliverable.workProgress.completed}
-            />
+            <DeliverableStoryPointsBar total={deliverableProgress.total} completed={deliverableProgress.completed} />
           ))}
       </ProgressContainer>
 
@@ -69,15 +67,21 @@ const DeliverableCard: React.FC<DeliverableCardProps> = ({
         </Description>
       )}
       <KeyBox>
-        {isProjectCard ? (
-          <MilestoneLink />
-        ) : (
-          deliverable.budgetAnchor.project &&
-          deliverable.budgetAnchor.project.code &&
-          deliverable.budgetAnchor.project.title && (
-            <ProjectLink code={deliverable.budgetAnchor.project.code} name={deliverable.budgetAnchor.project.title} />
-          )
-        )}
+        {isProjectCard
+          ? (deliverable as IncrementedDeliverable).milestoneOverride && (
+              <MilestoneLink
+                roadmapSlug={(deliverable as IncrementedDeliverable).milestoneOverride?.roadmapSlug ?? ''}
+                code={(deliverable as IncrementedDeliverable).milestoneOverride?.code ?? ''}
+              />
+            )
+          : (deliverable as MDeliverable).budgetAnchor.project &&
+            (deliverable as MDeliverable).budgetAnchor.project.code &&
+            (deliverable as MDeliverable).budgetAnchor.project.title && (
+              <ProjectLink
+                code={(deliverable as MDeliverable).budgetAnchor.project.code}
+                name={(deliverable as MDeliverable).budgetAnchor.project.title}
+              />
+            )}
         <KeyResults
           keyResults={deliverable.keyResults}
           viewMode={viewMode}

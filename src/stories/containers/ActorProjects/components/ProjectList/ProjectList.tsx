@@ -4,11 +4,11 @@ import lightTheme from '@ses/styles/theme/themes';
 import React from 'react';
 import TableEmptyState from '@/components/TableEmptyState/TableEmptyState';
 import ProjectCard from '../ProjectCard/ProjectCard';
-import type { Project } from '@ses/core/models/interfaces/projects';
+import type { Project, SupportedProjects } from '@ses/core/models/interfaces/projects';
 import type { WithIsLight } from '@ses/core/utils/typesHelpers';
 
 interface ProjectListProps {
-  projects: Project[];
+  projects: (Project | SupportedProjects)[];
   isSupportedProjects?: boolean;
 }
 
@@ -18,7 +18,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, isSupportedProjects
   return (
     <List>
       {projects.map((project) => (
-        <ProjectCard key={project.id} project={project} isSupportedProject={isSupportedProjects} />
+        <ProjectCard key={project.id} project={project} />
       ))}
 
       {projects.length === 0 &&

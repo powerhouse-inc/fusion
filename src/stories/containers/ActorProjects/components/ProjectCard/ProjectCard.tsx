@@ -4,6 +4,12 @@ import { LinkButton } from '@ses/components/LinkButton/LinkButton';
 import { siteRoutes } from '@ses/config/routes';
 import { useThemeContext } from '@ses/core/context/ThemeContext';
 import { ButtonType } from '@ses/core/enums/buttonTypeEnum';
+import {
+  isProject,
+  isSupportedProjects,
+  type Project,
+  type SupportedProjects,
+} from '@ses/core/models/interfaces/projects';
 import lightTheme from '@ses/styles/theme/themes';
 import Image from 'next/image';
 import React, { useCallback, useMemo, useState } from 'react';
@@ -16,12 +22,10 @@ import ProjectProgress from '../ProjectProgress/ProjectProgress';
 import ProjectStatusChip from '../ProjectStatusChip/ProjectStatusChip';
 import SupportedTeamsAvatarGroup from '../SupportedTeamsAvatarGroup/SupportedTeamsAvatarGroup';
 import ViewAllButton from '../ViewAllButton/ViewAllButton';
-import type { Project } from '@ses/core/models/interfaces/projects';
 import type { WithIsLight } from '@ses/core/utils/typesHelpers';
 
 interface ProjectCardProps {
-  project: Project;
-  isSupportedProject?: boolean;
+  project: Project | SupportedProjects;
 }
 
 export type DeliverableViewMode = 'compacted' | 'detailed';
@@ -37,7 +41,7 @@ export function splitInRows<T = unknown>(arr: T[], rowLength: number): T[][] {
   return result;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, isSupportedProject = false }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const { isLight } = useThemeContext();
   const isUpDesktop1280 = useMediaQuery(lightTheme.breakpoints.up('desktop_1280'));
 
@@ -51,16 +55,23 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isSupportedProject =
   const showGrayBackground = showAllDeliverables || !isUpDesktop1280;
   const showDeliverablesBelow = !isUpDesktop1280 || showAllDeliverables || deliverableViewMode === 'detailed';
 
+  const allDeliverables = useMemo(
+    () => (isProject(project) ? project.deliverables : project.supportedDeliverables),
+    [project]
+  );
+
   const supporters = useMemo(
     () =>
       // the supporters are the owners of the deliverables (they can be duplicated)
       Array.from(
-        project.deliverables
-          .filter((deliverable) => deliverable.owner.id !== project.owner.id)
+        allDeliverables
+          .filter(
+            (deliverable) => deliverable.owner.id !== (isProject(project) ? project.owner : project.projectOwner).id
+          )
           .reduce((prev, current) => prev.set(current.owner.id, current.owner), new Map<string, OwnerRef>())
           .values()
       ),
-    [project.deliverables, project.owner.id]
+    [allDeliverables, project]
   );
 
   const statusSection = (
@@ -73,8 +84,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isSupportedProject =
   );
 
   const deliverables = showAllDeliverables
-    ? project.deliverables
-    : project.deliverables.slice(0, deliverableViewMode === 'detailed' && isUpDesktop1280 ? 6 : 4);
+    ? allDeliverables
+    : allDeliverables.slice(0, deliverableViewMode === 'detailed' && isUpDesktop1280 ? 6 : 4);
   // transforming deliverables into rows we can predict the max height needed to the cards
   const deliverablesRows = splitInRows(deliverables, isUpDesktop1280 ? 3 : 2);
 
@@ -90,7 +101,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isSupportedProject =
           </NameContainer>
 
           <ParticipantsContainer>
-            <ProjectOwnerChip owner={project.owner} />
+            <ProjectOwnerChip owner={isProject(project) ? project.owner : project.projectOwner} />
             {supporters.length > 0 && <SupportedTeamsAvatarGroup supporters={supporters} />}
           </ParticipantsContainer>
         </ProjectHeader>
@@ -99,15 +110,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isSupportedProject =
           <LeftColumn showDeliverablesBelow={showDeliverablesBelow}>
             {isUpDesktop1280 && !showDeliverablesBelow && statusSection}
             <ImageContainer isBigger={showDeliverablesBelow}>
-              <Image src="/assets/img/project_placeholder.png" alt={project.title} layout="fill" unoptimized />
+              <Image
+                src={project.imgUrl ?? '/assets/img/project_placeholder.png'}
+                alt={project.title}
+                layout="fill"
+                unoptimized
+              />
             </ImageContainer>
             <DataContainer showDeliverablesBelow={showDeliverablesBelow}>
               {(!isUpDesktop1280 || showDeliverablesBelow) && statusSection}
               <Description isLight={isLight}>{project.abstract}</Description>
-              {isSupportedProject && (
+              {isSupportedProjects(project) && (
                 <ViewEcosystem
                   isLight={isLight}
-                  href={siteRoutes.ecosystemActorAbout(project.owner.code ?? '')}
+                  href={siteRoutes.ecosystemActorAbout(project.projectOwner.code ?? '')}
                   buttonType={ButtonType.Default}
                   label="View Ecosystem Actor"
                 />
@@ -131,18 +147,32 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isSupportedProject =
                   row.map((deliverable) => (
                     <DeliverableCard
                       key={deliverable.id}
-                      deliverable={deliverable}
+                      deliverable={
+                        isProject(project)
+                          ? deliverable
+                          : {
+                              ...deliverable,
+                              // supported projects doesn't have key results field in the deliverables
+                              keyResults:
+                                project.supportedKeyResults?.filter(
+                                  (keyResult) => keyResult.parentIdRef === deliverable.id
+                                ) ?? [],
+                            }
+                      }
                       viewMode={deliverableViewMode}
-                      maxKeyResultsOnRow={row.map((d) => d.keyResults.length).reduce((a, b) => Math.max(a, b), 0)}
+                      maxKeyResultsOnRow={
+                        // supported projects doesn't have key results in the deliverables
+                        isProject(project) ? row.map((d) => d.keyResults.length).reduce((a, b) => Math.max(a, b), 0) : 0
+                      }
                     />
                   ))
                 )}
               </DeliverablesContainer>
               {(isUpDesktop1280
                 ? deliverableViewMode === 'compacted'
-                  ? project.deliverables.length > 4
-                  : project.deliverables.length > 6
-                : project.deliverables.length > 4) && (
+                  ? allDeliverables.length > 4
+                  : allDeliverables.length > 6
+                : allDeliverables.length > 4) && (
                 <ViewAllButton viewAll={showAllDeliverables} onClick={() => setShowAllDeliverables((prev) => !prev)}>
                   View {showAllDeliverables ? 'less' : 'all'} Deliverables
                 </ViewAllButton>

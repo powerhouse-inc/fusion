@@ -5,15 +5,12 @@ interface DeliverablePercentageBarProps {
   percentage: number;
 }
 
-const DeliverablePercentageBar: React.FC<DeliverablePercentageBarProps> = ({ percentage }) => {
-  console.log('percent', typeof percentage);
-  return (
-    <ProgressContainer>
-      <ProgressBar progress={percentage * 100} />
-      <Label>{percentage * 100}%</Label>
-    </ProgressContainer>
-  );
-};
+const DeliverablePercentageBar: React.FC<DeliverablePercentageBarProps> = ({ percentage }) => (
+  <ProgressContainer>
+    <ProgressBar progress={percentage * 100} />
+    <Label>{percentage * 100}%</Label>
+  </ProgressContainer>
+);
 
 export default DeliverablePercentageBar;
 
