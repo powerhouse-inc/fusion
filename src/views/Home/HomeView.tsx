@@ -44,7 +44,9 @@ const HomeView: FC<HomeViewProps> = ({
       twitterImage={toAbsoluteURL('/assets/img/social-1200x630.png')}
     />
     <Container>
-      <HeaderCard />
+      <section id="home">
+        <HeaderCard />
+      </section>
       <Section id={headerCardData.buttonTexts[0].toLowerCase()}>
         <FinancesSection revenueAndSpendingData={revenueAndSpendingData} financesData={financesData} />
       </Section>
