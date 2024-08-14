@@ -24,6 +24,7 @@ interface Props {
 
 const TopBarNavigation: FC<Props> = ({ className }) => {
   const {
+    shouldHaveBlur,
     filter,
     isLight,
     toggleTheme,
@@ -37,7 +38,7 @@ const TopBarNavigation: FC<Props> = ({ className }) => {
   const theme = useTheme();
 
   return (
-    <ContainerWrapper>
+    <ContainerWrapper shouldHaveBlur={shouldHaveBlur}>
       <Container>
         <NavContainer aria-label="Primary Navigation" className={className}>
           <LeftSection>
@@ -110,13 +111,19 @@ const TopBarNavigation: FC<Props> = ({ className }) => {
 
 export default TopBarNavigation;
 
-const ContainerWrapper = styled('div')(({ theme }) => ({
+const ContainerWrapper = styled('div')<{ shouldHaveBlur: boolean }>(({ theme, shouldHaveBlur }) => ({
   position: 'fixed',
   display: 'flex',
   flex: 1,
   top: 0,
   width: '100%',
-  backdropFilter: 'blur(40px)',
+  ...(shouldHaveBlur
+    ? {
+        backdropFilter: 'blur(40px)',
+      }
+    : {
+        background: theme.palette.isLight ? theme.palette.colors.gray[50] : 'rgba(25, 29, 36, 1)',
+      }),
 
   [theme.breakpoints.up('tablet_768')]: {
     paddingTop: 6,

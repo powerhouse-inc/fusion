@@ -20,7 +20,7 @@ const RoadmapMilestonesView: React.FC<RoadmapMilestonesViewProps> = ({ roadmap }
   const { isMinimalist, titles } = useRoadmapMilestonesView();
 
   return (
-    <PageContainer hasImageBackground>
+    <PageContainer>
       <SEOHead
         title="Powerhouse Roadmap 2024"
         description="Powerhouse Ecosystem Actor team roadmap for the year 2024."

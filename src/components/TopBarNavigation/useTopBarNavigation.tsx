@@ -95,7 +95,18 @@ export const useTopBarNavigation = () => {
       router.push(find?.link || '/');
     }
   };
+
+  console.log(router);
+  const shouldHaveBlur = useMemo(() => {
+    if (router.asPath === '/') {
+      return true;
+    } else {
+      return false;
+    }
+  }, [router.asPath]);
+
   return {
+    shouldHaveBlur,
     filter,
     themeMode,
     toggleTheme,
