@@ -21,17 +21,28 @@ const Proposal: React.FC<ProposalProps> = ({ proposal }) => {
         <Description>{proposal.proposalBlurb}</Description>
 
         <DescriptionFooter>
-          {proposal.active && <GoverningProposal>Governing Proposal</GoverningProposal>}
+          {proposal.address === '0x8c7F12C7cE07916f631B25ce148e419FeFf19d46' && (
+            <GoverningProposal>Governing Proposal</GoverningProposal>
+          )}
           <Dates>
-            <span>
-              Passed on{' '}
-              {DateTime.fromISO(proposal.spellData.datePassed).toFormat("LLL dd yyyy HH:mm 'UTC'").toUpperCase()}
-            </span>
-            <Separator>-</Separator>
-            <span>
-              Executed on{' '}
-              {DateTime.fromISO(proposal.spellData.dateExecuted).toFormat("LLL dd yyyy HH:mm 'UTC'").toUpperCase()}
-            </span>
+            {proposal.spellData.datePassed && proposal.spellData.dateExecuted ? (
+              <>
+                <span>
+                  Passed on{' '}
+                  {DateTime.fromISO(proposal.spellData.datePassed).toFormat("LLL dd yyyy HH:mm 'UTC'").toUpperCase()}
+                </span>
+                <Separator>-</Separator>
+                <span>
+                  Executed on{' '}
+                  {DateTime.fromISO(proposal.spellData.dateExecuted).toFormat("LLL dd yyyy HH:mm 'UTC'").toUpperCase()}
+                </span>
+              </>
+            ) : (
+              <span>
+                Expires at{' '}
+                {DateTime.fromISO(proposal.spellData.expiration).toFormat("LLL dd yyyy HH:mm 'UTC'").toUpperCase()}
+              </span>
+            )}
           </Dates>
         </DescriptionFooter>
       </DescriptionContainer>
