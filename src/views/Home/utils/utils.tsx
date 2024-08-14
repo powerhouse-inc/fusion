@@ -116,7 +116,7 @@ export const createTooltipFormatter =
     }
   };
 
-export const getYearsLineBarChart = (revenueAndSpendingData: RevenueAndSpendingRecords) =>
+export const getYearsForChart = (revenueAndSpendingData: RevenueAndSpendingRecords) =>
   Object.keys(revenueAndSpendingData)
     // limit the years to 2021-2024 as there's no UI space for more years
     .filter((year) => Number(year) >= 2021 && Number(year) <= 2024)

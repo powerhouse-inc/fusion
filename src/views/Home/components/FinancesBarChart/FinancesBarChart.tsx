@@ -12,6 +12,7 @@ import type { FC } from 'react';
 
 interface FinancesBarChartProps {
   revenueAndSpendingData: RevenueAndSpendingRecords;
+  years: string[];
 }
 
 const FinancesBarChart: FC<FinancesBarChartProps> = ({ revenueAndSpendingData }) => {

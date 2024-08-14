@@ -17,9 +17,10 @@ interface StyledButtonProps extends ButtonProps {
 
 interface FinancesBarChartCardProps {
   revenueAndSpendingData: RevenueAndSpendingRecords;
+  years: string[];
 }
 
-const FinancesBarChartCard: FC<FinancesBarChartCardProps> = ({ revenueAndSpendingData }) => (
+const FinancesBarChartCard: FC<FinancesBarChartCardProps> = ({ revenueAndSpendingData, years }) => (
   <Container>
     <Title>Sky Ecosystem Finances</Title>
     <FinancesBarChartContainer>
@@ -30,7 +31,7 @@ const FinancesBarChartCard: FC<FinancesBarChartCardProps> = ({ revenueAndSpendin
             <Text>Annual Profit</Text>
           </AnnualProfitLegend>
         </AnnualProfit>
-        <FinancesBarChart revenueAndSpendingData={revenueAndSpendingData} />
+        <FinancesBarChart revenueAndSpendingData={revenueAndSpendingData} years={years} />
       </div>
       <Legends>
         <RevenueLegend>

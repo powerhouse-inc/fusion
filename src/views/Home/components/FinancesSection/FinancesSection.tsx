@@ -1,4 +1,5 @@
 import { styled } from '@mui/material';
+import { getYearsForChart } from '../../utils/utils';
 import FinancesBarChartCard from '../FinancesBarChartCard/FinancesBarChartCard';
 import FinancesLineChartCard from '../FinancesLineChartCard/FinancesLineChartCard';
 import { SectionTitle } from '../FinancesSectionTitle/FinancesSectionTitle';
@@ -15,8 +16,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ revenueAndSpendingDat
     <SectionTitle>Finances</SectionTitle>
     <Text>*All values are converted to DAI</Text>
     <Finances>
-      <FinancesBarChartCard revenueAndSpendingData={revenueAndSpendingData} />
-      <FinancesLineChartCard financesData={financesData} />
+      <FinancesBarChartCard
+        revenueAndSpendingData={revenueAndSpendingData}
+        years={getYearsForChart(revenueAndSpendingData)}
+      />
+      <FinancesLineChartCard financesData={financesData} years={getYearsForChart(revenueAndSpendingData)} />
     </Finances>
   </>
 );
