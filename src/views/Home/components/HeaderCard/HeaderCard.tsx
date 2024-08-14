@@ -223,11 +223,15 @@ const MobileMenu = styled('div', {
   boxShadow: headerCardData.buttonShadows[0],
 }));
 
-const MobileHeaderButtonContainer = styled('div')(() => ({
+const MobileHeaderButtonContainer = styled('div')(({ theme }) => ({
   width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+
+  '& svg path': {
+    fill: theme.palette.colors.gray[900],
+  },
 }));
 
 const MobileHeaderButton = styled(Button)(({ theme }) => ({
