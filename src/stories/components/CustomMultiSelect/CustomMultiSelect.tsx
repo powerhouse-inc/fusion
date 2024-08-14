@@ -184,13 +184,13 @@ export const CustomMultiSelect = ({
               isLight
                 ? activeItems.length > 0
                   ? !hover
-                    ? '#1AAB9B'
-                    : '#098C7D'
+                    ? '#504DFF'
+                    : '#504DFF'
                   : '#231536'
                 : activeItems.length > 0
                 ? !hover
-                  ? '#1AAB9B'
-                  : '#6EDBD0'
+                  ? '#504DFF'
+                  : '#504DFF'
                 : '#E2D8EE'
             }
           />
@@ -284,11 +284,11 @@ const SelectContainer = styled.div<
   alignItems: 'center',
   border:
     isLight && active
-      ? '1px solid #1AAB9B'
+      ? '1px solid #504DFF'
       : isLight && focus
       ? '1px solid #231536'
       : !isLight && active
-      ? '1px solid #098C7D'
+      ? '1px solid #504DFF'
       : !isLight && focus
       ? '1px solid #343442'
       : isLight && !active
@@ -305,12 +305,12 @@ const SelectContainer = styled.div<
   '&:hover': {
     border: isLight
       ? active
-        ? '1px solid #1AAB9B'
+        ? '1px solid #504DFF'
         : '1px solid #231536'
       : active
-      ? '1px solid #098C7D'
+      ? '1px solid #504DFF'
       : '1px solid #787A9B',
-    background: isLight ? (active ? '#E7FCFA' : 'none') : active ? '#003C40' : '#10191F',
+    background: isLight ? (active ? '#EEEEFF' : 'red') : active ? '#100F33' : '#10191F',
   },
 
   [lightTheme.breakpoints.up(legacyBreakpoints ? 'table_834' : 'tablet_768')]: {
@@ -335,13 +335,13 @@ const Label = styled.div<{ active: boolean; isLight: boolean; hover: boolean }>(
   color: isLight
     ? active
       ? !hover
-        ? '#1AAB9B'
-        : '#098C7D'
+        ? '#504DFF'
+        : '#625FFF'
       : '#231536'
     : active
     ? !hover
-      ? '#1AAB9B'
-      : '#6EDBD0'
+      ? '#504DFF'
+      : '#504DFF'
     : '#E2D8EE',
   whiteSpace: 'nowrap',
 }));
