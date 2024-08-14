@@ -35,8 +35,8 @@ const HomeView: FC<HomeViewProps> = ({
 }) => (
   <HomeViewContainer>
     <SEOHead
-      title="Homepage"
-      description="Homepage description"
+      title="Sky Fusion Dashboard"
+      description="Sky Fusion Dashboard"
       image={{
         src: toAbsoluteURL('/assets/img/social-385x200.png'),
         width: 385,
