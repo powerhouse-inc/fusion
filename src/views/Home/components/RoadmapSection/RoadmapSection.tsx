@@ -2,19 +2,14 @@ import { styled, useMediaQuery } from '@mui/material';
 import { Fragment } from 'react';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
 import FancyTabs from '@/components/FancyTabs/FancyTabs';
 import ShadowWrapper from '@/components/FancyTabs/ShadowWrapper';
-
 import type { Roadmap } from '@/core/models/interfaces/roadmaps';
 import MilestoneCard from '@/views/Home/components/MilestoneCard/MilestoneCard';
-
 import useRoadmapSection from './useRoadmapSection';
-
 import type { Theme } from '@mui/material';
 import type { FC } from 'react';
 import type { SwiperProps } from 'swiper/react';
-
 import 'swiper/css';
 import 'swiper/css/pagination';
 
@@ -182,9 +177,7 @@ const SwiperContainer = styled('div')(({ theme }) => ({
   },
 
   '& .swiper-pagination-bullet-active': {
-    backgroundColor: theme.palette.isLight
-      ? `${theme.palette.colors.gray[900]} !important`
-      : `${theme.palette.colors.slate[50]} !important`,
+    backgroundColor: `${theme.palette.colors.sky[1000]} !important`,
   },
 }));
 
