@@ -363,7 +363,7 @@ const Wrapper = styled('div')(({ theme }) => ({
 
   [theme.breakpoints.up('desktop_1280')]: {
     flexDirection: 'column',
-    gap: 32,
+    gap: 14,
   },
 }));
 
