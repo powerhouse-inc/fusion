@@ -301,6 +301,10 @@ const ViewButton = styled(CustomButton)(({ theme }) => ({
   padding: '8px 23px',
   borderColor: theme.palette.isLight ? '#D4D9E1' : '#405361',
 
+  '&:hover': {
+    borderColor: `${theme.palette.colors.sky[1000]}!important`,
+  },
+
   [theme.breakpoints.up('tablet_768')]: {
     padding: '2px 23px',
   },

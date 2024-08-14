@@ -72,7 +72,7 @@ const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedM
     },
     {
       type: 'line',
-      name: 'Stability',
+      name: 'Stability Scope',
       stack: 'b',
       stackStrategy: 'all',
       areaStyle: {},
