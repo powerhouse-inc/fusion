@@ -60,11 +60,17 @@ const EcosystemActorsIndexView: React.FC<Props> = ({ actors, stories = false }) 
               </span>
             </StyledParagraphOne>
             {showTextDesk && (
-              <StyledParagraph>
-                Active Ecosystem Actors work according to the specifications of Scope Alignment Artifacts to receive
-                funding for performing specific projects such as developing new features, data collection, marketing,
-                growth, and other operational
-              </StyledParagraph>
+              <>
+                <StyledParagraph>
+                  Active Ecosystem Actors work according to the specifications of Scope Alignment Artifacts to receive
+                  funding for performing specific projects such as developing new features, data collection, marketing,
+                  growth, and other operational activities that benefit the Sky Ecosystem.
+                </StyledParagraph>
+                <StyledParagraph>
+                  In contrast, Advisory Council Member Ecosystem Actors engage in research and offer guidance to the Sky
+                  Ecosystem, contributing to the refinement of Scopes Artifacts and their underlying procedures.
+                </StyledParagraph>
+              </>
             )}
           </Description>
         </ContainerText>
