@@ -393,14 +393,14 @@ const ChartContainer = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('desktop_1280')]: {
     width: 655,
     minWidth: 655,
-    height: 360,
+    height: 380,
     marginTop: 8,
   },
 
   [theme.breakpoints.up('desktop_1440')]: {
     width: 704,
     minWidth: 704,
-    height: 360,
+    height: 380,
   },
 }));
 
