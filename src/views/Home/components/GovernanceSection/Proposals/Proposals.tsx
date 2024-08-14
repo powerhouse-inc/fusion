@@ -9,17 +9,39 @@ interface ProposalsProps {
 }
 
 const Proposals: React.FC<ProposalsProps> = ({ governanceProposals }) => {
-  const activeProposals = governanceProposals.filter((proposal) => proposal.active);
+  const openProposals = governanceProposals.filter(
+    (proposal) => proposal.active && !proposal.spellData.datePassed && !proposal.spellData.dateExecuted
+  );
+  const activeProposals = governanceProposals.filter(
+    (proposal) => proposal.active && proposal.spellData.datePassed && proposal.spellData.dateExecuted
+  );
   const passedProposals = governanceProposals.filter((proposal) => !proposal.active);
   const slicedPassedProposals = passedProposals.slice(0, Math.min(3, passedProposals.length));
 
   return (
     <ProposalsContainer>
+      {openProposals.length > 0 && (
+        <SectionContainer>
+          <SectionHeader isMain>
+            <span>Open Executive Proposals</span>
+            <ExternalLinkButton href="https://vote.makerdao.com/">Go to Makervote</ExternalLinkButton>
+          </SectionHeader>
+
+          <ProposalList>
+            {openProposals.map((proposal, index) => (
+              <Proposal key={index} proposal={proposal} />
+            ))}
+          </ProposalList>
+        </SectionContainer>
+      )}
+
       {activeProposals.length > 0 && (
         <SectionContainer>
           <SectionHeader isMain>
             <span>Active Executive Proposals</span>
-            <ExternalLinkButton href="https://vote.makerdao.com/">Go to Makervote</ExternalLinkButton>
+            {openProposals.length === 0 && (
+              <ExternalLinkButton href="https://vote.makerdao.com/">Go to Makervote</ExternalLinkButton>
+            )}
           </SectionHeader>
 
           <ProposalList>
@@ -34,7 +56,7 @@ const Proposals: React.FC<ProposalsProps> = ({ governanceProposals }) => {
         <SectionContainer>
           <SectionHeader>
             <span>Passed Executive Proposals</span>
-            {activeProposals.length === 0 && (
+            {openProposals.length === 0 && activeProposals.length === 0 && (
               <ExternalLinkButton href="https://vote.makerdao.com/">Go to Makervote</ExternalLinkButton>
             )}
           </SectionHeader>
