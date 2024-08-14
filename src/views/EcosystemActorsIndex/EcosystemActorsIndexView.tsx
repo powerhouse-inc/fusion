@@ -203,6 +203,7 @@ const StyledParagraph = styled('p')({
   lineHeight: '22px',
   fontWeight: 400,
   [lightTheme.breakpoints.up('tablet_768')]: {
+    fontSize: 16,
     marginTop: 18,
   },
 });
