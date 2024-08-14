@@ -208,7 +208,7 @@ const SwiperWrapper = styled.div<WithIsLight>(({ isLight }) => ({
   },
 
   '& .swiper-pagination-bullet-active': {
-    backgroundColor: isLight ? '#2DC1B1 !important' : '#098C7D !important',
+    backgroundColor: '#504DFF !important',
   },
 
   '& .swiper-slide-active': {
