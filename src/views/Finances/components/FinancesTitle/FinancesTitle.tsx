@@ -143,8 +143,18 @@ const CopyWrapper = styled(Link)(({ theme }) => ({
 }));
 
 const Date = styled('div')(({ theme }) => ({
-  color: theme.palette.isLight ? theme.palette.colors.slate[100] : 'red',
-  fontSize: 18,
+  color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[300],
   fontWeight: 500,
-  lineHeight: '21.6px',
+  fontSize: 16,
+  lineHeight: '19.2px',
+
+  [theme.breakpoints.up('desktop_1024')]: {
+    fontSize: 18,
+    lineHeight: '21.6px',
+  },
+
+  [theme.breakpoints.up('desktop_1280')]: {
+    fontSize: 20,
+    lineHeight: '24px',
+  },
 }));

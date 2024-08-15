@@ -1,10 +1,11 @@
-import styled from '@emotion/styled';
-import lightTheme from '@ses/styles/theme/themes';
+// All comments will be removed in future PRs
+import { styled } from '@mui/material';
 import React from 'react';
+import FinancesTitle from '@/views/Finances/components/FinancesTitle/FinancesTitle';
 import type { LineChartSeriesData } from '@/views/Finances/utils/types';
 import MakerDAOChartMetrics from './MakerDAOChartMetrics/MakerDAOChartMetrics';
 import MakerDAOExpenseMetricsSkeleton from './MakerDAOExpenseMetricsSkeleton';
-import TitleFilterComponent from './TitleFilterComponent';
+// import TitleFilterComponent from './TitleFilterComponent';
 import type { CumulativeType } from './useMakerDAOExpenseMetrics';
 import type { AnalyticGranularity } from '@ses/core/models/interfaces/analytic';
 
@@ -24,19 +25,19 @@ interface Props {
 
 const MakerDAOExpenseMetricsFinances: React.FC<Props> = ({
   title,
-  handleGranularityChange,
+  // handleGranularityChange,
   selectedGranularity,
   isCumulative,
-  handleToggleCumulative,
+  // handleToggleCumulative,
   cumulativeType,
-  handleChangeCumulativeType,
+  // handleChangeCumulativeType,
   series,
   handleToggleSeries,
   year,
   isLoading,
 }) => (
   <Container>
-    <TitleFilterComponent
+    {/* <TitleFilterComponent
       title={title}
       handleChange={handleGranularityChange}
       selectedValue={selectedGranularity}
@@ -44,6 +45,30 @@ const MakerDAOExpenseMetricsFinances: React.FC<Props> = ({
       handleToggleCumulative={handleToggleCumulative}
       cumulativeType={cumulativeType}
       handleChangeCumulativeType={handleChangeCumulativeType}
+    /> */}
+    <FinancesTitle
+      year={year}
+      title={title}
+      tooltip={
+        <TooltipContent>
+          <p>
+            Explore Sky's financial evolution in detail with this advanced line chart, which offers both cumulative and
+            flat perspectives on expenses.
+          </p>
+          <p>
+            Select the 'Absolute Cumulative' mode for a continuous tally from inception, providing a comprehensive
+            overview of long-term financial movements.
+          </p>
+          <p>
+            Use the 'Relative Cumulative' mode, which resets at the start of each chosen period, to analyze expenses
+            within specific intervals.
+          </p>
+          <p>
+            Effortlessly switch between these views to discern overarching fiscal trends or to pinpoint financial
+            developments specific to a quarter or year, aiding in strategic decision-making and performance assessment.
+          </p>
+        </TooltipContent>
+      }
     />
     <ContainerChart>
       {isLoading ? (
@@ -63,13 +88,24 @@ const MakerDAOExpenseMetricsFinances: React.FC<Props> = ({
 );
 
 export default MakerDAOExpenseMetricsFinances;
-const Container = styled.div({
+const Container = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   marginTop: 40,
-  [lightTheme.breakpoints.up('tablet_768')]: {
+
+  [theme.breakpoints.up('tablet_768')]: {
     marginTop: 64,
+  },
+}));
+
+const TooltipContent = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 8,
+
+  p: {
+    margin: 0,
   },
 });
 
-const ContainerChart = styled.div({});
+const ContainerChart = styled('div')({});

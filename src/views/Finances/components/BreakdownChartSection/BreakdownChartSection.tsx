@@ -1,7 +1,7 @@
 import { styled } from '@mui/material';
 import React from 'react';
 import Card from '@/components/Card/Card';
-import FinancesTitle from '@/components/FinancesTitle';
+import FinancesTitle from '@/views/Finances/components/FinancesTitle/FinancesTitle';
 import BreakdownChart from './BreakdownChart/BreakdownChart';
 import BreakdownChartSkeleton from './BreakdownChart/BreakdownChartSkeleton';
 import type { BreakdownChartSeriesData } from '../../utils/types';
