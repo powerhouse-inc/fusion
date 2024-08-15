@@ -71,7 +71,7 @@ const MakerDAOExpenseMetricsFinances: React.FC<Props> = ({
         </TooltipContent>
       }
     />
-    <ContainerChart>
+    <div>
       {isLoading ? (
         <MakerDAOExpenseMetricsSkeleton />
       ) : (
@@ -84,7 +84,7 @@ const MakerDAOExpenseMetricsFinances: React.FC<Props> = ({
           cumulativeType={cumulativeType}
         />
       )}
-    </ContainerChart>
+    </div>
   </Container>
 );
 
@@ -92,7 +92,6 @@ export default MakerDAOExpenseMetricsFinances;
 
 const Container = styled(Card)(({ theme }) => ({
   width: '100%',
-  marginTop: 24,
   padding: '8px 8px 16px',
 
   [theme.breakpoints.up('tablet_768')]: {
@@ -101,10 +100,6 @@ const Container = styled(Card)(({ theme }) => ({
 
   [theme.breakpoints.up('desktop_1024')]: {
     padding: '16px 24px 24px',
-  },
-
-  [theme.breakpoints.up('desktop_1280')]: {
-    marginTop: 32,
   },
 }));
 
@@ -117,5 +112,3 @@ const TooltipContent = styled('div')({
     margin: 0,
   },
 });
-
-const ContainerChart = styled('div')({});

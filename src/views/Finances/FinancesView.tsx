@@ -8,12 +8,12 @@ import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
 import BreakdownChartSection from './components/BreakdownChartSection/BreakdownChartSection';
 import ConditionalWrapper from './components/ConditionalWrapper/ConditionalWrapper';
+import MakerDAOExpenseMetrics from './components/MakerDAOExpenseMetrics/MakerDAOExpenseMetrics';
 import OverviewCardMobile from './components/OverviewCardMobile/OverviewCardMobile';
 import BreadcrumbYearNavigation from './components/SectionPages/BreadcrumbYearNavigation';
 import BreakdownTable from './components/SectionPages/BreakdownTable/BreakdownTable';
 import CardsNavigation from './components/SectionPages/CardsNavigation/CardsNavigation';
 import DelegateExpenseTrendFinances from './components/SectionPages/ExpenseReports/ExpenseReports';
-import MakerDAOExpenseMetricsFinances from './components/SectionPages/MakerDAOExpenseMetrics/MakerDAOExpenseMetrics';
 import OverviewSection from './components/SectionPages/OverviewSection/OverviewSection';
 import ReservesWaterfallChartSection from './components/SectionPages/ReservesWaterfallChartSection/ReservesWaterfallChartSection';
 import { useFinancesView } from './useFinancesView';
@@ -166,19 +166,22 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
         />
       </ConditionalWrapper>
       <Container>
-        <MakerDAOExpenseMetricsFinances
-          title={`${levelNumber === 1 ? 'MakerDAO' : title} Expense Metrics`}
-          handleGranularityChange={makerDAOExpensesMetrics.handleGranularityChange}
-          selectedGranularity={makerDAOExpensesMetrics.selectedGranularity}
-          isCumulative={makerDAOExpensesMetrics.isCumulative}
-          handleToggleCumulative={makerDAOExpensesMetrics.handleToggleCumulative}
-          cumulativeType={makerDAOExpensesMetrics.cumulativeType}
-          handleChangeCumulativeType={makerDAOExpensesMetrics.handleChangeCumulativeType}
-          series={makerDAOExpensesMetrics.series}
-          handleToggleSeries={makerDAOExpensesMetrics.handleToggleSeries}
-          isLoading={makerDAOExpensesMetrics.isLoading}
-          year={year}
-        />
+        <MakerDAOExpenseMetricsContainer>
+          <MakerDAOExpenseMetrics
+            title={`${levelNumber === 1 ? 'MakerDAO' : title} Expense Metrics`}
+            handleGranularityChange={makerDAOExpensesMetrics.handleGranularityChange}
+            selectedGranularity={makerDAOExpensesMetrics.selectedGranularity}
+            isCumulative={makerDAOExpensesMetrics.isCumulative}
+            handleToggleCumulative={makerDAOExpensesMetrics.handleToggleCumulative}
+            cumulativeType={makerDAOExpensesMetrics.cumulativeType}
+            handleChangeCumulativeType={makerDAOExpensesMetrics.handleChangeCumulativeType}
+            series={makerDAOExpensesMetrics.series}
+            handleToggleSeries={makerDAOExpensesMetrics.handleToggleSeries}
+            isLoading={makerDAOExpensesMetrics.isLoading}
+            year={year}
+          />
+          <CurrencyBreakdown />
+        </MakerDAOExpenseMetricsContainer>
         <ContainerReservesWaterfallChart>
           <ReservesWaterfallChartSection
             title={`${levelNumber === 1 ? 'MakerDAO Finances' : title} Reserves`}
@@ -312,4 +315,25 @@ const WrapperMobile = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('tablet_768')]: {
     display: 'none',
   },
+}));
+
+const MakerDAOExpenseMetricsContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 24,
+  width: '100%',
+  marginTop: 24,
+
+  [theme.breakpoints.up('desktop_1280')]: {
+    flexDirection: 'row',
+    gap: 32,
+    marginTop: 32,
+  },
+}));
+
+const CurrencyBreakdown = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+  border: '1px solid red', // temporary
 }));
