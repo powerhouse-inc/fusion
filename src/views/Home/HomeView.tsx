@@ -24,6 +24,7 @@ export interface HomeViewProps {
   teams: Team[];
   governanceProposals: ExtendedExecutiveProposal[];
   roadmaps: Roadmap[];
+  hatAddress: string;
 }
 
 const HomeView: FC<HomeViewProps> = ({
@@ -32,6 +33,7 @@ const HomeView: FC<HomeViewProps> = ({
   teams,
   governanceProposals,
   roadmaps,
+  hatAddress,
 }) => (
   <HomeViewContainer>
     <SEOHead
@@ -53,7 +55,7 @@ const HomeView: FC<HomeViewProps> = ({
         <FinancesSection revenueAndSpendingData={revenueAndSpendingData} financesData={financesData} />
       </Section>
       <Section id={headerCardData.buttonTexts[1].toLowerCase()}>
-        <GovernanceSection governanceProposals={governanceProposals} />
+        <GovernanceSection governanceProposals={governanceProposals} hatAddress={hatAddress} />
       </Section>
       <Section id={headerCardData.buttonTexts[2].toLowerCase()}>
         <SectionTitle>{sectionsData.titles[2]}</SectionTitle>

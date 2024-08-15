@@ -931,3 +931,10 @@ export const removeBudgetWord = (name: string) => {
 
   return name.replace(wordToRemove, '');
 };
+
+export const getMonthAbbreviationToolTip = (month: number) => {
+  const monthKeys = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+
+  const key = monthKeys[month];
+  return key;
+};
