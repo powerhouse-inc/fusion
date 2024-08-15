@@ -137,6 +137,8 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
             series={breakdownChartSectionData.series}
             handleToggleSeries={breakdownChartSectionData.handleToggleSeries}
             refBreakDownChart={breakdownChartSectionData.refBreakDownChart}
+            // isChecked={breakdownChartSectionData.isChecked}
+            // handleChangeSwitch={breakdownChartSectionData.handleChangeSwitch}
           />
         </Container>
       </BudgetMetricsModalProvider>
