@@ -6,16 +6,13 @@ import Proposal from '../Proposal/Proposal';
 
 interface ProposalsProps {
   governanceProposals: ExtendedExecutiveProposal[];
+  hatAddress: string;
 }
 
-const Proposals: React.FC<ProposalsProps> = ({ governanceProposals }) => {
-  const openProposals = governanceProposals.filter(
-    (proposal) => proposal.active && !proposal.spellData.datePassed && !proposal.spellData.dateExecuted
-  );
-  const activeProposals = governanceProposals.filter(
-    (proposal) => proposal.active && proposal.spellData.datePassed && proposal.spellData.dateExecuted
-  );
-  const passedProposals = governanceProposals.filter((proposal) => !proposal.active);
+const Proposals: React.FC<ProposalsProps> = ({ governanceProposals, hatAddress }) => {
+  const openProposals = governanceProposals.filter((proposal) => proposal.active && hatAddress !== proposal.address);
+  const activeProposals = governanceProposals.filter((proposal) => hatAddress === proposal.address);
+  const passedProposals = governanceProposals.filter((proposal) => !proposal.active && hatAddress !== proposal.address);
   const slicedPassedProposals = passedProposals.slice(0, Math.min(3, passedProposals.length));
 
   return (
@@ -29,7 +26,7 @@ const Proposals: React.FC<ProposalsProps> = ({ governanceProposals }) => {
 
           <ProposalList>
             {openProposals.map((proposal, index) => (
-              <Proposal key={index} proposal={proposal} />
+              <Proposal key={index} proposal={proposal} isHat={hatAddress === proposal.address} />
             ))}
           </ProposalList>
         </SectionContainer>
@@ -37,7 +34,7 @@ const Proposals: React.FC<ProposalsProps> = ({ governanceProposals }) => {
 
       {activeProposals.length > 0 && (
         <SectionContainer>
-          <SectionHeader isMain>
+          <SectionHeader isMain={openProposals.length === 0}>
             <span>Active Executive Proposals</span>
             {openProposals.length === 0 && (
               <ExternalLinkButton href="https://vote.makerdao.com/">Go to Makervote</ExternalLinkButton>
@@ -46,7 +43,7 @@ const Proposals: React.FC<ProposalsProps> = ({ governanceProposals }) => {
 
           <ProposalList>
             {activeProposals.map((proposal, index) => (
-              <Proposal key={index} proposal={proposal} />
+              <Proposal key={index} proposal={proposal} isHat={hatAddress === proposal.address} />
             ))}
           </ProposalList>
         </SectionContainer>
@@ -63,7 +60,7 @@ const Proposals: React.FC<ProposalsProps> = ({ governanceProposals }) => {
 
           <ProposalList>
             {slicedPassedProposals.map((proposal, index) => (
-              <Proposal key={index} proposal={proposal} />
+              <Proposal key={index} proposal={proposal} isHat={hatAddress === proposal.address} />
             ))}
           </ProposalList>
         </SectionContainer>

@@ -1,5 +1,5 @@
 import { styled, useMediaQuery } from '@mui/material';
-import { utils } from 'ethers';
+import { ethers, utils } from 'ethers';
 import { DateTime } from 'luxon';
 import MakerdaoIcon from 'public/assets/svg/makerdao.svg';
 import ExternalLinkButton from '@/components/ExternalLinkButton/ExternalLinkButton';
@@ -9,9 +9,10 @@ import type { Theme } from '@mui/material';
 
 interface ProposalProps {
   proposal: ExtendedExecutiveProposal;
+  isHat: boolean;
 }
 
-const Proposal: React.FC<ProposalProps> = ({ proposal }) => {
+const Proposal: React.FC<ProposalProps> = ({ proposal, isHat }) => {
   const isUpDesktop1024 = useMediaQuery((theme: Theme) => theme.breakpoints.up('desktop_1024'));
   const mkrSupportEth = parseFloat(utils.formatEther(proposal.spellData.mkrSupport));
 
@@ -21,7 +22,7 @@ const Proposal: React.FC<ProposalProps> = ({ proposal }) => {
         <Description>{proposal.proposalBlurb}</Description>
 
         <DescriptionFooter>
-          {proposal.address === '0x8c7F12C7cE07916f631B25ce148e419FeFf19d46' && (
+          {isHat && proposal.address !== ethers.constants.AddressZero && (
             <GoverningProposal>Governing Proposal</GoverningProposal>
           )}
           <Dates>

@@ -9,6 +9,7 @@ import { getGovernanceProposals } from '@/views/Home/api/makervoteQueries';
 import type { RevenueAndSpendingRecords } from '@/views/Home/api/revenueAndSpending';
 import { getRevenueAndSpendingData } from '@/views/Home/api/revenueAndSpending';
 import { getScopeOfWorkState } from '@/views/RoadmapMilestones/api/queries';
+import { getChiefHat } from '@/web3/api/governance';
 import type { GetServerSideProps, NextPage } from 'next';
 
 interface HomePageProps {
@@ -17,6 +18,7 @@ interface HomePageProps {
   teams: Team[];
   governanceProposals: ExtendedExecutiveProposal[];
   roadmaps: Roadmap[];
+  hatAddress: string;
 }
 
 const HomePage: NextPage<HomePageProps> = ({
@@ -25,6 +27,7 @@ const HomePage: NextPage<HomePageProps> = ({
   teams,
   governanceProposals,
   roadmaps,
+  hatAddress,
 }) => (
   <HomeView
     revenueAndSpendingData={revenueAndSpendingData}
@@ -32,18 +35,20 @@ const HomePage: NextPage<HomePageProps> = ({
     teams={teams}
     governanceProposals={governanceProposals}
     roadmaps={roadmaps}
+    hatAddress={hatAddress}
   />
 );
 
 export default HomePage;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const [revenueAndSpendingData, financesData, teams, governanceProposals, roadmaps] = await Promise.all([
+  const [revenueAndSpendingData, financesData, teams, governanceProposals, roadmaps, hatAddress] = await Promise.all([
     getRevenueAndSpendingData(),
     getFinancesData(),
     fetchActors(),
     getGovernanceProposals(),
     getScopeOfWorkState(),
+    getChiefHat(),
   ]);
 
   return {
@@ -53,6 +58,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       teams,
       governanceProposals,
       roadmaps,
+      hatAddress,
     },
   };
 };
