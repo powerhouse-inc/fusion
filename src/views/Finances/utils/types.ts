@@ -43,6 +43,7 @@ export interface BarChartSeries {
   seriesName: string;
   color: string;
   value: number;
+  dataIndex: number;
 }
 
 export type PeriodicSelectionFilter = 'Monthly' | 'Quarterly' | 'Annually' | 'Semi-annual';
