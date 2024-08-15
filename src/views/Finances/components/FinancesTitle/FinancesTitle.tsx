@@ -82,7 +82,7 @@ const Container = styled('div')({
 });
 
 const Title = styled('div')(({ theme }) => ({
-  color: theme.palette.isLight ? theme.palette.colors.gray[900] : 'red',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   fontFamily: 'Inter, sans-serif',
   fontSize: 16,
   fontStyle: 'normal',
@@ -108,23 +108,25 @@ const Tooltip = styled('div')({
   alignItems: 'center',
 });
 
-const IconWrapper = styled('div')({
+const IconWrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   width: 24,
   height: 24,
+
   '& svg': {
     width: 15,
     height: 15,
   },
-
+  '& path': {
+    fill: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[200],
+  },
   cursor: 'pointer',
-
   [lightTheme.breakpoints.up('tablet_768')]: {
     alignItems: 'center',
   },
-});
+}));
 
 const CopyWrapper = styled(Link)(({ theme }) => ({
   display: 'flex',
@@ -132,7 +134,7 @@ const CopyWrapper = styled(Link)(({ theme }) => ({
   alignItems: 'center',
   width: 24,
   height: 24,
-  color: theme.palette.isLight ? theme.palette.colors.slate[100] : 'red',
+  color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[200],
 
   '& svg': {
     width: 20,
