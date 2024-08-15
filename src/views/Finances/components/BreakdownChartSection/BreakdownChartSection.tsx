@@ -1,10 +1,9 @@
 import { styled } from '@mui/material';
-import lightTheme from '@ses/styles/theme/themes';
 import React from 'react';
-import SectionTitle from '../SectionTitle/SectionTitle';
+import Card from '@/components/Card/Card';
+import FinancesTitle from '@/components/FinancesTitle';
 import BreakdownChart from './BreakdownChart/BreakdownChart';
 import BreakdownChartSkeleton from './BreakdownChart/BreakdownChartSkeleton';
-import BreakdownChartFilter from './BreakdownChartFilter/BreakdownChartFilter';
 import type { BreakdownChartSeriesData } from '../../utils/types';
 import type { AnalyticGranularity, AnalyticMetric } from '@ses/core/models/interfaces/analytic';
 import type { EChartsOption } from 'echarts-for-react';
@@ -21,35 +20,43 @@ export interface BreakdownChartSectionProps {
   series: BreakdownChartSeriesData[];
   handleToggleSeries: (series: string) => void;
   refBreakDownChart: React.RefObject<EChartsOption | null>;
+  isChecked: boolean;
+  handleChangeSwitch: () => void;
 }
 
 const BreakdownChartSection: React.FC<BreakdownChartSectionProps> = ({
+  // TODO: Work in progress. The commented code below will be removed in future updates.
   isLoading,
   year,
   selectedMetric,
-  onMetricChange,
+  // onMetricChange,
   selectedGranularity,
-  onGranularityChange,
-  isDisabled,
-  handleResetFilter,
+  // onGranularityChange,
+  // isDisabled,
+  // handleResetFilter,
   series,
   handleToggleSeries,
   refBreakDownChart,
+  isChecked,
+  handleChangeSwitch,
 }) => (
   <Section>
     <HeaderContainer>
-      <SectionTitle
+      <FinancesTitle
+        year={year}
         title="Breakdown Chart"
-        tooltip="Explore Sky's financial distribution across the 'Sky Legacy' (previously MakerDAO Legacy), 'Atlas Immutable', and 'Scope Framework' budgets from 2021-2024. This tool helps track allocation efficiency, identify funding fluctuations, and pinpoint transitions between legacy and Endgame budgets."
+        tooltip="Explore MakerDAO's financial distribution across the 'MakerDAO Legacy', 'Atlas Immutable', and 'Scope Framework' budgets from 2021-2024. This tool helps track allocation efficiency, identify funding fluctuations, and pinpoint transitions between legacy and endgame budgets."
       />
-      <BreakdownChartFilter
+      <div>Filters</div>
+      {/*  TODO: Work in progress. The commented code below will be removed in future updates. */}
+      {/* <BreakdownChartFilter
         selectedMetric={selectedMetric}
         selectedGranularity={selectedGranularity}
         onMetricChange={onMetricChange}
         onGranularityChange={onGranularityChange}
         isDisabled={isDisabled}
         handleResetFilter={handleResetFilter}
-      />
+      /> */}
     </HeaderContainer>
 
     {isLoading ? (
@@ -59,12 +66,14 @@ const BreakdownChartSection: React.FC<BreakdownChartSectionProps> = ({
     ) : (
       <Wrapper>
         <BreakdownChart
+          handleChangeSwitch={handleChangeSwitch}
           year={year}
           selectedGranularity={selectedGranularity as AnalyticGranularity}
           series={series}
           handleToggleSeries={handleToggleSeries}
           refBreakDownChart={refBreakDownChart}
           selectedMetric={selectedMetric}
+          isChecked={isChecked}
         />
       </Wrapper>
     )}
@@ -73,9 +82,18 @@ const BreakdownChartSection: React.FC<BreakdownChartSectionProps> = ({
 
 export default BreakdownChartSection;
 
-const Section = styled('section')(({ theme }) => ({
+const Section = styled(Card)(({ theme }) => ({
   marginTop: 40,
+  width: '100%',
 
+  padding: '8px 8px 16px',
+
+  [theme.breakpoints.up('tablet_768')]: {
+    padding: 16,
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
+    padding: 24,
+  },
   [theme.breakpoints.up('desktop_1280')]: {
     marginTop: 64,
   },
@@ -83,15 +101,10 @@ const Section = styled('section')(({ theme }) => ({
 
 const HeaderContainer = styled('div')({
   display: 'flex',
-  flexDirection: 'column',
-  gap: 24,
-
-  [lightTheme.breakpoints.up('tablet_768')]: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-  },
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  justifyContent: 'space-between',
+  alignItems: 'flex-start',
 });
 
 const Wrapper = styled('div')({

@@ -581,29 +581,20 @@ export const getBudgetsAnalytics = async (
 export const colors: string[] = ['#F99374', '#447AFB', '#2DC1B1'];
 export const colorsDark: string[] = ['#F77249', '#447AFB', '#1AAB9B'];
 
-// Legend for breakdown chart
-export const barChartAxisLabelsMonthly = (isMobile: boolean, isWaterfall = false) => {
-  const defaultArray = [
-    isMobile ? 'J' : 'JAN',
-    isMobile ? 'F' : 'FEB',
-    isMobile ? 'M' : 'MAR',
-    isMobile ? 'A' : 'APR',
-    isMobile ? 'M' : 'MAY',
-    isMobile ? 'J' : 'JUN',
-    isMobile ? 'J' : 'JUL',
-    isMobile ? 'A' : 'AUG',
-    isMobile ? 'S' : 'SEP',
-    isMobile ? 'O' : 'OCT',
-    isMobile ? 'N' : 'NOV',
-    isMobile ? 'D' : 'DEC',
-  ];
+export const getMonthlyBarChartLabels = (isMobile: boolean, isWaterfall = false, useShortLabels = false): string[] => {
+  const fullLabels = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+  const shortLabels = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
+
+  // Select the label set based on the options provided.
+  const labels = useShortLabels || isMobile ? shortLabels : fullLabels;
+
   if (isWaterfall) {
-    const start = isMobile ? '' : 'START';
-    const finish = isMobile ? '' : 'FINISH';
-    defaultArray.unshift(start);
-    defaultArray.push(finish);
+    const startLabel = isMobile ? '' : 'START';
+    const endLabel = isMobile ? '' : 'FINISH';
+    return [startLabel, ...labels, endLabel].filter(Boolean);
   }
-  return defaultArray;
+
+  return labels;
 };
 
 export const barChartAxisLabelsQuarterly = (isMobile: boolean, isWaterfall = false) => {
@@ -633,11 +624,12 @@ const barChartAxisLabelsAnnually = (isMobile: boolean, isWaterfall: boolean) => 
 export const getChartAxisLabelByGranularity = (
   granularity: AnalyticGranularity,
   isMobile: boolean,
-  isWaterfall = false
+  isWaterfall = false,
+  useShortLabels = false
 ) => {
   switch (granularity) {
     case 'monthly':
-      return barChartAxisLabelsMonthly(isMobile, isWaterfall);
+      return getMonthlyBarChartLabels(isMobile, isWaterfall, useShortLabels);
     case 'quarterly':
       return barChartAxisLabelsQuarterly(isMobile, isWaterfall);
     case 'annual':
@@ -646,7 +638,6 @@ export const getChartAxisLabelByGranularity = (
       barChartAxisLabelsQuarterly(isMobile, isWaterfall);
   }
 };
-
 export const formatterBreakdownChart = (
   granularity: AnalyticGranularity,
   isMobile: boolean,
@@ -657,13 +648,13 @@ export const formatterBreakdownChart = (
   switch (granularity) {
     case 'monthly':
       if (isMobile || isLessMobile) return value;
-      return `{month|${value}}\n{year|${year}}`;
+      return value;
     case 'quarterly':
-      return `{month|${value}}\n{year|${year}}`;
+      return value;
     case 'annual':
-      return `{month|${year}}`;
+      return year;
     default:
-      return `{month|${value}}\n{year|${year}}`;
+      return value;
   }
 };
 
