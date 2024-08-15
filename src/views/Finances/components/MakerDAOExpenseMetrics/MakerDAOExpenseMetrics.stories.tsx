@@ -4,7 +4,7 @@ import MakerDAOExpenseMetrics from './MakerDAOExpenseMetrics';
 import type { Meta } from '@storybook/react';
 
 const meta: Meta<typeof MakerDAOExpenseMetrics> = {
-  title: 'Fusion/Views/Finances/Section/MakerDAOExpenseMetrics',
+  title: 'Fusion/Views/Finances/MakerDAOExpenseMetrics',
   component: MakerDAOExpenseMetrics,
 
   parameters: {
@@ -27,7 +27,7 @@ const chartData = {
 
 const args = [
   {
-    title: 'MakerDAO Expense Metrics',
+    title: 'Sky Expense Metrics',
     year: 2024,
     series: buildExpenseMetricsLineChartSeries(chartData, [], true, 'monthly'),
     selectedGranularity: 'monthly',
@@ -35,7 +35,7 @@ const args = [
     handleGranularityChange: (value: string) => null,
   },
   {
-    title: 'MakerDAO Expense Metrics',
+    title: 'Sky Expense Metrics',
     year: 2023,
     series: buildExpenseMetricsLineChartSeries(chartData, [], false, 'monthly'),
     selectedGranularity: 'monthly',
@@ -44,7 +44,7 @@ const args = [
   },
 ];
 
-const [[LightMode, DarkMode]] = createThemeModeVariants(MakerDAOExpenseMetrics, args);
+const [[LightMode, DarkMode]] = createThemeModeVariants(MakerDAOExpenseMetrics, args, false);
 export { LightMode, DarkMode };
 
 LightMode.parameters = {
