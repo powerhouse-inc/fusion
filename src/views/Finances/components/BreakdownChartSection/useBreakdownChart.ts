@@ -4,7 +4,7 @@ import lightTheme from '@ses/styles/theme/themes';
 import { useMemo, useRef, useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import { getBudgetsAnalytics } from '../../utils/utils';
-import { parseAnalyticsToSeriesBreakDownChart, setBorderRadiusForSeries } from './utils';
+import { getBarWidth, parseAnalyticsToSeriesBreakDownChart, setBorderRadiusForSeries } from './utils';
 import type {
   AnalyticGranularity,
   AnalyticMetric,
@@ -15,6 +15,7 @@ import type { EChartsOption } from 'echarts-for-react';
 
 const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, allBudgets: Budget[]) => {
   const { isLight } = useThemeContext();
+  const [isChecked, setIsChecked] = useState(false);
   const [selectedMetric, setSelectedMetric] = useState<AnalyticMetric>('Budget');
   const refBreakDownChart = useRef<EChartsOption | null>(null);
   const [selectedGranularity, setSelectedGranularity] = useState<AnalyticGranularity>('monthly');
@@ -22,26 +23,14 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
   const isTablet = useMediaQuery(lightTheme.breakpoints.between('tablet_768', 'desktop_1024'));
   const isDesktop1024 = useMediaQuery(lightTheme.breakpoints.between('desktop_1024', 'desktop_1280'));
   const isDesktop1280 = useMediaQuery(lightTheme.breakpoints.up('desktop_1280'));
-  const barWidth = isMobile
-    ? selectedGranularity === 'quarterly'
-      ? 32
-      : selectedGranularity === 'annual'
-      ? 96
-      : 16
-    : isTablet
-    ? 40
-    : isDesktop1024 || isDesktop1280
-    ? selectedGranularity === 'annual'
-      ? 168
-      : selectedGranularity === 'quarterly'
-      ? 64
-      : 40
-    : 56;
+  const barWidth = getBarWidth(isMobile, isTablet, isDesktop1024, isDesktop1280, selectedGranularity);
 
   const handleMetricChange = (value: AnalyticMetric) => {
     setSelectedMetric(value);
   };
-
+  const handleChangeSwitch = () => {
+    setIsChecked(!isChecked);
+  };
   const handleGranularityChange = (value: AnalyticGranularity) => {
     setSelectedGranularity(value);
   };
@@ -132,6 +121,8 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
     isDesktop1024,
     isLight,
     refBreakDownChart,
+    isChecked,
+    handleChangeSwitch,
   };
 };
 
