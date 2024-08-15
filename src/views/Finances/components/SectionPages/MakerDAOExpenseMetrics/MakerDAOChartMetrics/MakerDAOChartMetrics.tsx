@@ -168,7 +168,7 @@ const MakerDAOChartMetrics: React.FC<BreakdownChartProps> = ({
     },
     xAxis: {
       type: 'category',
-      data: getChartAxisLabelByGranularity(selectedGranularity, isMobileOrLess),
+      data: getChartAxisLabelByGranularity(selectedGranularity, isMobileOrLess, false, true),
       splitLine: {
         show: false,
       },
