@@ -2,7 +2,11 @@ import { LimitedColorAssigner } from '@ses/core/utils/colors';
 import { existingColors, existingColorsDark, getCorrectMetric, transformPathToName } from '../../utils/utils';
 import { removePatternAfterSlash } from '../SectionPages/BreakdownTable/utils';
 import type { BreakdownChartSeriesData } from '../../utils/types';
-import type { AnalyticMetric, BreakdownBudgetAnalytic } from '@ses/core/models/interfaces/analytic';
+import type {
+  AnalyticGranularity,
+  AnalyticMetric,
+  BreakdownBudgetAnalytic,
+} from '@ses/core/models/interfaces/analytic';
 import type { Budget } from '@ses/core/models/interfaces/budget';
 
 export const parseAnalyticsToSeriesBreakDownChart = (
@@ -141,5 +145,29 @@ export const getSelectMetricText = (metric: AnalyticMetric | undefined) => {
       return 'Net Expenses On-Chain';
     default:
       return metric;
+  }
+};
+
+export const getBarWidth = (
+  isMobile: boolean,
+  isTablet: boolean,
+  isDesktop1024: boolean,
+  isDesktop1280: boolean,
+  selectedGranularity: AnalyticGranularity
+) => {
+  if (isMobile) {
+    if (selectedGranularity === 'quarterly') return 16;
+    if (selectedGranularity === 'annual') return 96;
+    return 16;
+  } else if (isTablet) {
+    return 23.8;
+  } else if (isDesktop1024) {
+    return 30;
+  } else if (isDesktop1280) {
+    return 40;
+  } else {
+    if (selectedGranularity === 'annual') return 168;
+    if (selectedGranularity === 'quarterly') return 64;
+    return 40;
   }
 };
