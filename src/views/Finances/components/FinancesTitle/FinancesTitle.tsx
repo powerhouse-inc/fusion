@@ -126,6 +126,11 @@ const IconWrapper = styled('div')(({ theme }) => ({
   [lightTheme.breakpoints.up('tablet_768')]: {
     alignItems: 'center',
   },
+  ':hover': {
+    '& path': {
+      fill: theme.palette.isLight ? theme.palette.colors.slate[200] : theme.palette.colors.slate[100],
+    },
+  },
 }));
 
 const CopyWrapper = styled(Link)(({ theme }) => ({
@@ -135,13 +140,14 @@ const CopyWrapper = styled(Link)(({ theme }) => ({
   width: 24,
   height: 24,
   color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[200],
-
   '& svg': {
     width: 20,
     height: 20,
   },
-
   cursor: 'pointer',
+  ':hover': {
+    color: theme.palette.isLight ? theme.palette.colors.slate[200] : theme.palette.colors.slate[100],
+  },
 }));
 
 const Date = styled('div')(({ theme }) => ({
