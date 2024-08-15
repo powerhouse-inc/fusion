@@ -1,6 +1,7 @@
 // All comments will be removed in future PRs
 import { styled } from '@mui/material';
 import React from 'react';
+import Card from '@/components/Card/Card';
 import FinancesTitle from '@/views/Finances/components/FinancesTitle/FinancesTitle';
 import type { LineChartSeriesData } from '@/views/Finances/utils/types';
 import MakerDAOChartMetrics from './MakerDAOChartMetrics/MakerDAOChartMetrics';
@@ -70,7 +71,7 @@ const MakerDAOExpenseMetricsFinances: React.FC<Props> = ({
         </TooltipContent>
       }
     />
-    <ContainerChart>
+    <div>
       {isLoading ? (
         <MakerDAOExpenseMetricsSkeleton />
       ) : (
@@ -83,18 +84,22 @@ const MakerDAOExpenseMetricsFinances: React.FC<Props> = ({
           cumulativeType={cumulativeType}
         />
       )}
-    </ContainerChart>
+    </div>
   </Container>
 );
 
 export default MakerDAOExpenseMetricsFinances;
-const Container = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  marginTop: 40,
+
+const Container = styled(Card)(({ theme }) => ({
+  width: '100%',
+  padding: '8px 8px 16px',
 
   [theme.breakpoints.up('tablet_768')]: {
-    marginTop: 64,
+    padding: 16,
+  },
+
+  [theme.breakpoints.up('desktop_1024')]: {
+    padding: '16px 24px 24px',
   },
 }));
 
@@ -107,5 +112,3 @@ const TooltipContent = styled('div')({
     margin: 0,
   },
 });
-
-const ContainerChart = styled('div')({});

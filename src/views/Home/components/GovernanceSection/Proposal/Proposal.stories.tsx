@@ -32,6 +32,7 @@ const variantsArgs = [
       },
       supporters: 41,
     } as ExtendedExecutiveProposal,
+    isHat: true,
   },
 ];
 

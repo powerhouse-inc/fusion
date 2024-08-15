@@ -1,19 +1,20 @@
 import { createThemeModeVariants } from '@ses/core/utils/storybook/factories';
 import { buildExpenseMetricsLineChartSeries } from '@/views/Finances/utils/utils';
-import MakerDAOExpenseMetricsFinances from './MakerDAOExpenseMetrics';
+import MakerDAOExpenseMetrics from './MakerDAOExpenseMetrics';
 import type { Meta } from '@storybook/react';
 
-const meta: Meta<typeof MakerDAOExpenseMetricsFinances> = {
-  title: 'Fusion/Views/Finances/Section/MakerDAOExpenseMetricsFinances',
-  component: MakerDAOExpenseMetricsFinances,
+const meta: Meta<typeof MakerDAOExpenseMetrics> = {
+  title: 'Fusion/Views/Finances/Section/MakerDAOExpenseMetrics',
+  component: MakerDAOExpenseMetrics,
 
   parameters: {
     chromatic: {
-      viewports: [375, 768, 1024, 1280, 1440, 1920],
+      viewports: [375, 768, 1024, 1280, 1440],
       pauseAnimationAtEnd: true,
     },
   },
 };
+
 export default meta;
 
 const chartData = {
@@ -23,10 +24,11 @@ const chartData = {
   onChain: [123434, 123434, 123434, 123434, 100000, 250000, 900000, 1250000, 0, 1400000, 1400000, 1500000],
   protocolNetOutflow: [123434, 123434, 123434, 123434, 100000, 250000, 900000, 1250000, 0, 1400000, 1400000, 1500000],
 };
+
 const args = [
   {
     title: 'MakerDAO Expense Metrics',
-    year: 2023,
+    year: 2024,
     series: buildExpenseMetricsLineChartSeries(chartData, [], true, 'monthly'),
     selectedGranularity: 'monthly',
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -42,81 +44,68 @@ const args = [
   },
 ];
 
-const [[LightMode], [, DarkMode]] = createThemeModeVariants(MakerDAOExpenseMetricsFinances, args, false);
+const [[LightMode, DarkMode]] = createThemeModeVariants(MakerDAOExpenseMetrics, args);
 export { LightMode, DarkMode };
 
 LightMode.parameters = {
   figma: {
     component: {
       375: {
-        component: 'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=28966-337836',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-13099&m=dev',
         options: {
           componentStyle: {
             width: 343,
           },
           style: {
-            top: 38,
+            top: 0,
             left: 0,
           },
         },
       },
       768: {
-        component: 'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=28966-331810',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-11043&m=dev',
         options: {
           componentStyle: {
             width: 704,
           },
           style: {
-            top: 64,
+            top: 0,
             left: 0,
           },
         },
       },
       1024: {
-        component: 'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=28966-330256',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-6822&m=dev',
         options: {
           componentStyle: {
             width: 960,
           },
           style: {
-            top: 64,
+            top: 0,
             left: 0,
           },
         },
       },
       1280: {
-        component: 'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=28966-334923',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-4246&m=dev',
         options: {
           componentStyle: {
-            width: 1184,
+            width: 584,
           },
           style: {
-            top: 64,
+            top: 0,
             left: 0,
           },
         },
       },
       1440: {
-        component: 'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=28966-336453',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=8-10584&m=dev',
         options: {
           componentStyle: {
-            width: 1312,
+            width: 640,
           },
           style: {
-            top: 64,
-            left: 0,
-          },
-        },
-      },
-      1920: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=28966:333454&mode=dev',
-        options: {
-          componentStyle: {
-            width: 1312,
-          },
-          style: {
-            top: 64,
+            top: 0,
             left: 0,
           },
         },

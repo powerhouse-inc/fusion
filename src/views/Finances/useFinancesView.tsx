@@ -7,11 +7,11 @@ import { useState, useMemo, useEffect } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import type { BreadcrumbItem } from '@/components/Breadcrumb/Breadcrumb';
 import useBreakdownChart from './components/BreakdownChartSection/useBreakdownChart';
+import { useMakerDAOExpenseMetrics } from './components/MakerDAOExpenseMetrics/useMakerDAOExpenseMetrics';
 import { useBreakdownTable } from './components/SectionPages/BreakdownTable/useBreakdownTable';
 import { useCardChartOverview } from './components/SectionPages/CardChartOverview/useCardChartOverview';
 import { getTotalAllMetricsBudget } from './components/SectionPages/CardChartOverview/utils';
 import { useExpenseReports } from './components/SectionPages/ExpenseReports/useExpenseReports';
-import { useMakerDAOExpenseMetrics } from './components/SectionPages/MakerDAOExpenseMetrics/useMakerDAOExpenseMetrics';
 import { useReservesWaterfallChart } from './components/SectionPages/ReservesWaterfallChartSection/useReservesWaterfallChart';
 import {
   getBudgetsAnalytics,

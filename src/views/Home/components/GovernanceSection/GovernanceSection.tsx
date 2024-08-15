@@ -7,13 +7,14 @@ import Proposals from './Proposals/Proposals';
 
 interface GovernanceSectionProps {
   governanceProposals: ExtendedExecutiveProposal[];
+  hatAddress: string;
 }
 
-const GovernanceSection: React.FC<GovernanceSectionProps> = ({ governanceProposals }) => (
+const GovernanceSection: React.FC<GovernanceSectionProps> = ({ governanceProposals, hatAddress }) => (
   <SectionContainer>
     <SectionTitle>{sectionsData.titles[1]}</SectionTitle>
 
-    <Proposals governanceProposals={governanceProposals} />
+    <Proposals governanceProposals={governanceProposals} hatAddress={hatAddress} />
     <ForumOverview />
   </SectionContainer>
 );
