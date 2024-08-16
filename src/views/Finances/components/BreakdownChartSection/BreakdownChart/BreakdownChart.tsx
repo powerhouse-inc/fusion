@@ -10,6 +10,7 @@ import {
   getChartAxisLabelByGranularity,
   formatBudgetName,
   removeBudgetWord,
+  getMonthAbbreviationToolTip,
 } from '@/views/Finances/utils/utils';
 import { getSelectMetricText } from '../utils';
 
@@ -47,6 +48,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
   const upTable = useMediaQuery((theme: Theme) => theme.breakpoints.up('tablet_768'));
   const isDesktop1024 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1024', 'desktop_1280'));
   const isDesktop1280 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1280', 'desktop_1440'));
+  const isDesktop1440 = useMediaQuery((theme: Theme) => theme.breakpoints.up('desktop_1440'));
 
   const isMobileOrLess = isMobile || isLessMobile;
   const showLineYear = (isMobile || isLessMobile) && selectedGranularity === 'monthly';
@@ -67,9 +69,13 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
   const options: EChartsOption = useMemo(
     () => ({
       tooltip: {
+        borderRadius: 12,
         show: !isMobile,
         trigger: 'axis',
         extraCssText: `z-index:${zIndexEnum.ECHART_TOOL_TIP}`,
+
+        backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
+        // This is the shadow of the on the bar that tooltip is
         axisPointer: {
           type: 'shadow',
           shadowStyle: {
@@ -78,6 +84,8 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
           },
         },
         padding: 0,
+        borderColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
+
         borderWidth: 1,
         position: function (
           point: [number, number],
@@ -104,12 +112,14 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
             yPos -= tooltipHeight;
           }
         },
-        borderColor: theme.palette.isLight ? '#D4D9E1' : '#231536',
+
         formatter: function (params: BarChartSeries[]) {
+          console.log(params);
           // If all values are cero, don't show tooltip
           if (params.every((item) => item.value === 0)) {
             return '';
           }
+
           const filteredParams = params.filter((item) => item.value !== 0 && Math.abs(item.value) > 0.004);
           const shortAmount = params.length > 10;
           const flexDirection = shortAmount ? 'row' : 'column';
@@ -123,12 +133,18 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
           const maxWithTable = isTablet ? 'max-width:190px' : isDesktop1024 ? 'max-width:450px' : '';
 
           return `
-            <div style="background-color:${
-              theme.palette.isLight ? '#fff' : '#000A13'
-            };padding:16px;overflow:auto;border-radius:3px;">
-              <div style="margin-bottom:16px;font-size:12px;font-weight:600;color:#B6BCC2;">${
-                (selectedGranularity as string) === 'Annually' ? year : params?.[0]?.name?.replace('’', "'")
-              }<span style="display:inline-block;margin-left:4px">${getSelectMetricText(selectedMetric)}</span></div>
+            <div style="border-radius:12px;background-color:${
+              theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800]
+            };box-shadow:${
+            theme.palette.isLight ? theme.fusionShadows.graphShadow : 'none'
+          };padding:16px;overflow:auto; font-family:Inter ,sans-serif">
+              <div style="margin-bottom:16px;font-size:12px;font-weight:600;color:${
+                theme.palette.isLight ? theme.palette.colors.charcoal[300] : '#B6BCC2'
+              }">${
+            (selectedGranularity as string) === 'Annually'
+              ? year
+              : getMonthAbbreviationToolTip(filteredParams?.[0]?.dataIndex as number)
+          }<span style="display:inline-block;margin-left:4px">${getSelectMetricText(selectedMetric)}</span></div>
               <div style="display:flex;flex-direction:${flexDirection};gap:${gap};${wrap}${minMax}">
                 ${filteredParams
                   .reverse()
@@ -144,12 +160,12 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
                       <circle cx="6.5" cy="6.5" r="4" fill="${item.color}" />
                     </svg>
                     <span style="display: inline-block;font-size:14px;color:${
-                      theme.palette.isLight ? '#231536' : '#B6BCC2'
+                      theme.palette.isLight ? theme.palette.colors.charcoal[300] : '#B6BCC2'
                     };white-space:nowrap;overflow:hidden;text-overflow:ellipsis;${maxWithTable}"> ${removeBudgetWord(
                         formatBudgetName(item.seriesName)
                       )}:</span>
                     <span style="font-size:16px;font-weight:700;color:${
-                      theme.palette.isLight ? '#231536' : '#EDEFFF'
+                      theme.palette.isLight ? theme.palette.colors.charcoal[900] : '#EDEFFF'
                     };display: inline-block;">${usLocalizedNumber(item.value, 2)}</span>
                   </div>`
                   )
@@ -160,9 +176,21 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
         },
       },
       grid: {
-        height: isLessMobile ? 198 : isMobile ? 205 : isTablet ? 210 : isDesktop1024 ? 220 : isDesktop1280 ? 300 : 300,
+        height: isLessMobile
+          ? 198
+          : isMobile
+          ? 170
+          : isTablet
+          ? 230
+          : isDesktop1024
+          ? 225
+          : isDesktop1280
+          ? 312
+          : isDesktop1440
+          ? 314
+          : 312,
         top: isLessMobile ? 10 : isMobile ? 10 : isTablet ? 10 : isDesktop1024 ? 30 : isDesktop1280 ? 11 : 11,
-        right: isMobile ? 2 : isTablet ? 0 : isDesktop1024 ? 0 : isDesktop1280 ? 4 : 4,
+        right: isMobile ? 4 : isTablet ? 0 : isDesktop1024 ? 0 : isDesktop1280 ? 4 : 4,
       },
       xAxis: {
         show: true,
@@ -182,13 +210,12 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
           show: false,
         },
         axisLabel: {
-          margin: isMobile ? 12 : isTablet ? 18 : isDesktop1024 ? 20 : isDesktop1280 ? 16 : 16,
-          color: theme.palette.isLight ? theme.palette.colors.slate[100] : '#708390',
+          margin: isMobile ? 12 : isTablet ? 12 : isDesktop1024 ? 16 : isDesktop1280 ? 16 : 16,
+          color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[300],
           align: 'center',
           fontFamily: 'OpenSansCondensed, sans-serif',
           fontWeight: 700,
-          fontSize: upTable ? 12 : 9,
-          height: upTable ? 15 : 11,
+          fontSize: isMobile ? 12 : 14,
           baseline: 'top',
           interval: 0,
           formatter: function (value: string) {
@@ -211,34 +238,33 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
         min: series.length === 0 ? 0 : null,
         max: series.length === 0 ? 1 : null,
         show: true,
+
         axisLabel: {
           show: true,
-          margin: isLessMobile ? 4 : isMobile ? 10 : isTablet ? 8 : isDesktop1024 ? 8 : isDesktop1280 ? 8 : 20,
+          fontFamily: 'OpenSansCondensed, sans-serif',
+          margin: isMobile ? 10 : isTablet ? 8 : isDesktop1024 ? 24 : isDesktop1280 ? 30 : isDesktop1440 ? 32 : 36,
           formatter: function (value: number, index: number) {
             if (value === 0 && index === 0) {
               return value.toString();
             }
-
             return replaceAllNumberLetOneBeforeDot(value, true);
           },
-          color: theme.palette.isLight ? '#231536' : '#EDEFFF',
-          fontSize: isLessMobile ? 12 : isMobile ? 10 : isTablet ? 14 : 14,
-          height: upTable ? 15 : 12,
-          fontFamily: 'OpenSansCondensed, sans-serif',
-          fontWeight: upTable ? 600 : 400,
+          color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[100],
+          fontSize: isLessMobile ? 12 : isMobile ? 12 : 14,
+          fontWeight: 700,
         },
         verticalAlign: 'middle',
-        height: upTable ? 15 : 12,
+
         type: 'value',
-        zlevel: 1,
-        splitNumber: 12,
+        zlevel: -1,
+        splitNumber: 9,
         axisLine: {
           show: false,
         },
         splitLine: {
           lineStyle: {
             width: 0.25,
-            color: theme.palette.isLight ? '#31424E' : '#D8E0E3',
+            color: theme.palette.isLight ? theme.palette.colors.gray[400] : theme.palette.colors.charcoal[800],
           },
         },
       },
@@ -247,6 +273,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
     [
       isDesktop1024,
       isDesktop1280,
+      isDesktop1440,
       isLessMobile,
       isMobile,
       isMobileOrLess,
@@ -254,9 +281,11 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
       selectedGranularity,
       selectedMetric,
       series,
+      theme.fusionShadows.graphShadow,
+      theme.palette.colors.charcoal,
+      theme.palette.colors.gray,
       theme.palette.colors.slate,
       theme.palette.isLight,
-      upTable,
       xAxisStyles,
       year,
     ]
@@ -339,37 +368,43 @@ const ChartContainer = styled('div')(({ theme }) => ({
   justifyContent: 'center',
   position: 'relative',
   width: '100%',
-  height: 260,
+  height: 227,
 
   [theme.breakpoints.up('tablet_768')]: {
     maxWidth: 'calc(100% - 300px)',
     height: 268,
     marginTop: 0,
+    paddingLeft: 20,
   },
 
   [theme.breakpoints.up('desktop_1024')]: {
     height: 288,
+    paddingLeft: 20,
     width: '100%',
     maxWidth: 'calc(100% - 362px)',
   },
 
   [theme.breakpoints.up('desktop_1280')]: {
-    height: 353,
+    height: 356,
+    paddingLeft: 0,
     maxWidth: 'calc(100% - 380px)',
   },
   [theme.breakpoints.up('desktop_1440')]: {
-    maxWidth: 'calc(100% - 392px)',
-    height: 353,
+    maxWidth: 'calc(100% - 353px)',
+    height: 356,
+    marginLeft: -10,
   },
 }));
 
 const YearXAxis = styled('div')<{ isLessMobile: boolean }>(({ theme, isLessMobile }) => {
-  const border = `1px solid ${theme.palette.isLight ? theme.palette.colors.charcoal[200] : 'red'}`;
+  const border = `1px solid ${
+    theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700]
+  }`;
 
   return {
     position: 'absolute',
-    bottom: isLessMobile ? 12 : 4,
-    left: isLessMobile ? 30 : 45,
+    bottom: isLessMobile ? 12 : 0,
+    left: isLessMobile ? 30 : 40,
     right: 5,
     height: 11,
     borderLeft: border,
@@ -383,14 +418,14 @@ const YearXAxis = styled('div')<{ isLessMobile: boolean }>(({ theme, isLessMobil
 const YearText = styled('div')(({ theme }) => ({
   fontSize: 12,
   lineHeight: 'normal',
-  color: theme.palette.isLight ? theme.palette.colors.charcoal[200] : 'red',
+  color: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700],
   position: 'absolute',
   bottom: -6,
 
   width: 52,
   left: '50%',
   transform: 'translateX(-50%)',
-  backgroundColor: theme.palette.isLight ? '#FFFFFF' : '#000000',
+  backgroundColor: theme.palette.isLight ? '#FFFFFF' : theme.palette.colors.charcoal[900],
   textAlign: 'center',
   fontWeight: 700,
   letterSpacing: '1px',

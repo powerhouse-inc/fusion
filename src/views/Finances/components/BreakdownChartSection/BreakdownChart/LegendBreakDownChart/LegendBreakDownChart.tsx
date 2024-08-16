@@ -34,8 +34,9 @@ const LegendBreakDownChart: FC<Props> = ({
       )} */}
       {series.map((element, index) => (
         <LegendItemBreakDownChart
+          index={index}
           element={element}
-          key={index}
+          key={element.name}
           handleToggleSeries={() => handleToggleSeries(element.name)}
           onLegendItemHover={() => onLegendItemHover(element.name)}
           onLegendItemLeave={() => onLegendItemLeave(element.name)}
@@ -62,8 +63,7 @@ const LegendContainer = styled('div')(({ theme }) => ({
   margin: '0 auto',
   flexWrap: 'wrap',
   rowGap: 16,
-  marginTop: 16,
-
+  marginTop: 22,
   [theme.breakpoints.up('tablet_768')]: {
     borderRadius: 12,
     flex: 1,
@@ -73,7 +73,7 @@ const LegendContainer = styled('div')(({ theme }) => ({
     margin: 'revert',
     justifyContent: 'center',
 
-    backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : 'red',
+    backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
   },
   [theme.breakpoints.up('desktop_1024')]: {
     width: 362,
@@ -125,7 +125,7 @@ const LineStyledBorder = styled('div')(({ theme }) => ({
 const BigButtonStyled = styled(BigButton)({
   minWidth: 'fit-content',
 });
-
+// This is for container ContainerSwitch
 // const ContainerSwitch = styled('div')(({ theme }) => ({
 //   display: 'none',
 //   [theme.breakpoints.up('tablet_768')]: {

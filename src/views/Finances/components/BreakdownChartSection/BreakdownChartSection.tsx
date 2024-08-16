@@ -107,6 +107,9 @@ const HeaderContainer = styled('div')({
   alignItems: 'flex-start',
 });
 
-const Wrapper = styled('div')({
-  marginTop: 32,
-});
+const Wrapper = styled('div')(({ theme }) => ({
+  marginTop: 16,
+  [theme.breakpoints.up('tablet_768')]: {
+    marginTop: 24,
+  },
+}));
