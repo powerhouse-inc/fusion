@@ -9,7 +9,7 @@ import FinancesView from './FinancesView';
 import type { Meta } from '@storybook/react';
 
 const meta: Meta<typeof FinancesView> = {
-  title: 'Fusion/Pages/Finances Views',
+  title: 'Fusion/Pages/Finances View',
   component: FinancesView,
   parameters: {
     layout: 'fullscreen',

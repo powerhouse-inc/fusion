@@ -1,11 +1,11 @@
 import { createThemeModeVariants } from '@ses/core/utils/storybook/factories';
 import { buildExpenseMetricsLineChartSeries } from '@/views/Finances/utils/utils';
-import MakerDAOExpenseMetrics from './MakerDAOExpenseMetrics';
+import ExpenseMetrics from './ExpenseMetrics';
 import type { Meta } from '@storybook/react';
 
-const meta: Meta<typeof MakerDAOExpenseMetrics> = {
+const meta: Meta<typeof ExpenseMetrics> = {
   title: 'Fusion/Views/Finances/MakerDAOExpenseMetrics',
-  component: MakerDAOExpenseMetrics,
+  component: ExpenseMetrics,
 
   parameters: {
     chromatic: {
@@ -44,7 +44,7 @@ const args = [
   },
 ];
 
-const [[LightMode, DarkMode]] = createThemeModeVariants(MakerDAOExpenseMetrics, args, false);
+const [[LightMode, DarkMode]] = createThemeModeVariants(ExpenseMetrics, args, false);
 export { LightMode, DarkMode };
 
 LightMode.parameters = {

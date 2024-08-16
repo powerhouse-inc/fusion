@@ -4,7 +4,7 @@ import lightTheme from '@ses/styles/theme/themes';
 import React from 'react';
 import SectionTitle from '../SectionTitle/SectionTitle';
 import CumulativeFilter from './CumulativeFilter/CumulativeFilter';
-import type { CumulativeType } from './useMakerDAOExpenseMetrics';
+import type { CumulativeType } from './useExpenseMetrics';
 import type { AnalyticGranularity } from '@ses/core/models/interfaces/analytic';
 
 interface Props {

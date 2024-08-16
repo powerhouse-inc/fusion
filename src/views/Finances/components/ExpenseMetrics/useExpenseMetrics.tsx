@@ -1,4 +1,4 @@
-import { useThemeContext } from '@ses/core/context/ThemeContext';
+import { useTheme } from '@mui/material';
 import { DateTime } from 'luxon';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
@@ -10,8 +10,8 @@ import type { AnalyticGranularity, AnalyticMetric, AnalyticSeriesRow } from '@se
 
 export type CumulativeType = 'relative' | 'absolute';
 
-export const useMakerDAOExpenseMetrics = (year: string) => {
-  const { isLight } = useThemeContext();
+export const useExpenseMetrics = (year: string) => {
+  const theme = useTheme();
   const [selectedGranularity, setSelectedGranularity] = useState<AnalyticGranularity>('monthly');
   const handleGranularityChange = (value: AnalyticGranularity) => {
     setSelectedGranularity(value);
@@ -134,8 +134,8 @@ export const useMakerDAOExpenseMetrics = (year: string) => {
   };
 
   const series: LineChartSeriesData[] = useMemo(
-    () => buildExpenseMetricsLineChartSeries(data, inactiveSeries, isLight, selectedGranularity),
-    [data, inactiveSeries, isLight, selectedGranularity]
+    () => buildExpenseMetricsLineChartSeries(data, inactiveSeries, theme.palette.isLight, selectedGranularity),
+    [data, inactiveSeries, theme.palette.isLight, selectedGranularity]
   );
 
   return {

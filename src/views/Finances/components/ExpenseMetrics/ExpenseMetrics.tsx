@@ -1,14 +1,14 @@
 // All comments will be removed in future PRs
 import { styled } from '@mui/material';
-import React from 'react';
 import Card from '@/components/Card/Card';
 import FinancesTitle from '@/views/Finances/components/FinancesTitle/FinancesTitle';
 import type { LineChartSeriesData } from '@/views/Finances/utils/types';
-import MakerDAOChartMetrics from './MakerDAOChartMetrics/MakerDAOChartMetrics';
-import MakerDAOExpenseMetricsSkeleton from './MakerDAOExpenseMetricsSkeleton';
+import ExpenseMetricsChart from './ExpenseMetricsChart/ExpenseMetricsChart';
+import ExpenseMetricsSkeleton from './ExpenseMetricsSkeleton';
 // import TitleFilterComponent from './TitleFilterComponent';
-import type { CumulativeType } from './useMakerDAOExpenseMetrics';
+import type { CumulativeType } from './useExpenseMetrics';
 import type { AnalyticGranularity } from '@ses/core/models/interfaces/analytic';
+import type { FC } from 'react';
 
 interface Props {
   title: string;
@@ -24,7 +24,7 @@ interface Props {
   isLoading: boolean;
 }
 
-const MakerDAOExpenseMetricsFinances: React.FC<Props> = ({
+const ExpenseMetricsFinances: FC<Props> = ({
   title,
   // handleGranularityChange,
   selectedGranularity,
@@ -73,9 +73,9 @@ const MakerDAOExpenseMetricsFinances: React.FC<Props> = ({
     />
     <div>
       {isLoading ? (
-        <MakerDAOExpenseMetricsSkeleton />
+        <ExpenseMetricsSkeleton />
       ) : (
-        <MakerDAOChartMetrics
+        <ExpenseMetricsChart
           year={year}
           selectedGranularity={selectedGranularity}
           series={series}
@@ -88,7 +88,7 @@ const MakerDAOExpenseMetricsFinances: React.FC<Props> = ({
   </Container>
 );
 
-export default MakerDAOExpenseMetricsFinances;
+export default ExpenseMetricsFinances;
 
 const Container = styled(Card)(({ theme }) => ({
   width: '100%',

@@ -5,7 +5,7 @@ import { SelectChevronDown } from '@ses/components/svg/select-chevron-down';
 import { useThemeContext } from '@ses/core/context/ThemeContext';
 import { useState, useRef } from 'react';
 import CumulativeSelectItem from './CumulativeSelectItem';
-import type { CumulativeType } from '../useMakerDAOExpenseMetrics';
+import type { CumulativeType } from '../useExpenseMetrics';
 
 interface CumulativeFilterProps {
   isCumulative: boolean;

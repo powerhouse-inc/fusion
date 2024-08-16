@@ -1,15 +1,15 @@
-import { Skeleton, styled, useMediaQuery } from '@mui/material';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
+import { Skeleton, styled, useMediaQuery, useTheme } from '@mui/material';
 import { Fragment } from 'react';
 import type { Theme } from '@mui/material';
+import type { FC } from 'react';
 
-const MakerDAOExpenseMetricsSkeleton: React.FC = () => {
-  const { isLight } = useThemeContext();
+const MakerDAOExpenseMetricsSkeleton: FC = () => {
+  const theme = useTheme();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
   const isDesktop1024 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1024', 'desktop_1280'));
-  const fill = isLight ? '#fff' : '#000';
-  const stroke = isLight ? '#D1DEE6' : '#546978';
+  const fill = theme.palette.isLight ? '#fff' : '#000';
+  const stroke = theme.palette.isLight ? '#D1DEE6' : '#546978';
 
   const yAxisLabelHeight = isMobile ? 8.75 : 12.25;
 

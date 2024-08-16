@@ -1,10 +1,10 @@
 // All comments will be removed in future PRs
 import { styled } from '@mui/material';
-import React from 'react';
-import MakerDAOExpenseMetrics from '@/views/Finances/components/MakerDAOExpenseMetrics/MakerDAOExpenseMetrics';
-import type { CumulativeType } from '@/views/Finances/components/MakerDAOExpenseMetrics/useMakerDAOExpenseMetrics';
+import ExpenseMetrics from '@/views/Finances/components/ExpenseMetrics/ExpenseMetrics';
+import type { CumulativeType } from '@/views/Finances/components/ExpenseMetrics/useExpenseMetrics';
 import type { LineChartSeriesData } from '@/views/Finances/utils/types';
 import type { AnalyticGranularity } from '@ses/core/models/interfaces/analytic';
+import type { FC } from 'react';
 
 interface Props {
   expenseMetrics: {
@@ -22,9 +22,9 @@ interface Props {
   };
 }
 
-const ExpenseMetricsSection: React.FC<Props> = ({ expenseMetrics }) => (
+const ExpenseMetricsSection: FC<Props> = ({ expenseMetrics }) => (
   <Container>
-    <MakerDAOExpenseMetrics {...expenseMetrics} />
+    <ExpenseMetrics {...expenseMetrics} />
     <CurrencyBreakdown />
   </Container>
 );
