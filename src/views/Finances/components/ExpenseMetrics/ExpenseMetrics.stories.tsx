@@ -4,7 +4,7 @@ import ExpenseMetrics from './ExpenseMetrics';
 import type { Meta } from '@storybook/react';
 
 const meta: Meta<typeof ExpenseMetrics> = {
-  title: 'Fusion/Views/Finances/MakerDAOExpenseMetrics',
+  title: 'Fusion/Views/Finances/ExpenseMetrics',
   component: ExpenseMetrics,
 
   parameters: {
@@ -57,8 +57,8 @@ LightMode.parameters = {
             width: 343,
           },
           style: {
-            top: 0,
-            left: 0,
+            top: -11,
+            left: -14,
           },
         },
       },
@@ -69,8 +69,8 @@ LightMode.parameters = {
             width: 704,
           },
           style: {
-            top: 0,
-            left: 0,
+            top: -11,
+            left: -14,
           },
         },
       },
@@ -81,8 +81,8 @@ LightMode.parameters = {
             width: 960,
           },
           style: {
-            top: 0,
-            left: 0,
+            top: -11,
+            left: -14,
           },
         },
       },
@@ -93,8 +93,8 @@ LightMode.parameters = {
             width: 584,
           },
           style: {
-            top: 0,
-            left: 0,
+            top: -11,
+            left: -14,
           },
         },
       },
@@ -105,8 +105,8 @@ LightMode.parameters = {
             width: 640,
           },
           style: {
-            top: 0,
-            left: 0,
+            top: -11,
+            left: -14,
           },
         },
       },
