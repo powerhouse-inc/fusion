@@ -355,12 +355,12 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
 export default DesktopChart;
 
 const Container = styled('div')<{ isCoreThirdLevel: boolean }>(({ theme, isCoreThirdLevel }) => ({
-  display: 'flex',
-  flexDirection: 'row',
-  width: '100%',
-  gap: 64,
+  display: 'none',
 
   [theme.breakpoints.up('tablet_768')]: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
     gap: 20,
     justifyContent: 'center',
   },

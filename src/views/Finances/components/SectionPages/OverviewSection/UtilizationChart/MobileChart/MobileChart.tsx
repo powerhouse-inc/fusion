@@ -45,9 +45,13 @@ const MobileChart: React.FC<MobileChartProps> = ({ seriesData }) => {
 
 export default MobileChart;
 
-const Wrapper = styled('div')(() => ({
+const Wrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   gap: 16,
+
+  [theme.breakpoints.up('tablet_768')]: {
+    display: 'none',
+  },
 }));
 
 const BarContainer = styled('div')(() => ({
