@@ -41,7 +41,7 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
     showMoreCards,
     toggleShowMoreCards,
     breakdownTable,
-    makerDAOExpensesMetrics,
+    expensesMetrics,
     breakdownChartSectionData,
     expenseReportSection,
     reserveChart,
@@ -169,15 +169,15 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
         <ExpenseMetricsSection
           expenseMetrics={{
             title: levelNumber === 1 ? 'Sky Expense Metrics' : 'Expense Metrics',
-            handleGranularityChange: makerDAOExpensesMetrics.handleGranularityChange,
-            selectedGranularity: makerDAOExpensesMetrics.selectedGranularity,
-            isCumulative: makerDAOExpensesMetrics.isCumulative,
-            handleToggleCumulative: makerDAOExpensesMetrics.handleToggleCumulative,
-            cumulativeType: makerDAOExpensesMetrics.cumulativeType,
-            handleChangeCumulativeType: makerDAOExpensesMetrics.handleChangeCumulativeType,
-            series: makerDAOExpensesMetrics.series,
-            handleToggleSeries: makerDAOExpensesMetrics.handleToggleSeries,
-            isLoading: makerDAOExpensesMetrics.isLoading,
+            handleGranularityChange: expensesMetrics.handleGranularityChange,
+            selectedGranularity: expensesMetrics.selectedGranularity,
+            isCumulative: expensesMetrics.isCumulative,
+            handleToggleCumulative: expensesMetrics.handleToggleCumulative,
+            cumulativeType: expensesMetrics.cumulativeType,
+            handleChangeCumulativeType: expensesMetrics.handleChangeCumulativeType,
+            series: expensesMetrics.series,
+            handleToggleSeries: expensesMetrics.handleToggleSeries,
+            isLoading: expensesMetrics.isLoading,
             year,
           }}
         />

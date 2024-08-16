@@ -7,7 +7,7 @@ import { useState, useMemo, useEffect } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import type { BreadcrumbItem } from '@/components/Breadcrumb/Breadcrumb';
 import useBreakdownChart from './components/BreakdownChartSection/useBreakdownChart';
-import { useMakerDAOExpenseMetrics } from './components/MakerDAOExpenseMetrics/useMakerDAOExpenseMetrics';
+import { useExpenseMetrics } from './components/ExpenseMetrics/useExpenseMetrics';
 import { useBreakdownTable } from './components/SectionPages/BreakdownTable/useBreakdownTable';
 import { useCardChartOverview } from './components/SectionPages/CardChartOverview/useCardChartOverview';
 import { getTotalAllMetricsBudget } from './components/SectionPages/CardChartOverview/utils';
@@ -148,8 +148,8 @@ export const useFinancesView = (budgets: Budget[], allBudgets: Budget[], initial
   // All the logic required by the BreakdownTable section
   const breakdownTable = useBreakdownTable(year, budgets, allBudgets);
 
-  // All the logic required by the MakerDAOExpenseMetrics
-  const makerDAOExpensesMetrics = useMakerDAOExpenseMetrics(year);
+  // All the logic required by the ExpenseMetrics
+  const expensesMetrics = useExpenseMetrics(year);
 
   // All the logic for the Reserve Chart
   const reserveChart = useReservesWaterfallChart(codePath, budgets, allBudgets, year);
@@ -173,7 +173,7 @@ export const useFinancesView = (budgets: Budget[], allBudgets: Budget[], initial
     canLoadMoreCards,
     showMoreCards,
     toggleShowMoreCards,
-    makerDAOExpensesMetrics,
+    expensesMetrics,
     expenseReportSection: expenseTrendFinances,
     reserveChart,
     code,
