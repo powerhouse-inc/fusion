@@ -1,5 +1,6 @@
 import { styled } from '@mui/material';
 import React from 'react';
+import { replaceAllNumberLetOneBeforeDot } from '@/core/utils/string';
 import type { BreakdownChartSeriesData } from '@/views/Finances/utils/types';
 import { formatBudgetName, removeBudgetWord } from '@/views/Finances/utils/utils';
 import type { FC } from 'react';
@@ -11,6 +12,7 @@ interface Props {
   onLegendItemLeave: (legendName: string) => void;
   handleToggleSeries: (series: string) => void;
   className?: string;
+  index: number;
 }
 
 const LegendItemBreakDownChart: FC<Props> = ({
@@ -19,6 +21,7 @@ const LegendItemBreakDownChart: FC<Props> = ({
   onLegendItemHover,
   onLegendItemLeave,
   handleToggleSeries,
+  index,
   className,
 }) => (
   <Container
@@ -36,7 +39,7 @@ const LegendItemBreakDownChart: FC<Props> = ({
     </SVGContainer>
     <Name>{removeBudgetWord(formatBudgetName(element.name))}</Name>
 
-    <Value>1.79 M</Value>
+    <Value>{replaceAllNumberLetOneBeforeDot(element?.data[index].value ?? 0, true)}</Value>
   </Container>
 );
 
@@ -61,31 +64,42 @@ const SVGContainer = styled('div')({
 });
 
 const SvgStyled = styled('svg')(({ theme }) => ({
-  width: 13,
-  height: 13,
+  width: 12,
+  height: 12,
   [theme.breakpoints.up('tablet_768')]: {
     width: 16,
     height: 16,
   },
 }));
 const Name = styled('div')(({ theme }) => ({
-  fontSize: 16,
+  fontSize: 12,
   lineHeight: '18px',
   fontWeight: 600,
-  color: theme.palette.isLight ? theme.palette.colors.slate[900] : 'red',
+  color: theme.palette.isLight ? theme.palette.colors.slate[900] : theme.palette.colors.slate[50],
 
   textAlign: 'center',
   [theme.breakpoints.up('tablet_768')]: {
-    fontSize: 16,
-    gap: 8,
+    fontSize: 14,
     lineHeight: '22px',
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    fontSize: 16,
+    lineHeight: '24px',
   },
 }));
 
 const Value = styled('div')(({ theme }) => ({
-  color: theme.palette.isLight ? theme.palette.colors.slate[200] : 'red',
+  color: theme.palette.colors.slate[200],
   fontSize: 12,
   fontStyle: 'normal',
   fontWeight: 600,
   lineHeight: '18px',
+  [theme.breakpoints.up('tablet_768')]: {
+    fontSize: 14,
+    lineHeight: '22px',
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    fontSize: 16,
+    lineHeight: '24px',
+  },
 }));

@@ -76,7 +76,7 @@ const Container = styled('div')({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
-  gap: 4,
+  gap: 8,
 
   scrollMarginTop: 150,
 });
