@@ -191,8 +191,8 @@ const NavContainer = styled('div')(({ theme }) => ({
 
 const LogoContainerMobile = styled('div')(({ theme }) => ({
   display: 'flex',
-  width: 48,
-  height: 48,
+  width: 32,
+  height: 32,
 
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'none',
@@ -220,7 +220,7 @@ const LeftSection = styled('div')(({ theme }) => ({
   gap: 8,
   alignItems: 'center',
   [theme.breakpoints.up('tablet_768')]: {
-    gap: 24,
+    gap: 12,
   },
   [theme.breakpoints.up('desktop_1024')]: {
     gap: 'revert',

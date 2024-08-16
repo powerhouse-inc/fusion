@@ -136,7 +136,7 @@ const Container = styled('div', {
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-  padding: `${isExpanded ? 32 : 48}px 24px 88px`,
+  padding: `${isExpanded ? 32 : 48}px 24px 112px`,
   borderRadius: 12,
   backgroundPosition: '50% 50%',
   backgroundRepeat: 'no-repeat',
