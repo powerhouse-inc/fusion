@@ -46,12 +46,12 @@ const ContainerLegend = styled('div')<{ isCoreThirdLevel: boolean; changeAlignme
     flexDirection: 'column',
     flexWrap: 'wrap',
     justifyContent: isCoreThirdLevel && changeAlignment ? 'flex-start' : changeAlignment ? 'flex-start' : 'center',
-    gap: 8,
+    gap: isCoreThirdLevel ? 4 : 8,
     maxWidth: '100%',
-    maxHeight: isCoreThirdLevel ? 180 : 210,
+    maxHeight: 155,
 
     [theme.breakpoints.up('desktop_1280')]: {
-      columnGap: 32,
+      columnGap: 24,
     },
   })
 );

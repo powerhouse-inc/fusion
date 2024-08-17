@@ -59,14 +59,6 @@ const ItemLegendDoughnut: React.FC<Props> = ({
 
 export default ItemLegendDoughnut;
 
-const LegendIcon = styled('div')<{ backgroundColor: string }>(({ backgroundColor }) => ({
-  backgroundColor,
-  minWidth: 8,
-  maxWidth: 8,
-  maxHeight: 8,
-  minHeight: 8,
-  borderRadius: '50%',
-}));
 const LegendItem = styled('div')<{ isCoreThirdLevel: boolean; changeAlignment: boolean }>(
   ({ theme, isCoreThirdLevel, changeAlignment }) => ({
     display: 'flex',
@@ -94,11 +86,19 @@ const LegendItem = styled('div')<{ isCoreThirdLevel: boolean; changeAlignment: b
   })
 );
 
+const LegendIcon = styled('div')<{ backgroundColor: string }>(({ backgroundColor }) => ({
+  backgroundColor,
+  minWidth: 8,
+  maxWidth: 8,
+  maxHeight: 8,
+  minHeight: 8,
+  borderRadius: '50%',
+}));
+
 const ValueDescription = styled('div')<{ isCoreThirdLevel: boolean }>(({ theme, isCoreThirdLevel }) => ({
-  color: theme.palette.isLight ? '#9FAFB9' : '#546978',
   fontSize: 12,
   fontWeight: 500,
-  lineHeight: 'normal',
+  lineHeight: isCoreThirdLevel ? '24px' : 'normal',
   display: 'flex',
   marginLeft: isCoreThirdLevel ? 4 : 14,
   ...(isCoreThirdLevel && {

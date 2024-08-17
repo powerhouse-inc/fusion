@@ -288,6 +288,8 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
     return <DoughnutChartFinancesSkeleton />;
   }
 
+  console.log(numberSliderPerLevel);
+
   return (
     <Container isCoreThirdLevel={isCoreThirdLevel}>
       <ContainerChart>
@@ -435,22 +437,18 @@ const SwiperWrapper = styled('div')<{ isCoreThirdLevel: boolean; numberSliderPer
     },
 
     [theme.breakpoints.up('desktop_1280')]: {
-      marginTop: !isCoreThirdLevel ? 10 : 10,
       display: 'flex',
       position: 'relative',
       ...(numberSliderPerLevel === 10 && {
         minWidth: 365,
-        height: 'calc(100% - 10px)',
       }),
     },
 
     [theme.breakpoints.up('desktop_1440')]: {
-      marginTop: !isCoreThirdLevel ? 10 : 10,
       display: 'flex',
       position: 'relative',
       ...(numberSliderPerLevel === 10 && {
         minWidth: 440,
-        height: 'calc(100% - 10px)',
       }),
     },
 
