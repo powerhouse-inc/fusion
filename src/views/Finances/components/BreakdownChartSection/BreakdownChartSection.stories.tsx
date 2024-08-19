@@ -320,7 +320,7 @@ LightMode.parameters = {
             width: 1200,
           },
           style: {
-            top: 30,
+            top: 52,
             left: -14,
           },
         },
@@ -332,7 +332,7 @@ LightMode.parameters = {
             width: 1312,
           },
           style: {
-            top: 30,
+            top: 52,
             left: -14,
           },
         },

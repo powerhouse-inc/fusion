@@ -131,7 +131,7 @@ const ContainerMobile = styled('div')<{ isLessThanFifteen?: boolean }>(({ theme,
   gap: 16,
   justifyContent: 'center',
   alignItems: 'flex-start',
-  marginTop: 16,
+  marginTop: 22,
   ...(isLessThanFifteen && {
     flexDirection: 'row',
     flexWrap: 'wrap',
