@@ -3,8 +3,10 @@ import { useThemeContext } from '@ses/core/context/ThemeContext';
 import lightTheme from '@ses/styles/theme/themes';
 import { useMemo, useRef, useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
+import type { Filter } from '@/components/FiltersBundle/types';
 import { getBudgetsAnalytics } from '../../utils/utils';
 import { getBarWidth, parseAnalyticsToSeriesBreakDownChart, setBorderRadiusForSeries } from './utils';
+import type { SelectItem } from '@ses/components/SingleItemSelect/SingleItemSelect';
 import type {
   AnalyticGranularity,
   AnalyticMetric,
@@ -17,13 +19,53 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
   const { isLight } = useThemeContext();
   const [isChecked, setIsChecked] = useState(false);
   const [selectedMetric, setSelectedMetric] = useState<AnalyticMetric>('Budget');
-  const refBreakDownChart = useRef<EChartsOption | null>(null);
   const [selectedGranularity, setSelectedGranularity] = useState<AnalyticGranularity>('monthly');
+  const refBreakDownChart = useRef<EChartsOption | null>(null);
   const isMobile = useMediaQuery(lightTheme.breakpoints.down('tablet_768'));
   const isTablet = useMediaQuery(lightTheme.breakpoints.between('tablet_768', 'desktop_1024'));
   const isDesktop1024 = useMediaQuery(lightTheme.breakpoints.between('desktop_1024', 'desktop_1280'));
   const isDesktop1280 = useMediaQuery(lightTheme.breakpoints.up('desktop_1280'));
   const barWidth = getBarWidth(isMobile, isTablet, isDesktop1024, isDesktop1280, selectedGranularity);
+
+  const metricItems: SelectItem<AnalyticMetric>[] = [
+    {
+      label: 'Budget',
+      value: 'Budget',
+    },
+    {
+      label: 'Forecast',
+      value: 'Forecast',
+    },
+    {
+      label: 'Net Protocol Outflow',
+      value: 'ProtocolNetOutflow',
+      labelWhenSelected: isMobile ? 'Prtcol Outfl' : 'Protocol Outflow',
+    },
+    {
+      label: 'Net Expenses On-Chain',
+      value: 'PaymentsOnChain',
+      labelWhenSelected: 'Net On-Chain',
+    },
+    {
+      label: 'Actuals',
+      value: 'Actuals',
+    },
+  ];
+
+  const granularityItems = [
+    {
+      label: 'Monthly',
+      value: 'monthly',
+    },
+    {
+      label: 'Quarterly',
+      value: 'quarterly',
+    },
+    {
+      label: 'Annually',
+      value: 'annual',
+    },
+  ];
 
   const handleMetricChange = (value: AnalyticMetric) => {
     setSelectedMetric(value);
@@ -106,6 +148,48 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
     return setBorderRadiusForSeries(parsedSeries, barBorderRadius);
   }, [allSeries, barBorderRadius, inactiveSeries]);
 
+  const filters: Filter[] = [
+    {
+      type: 'select',
+      id: 'Metrics',
+      label: 'Metrics',
+      selected: selectedMetric,
+      multiple: false,
+      onChange: (value: string | number | (string | number)[]) => {
+        setSelectedMetric(value as AnalyticMetric);
+      },
+      options: metricItems,
+      withAll: false,
+      widthStyles: {
+        width: 'fit-content',
+        menuWidth: 350,
+      },
+    },
+    {
+      type: 'select',
+      id: 'Granularity',
+      label: 'Granularity',
+      selected: selectedGranularity,
+      multiple: false,
+      onChange: (value: string | number | (string | number)[]) => {
+        setSelectedGranularity(value as AnalyticGranularity);
+      },
+      options: granularityItems,
+      withAll: false,
+      widthStyles: {
+        width: 'fit-content',
+        menuWidth: 350,
+      },
+    },
+  ];
+  //
+  const canReset = false;
+  const onReset = () => {
+    console.log('delete');
+  };
+
+  // TODO: Change this for the level of the page after checking with the client
+  const showLegendValue = true;
   return {
     isLoading,
     selectedMetric,
@@ -123,6 +207,10 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
     refBreakDownChart,
     isChecked,
     handleChangeSwitch,
+    filters,
+    canReset,
+    onReset,
+    showLegendValue,
   };
 };
 
