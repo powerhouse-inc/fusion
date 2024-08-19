@@ -278,67 +278,62 @@ LightMode.parameters = {
   figma: {
     component: {
       375: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=28966:337473&mode=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16:12963&m=dev',
         options: {
           componentStyle: {
             width: 343,
           },
           style: {
-            top: 40,
-            left: 0,
+            top: 30,
+            left: -14,
           },
         },
       },
       768: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=28966:331338&mode=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16:10909&m=dev',
         options: {
           componentStyle: {
             width: 704,
           },
           style: {
-            top: 40,
-            left: 0,
+            top: 30,
+            left: -14,
           },
         },
       },
       1024: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=28966:329693&mode=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16:6688&m=dev',
         options: {
           componentStyle: {
             width: 960,
           },
           style: {
-            top: 40,
-            left: 0,
+            top: 30,
+            left: -14,
           },
         },
       },
       1280: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=28966:334362&mode=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16:4112&m=dev',
         options: {
           componentStyle: {
-            width: 1184,
+            width: 1200,
           },
           style: {
-            top: 40,
-            left: 0,
+            top: 30,
+            left: -14,
           },
         },
       },
       1440: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=28966:335891&mode=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=8:10454&m=dev',
         options: {
           componentStyle: {
             width: 1312,
           },
           style: {
-            top: 40,
-            left: 0,
+            top: 30,
+            left: -14,
           },
         },
       },

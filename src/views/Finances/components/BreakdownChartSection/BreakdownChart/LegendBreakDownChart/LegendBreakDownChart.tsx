@@ -1,8 +1,7 @@
 import { styled } from '@mui/material';
 import React from 'react';
-import BigButton from '@/views/CoreUnitAbout/components/Button/BigButton/BigButton';
+import SimpleBar from 'simplebar-react';
 import type { BreakdownChartSeriesData } from '@/views/Finances/utils/types';
-// import SwitchComponent from '../SwitchComponent/SwitchComponent';
 import LegendItemBreakDownChart from './LegendItemBreakDownChart';
 import type { FC } from 'react';
 
@@ -13,6 +12,7 @@ interface Props {
   onLegendItemLeave: (legendName: string) => void;
   // isChecked: boolean;
   // handleChangeSwitch: () => void;
+  showLegendValue?: boolean;
 }
 
 const LegendBreakDownChart: FC<Props> = ({
@@ -20,59 +20,95 @@ const LegendBreakDownChart: FC<Props> = ({
   handleToggleSeries,
   onLegendItemHover,
   onLegendItemLeave,
+  showLegendValue,
   // isChecked,
   // handleChangeSwitch,
 }) => {
   const showAll = series.length > 15;
-  // const turnOff = series.length < 15;
+  const showScroll = series.length > 15;
   return (
-    <LegendContainer>
-      {/* {turnOff && (
-        <ContainerSwitch>
-          <SwitchComponent isChecked={isChecked} handleChangeSwitch={handleChangeSwitch} />
-        </ContainerSwitch>
-      )} */}
-      {series.map((element, index) => (
-        <LegendItemBreakDownChart
-          index={index}
-          element={element}
-          key={element.name}
-          handleToggleSeries={() => handleToggleSeries(element.name)}
-          onLegendItemHover={() => onLegendItemHover(element.name)}
-          onLegendItemLeave={() => onLegendItemLeave(element.name)}
-        />
-      ))}
-      {showAll && (
-        <ButtonContainer>
-          <LineStyledBorder />
-          <BigButtonStyled title="View All" />
-          <LineStyledBorder />
-        </ButtonContainer>
+    <>
+      <ContainerMobile isLessThanFifteen={showAll}>
+        {series.map((element, index) => (
+          <LegendItemBreakDownChart
+            index={index}
+            element={element}
+            key={element.name}
+            handleToggleSeries={() => handleToggleSeries(element.name)}
+            onLegendItemHover={() => onLegendItemHover(element.name)}
+            onLegendItemLeave={() => onLegendItemLeave(element.name)}
+            showLegendValue={showLegendValue}
+          />
+        ))}
+      </ContainerMobile>
+
+      {showScroll ? (
+        <LegendContainer>
+          <ContainerSwitch>
+            <div
+              style={{
+                width: 42,
+                height: 21,
+              }}
+            >
+              Switch
+            </div>
+            {/* TODO:Add the component of <SwitchComponent isChecked={false} handleChangeSwitch={() => {}} /> */}
+          </ContainerSwitch>
+          <ContainerScroll>
+            <SimpleBarStyled>
+              <ContainerSeries>
+                {series.map((element, index) => (
+                  <LegendItemBreakDownChart
+                    index={index}
+                    element={element}
+                    key={element.name}
+                    handleToggleSeries={() => handleToggleSeries(element.name)}
+                    onLegendItemHover={() => onLegendItemHover(element.name)}
+                    onLegendItemLeave={() => onLegendItemLeave(element.name)}
+                    showLegendValue={showLegendValue}
+                  />
+                ))}
+              </ContainerSeries>
+            </SimpleBarStyled>
+          </ContainerScroll>
+        </LegendContainer>
+      ) : (
+        <SimpleContainer>
+          <SimpleContainerSeries>
+            {series.map((element, index) => (
+              <LegendItemBreakDownChart
+                index={index}
+                element={element}
+                key={element.name}
+                handleToggleSeries={() => handleToggleSeries(element.name)}
+                onLegendItemHover={() => onLegendItemHover(element.name)}
+                onLegendItemLeave={() => onLegendItemLeave(element.name)}
+                showLegendValue={showLegendValue}
+              />
+            ))}
+          </SimpleContainerSeries>
+        </SimpleContainer>
       )}
-    </LegendContainer>
+    </>
   );
 };
 
 export default LegendBreakDownChart;
 
 const LegendContainer = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'flex-start',
-  position: 'relative',
-  margin: '0 auto',
-  flexWrap: 'wrap',
-  rowGap: 16,
-  marginTop: 22,
+  display: 'none',
   [theme.breakpoints.up('tablet_768')]: {
+    display: 'flex',
+    flexDirection: 'column',
     borderRadius: 12,
+    width: 231,
+    minWidth: 231,
     flex: 1,
-    padding: '0 16px',
-    width: 263,
-    minWidth: 263,
-    margin: 'revert',
+    gap: 8,
+    height: '100%',
+    padding: '8px 8px 16px 16px',
     justifyContent: 'center',
-
     backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
   },
   [theme.breakpoints.up('desktop_1024')]: {
@@ -89,48 +125,132 @@ const LegendContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const ButtonContainer = styled('div')(({ theme }) => ({
+const ContainerMobile = styled('div')<{ isLessThanFifteen?: boolean }>(({ theme, isLessThanFifteen = false }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 16,
+  justifyContent: 'center',
+  alignItems: 'flex-start',
+  marginTop: 16,
+  ...(isLessThanFifteen && {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    rowGap: 16,
+    columnGap: 8,
+  }),
+  [theme.breakpoints.up('tablet_768')]: {
+    display: 'none',
+  },
+}));
+
+const ContainerSeries = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
+  flexWrap: 'wrap',
+
+  justifyContent: 'flex-start',
+  alignItems: 'center',
+  columnGap: 16,
+  rowGap: 16,
+  height: '100%',
+  [theme.breakpoints.up('tablet_768')]: {
+    height: 'none',
+  },
+}));
+
+const SimpleBarStyled = styled(SimpleBar)<{ isLessThanFifteen?: boolean }>(({ theme }) => ({
+  height: '100%',
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  overflow: 'hidden',
-  [theme.breakpoints.down('desktop_1024')]: {
-    marginBottom: '32px',
+  '.simplebar-scrollbar::before': {
+    width: 4,
+    marginLeft: 4,
+    height: 128,
+    background: theme.palette.isLight ? theme.palette.colors.charcoal[500] : theme.palette.colors.charcoal[700],
+    borderRadius: 12,
   },
-  ':hover': {
-    '& > div:nth-of-type(1) , div:nth-of-type(2)': {
-      borderTop: `1px solid ${
-        theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700]
-      }`,
-    },
-    '& > button': {
-      background: 'none',
-      border: `1px solid ${
-        theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700]
-      }`,
-      color: theme.palette.isLight ? theme.palette.colors.slate[300] : theme.palette.colors.charcoal[600],
-    },
+  [theme.breakpoints.up('tablet_768')]: {
+    height: 215,
+    maxHeight: 215,
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
+    height: 235,
+    maxHeight: 235,
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    height: 300,
+    maxHeight: 300,
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    height: 300,
+    maxHeight: 300,
   },
 }));
 
-const LineStyledBorder = styled('div')(({ theme }) => ({
+const ContainerScroll = styled('div')(() => ({
   display: 'flex',
-  width: '100%',
-  borderTop: `1px solid ${
-    theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.charcoal[800]
-  }`,
+  position: 'relative',
+  flexDirection: 'column',
+  alignItems: 'center',
+  rowGap: 4,
+  columnGap: 4,
+  gap: 4,
 }));
 
-const BigButtonStyled = styled(BigButton)({
-  minWidth: 'fit-content',
-});
-// This is for container ContainerSwitch
-// const ContainerSwitch = styled('div')(({ theme }) => ({
-//   display: 'none',
-//   [theme.breakpoints.up('tablet_768')]: {
-//     position: 'absolute',
-//     top: 16,
-//     right: 16,
-//   },
-// }));
+const SimpleContainer = styled('div')(({ theme }) => ({
+  display: 'none',
+  [theme.breakpoints.up('tablet_768')]: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    borderRadius: 12,
+    width: 231,
+    minWidth: 231,
+    flex: 1,
+    padding: '0px 16px',
+    backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
+    height: 288,
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    height: 353,
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    height: 353,
+    maxWidth: 392,
+  },
+}));
+
+const SimpleContainerSeries = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'flex-start',
+  rowGap: 24,
+  height: '100%',
+
+  [theme.breakpoints.up('tablet_768')]: {
+    height: 268,
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
+    height: 288,
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    height: 353,
+  },
+}));
+
+const ContainerSwitch = styled('div')(({ theme }) => ({
+  display: 'none',
+  [theme.breakpoints.up('tablet_768')]: {
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    paddingRight: 8,
+  },
+}));
