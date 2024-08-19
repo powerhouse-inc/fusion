@@ -284,8 +284,8 @@ LightMode.parameters = {
             width: 343,
           },
           style: {
-            top: 40,
-            left: 0,
+            top: 30,
+            left: -14,
           },
         },
       },
@@ -296,8 +296,8 @@ LightMode.parameters = {
             width: 704,
           },
           style: {
-            top: 40,
-            left: 0,
+            top: 30,
+            left: -14,
           },
         },
       },
@@ -308,8 +308,8 @@ LightMode.parameters = {
             width: 960,
           },
           style: {
-            top: 40,
-            left: 0,
+            top: 30,
+            left: -14,
           },
         },
       },
@@ -317,11 +317,11 @@ LightMode.parameters = {
         component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16:4112&m=dev',
         options: {
           componentStyle: {
-            width: 1184,
+            width: 1200,
           },
           style: {
-            top: 40,
-            left: 0,
+            top: 30,
+            left: -14,
           },
         },
       },
@@ -332,8 +332,8 @@ LightMode.parameters = {
             width: 1312,
           },
           style: {
-            top: 40,
-            left: 0,
+            top: 30,
+            left: -14,
           },
         },
       },

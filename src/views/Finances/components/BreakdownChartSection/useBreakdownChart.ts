@@ -18,6 +18,7 @@ import type { EChartsOption } from 'echarts-for-react';
 const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, allBudgets: Budget[]) => {
   const { isLight } = useThemeContext();
   const [isChecked, setIsChecked] = useState(false);
+  const levelNumber = codePath.split('/').length;
   const [selectedMetric, setSelectedMetric] = useState<AnalyticMetric>('Budget');
   const [selectedGranularity, setSelectedGranularity] = useState<AnalyticGranularity>('monthly');
   const refBreakDownChart = useRef<EChartsOption | null>(null);
@@ -188,8 +189,7 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
     console.log('delete');
   };
 
-  // TODO: Change this for the level of the page after checking with the client
-  const showLegendValue = true;
+  const showLegendValue = !(levelNumber > 1);
   return {
     isLoading,
     selectedMetric,
