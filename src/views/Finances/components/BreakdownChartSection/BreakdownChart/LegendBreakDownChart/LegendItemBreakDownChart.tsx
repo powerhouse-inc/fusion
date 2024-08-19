@@ -47,7 +47,7 @@ const LegendItemBreakDownChart: FC<Props> = ({
 
 export default LegendItemBreakDownChart;
 
-const Container = styled('div')(({ theme }) => ({
+const Container = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'flex-start',
@@ -56,9 +56,6 @@ const Container = styled('div')(({ theme }) => ({
   cursor: 'pointer',
   width: 'fit-content',
   height: 'fit-content',
-  [theme.breakpoints.up('tablet_768')]: {
-    margin: '0 auto',
-  },
 }));
 
 const SVGContainer = styled('div')({

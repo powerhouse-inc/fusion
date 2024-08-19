@@ -229,7 +229,7 @@ const SimpleContainerSeries = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  alignItems: 'center',
+  alignItems: 'flex-start',
   rowGap: 24,
   height: '100%',
 
