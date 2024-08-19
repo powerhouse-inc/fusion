@@ -288,8 +288,6 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
     return <DoughnutChartFinancesSkeleton />;
   }
 
-  console.log(numberSliderPerLevel);
-
   return (
     <Container isCoreThirdLevel={isCoreThirdLevel}>
       <ContainerChart>
