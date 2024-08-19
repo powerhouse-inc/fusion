@@ -28,6 +28,7 @@ interface BreakdownChartProps {
   selectedMetric?: AnalyticMetric;
   // isChecked: boolean;
   // handleChangeSwitch: () => void;
+  showLegendValue?: boolean;
 }
 
 const BreakdownChart: React.FC<BreakdownChartProps> = ({
@@ -37,6 +38,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
   handleToggleSeries,
   selectedGranularity,
   selectedMetric,
+  showLegendValue,
   // isChecked,
   // handleChangeSwitch,
 }) => {
@@ -125,12 +127,34 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
           const flexDirection = shortAmount ? 'row' : 'column';
           const wrap = shortAmount ? 'flex-wrap:wrap;' : '';
           const gap = shortAmount ? '16px' : '12px';
-          const minMax = isTablet
-            ? 'max-width:300px'
-            : isDesktop1024
-            ? 'max-width:400px'
-            : 'min-width:190px;max-width:450px';
-          const maxWithTable = isTablet ? 'max-width:190px' : isDesktop1024 ? 'max-width:450px' : '';
+          const minMaxValues = {
+            tablet: 'max-width:300px',
+            desktop1024: 'max-width:400px',
+            default: 'min-width:190px;max-width:450px',
+          };
+          let minMax;
+          if (isTablet) {
+            minMax = minMaxValues.tablet;
+          } else if (isDesktop1024) {
+            minMax = minMaxValues.desktop1024;
+          } else {
+            minMax = minMaxValues.default;
+          }
+
+          const maxWithTableValues = {
+            tablet: 'max-width:190px',
+            desktop1024: 'max-width:450px',
+            default: '',
+          };
+
+          let maxWithTable;
+          if (isTablet) {
+            maxWithTable = maxWithTableValues.tablet;
+          } else if (isDesktop1024) {
+            maxWithTable = maxWithTableValues.desktop1024;
+          } else {
+            maxWithTable = maxWithTableValues.default;
+          }
 
           return `
             <div style="border-radius:12px;background-color:${
@@ -338,6 +362,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
         handleToggleSeries={handleToggleSeries}
         onLegendItemHover={onLegendItemHover}
         onLegendItemLeave={onLegendItemLeave}
+        showLegendValue={showLegendValue}
       />
     </Wrapper>
   );
@@ -371,7 +396,7 @@ const ChartContainer = styled('div')(({ theme }) => ({
   height: 227,
 
   [theme.breakpoints.up('tablet_768')]: {
-    maxWidth: 'calc(100% - 300px)',
+    maxWidth: 'calc(100% - 287px)',
     height: 268,
     marginTop: 0,
     paddingLeft: 20,
@@ -381,16 +406,16 @@ const ChartContainer = styled('div')(({ theme }) => ({
     height: 288,
     paddingLeft: 20,
     width: '100%',
-    maxWidth: 'calc(100% - 362px)',
+    maxWidth: 'calc(100% - 386px)',
   },
 
   [theme.breakpoints.up('desktop_1280')]: {
     height: 356,
     paddingLeft: 0,
-    maxWidth: 'calc(100% - 380px)',
+    maxWidth: 'calc(100% - 387px)',
   },
   [theme.breakpoints.up('desktop_1440')]: {
-    maxWidth: 'calc(100% - 353px)',
+    maxWidth: 'calc(100% - 424px)',
     height: 356,
     marginLeft: -10,
   },

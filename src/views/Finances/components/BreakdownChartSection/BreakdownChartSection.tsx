@@ -20,6 +20,7 @@ export interface BreakdownChartSectionProps {
   series: BreakdownChartSeriesData[];
   handleToggleSeries: (series: string) => void;
   refBreakDownChart: React.RefObject<EChartsOption | null>;
+  showLegendValue?: boolean;
   // isChecked: boolean;
   // handleChangeSwitch: () => void;
 }
@@ -37,6 +38,7 @@ const BreakdownChartSection: React.FC<BreakdownChartSectionProps> = ({
   series,
   handleToggleSeries,
   refBreakDownChart,
+  showLegendValue,
   // isChecked,
   // handleChangeSwitch,
 }) => (
@@ -74,6 +76,7 @@ const BreakdownChartSection: React.FC<BreakdownChartSectionProps> = ({
           refBreakDownChart={refBreakDownChart}
           selectedMetric={selectedMetric}
           // isChecked={isChecked}
+          showLegendValue={showLegendValue}
         />
       </Wrapper>
     )}

@@ -13,6 +13,7 @@ interface Props {
   handleToggleSeries: (series: string) => void;
   className?: string;
   index: number;
+  showLegendValue?: boolean;
 }
 
 const LegendItemBreakDownChart: FC<Props> = ({
@@ -23,6 +24,7 @@ const LegendItemBreakDownChart: FC<Props> = ({
   handleToggleSeries,
   index,
   className,
+  showLegendValue = true,
 }) => (
   <Container
     className={className}
@@ -39,7 +41,7 @@ const LegendItemBreakDownChart: FC<Props> = ({
     </SVGContainer>
     <Name>{removeBudgetWord(formatBudgetName(element.name))}</Name>
 
-    <Value>{replaceAllNumberLetOneBeforeDot(element?.data[index].value ?? 0, true)}</Value>
+    {showLegendValue && <Value>{replaceAllNumberLetOneBeforeDot(element?.data[index]?.value ?? 0, true)}</Value>}
   </Container>
 );
 
@@ -52,6 +54,7 @@ const Container = styled('div')(({ theme }) => ({
   gap: 8,
   alignItems: 'center',
   cursor: 'pointer',
+  width: 'fit-content',
   height: 'fit-content',
   [theme.breakpoints.up('tablet_768')]: {
     margin: '0 auto',
