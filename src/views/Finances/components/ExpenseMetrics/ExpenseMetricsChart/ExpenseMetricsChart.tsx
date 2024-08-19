@@ -17,7 +17,7 @@ import type { AnalyticGranularity } from '@ses/core/models/interfaces/analytic';
 import type { EChartsOption } from 'echarts-for-react';
 import type { FC } from 'react';
 
-interface BreakdownChartProps {
+interface ExpenseMetricsChartProps {
   year: string;
   selectedGranularity: AnalyticGranularity;
   series: LineChartSeriesData[];
@@ -26,7 +26,7 @@ interface BreakdownChartProps {
   cumulativeType: CumulativeType;
 }
 
-const MakerDAOExpenseMetricsChart: FC<BreakdownChartProps> = ({
+const ExpenseMetricsChart: FC<ExpenseMetricsChartProps> = ({
   year,
   selectedGranularity,
   series,
@@ -37,24 +37,11 @@ const MakerDAOExpenseMetricsChart: FC<BreakdownChartProps> = ({
   const theme = useTheme();
   const chartRef = useRef<EChartsOption>(null);
 
-  const upTable = useMediaQuery((theme: Theme) => theme.breakpoints.up('tablet_768'));
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.between('mobile_375', 'tablet_768'));
-  const isLessMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('mobile_375'));
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
   const isDesktop1024 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1024', 'desktop_1280'));
   const isDesktop1280 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1280', 'desktop_1440'));
-  const showLineYear = (isMobile || isLessMobile) && selectedGranularity === 'monthly';
-  const isMobileOrLess = isMobile || isLessMobile;
-
-  const xAxisStyles = {
-    fontFamily: 'Inter, sans-serif',
-    textAlign: 'center',
-    color: '#708390',
-    fontWeight: 600,
-    fontSize: upTable ? 12 : isLessMobile ? 8 : 9,
-    verticalAlign: 'top',
-    interval: 0,
-  };
+  const showLineYear = isMobile && selectedGranularity === 'monthly';
 
   const options: EChartsOption = {
     tooltip: {
@@ -70,13 +57,13 @@ const MakerDAOExpenseMetricsChart: FC<BreakdownChartProps> = ({
       },
       padding: 0,
       borderWidth: 1,
-      position: function (
+      position: (
         point: [number, number],
         params: EChartsOption,
         dom: EChartsOption,
         rect: EChartsOption,
         size: EChartsOption
-      ) {
+      ) => {
         const MORE_WITH = 10;
         const withTooltip = size.contentSize[0];
         const heightTooltip = size.contentSize[0];
@@ -96,7 +83,7 @@ const MakerDAOExpenseMetricsChart: FC<BreakdownChartProps> = ({
         }
       },
       borderColor: theme.palette.isLight ? '#D4D9E1' : '#231536',
-      formatter: function (params: BarChartSeries[]) {
+      formatter: (params: BarChartSeries[]) => {
         // If all values are cero, don't show tooltip
         if (params.every((item) => item.value === 0)) {
           return '';
@@ -162,14 +149,15 @@ const MakerDAOExpenseMetricsChart: FC<BreakdownChartProps> = ({
       },
     },
     grid: {
-      height: isLessMobile ? 192 : isMobile ? 192 : isTablet ? 409 : isDesktop1024 ? 398 : isDesktop1280 ? 399 : 399,
-      width: isLessMobile ? 290 : isMobile ? 304 : isTablet ? 645 : isDesktop1024 ? 704 : isDesktop1280 ? 955 : 955,
-      top: isLessMobile ? 10 : isMobile ? 10 : isTablet ? 10 : isDesktop1024 ? 6 : isDesktop1280 ? 11 : 11,
-      right: isLessMobile ? 2 : isMobile ? 2 : isTablet ? 0 : isDesktop1024 ? 36 : isDesktop1280 ? 4 : 4,
+      top: 5,
+      right: 0,
+      bottom: 0,
+      left: isMobile ? 40 : isTablet ? 60 : isDesktop1024 ? 55 : 60,
+      height: isMobile ? 180 : isTablet ? 251 : isDesktop1024 ? 253 : 317,
     },
     xAxis: {
       type: 'category',
-      data: getChartAxisLabelByGranularity(selectedGranularity, isMobileOrLess, false, true),
+      data: getChartAxisLabelByGranularity(selectedGranularity, isMobile, false, true),
       splitLine: {
         show: false,
       },
@@ -184,50 +172,49 @@ const MakerDAOExpenseMetricsChart: FC<BreakdownChartProps> = ({
         show: false,
       },
       axisLabel: {
-        margin: isMobile ? 12 : isTablet ? 12 : isDesktop1024 ? 26 : isDesktop1280 ? 20 : 20,
-        color: theme.palette.isLight ? '#434358' : '#708390',
+        margin: isMobile ? 8 : isTablet ? 10 : 12,
+        fontFamily: 'OpenSansCondensed, sans-serif',
+        fontWeight: 700,
+        fontSize: isMobile ? 12 : 14,
+        lineHeight: isMobile ? 16 : 19,
+        height: isMobile ? 16 : 19,
         align: 'center',
-        fontFamily: 'Inter,san-serif',
-        fontWeight: 400,
-        fontSize: upTable ? 12 : 9,
-        height: upTable ? 15 : 11,
         baseline: 'top',
+        color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[300],
         interval: 0,
-        formatter: function (value: string) {
+
+        formatter: (value: string) => {
           const formatted = formatterBreakdownChart(
             selectedGranularity as AnalyticGranularity,
             isMobile,
             year,
             value,
-            isMobileOrLess
+            isMobile
           );
           return formatted;
-        },
-        rich: {
-          month: xAxisStyles,
-          year: xAxisStyles,
         },
       },
     },
     yAxis: {
       axisLabel: {
-        margin: isLessMobile ? 4 : isMobile ? 10 : isTablet ? 12 : isDesktop1024 ? 26 : isDesktop1280 ? 20 : 20,
-        formatter: function (value: number, index: number) {
+        margin: isMobile ? 8 : isTablet ? 10 : isDesktop1024 ? 12 : isDesktop1280 ? 14 : 16,
+        fontFamily: 'OpenSansCondensed, sans-serif',
+        fontWeight: 700,
+        fontSize: isMobile ? 12 : 14,
+        lineHeight: isMobile ? 16 : 19,
+        height: isMobile ? 16 : 19,
+        verticalAlign: 'middle',
+        color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[100],
+        interval: 0,
+
+        formatter: (value: number, index: number) => {
           if (value === 0 && index === 0) {
             return value.toString();
           }
 
           return replaceAllNumberLetOneBeforeDot(value, true);
         },
-        color: theme.palette.isLight ? '#231536' : '#EDEFFF',
-        fontSize: isLessMobile ? 10 : isMobile ? 10 : isTablet ? 14 : 14,
-        height: upTable ? 15 : 12,
-        fontFamily: 'Inter, sans-serif',
-        fontWeight: upTable ? 600 : 400,
       },
-      verticalAlign: 'middle',
-      height: upTable ? 15 : 12,
-
       type: 'value',
       zlevel: 1,
       axisLine: {
@@ -235,7 +222,7 @@ const MakerDAOExpenseMetricsChart: FC<BreakdownChartProps> = ({
       },
       splitLine: {
         lineStyle: {
-          color: theme.palette.isLight ? '#31424E' : '#D8E0E3',
+          color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[300],
           width: 0.25,
         },
       },
@@ -260,112 +247,101 @@ const MakerDAOExpenseMetricsChart: FC<BreakdownChartProps> = ({
   };
 
   return (
-    <Wrapper>
-      <ChartContainer>
-        <ReactECharts
-          ref={chartRef}
-          option={options}
-          style={{
-            height: '100%',
-            width: '100%',
-          }}
-          opts={{ renderer: 'svg' }}
-        />
-        {showLineYear && (
-          <YearXAxis isLessMobile={isLessMobile}>
-            <YearText>{year}</YearText>
-          </YearXAxis>
-        )}
-        <LegendContainer>
-          {series.map((seriesItem: LineChartSeriesData) => (
-            <LegendItem
-              onMouseEnter={() => onLegendItemHover(seriesItem.name)}
-              onMouseLeave={() => onLegendItemLeave(seriesItem.name)}
-              onClick={() => handleToggleSeries(seriesItem.name)}
+    <ChartContainer>
+      <ReactECharts
+        ref={chartRef}
+        option={options}
+        style={{
+          width: '100%',
+          height: '100%',
+        }}
+        opts={{ renderer: 'svg' }}
+      />
+      {showLineYear && (
+        <YearXAxis>
+          <YearText>{year}</YearText>
+        </YearXAxis>
+      )}
+      <LegendContainer>
+        {series.map((seriesItem: LineChartSeriesData) => (
+          <LegendItem
+            onMouseEnter={() => onLegendItemHover(seriesItem.name)}
+            onMouseLeave={() => onLegendItemLeave(seriesItem.name)}
+            onClick={() => handleToggleSeries(seriesItem.name)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width={isMobile ? 12 : 16}
+              height={isMobile ? 12 : 16}
+              viewBox={`0 0 ${isMobile ? 12 : 16} ${isMobile ? 12 : 16}`}
+              fill="none"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={isMobile ? 13 : 16}
-                height={isMobile ? 13 : 16}
-                viewBox="0 0 13 13"
-                fill="none"
-              >
-                <circle cx="6.5" cy="6.5" r="5.5" stroke={seriesItem.itemStyle.color} />
-                <circle cx="6.5" cy="6.5" r="4" fill={seriesItem.itemStyle.color} />
-              </svg>
-              {seriesItem.name === 'Net Expenses Off-chain'
-                ? `${isMobile ? 'Net Expenses Off-chain' : 'Net Expenses Off-chain included'}`
-                : seriesItem.name}
-            </LegendItem>
-          ))}
-        </LegendContainer>
-      </ChartContainer>
-    </Wrapper>
+              <circle
+                cx={isMobile ? 6 : 8}
+                cy={isMobile ? 6 : 8}
+                r={isMobile ? 5.5 : 7.5}
+                stroke={seriesItem.itemStyle.color}
+              />
+              <circle
+                cx={isMobile ? 6 : 8}
+                cy={isMobile ? 6 : 8}
+                r={isMobile ? 4 : 6}
+                fill={seriesItem.itemStyle.color}
+              />
+            </svg>
+            {seriesItem.name === 'Net Expenses Off-chain'
+              ? `${isMobile ? 'Net Expenses Off-chain' : 'Net Expenses Off-chain included'}`
+              : seriesItem.name}
+          </LegendItem>
+        ))}
+      </LegendContainer>
+    </ChartContainer>
   );
 };
 
-export default MakerDAOExpenseMetricsChart;
-
-const Wrapper = styled('div')(() => ({
-  marginTop: 32,
-}));
+export default ExpenseMetricsChart;
 
 const ChartContainer = styled('div')(({ theme }) => ({
-  [theme.breakpoints.down('mobile_375')]: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    position: 'relative',
-    width: '100%',
-    minWidth: 328,
-    height: 319,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginTop: -4,
-  },
-  [theme.breakpoints.between('mobile_375', 'tablet_768')]: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    position: 'relative',
-    width: '100%',
-    maxWidth: 343,
-    height: 319,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginTop: -4,
-  },
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  width: '100%',
+  height: 300,
+  marginTop: 16,
 
   [theme.breakpoints.up('tablet_768')]: {
-    position: 'relative',
-    maxWidth: 756,
-    height: 560,
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    maxWidth: 385,
+    height: 286,
   },
 
   [theme.breakpoints.up('desktop_1024')]: {
-    maxWidth: 848,
-    height: 521,
+    maxWidth: 526,
+    height: 288,
   },
 
   [theme.breakpoints.up('desktop_1280')]: {
-    maxWidth: 1028,
-    height: 521,
+    maxWidth: 536,
+    height: 432,
+  },
+
+  [theme.breakpoints.up('desktop_1440')]: {
+    maxWidth: 592,
+    height: 432,
   },
 }));
 
-const YearXAxis = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'isLessMobile',
-})<{ isLessMobile: boolean }>(({ theme, isLessMobile }) => {
-  const border = `1px solid ${theme.palette.isLight ? '#6EDBD0' : '#1AAB9B'}`;
+const YearXAxis = styled('div')(({ theme }) => {
+  const border = `1px solid ${
+    theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[400]
+  }`;
 
   return {
     position: 'absolute',
-    bottom: isLessMobile ? 70 : 80,
-    left: isLessMobile ? 30 : 40,
-    right: 5,
-    height: 11,
+    bottom: 72,
+    left: 40,
+    right: 0,
+    height: 12,
     borderLeft: border,
     borderRight: border,
     borderBottom: border,
@@ -375,72 +351,61 @@ const YearXAxis = styled('div', {
 });
 
 const YearText = styled('div')(({ theme }) => ({
-  fontSize: 11,
-  lineHeight: 'normal',
-  color: theme.palette.isLight ? '#139D8D' : '#1AAB9B',
   position: 'absolute',
+  fontFamily: 'OpenSansCondensed, sans-serif',
+  fontWeight: 700,
+  fontSize: 12,
+  lineHeight: '16px',
+  color: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[400],
   bottom: -6,
-  width: 52,
+  width: 36,
   left: '50%',
   transform: 'translateX(-50%)',
-  backgroundColor: theme.palette.isLight ? '#FFFFFF' : '#000000',
+  backgroundColor: theme.palette.isLight ? 'white' : theme.palette.colors.charcoal[900],
   textAlign: 'center',
 }));
 
 const LegendContainer = styled('div')(({ theme }) => ({
+  position: 'absolute',
   display: 'flex',
-  flexDirection: 'row',
   justifyContent: 'center',
   flexWrap: 'wrap',
-  flex: 1,
-  gap: 24,
-  position: 'absolute',
+  gap: 16,
   bottom: 0,
-  rowGap: 14,
 
   [theme.breakpoints.up('tablet_768')]: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 42,
-    rowGap: 16,
+    display: 'none', // temporary
   },
 
   [theme.breakpoints.up('desktop_1024')]: {
-    marginLeft: -6,
-    gap: 40,
-    minWidth: 940,
-    justifyContent: 'center',
+    display: 'none', // temporary
   },
 
   [theme.breakpoints.up('desktop_1280')]: {
-    gap: 65,
-    marginLeft: -46,
-    width: '100%',
-    minWidth: 'revert',
-  },
-
-  [theme.breakpoints.up('desktop_1440')]: {
-    gap: 65,
-    marginLeft: 2,
-  },
-
-  [theme.breakpoints.up('desktop_1920')]: {
-    marginLeft: -45,
+    display: 'flex', // temporary
+    gap: '16px 24px',
   },
 }));
 
 const LegendItem = styled('div')(({ theme }) => ({
-  fontSize: 12,
-  color: theme.palette.isLight ? '#231536' : '#D2D4EF',
   display: 'flex',
+  justifyContent: 'center',
   alignItems: 'center',
-  gap: 6,
+  gap: 8,
+  fontFamily: 'Inter, sans-serif',
+  fontWeight: 600,
+  fontSize: 12,
+  lineHeight: '18px',
+  color: theme.palette.isLight ? theme.palette.colors.slate[900] : theme.palette.colors.gray[50],
   cursor: 'pointer',
-  lineHeight: 'normal',
+
   [theme.breakpoints.up('tablet_768')]: {
-    fontSize: 16,
-    gap: 8,
+    fontSize: 14,
     lineHeight: '22px',
+  },
+
+  [theme.breakpoints.up('desktop_1280')]: {
+    fontSize: 16,
+    lineHeight: '24px',
   },
 }));

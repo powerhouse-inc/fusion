@@ -17,7 +17,7 @@ const MakerDAOExpenseMetricsSkeleton: FC = () => {
     <SectionContainer>
       <LinesContainer>
         {isMobile ? (
-          <svg width="294" height="154" viewBox="0 0 294 154" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 294 154" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M4.5 149L30.5 138L56.5 140.5L82.5 137.5L108.5 127.5L134.5 133L160.5 130L186.5 127.5L212 110L238.5 117.5L264.5 116L290.5 123"
               stroke={stroke}
@@ -100,7 +100,7 @@ const MakerDAOExpenseMetricsSkeleton: FC = () => {
             <circle cx="4" cy="32.5" r="3.5" fill={fill} stroke={stroke} />
           </svg>
         ) : isTablet ? (
-          <svg width="630" height="295" viewBox="0 0 630 295" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 630 295" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M7.99952 194L61.9995 200.5L116 179.5L170 183.125L224 174L278 158L332 183.125L386 175L440 183L494 177L548 165.5L602 139"
               stroke={stroke}
@@ -193,7 +193,7 @@ const MakerDAOExpenseMetricsSkeleton: FC = () => {
             <circle cx="116" cy="281" r="4.5" fill={fill} stroke={stroke} />
           </svg>
         ) : isDesktop1024 ? (
-          <svg width="668" height="295" viewBox="0 0 668 295" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 668 295" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M7.99952 194L59.9995 200.5L118 179.5L176 183.125L234 174L292 158L350 183.125L408 175L466 183L524 177L582 165.5L640 139"
               stroke={stroke}
@@ -286,7 +286,7 @@ const MakerDAOExpenseMetricsSkeleton: FC = () => {
             <circle cx="118" cy="281" r="4.5" fill={fill} stroke={stroke} />
           </svg>
         ) : (
-          <svg width="916" height="295" viewBox="0 0 916 295" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 916 295" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M7.99952 194L87.9995 200.5L168 179.5L249 183.125L328 174L408 158L488 183.125L568 175L648 183L728 177L808 165.5L888 139"
               stroke={stroke}
@@ -441,38 +441,45 @@ export default MakerDAOExpenseMetricsSkeleton;
 
 const SectionContainer = styled('div')(({ theme }) => ({
   position: 'relative',
-  maxWidth: 343,
+  maxWidth: 327,
   width: '100%',
   marginLeft: 'auto',
   marginRight: 'auto',
-  marginTop: 32,
+  marginTop: 16,
 
   [theme.breakpoints.up('tablet_768')]: {
-    marginTop: 40,
-    maxWidth: 704,
+    maxWidth: 385,
   },
 
   [theme.breakpoints.up('desktop_1024')]: {
-    maxWidth: 770,
+    maxWidth: 526,
   },
 
   [theme.breakpoints.up('desktop_1280')]: {
-    maxWidth: 1024,
+    maxWidth: 592,
   },
 }));
 
 const LinesContainer = styled('div')(({ theme }) => ({
   position: 'absolute',
-  top: 3,
-  right: 6,
+  top: 16,
+  right: 4,
+  width: 280,
+  height: 190,
 
   [theme.breakpoints.up('tablet_768')]: {
-    top: 6,
-    right: -5,
+    width: 280,
+    height: 190,
+  },
+
+  [theme.breakpoints.up('desktop_1024')]: {
+    width: 280,
+    height: 190,
   },
 
   [theme.breakpoints.up('desktop_1280')]: {
-    right: 5,
+    width: 280,
+    height: 190,
   },
 }));
 
@@ -516,13 +523,13 @@ const YAxisLabel = styled('div')(({ theme }) => ({
 const YLine = styled('div')(({ theme }) => ({
   width: '100%',
   height: 1,
-  background: theme.palette.mode === 'light' ? '#ECF1F3' : '#1E2C37',
+  background: theme.palette.isLight ? '#ECF1F3' : '#1E2C37',
 }));
 
 const XAxisContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
-  gap: 10,
+  gap: 8,
   marginTop: 4,
   marginLeft: 38,
 
@@ -560,7 +567,7 @@ const XAxisLabel = styled('div')(({ theme }) => ({
 }));
 
 const YearXAxis = styled('div')(({ theme }) => {
-  const border = `1px solid ${theme.palette.mode === 'light' ? '#D1DEE6' : '#1E2C37'}`;
+  const border = `1px solid ${theme.palette.isLight ? '#D1DEE6' : '#1E2C37'}`;
 
   return {
     position: 'relative',
@@ -587,7 +594,7 @@ const YearBox = styled('div')(({ theme }) => ({
   justifyContent: 'center',
   margin: '0 auto',
   width: 52,
-  background: theme.palette.mode === 'light' ? '#fff' : '#000',
+  background: theme.palette.isLight ? '#fff' : '#000',
 }));
 
 const LabelsContainer = styled('div')(({ theme }) => ({
