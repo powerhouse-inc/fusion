@@ -249,16 +249,16 @@ export const useCardChartOverview = (
   const numberSliderPerLevel = isTable
     ? numberItems >= 4 && levelNumber < 3
       ? 3
-      : 6
+      : 5
     : isDesk1024
     ? numberItems >= 4 && levelNumber < 3
       ? 3
-      : 6
+      : 5
     : isDesk1280
     ? numberItems >= 10
       ? 10
-      : 6
-    : 6;
+      : 5
+    : 5;
 
   return {
     paymentsOnChain: isHasSubLevels ? metric.paymentsOnChain : budgetWithNotChildren.paymentsOnChain,

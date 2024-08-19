@@ -60,6 +60,7 @@ const MainContentSection = styled('div')(({ theme }) => ({
 
     '& > div:nth-of-type(1)': {
       flex: 1,
+      maxWidth: 'calc(33.333333% - 15px)',
     },
 
     '& > div:nth-of-type(2)': {

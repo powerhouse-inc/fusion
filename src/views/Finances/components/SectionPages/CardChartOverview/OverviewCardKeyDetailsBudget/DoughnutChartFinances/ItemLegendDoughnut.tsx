@@ -33,12 +33,12 @@ const ItemLegendDoughnut: React.FC<Props> = ({
     >
       <IconWithName>
         <LegendIcon backgroundColor={doughnutData.color || 'blue'} />
-        <NameOrCode isCoreThirdLevel={isCoreThirdLevel}>
+        <NameOrCode isCoreThirdLevel={isCoreThirdLevel} className="name">
           {isCoreThirdLevel ? getShortCode(doughnutData?.code || '') : doughnutData.name}
         </NameOrCode>
       </IconWithName>
       <ValueDescription isCoreThirdLevel={isCoreThirdLevel}>
-        <Percent>{`(${
+        <Percent className="percentage">{`(${
           doughnutData.percent === 0
             ? 0
             : doughnutData.percent < 0.1
@@ -48,7 +48,7 @@ const ItemLegendDoughnut: React.FC<Props> = ({
             : usLocalizedNumber(doughnutData.percent, 1)
         }%)`}</Percent>
         <ContainerValue>
-          <Value>
+          <Value className="value">
             {valueRounded.value} {valueRounded.suffix}
           </Value>
         </ContainerValue>
@@ -59,16 +59,8 @@ const ItemLegendDoughnut: React.FC<Props> = ({
 
 export default ItemLegendDoughnut;
 
-const LegendIcon = styled('div')<{ backgroundColor: string }>(({ backgroundColor }) => ({
-  backgroundColor,
-  minWidth: 8,
-  maxWidth: 8,
-  maxHeight: 8,
-  minHeight: 8,
-  borderRadius: '50%',
-}));
 const LegendItem = styled('div')<{ isCoreThirdLevel: boolean; changeAlignment: boolean }>(
-  ({ isCoreThirdLevel, changeAlignment }) => ({
+  ({ theme, isCoreThirdLevel, changeAlignment }) => ({
     display: 'flex',
     flexDirection: isCoreThirdLevel ? 'row' : 'column',
     gap: 2,
@@ -79,14 +71,34 @@ const LegendItem = styled('div')<{ isCoreThirdLevel: boolean; changeAlignment: b
     ...(changeAlignment && {
       minWidth: 0,
     }),
+
+    '&:hover': {
+      '.name': {
+        color: theme.palette.isLight ? theme.palette.colors.slate[950] : '#fff',
+      },
+      '.percentage': {
+        color: theme.palette.isLight ? theme.palette.colors.gray[600] : theme.palette.colors.gray[500],
+      },
+      '.value': {
+        color: theme.palette.isLight ? theme.palette.colors.gray[700] : theme.palette.colors.gray[100],
+      },
+    },
   })
 );
 
+const LegendIcon = styled('div')<{ backgroundColor: string }>(({ backgroundColor }) => ({
+  backgroundColor,
+  minWidth: 8,
+  maxWidth: 8,
+  maxHeight: 8,
+  minHeight: 8,
+  borderRadius: '50%',
+}));
+
 const ValueDescription = styled('div')<{ isCoreThirdLevel: boolean }>(({ theme, isCoreThirdLevel }) => ({
-  color: theme.palette.isLight ? '#9FAFB9' : '#546978',
   fontSize: 12,
   fontWeight: 500,
-  lineHeight: 'normal',
+  lineHeight: isCoreThirdLevel ? '24px' : 'normal',
   display: 'flex',
   marginLeft: isCoreThirdLevel ? 4 : 14,
   ...(isCoreThirdLevel && {

@@ -64,18 +64,17 @@ const DoughnutChartFinancesSkeleton: React.FC = () => (
 export default DoughnutChartFinancesSkeleton;
 
 const ChartContainer = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: 16,
-  marginTop: 24,
+  display: 'none',
 
   [theme.breakpoints.up('tablet_768')]: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 24,
     flexDirection: 'row',
   },
 
-  [theme.breakpoints.up('desktop_1024')]: {
-    gap: 48,
+  [theme.breakpoints.up('desktop_1280')]: {
+    gap: 64,
   },
 }));
 
@@ -97,8 +96,8 @@ const SVG = styled('svg')(({ theme }) => ({
   height: 128,
 
   [theme.breakpoints.up('desktop_1280')]: {
-    width: 192,
-    height: 192,
+    width: 148,
+    height: 148,
   },
 }));
 

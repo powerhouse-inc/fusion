@@ -8,7 +8,6 @@ import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
 import BreakdownChartSection from './components/BreakdownChartSection/BreakdownChartSection';
 import ConditionalWrapper from './components/ConditionalWrapper/ConditionalWrapper';
-import OverviewCardMobile from './components/OverviewCardMobile/OverviewCardMobile';
 import BreadcrumbYearNavigation from './components/SectionPages/BreadcrumbYearNavigation';
 import BreakdownTable from './components/SectionPages/BreakdownTable/BreakdownTable';
 import CardsNavigation from './components/SectionPages/CardsNavigation/CardsNavigation';
@@ -110,13 +109,6 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
               showSwiper={cardOverViewSectionData.showSwiper}
               numberSliderPerLevel={cardOverViewSectionData.numberSliderPerLevel}
             />
-
-            <WrapperMobile>
-              <OverviewCardMobile
-                paymentsOnChain={cardOverViewSectionData.paymentsOnChain}
-                budgetCap={cardOverViewSectionData.budgetCap}
-              />
-            </WrapperMobile>
             <CardsNavigation
               cardsNavigationInformation={cardsToShow}
               canLoadMoreCards={canLoadMoreCards}
@@ -303,15 +295,5 @@ const ContainerReservesWaterfallChart = styled('div')(({ theme }) => ({
 
   [theme.breakpoints.up('tablet_768')]: {
     marginTop: 64,
-  },
-}));
-
-const WrapperMobile = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 8,
-
-  [theme.breakpoints.up('tablet_768')]: {
-    display: 'none',
   },
 }));

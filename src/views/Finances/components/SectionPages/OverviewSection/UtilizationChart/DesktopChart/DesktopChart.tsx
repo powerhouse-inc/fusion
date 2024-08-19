@@ -1,9 +1,8 @@
-import { styled, useMediaQuery } from '@mui/material';
+import { styled, useMediaQuery, useTheme } from '@mui/material';
 import ReactECharts from 'echarts-for-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { useThemeContext } from '@/core/context/ThemeContext';
 import { zIndexEnum } from '@/core/enums/zIndexEnum';
 import type { AnalyticMetric, BudgetMetric } from '@/core/models/interfaces/analytic';
 import { usLocalizedNumber } from '@/core/utils/humanization';
@@ -41,7 +40,7 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
 }) => {
   const chartRef = useRef<EChartsOption | null>(null);
   const ref = useRef<SwiperRef>(null);
-  const { isLight } = useThemeContext();
+  const theme = useTheme();
   const [visibleSeries, setVisibleSeries] = useState<DoughnutSeries[]>(seriesData);
   const [legends, setLegends] = useState<DoughnutSeries[]>(seriesData);
 
@@ -82,7 +81,7 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
     () => ({
       color: visibleSeries.map((data) => data.color),
       tooltip: {
-        extraCssText: `z-index:${zIndexEnum.ECHART_TOOL_TIP}`,
+        extraCssText: `z-index:${zIndexEnum.ECHART_TOOL_TIP};border-radius: 12px;overflow: hidden;`,
         show: true,
         trigger: 'item',
         label: {
@@ -93,16 +92,18 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
           width: 40,
         },
         padding: 0,
-        borderWidth: 2,
+        borderWidth: 1,
         formatter: function (params: DoughnutSeries) {
           const index = visibleSeries.findIndex((data) => data.name === params.name);
           const itemRender = visibleSeries[index];
           const selectedMetricKey = getCorrectMetricValuesOverViewChart(selectedMetric) as keyof BudgetMetric;
           const customTooltip = `
           <div style="background-color:${
-            isLight ? '#fff' : '#000A13'
-          };padding:16px;min-width:194px;overflow:auto;border-radius:3px;">
-            <div style="margin-bottom:4px;color:${isLight ? '#000' : '#EDEFFF'};">${
+            theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800]
+          };padding:7px 15px;min-width:194px;">
+            <div style="color:${
+              theme.palette.isLight ? theme.palette.colors.charcoal[900] : theme.palette.colors.charcoal[100]
+            };font-size: 18px;font-weight: 700;line-height: 120%;">${
             itemRender.percent === 0
               ? 0
               : itemRender.percent < 0.1
@@ -111,25 +112,35 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
               ? usLocalizedNumber(itemRender.percent, 2)
               : usLocalizedNumber(itemRender.percent, 1)
           }%</div>
-            <div style="margin-bottom:16px;color:${
-              isLight ? '#000' : '#EDEFFF'
-            };max-width: 300px; white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">${itemRender.name}</div>
-            <div style="display:flex;flex-direction:row;gap:20px">
+            <div style="margin-bottom:8px;color:${
+              theme.palette.isLight ? theme.palette.colors.charcoal[300] : theme.palette.colors.charcoal[300]
+            };font-size: 14px;font-weight: 600;line-height: 22px;max-width: 300px; white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">${
+            itemRender.name
+          }</div>
+            <div style="display:flex;flex-direction:row;gap:32px">
                 <div style="display:flex;flex-direction:column">
-                  <div style="margin-bottom:4;color:${isLight ? '#000' : '#EDEFFF'};">${usLocalizedNumber(
+                  <div style="margin-bottom:4;color:${
+                    theme.palette.isLight ? theme.palette.colors.charcoal[900] : theme.palette.colors.charcoal[100]
+                  };font-size: 16px;font-weight: 600;line-height: 24px;">${usLocalizedNumber(
             itemRender.metrics[selectedMetricKey === 'budget' ? 'paymentsOnChain' : selectedMetricKey].value,
             2
           )}</div>
-                  <div style="font-weight:bold;color:${isLight ? '#231536' : '#9FAFB9'};">${
+                  <div style="color:${
+                    theme.palette.isLight ? theme.palette.colors.charcoal[500] : theme.palette.colors.charcoal[500]
+                  };font-size: 12px;font-weight: 500;line-height: 18px;">${
             selectedMetric === 'Budget' ? 'Net Expenses On-Chain' : tooltipSelectedMetricLabel
           }</div>
                </div>
                 <div style="display:flex;flex-direction:column">
-                  <div style="margin-bottom:4;color:${isLight ? '#000' : '#EDEFFF'};">${usLocalizedNumber(
+                  <div style="margin-bottom:4;color:${
+                    theme.palette.isLight ? theme.palette.colors.charcoal[900] : theme.palette.colors.charcoal[100]
+                  };font-size: 16px;font-weight: 600;line-height: 24px;">${usLocalizedNumber(
             itemRender.metrics.budget.value,
             2
           )}</div>
-                  <div style="font-weight:bold;color:${isLight ? '#231536' : '#9FAFB9'};">Budget Cap</div>
+                  <div style="color:${
+                    theme.palette.isLight ? theme.palette.colors.charcoal[500] : theme.palette.colors.charcoal[500]
+                  };font-size: 12px;font-weight: 500;line-height: 18px;">Budget Cap</div>
                </div>
             </div>
           </div>
@@ -163,7 +174,7 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
         },
       ],
     }),
-    [isDesktop1024, isLight, isTable, selectedMetric, tooltipSelectedMetricLabel, visibleSeries]
+    [isDesktop1024, theme, isTable, selectedMetric, tooltipSelectedMetricLabel, visibleSeries]
   );
 
   const toggleSeriesVisibility = (seriesName: string) => {
@@ -277,6 +288,8 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
     return <DoughnutChartFinancesSkeleton />;
   }
 
+  console.log(numberSliderPerLevel);
+
   return (
     <Container isCoreThirdLevel={isCoreThirdLevel}>
       <ContainerChart>
@@ -344,12 +357,12 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
 export default DesktopChart;
 
 const Container = styled('div')<{ isCoreThirdLevel: boolean }>(({ theme, isCoreThirdLevel }) => ({
-  display: 'flex',
-  flexDirection: 'row',
-  width: '100%',
-  gap: 64,
+  display: 'none',
 
   [theme.breakpoints.up('tablet_768')]: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
     gap: 20,
     justifyContent: 'center',
   },
@@ -424,22 +437,18 @@ const SwiperWrapper = styled('div')<{ isCoreThirdLevel: boolean; numberSliderPer
     },
 
     [theme.breakpoints.up('desktop_1280')]: {
-      marginTop: !isCoreThirdLevel ? 10 : 10,
       display: 'flex',
       position: 'relative',
       ...(numberSliderPerLevel === 10 && {
         minWidth: 365,
-        height: 'calc(100% - 10px)',
       }),
     },
 
     [theme.breakpoints.up('desktop_1440')]: {
-      marginTop: !isCoreThirdLevel ? 10 : 10,
       display: 'flex',
       position: 'relative',
       ...(numberSliderPerLevel === 10 && {
         minWidth: 440,
-        height: 'calc(100% - 10px)',
       }),
     },
 

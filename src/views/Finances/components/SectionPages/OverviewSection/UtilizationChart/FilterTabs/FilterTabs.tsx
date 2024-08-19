@@ -82,6 +82,7 @@ const TabContainer = styled('div')(({ theme }) => ({
 
   [theme.breakpoints.up('desktop_1280')]: {
     minWidth: 205,
+    gap: 5,
   },
 }));
 
