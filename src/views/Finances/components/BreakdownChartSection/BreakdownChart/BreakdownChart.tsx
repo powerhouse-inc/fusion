@@ -132,7 +132,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
             desktop1024: 'max-width:400px',
             default: 'min-width:190px;max-width:450px',
           };
-          let minMax;
+          let minMax: string;
           if (isTablet) {
             minMax = minMaxValues.tablet;
           } else if (isDesktop1024) {
@@ -147,7 +147,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
             default: '',
           };
 
-          let maxWithTable;
+          let maxWithTable: string;
           if (isTablet) {
             maxWithTable = maxWithTableValues.tablet;
           } else if (isDesktop1024) {
