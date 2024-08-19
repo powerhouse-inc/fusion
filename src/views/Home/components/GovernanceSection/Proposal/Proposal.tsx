@@ -56,7 +56,7 @@ const Proposal: React.FC<ProposalProps> = ({ proposal, isHat }) => {
         <MKRSupport>
           <Label>MKR Support</Label>
           <Number>
-            {usLocalizedNumber(mkrSupportEth, mkrSupportEth < 1000 ? 1 : 0)} <MakerdaoIcon />
+            {usLocalizedNumber(mkrSupportEth, mkrSupportEth < 1000 ? 2 : 0)} <MakerdaoIcon />
           </Number>
         </MKRSupport>
         <ExternalLinkContainer>

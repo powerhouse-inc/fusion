@@ -109,7 +109,7 @@ export const useFinancesView = (budgets: Budget[], allBudgets: Budget[], initial
             image: item.image || '/assets/img/default-icon-cards-budget.svg',
             codePath: item.codePath,
             title: formatBudgetName(item.name),
-            description: item.description || 'Finances of the core governance constructs described in the Maker Atlas.',
+            description: item.description,
             href: `${siteRoutes.finances(item.codePath.replace('atlas/', ''))}?year=${year}`,
             valueDai: budgetMetric[0].paymentsOnChain.value,
             totalDai: allMetrics.paymentsOnChain,
