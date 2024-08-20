@@ -170,20 +170,22 @@ const NavContainer = styled('div')(({ theme }) => ({
   boxShadow: theme.palette.isLight
     ? '1px 4px 15px 0px rgba(74, 88, 115, 0.15)'
     : '1px 4px 15px 0px rgba(74, 88, 115, 0.15)',
-  padding: '8px 16px',
-
+  padding: 16,
   width: '100%',
   justifyContent: 'space-between',
   alignItems: 'center',
+
   [theme.breakpoints.up('tablet_768')]: {
     borderRadius: 16,
     padding: '12px 16px',
     minHeight: 72,
   },
+
   [theme.breakpoints.up('desktop_1024')]: {
     padding: '15px 32px',
     height: 72,
   },
+
   [theme.breakpoints.up('desktop_1440')]: {
     padding: '15px 40px',
   },
