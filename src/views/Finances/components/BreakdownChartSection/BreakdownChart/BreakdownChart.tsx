@@ -26,9 +26,10 @@ interface BreakdownChartProps {
   handleToggleSeries: (series: string) => void;
   refBreakDownChart: React.RefObject<EChartsOption | null>;
   selectedMetric?: AnalyticMetric;
-  // isChecked: boolean;
-  // handleChangeSwitch: () => void;
+  isChecked: boolean;
+  handleChangeSwitch: () => void;
   showLegendValue?: boolean;
+  showScrollAndToggle?: boolean;
 }
 
 const BreakdownChart: React.FC<BreakdownChartProps> = ({
@@ -39,8 +40,9 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
   selectedGranularity,
   selectedMetric,
   showLegendValue,
-  // isChecked,
-  // handleChangeSwitch,
+  isChecked,
+  handleChangeSwitch,
+  showScrollAndToggle,
 }) => {
   const theme = useTheme();
 
@@ -356,13 +358,14 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
         )}
       </ChartContainer>
       <LegendBreakDownChart
-        // handleChangeSwitch={handleChangeSwitch}
-        // isChecked={isChecked}
+        handleChangeSwitch={handleChangeSwitch}
+        isChecked={isChecked}
         series={series}
         handleToggleSeries={handleToggleSeries}
         onLegendItemHover={onLegendItemHover}
         onLegendItemLeave={onLegendItemLeave}
         showLegendValue={showLegendValue}
+        showScrollAndToggle={showScrollAndToggle}
       />
     </Wrapper>
   );

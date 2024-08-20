@@ -21,26 +21,24 @@ export interface BreakdownChartSectionProps {
   handleToggleSeries: (series: string) => void;
   refBreakDownChart: React.RefObject<EChartsOption | null>;
   showLegendValue?: boolean;
-  // isChecked: boolean;
-  // handleChangeSwitch: () => void;
+  isChecked: boolean;
+  handleChangeSwitch: () => void;
+  showScrollAndToggle?: boolean;
 }
 
 const BreakdownChartSection: React.FC<BreakdownChartSectionProps> = ({
-  // TODO: Work in progress. The commented code below will be removed in future updates.
+  // TODO: Work in progress. For the update the filters
   isLoading,
   year,
   selectedMetric,
-  // onMetricChange,
   selectedGranularity,
-  // onGranularityChange,
-  // isDisabled,
-  // handleResetFilter,
   series,
   handleToggleSeries,
   refBreakDownChart,
   showLegendValue,
-  // isChecked,
-  // handleChangeSwitch,
+  isChecked,
+  handleChangeSwitch,
+  showScrollAndToggle,
 }) => (
   <Section>
     <HeaderContainer>
@@ -50,15 +48,6 @@ const BreakdownChartSection: React.FC<BreakdownChartSectionProps> = ({
         tooltip="Explore MakerDAO's financial distribution across the 'MakerDAO Legacy', 'Atlas Immutable', and 'Scope Framework' budgets from 2021-2024. This tool helps track allocation efficiency, identify funding fluctuations, and pinpoint transitions between legacy and endgame budgets."
       />
       <div>Filters</div>
-      {/*  TODO: Work in progress. The commented code below will be removed in future updates. */}
-      {/* <BreakdownChartFilter
-        selectedMetric={selectedMetric}
-        selectedGranularity={selectedGranularity}
-        onMetricChange={onMetricChange}
-        onGranularityChange={onGranularityChange}
-        isDisabled={isDisabled}
-        handleResetFilter={handleResetFilter}
-      /> */}
     </HeaderContainer>
 
     {isLoading ? (
@@ -68,15 +57,16 @@ const BreakdownChartSection: React.FC<BreakdownChartSectionProps> = ({
     ) : (
       <Wrapper>
         <BreakdownChart
-          // handleChangeSwitch={handleChangeSwitch}
+          handleChangeSwitch={handleChangeSwitch}
+          isChecked={isChecked}
           year={year}
           selectedGranularity={selectedGranularity as AnalyticGranularity}
           series={series}
           handleToggleSeries={handleToggleSeries}
           refBreakDownChart={refBreakDownChart}
           selectedMetric={selectedMetric}
-          // isChecked={isChecked}
           showLegendValue={showLegendValue}
+          showScrollAndToggle={showScrollAndToggle}
         />
       </Wrapper>
     )}
