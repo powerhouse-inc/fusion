@@ -29,6 +29,7 @@ interface BreakdownChartProps {
   isChecked: boolean;
   handleChangeSwitch: () => void;
   showLegendValue?: boolean;
+  showScrollAndToggle?: boolean;
 }
 
 const BreakdownChart: React.FC<BreakdownChartProps> = ({
@@ -41,6 +42,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
   showLegendValue,
   isChecked,
   handleChangeSwitch,
+  showScrollAndToggle,
 }) => {
   const theme = useTheme();
 
@@ -363,6 +365,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
         onLegendItemHover={onLegendItemHover}
         onLegendItemLeave={onLegendItemLeave}
         showLegendValue={showLegendValue}
+        showScrollAndToggle={showScrollAndToggle}
       />
     </Wrapper>
   );

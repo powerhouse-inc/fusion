@@ -132,6 +132,7 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
             showLegendValue={breakdownChartSectionData.showLegendValue}
             isChecked={breakdownChartSectionData.isChecked}
             handleChangeSwitch={breakdownChartSectionData.handleChangeSwitch}
+            showScrollAndToggle={breakdownChartSectionData.showScrollAndToggle}
           />
         </Container>
       </BudgetMetricsModalProvider>

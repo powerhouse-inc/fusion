@@ -23,6 +23,7 @@ export interface BreakdownChartSectionProps {
   showLegendValue?: boolean;
   isChecked: boolean;
   handleChangeSwitch: () => void;
+  showScrollAndToggle?: boolean;
 }
 
 const BreakdownChartSection: React.FC<BreakdownChartSectionProps> = ({
@@ -37,6 +38,7 @@ const BreakdownChartSection: React.FC<BreakdownChartSectionProps> = ({
   showLegendValue,
   isChecked,
   handleChangeSwitch,
+  showScrollAndToggle,
 }) => (
   <Section>
     <HeaderContainer>
@@ -64,6 +66,7 @@ const BreakdownChartSection: React.FC<BreakdownChartSectionProps> = ({
           refBreakDownChart={refBreakDownChart}
           selectedMetric={selectedMetric}
           showLegendValue={showLegendValue}
+          showScrollAndToggle={showScrollAndToggle}
         />
       </Wrapper>
     )}
