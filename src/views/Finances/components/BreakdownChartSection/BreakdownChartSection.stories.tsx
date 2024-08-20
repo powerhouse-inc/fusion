@@ -531,7 +531,7 @@ ManyItems.parameters = {
   figma: {
     component: {
       1280: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=8:10454&m=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16:5967&m=dev',
         options: {
           componentStyle: {
             width: 1312,
