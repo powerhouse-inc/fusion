@@ -21,7 +21,7 @@ const Proposals: React.FC<ProposalsProps> = ({ governanceProposals, hatAddress }
         <SectionContainer>
           <SectionHeader isMain>
             <span>Open Executive Proposals</span>
-            <ExternalLinkButton href="https://vote.makerdao.com/">Go to Makervote</ExternalLinkButton>
+            <ExternalLinkButton href="https://vote.makerdao.com/">Go to Sky vote</ExternalLinkButton>
           </SectionHeader>
 
           <ProposalList>
@@ -37,7 +37,7 @@ const Proposals: React.FC<ProposalsProps> = ({ governanceProposals, hatAddress }
           <SectionHeader isMain={openProposals.length === 0}>
             <span>Active Executive Proposals</span>
             {openProposals.length === 0 && (
-              <ExternalLinkButton href="https://vote.makerdao.com/">Go to Makervote</ExternalLinkButton>
+              <ExternalLinkButton href="https://vote.makerdao.com/">Go to Sky vote</ExternalLinkButton>
             )}
           </SectionHeader>
 
