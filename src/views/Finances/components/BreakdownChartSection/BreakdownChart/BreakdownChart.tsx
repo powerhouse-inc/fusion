@@ -324,16 +324,16 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
   }, [options, refBreakDownChart]);
 
   const onLegendItemHover = (legendName: string) => {
-    const chartInstance = refBreakDownChart.current.getEchartsInstance();
-    chartInstance.dispatchAction({
+    const chartInstance = refBreakDownChart?.current?.getEchartsInstance();
+    chartInstance?.dispatchAction({
       type: 'highlight',
       seriesName: legendName,
     });
   };
 
   const onLegendItemLeave = (legendName: string) => {
-    const chartInstance = refBreakDownChart.current.getEchartsInstance();
-    chartInstance.dispatchAction({
+    const chartInstance = refBreakDownChart?.current?.getEchartsInstance();
+    chartInstance?.dispatchAction({
       type: 'downplay',
       seriesName: legendName,
     });

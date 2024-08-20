@@ -6,7 +6,6 @@ import { formatBudgetName, removeBudgetWord } from '@/views/Finances/utils/utils
 import type { FC } from 'react';
 
 interface Props {
-  key: React.Key;
   element: BreakdownChartSeriesData;
   onLegendItemHover: (legendName: string) => void;
   onLegendItemLeave: (legendName: string) => void;
@@ -17,7 +16,6 @@ interface Props {
 }
 
 const LegendItemBreakDownChart: FC<Props> = ({
-  key,
   element,
   onLegendItemHover,
   onLegendItemLeave,
@@ -28,10 +26,9 @@ const LegendItemBreakDownChart: FC<Props> = ({
 }) => (
   <Container
     className={className}
-    key={key}
-    onMouseEnter={() => onLegendItemHover(element.name)}
-    onMouseLeave={() => onLegendItemLeave(element.name)}
-    onClick={() => handleToggleSeries(element.name)}
+    onMouseEnter={() => onLegendItemHover(element.name ?? '')}
+    onMouseLeave={() => onLegendItemLeave(element.name ?? '')}
+    onClick={() => handleToggleSeries(element.name ?? '')}
   >
     <SVGContainer>
       <SvgStyled xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 13" fill="none">
