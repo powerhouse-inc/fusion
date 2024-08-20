@@ -45,14 +45,6 @@ const LegendBreakDownChart: FC<Props> = ({
     {showScrollAndToggle ? (
       <LegendContainer>
         <ContainerSwitch>
-          {/* <div
-              style={{
-                width: 42,
-                height: 21,
-              }}
-            >
-              Switch
-            </div> */}
           <SwitchComponent isChecked={isChecked} handleChangeSwitch={handleChangeSwitch} />
         </ContainerSwitch>
         <ContainerScroll>
@@ -249,6 +241,5 @@ const ContainerSwitch = styled('div')(({ theme }) => ({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    paddingRight: 8,
   },
 }));
