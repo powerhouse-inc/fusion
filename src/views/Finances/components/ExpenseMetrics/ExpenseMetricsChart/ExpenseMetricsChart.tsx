@@ -271,37 +271,40 @@ const ExpenseMetricsChart: FC<ExpenseMetricsChartProps> = ({
         </YearXAxis>
       )}
       <LegendContainer>
-        {series.map((seriesItem: LineChartSeriesData) => (
-          <LegendItem
-            onMouseEnter={() => onLegendItemHover(seriesItem.name)}
-            onMouseLeave={() => onLegendItemLeave(seriesItem.name)}
-            onClick={() => handleToggleSeries(seriesItem.name)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width={isMobile ? 12 : 16}
-              height={isMobile ? 12 : 16}
-              viewBox={`0 0 ${isMobile ? 12 : 16} ${isMobile ? 12 : 16}`}
-              fill="none"
+        <LegendWrapper>
+          {series.map((seriesItem: LineChartSeriesData, index: number) => (
+            <LegendItem
+              key={`${seriesItem.name}-${index}`}
+              onMouseEnter={() => onLegendItemHover(seriesItem.name)}
+              onMouseLeave={() => onLegendItemLeave(seriesItem.name)}
+              onClick={() => handleToggleSeries(seriesItem.name)}
             >
-              <circle
-                cx={isMobile ? 6 : 8}
-                cy={isMobile ? 6 : 8}
-                r={isMobile ? 5.5 : 7.5}
-                stroke={seriesItem.itemStyle.color}
-              />
-              <circle
-                cx={isMobile ? 6 : 8}
-                cy={isMobile ? 6 : 8}
-                r={isMobile ? 4 : 6}
-                fill={seriesItem.itemStyle.color}
-              />
-            </svg>
-            {seriesItem.name === 'Net Expenses Off-chain'
-              ? `${isMobile ? 'Net Expenses Off-chain' : 'Net Expenses Off-chain included'}`
-              : seriesItem.name}
-          </LegendItem>
-        ))}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={isMobile ? 12 : 16}
+                height={isMobile ? 12 : 16}
+                viewBox={`0 0 ${isMobile ? 12 : 16} ${isMobile ? 12 : 16}`}
+                fill="none"
+              >
+                <circle
+                  cx={isMobile ? 6 : 8}
+                  cy={isMobile ? 6 : 8}
+                  r={isMobile ? 5.5 : 7.5}
+                  stroke={seriesItem.itemStyle.color}
+                />
+                <circle
+                  cx={isMobile ? 6 : 8}
+                  cy={isMobile ? 6 : 8}
+                  r={isMobile ? 4 : 6}
+                  fill={seriesItem.itemStyle.color}
+                />
+              </svg>
+              {seriesItem.name === 'Net Expenses Off-chain'
+                ? `${isMobile ? 'Net Expenses Off-chain' : 'Net Expenses Off-chain included'}`
+                : seriesItem.name}
+            </LegendItem>
+          ))}
+        </LegendWrapper>
       </LegendContainer>
     </ChartContainer>
   );
@@ -319,18 +322,34 @@ const ChartContainer = styled('div')(({ theme }) => ({
   marginTop: 16,
 
   [theme.breakpoints.up('tablet_768')]: {
-    maxWidth: 385,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    gap: 24,
     height: 286,
+
+    '& > div:first-of-type': {
+      maxWidth: 385,
+    },
   },
 
   [theme.breakpoints.up('desktop_1024')]: {
-    maxWidth: 526,
     height: 288,
+
+    '& > div:first-of-type': {
+      maxWidth: 526,
+    },
   },
 
   [theme.breakpoints.up('desktop_1280')]: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    gap: 0,
     maxWidth: 536,
     height: 432,
+
+    '& > div:first-of-type': {
+      maxWidth: '100%',
+    },
   },
 
   [theme.breakpoints.up('desktop_1440')]: {
@@ -377,20 +396,41 @@ const LegendContainer = styled('div')(({ theme }) => ({
   position: 'absolute',
   display: 'flex',
   justifyContent: 'center',
-  flexWrap: 'wrap',
-  gap: 16,
   bottom: 0,
 
   [theme.breakpoints.up('tablet_768')]: {
-    display: 'none', // temporary
-  },
-
-  [theme.breakpoints.up('desktop_1024')]: {
-    display: 'none', // temporary
+    position: 'static',
+    alignItems: 'center',
+    flex: '1 0 0',
+    padding: '0px 16px',
+    borderRadius: 12,
+    backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
   },
 
   [theme.breakpoints.up('desktop_1280')]: {
-    display: 'flex', // temporary
+    position: 'absolute',
+    alignItems: 'flex-start',
+    flex: 'none',
+    padding: 0,
+    borderRadius: 0,
+    backgroundColor: 'transparent',
+  },
+}));
+
+const LegendWrapper = styled('div')(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  flexWrap: 'wrap',
+  gap: 16,
+
+  [theme.breakpoints.up('tablet_768')]: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    gap: 24,
+  },
+
+  [theme.breakpoints.up('desktop_1280')]: {
+    flexDirection: 'row',
     gap: '16px 24px',
   },
 }));
