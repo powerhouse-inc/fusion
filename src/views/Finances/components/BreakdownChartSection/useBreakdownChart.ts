@@ -17,7 +17,8 @@ import type { EChartsOption } from 'echarts-for-react';
 
 const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, allBudgets: Budget[]) => {
   const { isLight } = useThemeContext();
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(true);
+  const [inactiveSeries, setInactiveSeries] = useState<string[]>([]);
   const levelNumber = codePath.split('/').length;
   const [selectedMetric, setSelectedMetric] = useState<AnalyticMetric>('Budget');
   const [selectedGranularity, setSelectedGranularity] = useState<AnalyticGranularity>('monthly');
@@ -72,6 +73,11 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
     setSelectedMetric(value);
   };
   const handleChangeSwitch = () => {
+    if (!isChecked && inactiveSeries.length > 0) {
+      setInactiveSeries([]);
+    } else {
+      setInactiveSeries([...allSeries.map((series) => series.name)]);
+    }
     setIsChecked(!isChecked);
   };
   const handleGranularityChange = (value: AnalyticGranularity) => {
@@ -117,7 +123,7 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
   }, [allBudgets, barBorderRadius, barWidth, budgets, budgetsAnalytics, isLight, selectedMetric]);
 
   // series to be "hidden" in the chart
-  const [inactiveSeries, setInactiveSeries] = useState<string[]>([]);
+
   const handleToggleSeries = (toggleSeries: string) => {
     setInactiveSeries(
       inactiveSeries.includes(toggleSeries)

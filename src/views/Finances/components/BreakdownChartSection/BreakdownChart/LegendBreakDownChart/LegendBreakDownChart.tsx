@@ -2,6 +2,7 @@ import { styled } from '@mui/material';
 import React from 'react';
 import SimpleBar from 'simplebar-react';
 import type { BreakdownChartSeriesData } from '@/views/Finances/utils/types';
+import SwitchComponent from '../SwitchComponent/SwitchComponent';
 import LegendItemBreakDownChart from './LegendItemBreakDownChart';
 import type { FC } from 'react';
 
@@ -10,8 +11,8 @@ interface Props {
   series: BreakdownChartSeriesData[];
   onLegendItemHover: (legendName: string) => void;
   onLegendItemLeave: (legendName: string) => void;
-  // isChecked: boolean;
-  // handleChangeSwitch: () => void;
+  isChecked: boolean;
+  handleChangeSwitch: () => void;
   showLegendValue?: boolean;
 }
 
@@ -21,8 +22,9 @@ const LegendBreakDownChart: FC<Props> = ({
   onLegendItemHover,
   onLegendItemLeave,
   showLegendValue,
-  // isChecked,
-  // handleChangeSwitch,
+
+  isChecked,
+  handleChangeSwitch,
 }) => {
   const showAll = series.length > 15;
   const showScroll = series.length > 15;
@@ -45,15 +47,15 @@ const LegendBreakDownChart: FC<Props> = ({
       {showScroll ? (
         <LegendContainer>
           <ContainerSwitch>
-            <div
+            {/* <div
               style={{
                 width: 42,
                 height: 21,
               }}
             >
               Switch
-            </div>
-            {/* TODO:Add the component of <SwitchComponent isChecked={false} handleChangeSwitch={() => {}} /> */}
+            </div> */}
+            <SwitchComponent isChecked={isChecked} handleChangeSwitch={handleChangeSwitch} />
           </ContainerSwitch>
           <ContainerScroll>
             <SimpleBarStyled>
@@ -168,7 +170,7 @@ const SimpleBarStyled = styled(SimpleBar)<{ isLessThanFifteen?: boolean }>(({ th
   '.simplebar-scrollbar::before': {
     width: 4,
     marginLeft: 4,
-    height: 128,
+    height: 64,
     background: theme.palette.isLight ? theme.palette.colors.charcoal[500] : theme.palette.colors.charcoal[700],
     borderRadius: 12,
   },
