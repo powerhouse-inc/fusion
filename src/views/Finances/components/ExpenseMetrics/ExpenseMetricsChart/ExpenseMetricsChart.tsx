@@ -10,6 +10,7 @@ import {
   formatterBreakdownChart,
   getChartAxisLabelByGranularity,
   removeBudgetWord,
+  getMonthAbbreviationToolTip,
 } from '@/views/Finances/utils/utils';
 import type { CumulativeType } from '../useExpenseMetrics';
 import type { Theme } from '@mui/material';
@@ -45,9 +46,11 @@ const ExpenseMetricsChart: FC<ExpenseMetricsChartProps> = ({
 
   const options: EChartsOption = {
     tooltip: {
+      borderRadius: 12,
       show: !isMobile,
       trigger: 'axis',
       extraCssText: `z-index:${zIndexEnum.ECHART_TOOL_TIP}`,
+      backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
       axisPointer: {
         type: 'shadow',
         shadowStyle: {
@@ -56,6 +59,7 @@ const ExpenseMetricsChart: FC<ExpenseMetricsChartProps> = ({
         },
       },
       padding: 0,
+      borderColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
       borderWidth: 1,
       position: (
         point: [number, number],
@@ -82,13 +86,13 @@ const ExpenseMetricsChart: FC<ExpenseMetricsChartProps> = ({
           yPos -= tooltipHeight;
         }
       },
-      borderColor: theme.palette.isLight ? '#D4D9E1' : '#231536',
       formatter: (params: BarChartSeries[]) => {
         // If all values are cero, don't show tooltip
         if (params.every((item) => item.value === 0)) {
           return '';
         }
 
+        const filteredParams = params.filter((item) => item.value !== 0 && Math.abs(item.value) > 0.004);
         const shortAmount = params.length > 10;
         const flexDirection = shortAmount ? 'row' : 'column';
         const wrap = shortAmount ? 'flex-wrap:wrap;' : '';
@@ -98,30 +102,34 @@ const ExpenseMetricsChart: FC<ExpenseMetricsChartProps> = ({
           : isDesktop1024
           ? 'max-width:400px'
           : 'min-width:190px;max-width:450px';
-        const maxWithTable = isTablet ? 'max-width:190px' : isDesktop1024 ? 'max-width:450px' : '';
+        const maxWithTablet = isTablet ? 'max-width:190px' : isDesktop1024 ? 'max-width:450px' : '';
 
         return `
-          <div style="background-color:${
-            theme.palette.isLight ? '#fff' : '#000A13'
-          };padding:16px;overflow:auto;border-radius:3px;">
-            <div style="display: flex;justify-content: space-between;gap:24px;text-align:center;">
-              <div style="margin-bottom:16px;font-size:12px;font-weight:600;color:#B6BCC2;">${
-                (selectedGranularity as string) === 'Annually' ? year : params?.[0]?.name?.replace('’', "'")
-              }</div>
-              ${
-                isCumulative
-                  ? `<div style="text-transform:uppercase;font-weight:300;font-size:11px;color:${
-                      theme.palette.isLight ? '#434358' : '#B6BCC2'
-                    }">${cumulativeType} cumulative</div>`
-                  : ''
-              }
-            </div>
+          <div style="border-radius:12px;background-color:${
+            theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800]
+          };box-shadow:${
+          theme.palette.isLight ? theme.fusionShadows.graphShadow : 'none'
+        };padding:16px;overflow:auto;font-family:Inter,sans-serif">
+            <div style="margin-bottom:16px;font-size:12px;font-weight:600;color:${
+              theme.palette.isLight ? theme.palette.colors.charcoal[300] : theme.palette.colors.slate[100]
+            }">${
+          (selectedGranularity as string) === 'Annually'
+            ? year
+            : getMonthAbbreviationToolTip(filteredParams?.[0]?.dataIndex as number)
+        }</div>
+            ${
+              isCumulative
+                ? `<div style="text-transform:uppercase;font-weight:300;font-size:11px;color:${
+                    theme.palette.isLight ? '#434358' : theme.palette.colors.slate[100]
+                  }">${cumulativeType} cumulative</div>`
+                : ''
+            }
             <div style="display:flex;flex-direction:${flexDirection};gap:${gap};${wrap}${minMax}">
-              ${params
+              ${filteredParams
                 .reverse()
                 .map(
                   (item) =>
-                    `<div style="display: flex;align-items:center;gap: 6px;">
+                    `<div style="display:flex;align-items:center;gap:6px;">
                   <svg xmlns="http://www.w3.org/2000/svg" width="${isMobile ? 13 : 16}" height="${
                       isMobile ? 13 : 16
                     }" viewBox="0 0 13 13" fill="none" style="min-width:${isMobile ? 13 : 16};min-height:${
@@ -130,16 +138,16 @@ const ExpenseMetricsChart: FC<ExpenseMetricsChartProps> = ({
                     <circle cx="6.5" cy="6.5" r="5.5" stroke="${item.color}" />
                     <circle cx="6.5" cy="6.5" r="4" fill="${item.color}" />
                   </svg>
-                  <span style="display: inline-block;font-size:14px;color:${
-                    theme.palette.isLight ? '#231536' : '#B6BCC2'
-                  };white-space:nowrap;overflow:hidden;text-overflow:ellipsis;${maxWithTable}"> ${
+                  <span style="display:inline-block;font-size:14px;color:${
+                    theme.palette.isLight ? theme.palette.colors.charcoal[300] : theme.palette.colors.slate[100]
+                  };white-space:nowrap;overflow:hidden;text-overflow:ellipsis;${maxWithTablet}"> ${
                       !isMobile
                         ? formatBudgetName(item.seriesName)
                         : removeBudgetWord(formatBudgetName(item.seriesName))
                     }:</span>
                   <span style="font-size:16px;font-weight:700;color:${
-                    theme.palette.isLight ? '#231536' : '#EDEFFF'
-                  };display: inline-block;">${usLocalizedNumber(item.value, 2)}</span>
+                    theme.palette.isLight ? theme.palette.colors.charcoal[900] : '#EDEFFF'
+                  };display:inline-block;">${usLocalizedNumber(item.value, 2)}</span>
                 </div>`
                 )
                 .join('')}
