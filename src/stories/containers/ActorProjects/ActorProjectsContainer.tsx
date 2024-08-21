@@ -88,7 +88,7 @@ const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, 
           />
         }
       />
-      <TeamHeader team={actor} />
+      <TeamHeader team={actor} withDescription={false} />
       <Container>
         <ContainerAllData>
           <ContainerResponsive>
