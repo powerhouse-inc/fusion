@@ -148,25 +148,33 @@ const SwiperWrapper = styled('div')(({ theme }) => ({
   '& .swiper-pagination-bullet': {
     width: 12,
     height: 12,
-    backgroundColor: theme.palette.isLight ? '#ECF1F3 !important' : '#1E2C37 !important',
-    opacity: '1px !important',
+    backgroundColor: theme.palette.isLight
+      ? `${theme.palette.colors.charcoal[100]} !important`
+      : `${theme.palette.colors.gray[900]} !important`,
+    opacity: '1 !important',
 
     [theme.breakpoints.up('tablet_768')]: {
       width: 16,
       height: 16,
     },
 
-    '&:first-child': {
+    '&:first-of-type': {
       borderRadius: '20px 0px 0px 20px',
     },
 
-    '&:last-child': {
+    '&:last-of-type': {
       borderRadius: '0px 20px 20px 0px',
+    },
+
+    '&:not(.swiper-pagination-bullet-active):hover': {
+      backgroundColor: theme.palette.isLight
+        ? `${theme.palette.colors.charcoal[200]} !important`
+        : `${theme.palette.colors.gray[800]} !important`,
     },
   },
 
   '& .swiper-pagination-bullet-active': {
-    backgroundColor: '#504DFF !important',
+    backgroundColor: `${theme.palette.colors.sky[1000]} !important`,
   },
 
   '& .swiper-slide-active': {
