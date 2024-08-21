@@ -14,7 +14,7 @@ interface FinancesSectionProps {
 const FinancesSection: React.FC<FinancesSectionProps> = ({ revenueAndSpendingData, financesData }) => (
   <>
     <SectionTitle>Finances</SectionTitle>
-    <Text>*All values are converted to DAI</Text>
+    <Text>*All values are converted to DAI/USDS</Text>
     <Finances>
       <FinancesBarChartCard
         revenueAndSpendingData={revenueAndSpendingData}
