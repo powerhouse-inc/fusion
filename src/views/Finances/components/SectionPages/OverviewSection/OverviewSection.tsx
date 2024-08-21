@@ -73,6 +73,7 @@ const MainContentSection = styled('div')(({ theme }) => ({
 
     '& > div:nth-of-type(1)': {
       maxWidth: 'calc(33.333333% - 22px)',
+      minWidth: 'calc(33.333333% - 22px)',
     },
   },
 }));

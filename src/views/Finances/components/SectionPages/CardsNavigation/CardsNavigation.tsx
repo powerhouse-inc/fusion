@@ -12,10 +12,9 @@ import 'swiper/css';
 
 interface Props {
   cardsNavigationInformation: NavigationCard[];
-  level: number;
 }
 
-const CardsNavigation: React.FC<Props> = ({ cardsNavigationInformation, level }) => {
+const CardsNavigation: React.FC<Props> = ({ cardsNavigationInformation }) => {
   const ref = useRef<SwiperRef>(null);
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const isTabletOrDesktop1024 = useMediaQuery((theme: Theme) =>
@@ -24,7 +23,7 @@ const CardsNavigation: React.FC<Props> = ({ cardsNavigationInformation, level })
   const MAX_ITEMS = isMobile ? 2 : isTabletOrDesktop1024 ? 3 : 5;
   const showSwiper = cardsNavigationInformation.length > MAX_ITEMS;
 
-  const isDeepLevel = level >= 3;
+  const isDeepLevel = cardsNavigationInformation.length > 6;
 
   // Options of Swiper
   const swiperOptions: SwiperProps = {
@@ -63,7 +62,7 @@ const CardsNavigation: React.FC<Props> = ({ cardsNavigationInformation, level })
   };
 
   return (
-    <ContainerCardsNavigation showSwiper={showSwiper}>
+    <ContainerCardsNavigation showSwiper={showSwiper} isCompact={isDeepLevel}>
       {showSwiper ? (
         <SwiperWrapper>
           <Swiper
@@ -110,21 +109,24 @@ const CardsNavigation: React.FC<Props> = ({ cardsNavigationInformation, level })
 
 export default CardsNavigation;
 
-const ContainerCardsNavigation = styled('div')<{ showSwiper: boolean }>(({ theme, showSwiper }) => ({
-  display: 'flex',
-  flexDirection: 'row',
-  flexWrap: 'nowrap',
-  gap: 16,
-  ...(showSwiper && { margin: '0 -8px' }),
+const ContainerCardsNavigation = styled('div')<{ showSwiper: boolean; isCompact: boolean }>(
+  ({ theme, showSwiper, isCompact }) => ({
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    gap: 16,
+    ...(showSwiper && { margin: '0 -8px' }),
 
-  [theme.breakpoints.up('tablet_768')]: {
-    gap: 24,
-  },
+    [theme.breakpoints.up('tablet_768')]: {
+      gap: 24,
+    },
 
-  [theme.breakpoints.up('desktop_1280')]: {
-    gap: 32,
-  },
-}));
+    [theme.breakpoints.up('desktop_1280')]: {
+      gap: 32,
+      ...(showSwiper && { margin: isCompact ? '0 -8px 0 -16px' : '0 -8px' }),
+    },
+  })
+);
 
 const SwiperWrapper = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -182,7 +184,7 @@ const SwiperWrapper = styled('div')(({ theme }) => ({
   },
 }));
 
-const CardWrapper = styled('div')({
+const CardWrapper = styled('div')(({ theme }) => ({
   paddingLeft: 16,
   paddingBottom: 4,
   paddingTop: 4,
@@ -190,4 +192,8 @@ const CardWrapper = styled('div')({
   flex: '1',
   height: '100%',
   boxSizing: 'border-box',
-});
+
+  [theme.breakpoints.up('desktop_1280')]: {
+    paddingLeft: 24,
+  },
+}));
