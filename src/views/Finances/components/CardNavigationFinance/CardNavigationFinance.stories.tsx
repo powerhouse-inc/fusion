@@ -1,6 +1,4 @@
-import { BudgetBuilder } from '@ses/core/businessLogic/builders/budgetBuilder';
 import { createThemeModeVariants } from '@ses/core/utils/storybook/factories';
-
 import CardNavigationFinance from './CardNavigationFinance';
 import type { Meta } from '@storybook/react';
 import type { FigmaParams } from 'sb-figma-comparator';
@@ -24,16 +22,7 @@ const args = [
     title: 'Atlas Immutable Budget',
     description: 'Finances of the core governance constructs described in the Maker Atlas.',
     href: '#',
-    allBudgets: [
-      new BudgetBuilder()
-        .withId('1')
-        .withParentId('45')
-        .withName('End-game Atlas Immutable')
-        .withCode('atlas/immutable')
-        .withCodePath('atlas/immutable/AC')
-        .build(),
-    ],
-    codePath: 'atlas/immutable',
+    code: 'atlas/immutable',
   },
 ];
 const [[LightMode, DarkMode]] = createThemeModeVariants(CardNavigationFinance, args);
