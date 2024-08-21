@@ -52,7 +52,7 @@ const FinancesBarChartCard: FC<FinancesBarChartCardProps> = ({ revenueAndSpendin
           <LegendTitle>Spending</LegendTitle>
           <SpendingLegendButtons>
             <LegendButton index={3} startIcon={<CircleIcon />} disableRipple>
-              DAI Expensed
+              DAI Spent
             </LegendButton>
             <LegendButton index={4} startIcon={<CircleIcon />} disableRipple>
               MKR Vesting
