@@ -1,4 +1,5 @@
 import type { Theme } from '@mui/material';
+import type { breakpoints } from '@ses/styles/theme/themes';
 import type { CSSProperties, MutableRefObject } from 'react';
 
 export type Breakpoint = 'mobile' | 'tablet' | 'desktop';
@@ -77,4 +78,5 @@ export interface FiltersBundleOptions {
   order?: Partial<Record<Breakpoint, string[]>>;
   snapPoints?: number[];
   initialSnap?: number; // this is the index of the previous array
+  asPopover?: (keyof typeof breakpoints | 'desktop')[];
 }

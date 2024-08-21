@@ -53,5 +53,6 @@ export default function useFiltersBundle({ filters, order }: Props) {
     areFiltersOpen,
     handleToggleOpenFilters,
     orderedFilters,
+    currentBreakpoint,
   };
 }
