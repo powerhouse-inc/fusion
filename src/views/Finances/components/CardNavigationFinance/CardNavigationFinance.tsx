@@ -107,7 +107,7 @@ const Title = styled('div')<{ oneLineOnly: boolean }>(({ theme, oneLineOnly }) =
   lineHeight: '20px',
   marginTop: 8,
 
-  color: theme.palette.isLight ? theme.palette.colors.gray[900] : 'red',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
 
   ...(oneLineOnly
     ? {
@@ -128,7 +128,7 @@ const Code = styled('div')(({ theme }) => ({
   fontSize: 16,
   fontWeight: 600,
   lineHeight: '24px',
-  color: theme.palette.isLight ? theme.palette.colors.slate[100] : 'red',
+  color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.gray[600],
 
   [theme.breakpoints.up('tablet_768')]: {
     alignSelf: 'center',
@@ -139,7 +139,7 @@ const Description = styled('div')(({ theme }) => ({
   fontSize: 12,
   fontWeight: 400,
   lineHeight: 'normal',
-  color: theme.palette.isLight ? theme.palette.colors.gray[500] : 'red',
+  color: theme.palette.colors.gray[500],
 
   [theme.breakpoints.up('tablet_768')]: {
     marginBottom: 8,
