@@ -54,7 +54,7 @@ const Wrapper = styled('div')(({ theme }) => ({
   },
 }));
 
-const BarContainer = styled('div')(() => ({
+const BarContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignSelf: 'stretch',
@@ -63,6 +63,7 @@ const BarContainer = styled('div')(() => ({
   minWidth: 32,
   borderRadius: 8,
   overflow: 'hidden',
+  background: theme.palette.isLight ? theme.palette.colors.slate[50] : '#232832',
 }));
 
 const Bar = styled('div')<{ color: string; height: number }>(({ color, height }) => ({

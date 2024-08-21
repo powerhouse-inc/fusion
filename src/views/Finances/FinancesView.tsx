@@ -106,7 +106,7 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
               showSwiper={cardOverViewSectionData.showSwiper}
               numberSliderPerLevel={cardOverViewSectionData.numberSliderPerLevel}
             />
-            <CardsNavigation cardsNavigationInformation={cardsNavigationInformation} level={levelNumber} />
+            <CardsNavigation cardsNavigationInformation={cardsNavigationInformation} />
           </ContainerSections>
 
           <BreakdownChartSection
