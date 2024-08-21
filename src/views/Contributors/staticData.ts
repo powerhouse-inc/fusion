@@ -22,7 +22,7 @@ export const currentTeams = [
     type: 'contributor',
     name: 'Keepers',
     description:
-      'Keepers manage crucial financial operations within Sky, ensuring the stability and efficiency of the SkyDollar and overall Sky Ecosystem health. Their actions directly impact the economic resilience of the Sky.',
+      'Keepers manage crucial financial operations within Sky, ensuring the stability and efficiency of the USDS and overall Sky Ecosystem health. Their actions directly impact the economic resilience of the Sky.',
     teams: 4,
     href: siteRoutes.finances('scopes/PRO/KPRS?year=2024'),
   },

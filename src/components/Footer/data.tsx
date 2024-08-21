@@ -67,7 +67,7 @@ const linkCategory: LinkCategory[] = [
     ],
   },
   {
-    name: 'Sky DAO tools',
+    name: 'Sky Ecosystem Tooling',
     links: [
       {
         label: 'Connect',
