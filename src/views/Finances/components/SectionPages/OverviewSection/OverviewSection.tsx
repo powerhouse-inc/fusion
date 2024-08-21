@@ -60,11 +60,19 @@ const MainContentSection = styled('div')(({ theme }) => ({
 
     '& > div:nth-of-type(1)': {
       flex: 1,
-      maxWidth: 'calc(33.333333% - 15px)',
+      maxWidth: 'calc(33.333333% - 16px)',
     },
 
     '& > div:nth-of-type(2)': {
       flex: 2,
+    },
+  },
+
+  [theme.breakpoints.up('desktop_1280')]: {
+    gap: 32,
+
+    '& > div:nth-of-type(1)': {
+      maxWidth: 'calc(33.333333% - 22px)',
     },
   },
 }));

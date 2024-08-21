@@ -2,6 +2,7 @@ import { styled } from '@mui/material';
 import React from 'react';
 import SimpleBar from 'simplebar-react';
 import type { BreakdownChartSeriesData } from '@/views/Finances/utils/types';
+import SwitchComponent from '../SwitchComponent/SwitchComponent';
 import LegendItemBreakDownChart from './LegendItemBreakDownChart';
 import type { FC } from 'react';
 
@@ -10,9 +11,10 @@ interface Props {
   series: BreakdownChartSeriesData[];
   onLegendItemHover: (legendName: string) => void;
   onLegendItemLeave: (legendName: string) => void;
-  // isChecked: boolean;
-  // handleChangeSwitch: () => void;
+  isChecked: boolean;
+  handleChangeSwitch: () => void;
   showLegendValue?: boolean;
+  showScrollAndToggle?: boolean;
 }
 
 const LegendBreakDownChart: FC<Props> = ({
@@ -21,79 +23,67 @@ const LegendBreakDownChart: FC<Props> = ({
   onLegendItemHover,
   onLegendItemLeave,
   showLegendValue,
-  // isChecked,
-  // handleChangeSwitch,
-}) => {
-  const showAll = series.length > 15;
-  const showScroll = series.length > 15;
-  return (
-    <>
-      <ContainerMobile isLessThanFifteen={showAll}>
-        {series.map((element, index) => (
-          <LegendItemBreakDownChart
-            index={index}
-            element={element}
-            key={element.name}
-            handleToggleSeries={() => handleToggleSeries(element.name)}
-            onLegendItemHover={() => onLegendItemHover(element.name)}
-            onLegendItemLeave={() => onLegendItemLeave(element.name)}
-            showLegendValue={showLegendValue}
-          />
-        ))}
-      </ContainerMobile>
+  showScrollAndToggle = false,
+  isChecked,
+  handleChangeSwitch,
+}) => (
+  <>
+    <ContainerMobile isLessThanFifteen={showScrollAndToggle}>
+      {series.map((element, index) => (
+        <LegendItemBreakDownChart
+          index={index}
+          element={element}
+          key={element.name}
+          handleToggleSeries={() => handleToggleSeries(element.name)}
+          onLegendItemHover={() => onLegendItemHover(element.name)}
+          onLegendItemLeave={() => onLegendItemLeave(element.name)}
+          showLegendValue={showLegendValue}
+        />
+      ))}
+    </ContainerMobile>
 
-      {showScroll ? (
-        <LegendContainer>
-          <ContainerSwitch>
-            <div
-              style={{
-                width: 42,
-                height: 21,
-              }}
-            >
-              Switch
-            </div>
-            {/* TODO:Add the component of <SwitchComponent isChecked={false} handleChangeSwitch={() => {}} /> */}
-          </ContainerSwitch>
-          <ContainerScroll>
-            <SimpleBarStyled>
-              <ContainerSeries>
-                {series.map((element, index) => (
-                  <LegendItemBreakDownChart
-                    index={index}
-                    element={element}
-                    key={element.name}
-                    handleToggleSeries={() => handleToggleSeries(element.name)}
-                    onLegendItemHover={() => onLegendItemHover(element.name)}
-                    onLegendItemLeave={() => onLegendItemLeave(element.name)}
-                    showLegendValue={showLegendValue}
-                  />
-                ))}
-              </ContainerSeries>
-            </SimpleBarStyled>
-          </ContainerScroll>
-        </LegendContainer>
-      ) : (
-        <SimpleContainer>
-          <SimpleContainerSeries>
-            {series.map((element, index) => (
-              <LegendItemBreakDownChart
-                index={index}
-                element={element}
-                key={element.name}
-                handleToggleSeries={() => handleToggleSeries(element.name)}
-                onLegendItemHover={() => onLegendItemHover(element.name)}
-                onLegendItemLeave={() => onLegendItemLeave(element.name)}
-                showLegendValue={showLegendValue}
-              />
-            ))}
-          </SimpleContainerSeries>
-        </SimpleContainer>
-      )}
-    </>
-  );
-};
-
+    {showScrollAndToggle ? (
+      <LegendContainer>
+        <ContainerSwitch>
+          <SwitchComponent isChecked={isChecked} handleChangeSwitch={handleChangeSwitch} />
+        </ContainerSwitch>
+        <ContainerScroll>
+          <SimpleBarStyled>
+            <ContainerSeries>
+              {series.map((element, index) => (
+                <LegendItemBreakDownChart
+                  index={index}
+                  element={element}
+                  key={element.name}
+                  handleToggleSeries={() => handleToggleSeries(element.name)}
+                  onLegendItemHover={() => onLegendItemHover(element.name)}
+                  onLegendItemLeave={() => onLegendItemLeave(element.name)}
+                  showLegendValue={showLegendValue}
+                />
+              ))}
+            </ContainerSeries>
+          </SimpleBarStyled>
+        </ContainerScroll>
+      </LegendContainer>
+    ) : (
+      <SimpleContainer>
+        <SimpleContainerSeries>
+          {series.map((element, index) => (
+            <LegendItemBreakDownChart
+              index={index}
+              element={element}
+              key={element.name}
+              handleToggleSeries={() => handleToggleSeries(element.name)}
+              onLegendItemHover={() => onLegendItemHover(element.name)}
+              onLegendItemLeave={() => onLegendItemLeave(element.name)}
+              showLegendValue={showLegendValue}
+            />
+          ))}
+        </SimpleContainerSeries>
+      </SimpleContainer>
+    )}
+  </>
+);
 export default LegendBreakDownChart;
 
 const LegendContainer = styled('div')(({ theme }) => ({
@@ -168,7 +158,7 @@ const SimpleBarStyled = styled(SimpleBar)<{ isLessThanFifteen?: boolean }>(({ th
   '.simplebar-scrollbar::before': {
     width: 4,
     marginLeft: 4,
-    height: 128,
+    height: 64,
     background: theme.palette.isLight ? theme.palette.colors.charcoal[500] : theme.palette.colors.charcoal[700],
     borderRadius: 12,
   },
@@ -251,6 +241,5 @@ const ContainerSwitch = styled('div')(({ theme }) => ({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    paddingRight: 8,
   },
 }));

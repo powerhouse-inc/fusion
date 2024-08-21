@@ -13,7 +13,6 @@ import { BudgetStatementMkrVesting } from '@/components/BudgetStatement/BudgetSt
 import BudgetStatementPager from '@/components/BudgetStatement/BudgetStatementPager/BudgetStatementPager';
 import { BudgetStatementTransferRequest } from '@/components/BudgetStatement/BudgetStatementTransferRequest/BudgetStatementTransferRequest';
 import ExpenseReport from '@/components/BudgetStatement/ExpenseReport/ExpenseReport';
-
 import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
 import Tabs from '@/components/Tabs/Tabs';
@@ -117,7 +116,7 @@ const CoreUnitBudgetStatementView = ({
           />
         }
       />
-      <TeamHeader team={coreUnit as unknown as Team} />
+      <TeamHeader team={coreUnit as unknown as Team} withDescription={false} />
 
       <PageSeparator>
         <Container>

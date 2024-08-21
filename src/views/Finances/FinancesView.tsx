@@ -35,10 +35,7 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
     breakdownItems,
     cardOverViewSectionData,
     handleChangeYears,
-    cardsToShow,
-    canLoadMoreCards,
-    showMoreCards,
-    toggleShowMoreCards,
+    cardsNavigationInformation,
     breakdownTable,
     expensesMetrics,
     breakdownChartSectionData,
@@ -109,12 +106,7 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
               showSwiper={cardOverViewSectionData.showSwiper}
               numberSliderPerLevel={cardOverViewSectionData.numberSliderPerLevel}
             />
-            <CardsNavigation
-              cardsNavigationInformation={cardsToShow}
-              canLoadMoreCards={canLoadMoreCards}
-              showMoreCards={showMoreCards}
-              toggleShowMoreCards={toggleShowMoreCards}
-            />
+            <CardsNavigation cardsNavigationInformation={cardsNavigationInformation} level={levelNumber} />
           </ContainerSections>
 
           <BreakdownChartSection
@@ -130,8 +122,9 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
             handleToggleSeries={breakdownChartSectionData.handleToggleSeries}
             refBreakDownChart={breakdownChartSectionData.refBreakDownChart}
             showLegendValue={breakdownChartSectionData.showLegendValue}
-            // isChecked={breakdownChartSectionData.isChecked}
-            // handleChangeSwitch={breakdownChartSectionData.handleChangeSwitch}
+            isChecked={breakdownChartSectionData.isChecked}
+            handleChangeSwitch={breakdownChartSectionData.handleChangeSwitch}
+            showScrollAndToggle={breakdownChartSectionData.showScrollAndToggle}
           />
         </Container>
       </BudgetMetricsModalProvider>
@@ -280,6 +273,10 @@ const ContainerSections = styled('div')(({ theme }) => ({
 
   [theme.breakpoints.up('tablet_768')]: {
     gap: 24,
+  },
+
+  [theme.breakpoints.up('desktop_1280')]: {
+    gap: 32,
   },
 }));
 

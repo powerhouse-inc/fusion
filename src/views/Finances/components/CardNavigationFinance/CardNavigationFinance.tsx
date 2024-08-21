@@ -1,13 +1,9 @@
-import styled from '@emotion/styled';
-import { useMediaQuery } from '@mui/material';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
-import lightTheme from '@ses/styles/theme/themes';
+import { styled, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
-import React from 'react';
-import CardNavigationGeneric from '../CardNavigationGeneric';
-import ReadMore from '../ReadMore';
+import Card from '@/components/Card/Card';
+import InternalLinkButton from '@/components/InternalLinkButton/InternalLinkButton';
 import { truncateDescription } from './utils';
-import type { WithIsLight } from '@ses/core/utils/typesHelpers';
+import type { Theme } from '@mui/material';
 
 interface Props {
   image: string;
@@ -15,129 +11,148 @@ interface Props {
   description: string;
   href: string;
   code?: string;
+  isCompact: boolean;
 }
 
-const CardNavigationFinance: React.FC<Props> = ({ image, title, description, href, code }) => {
-  const { isLight } = useThemeContext();
-  const isMobile = useMediaQuery(lightTheme.breakpoints.down('tablet_768'));
+const CardNavigationFinance: React.FC<Props> = ({ image, title, description, href, code, isCompact }) => {
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const truncatedDescription = truncateDescription(description);
 
-  const showCode = code && code.length > 0;
-  const showCodeBelow =
-    showCode &&
-    (code.toLocaleLowerCase() === code ||
-      (code.includes('-') && code.toUpperCase() !== code) ||
-      /[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?/.test(code));
-
   return (
-    <StyleCardNavigationGeneric>
-      <ContainerImage>
-        <ImageStyle src={image} width={isMobile ? 32 : 64} height={isMobile ? 32 : 64} alt="Picture" unoptimized />
-      </ContainerImage>
-      <ContainerWithButton>
-        <CardInformation>
-          <Title isLight={isLight}>
-            {showCode && !showCodeBelow && <Code isLight={isLight}>{code}</Code>} {title}
-          </Title>
-          {showCodeBelow && (
-            <Title isLight={isLight}>
-              <Code isLight={isLight}>{code}</Code>
-            </Title>
-          )}
-          <Description isLight={isLight}>{truncatedDescription}</Description>
-        </CardInformation>
-      </ContainerWithButton>
-      <ContainerReadMore>
-        <ReadMore href={href} />
-      </ContainerReadMore>
-    </StyleCardNavigationGeneric>
+    <NavigationCard isCompact={isCompact} className="no-select">
+      <HeaderContainer>
+        <ImageContainer>
+          <ImageWrapper>
+            <Image src={image} alt="Budget logo" fill unoptimized />
+          </ImageWrapper>
+
+          {isMobile && <InternalLinkButton href={href} />}
+        </ImageContainer>
+
+        <Code>{code}</Code>
+      </HeaderContainer>
+
+      <Title oneLineOnly={isCompact}>{title}</Title>
+      {!isCompact && <Description>{truncatedDescription}</Description>}
+
+      {!isMobile && (
+        <ButtonContainer isCentered={isCompact}>
+          <InternalLinkButton href={href} label="Explore" />
+        </ButtonContainer>
+      )}
+    </NavigationCard>
   );
 };
 
 export default CardNavigationFinance;
 
-const StyleCardNavigationGeneric = styled(CardNavigationGeneric)({
+const NavigationCard = styled(Card)<{ isCompact: boolean }>(({ theme, isCompact }) => ({
   flexDirection: 'column',
-  alignItems: 'center',
   width: '100%',
-  gap: 16,
+  padding: '8px 16px 16px',
 
-  [lightTheme.breakpoints.up('tablet_768')]: {
-    padding: '16px 8px 24px',
+  [theme.breakpoints.up('tablet_768')]: {
     flex: 1,
   },
 
-  [lightTheme.breakpoints.up('desktop_1024')]: {
-    padding: '16px 8px 24px',
-    minWidth: 'calc(20% - 13px)',
+  [theme.breakpoints.up('desktop_1024')]: {
+    padding: isCompact ? '8px 16px 16px' : '8px 24px 16px',
   },
 
-  [lightTheme.breakpoints.up('desktop_1280')]: {
-    minWidth: 'calc(20% - 20px)',
+  [theme.breakpoints.up('desktop_1280')]: {
+    padding: isCompact ? '8px 16px 16px' : '8px 32px 16px',
   },
-});
-
-const ContainerImage = styled.div({
-  width: 64,
-  height: 64,
-  minWidth: 64,
-  minHeight: 64,
-});
-
-const Title = styled.div<WithIsLight>(({ isLight }) => ({
-  fontSize: 16,
-  fontStyle: 'normal',
-  fontWeight: 500,
-  lineHeight: 'normal',
-  marginBottom: 8,
-  paddingLeft: 4,
-  paddingRight: 4,
-  color: isLight ? '#231536' : '#D2D4EF',
 }));
 
-const Code = styled.span<WithIsLight>(({ isLight }) => ({
-  color: isLight ? '#B6BCC2' : '#546978',
+const HeaderContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 8,
+
+  [theme.breakpoints.up('tablet_768')]: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+}));
+
+const ImageContainer = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+
+  '& > a': {
+    padding: '4px 8px 4px 8px',
+  },
+}));
+
+const ImageWrapper = styled('div')(({ theme }) => ({
+  position: 'relative',
+  width: 42,
+  minWidth: 42,
+  height: 42,
+  borderRadius: '50%',
+  overflow: 'hidden',
+  boxShadow: `2px 4px 7px ${theme.palette.isLight ? 'rgba(25, 144, 255, 0.20)' : 'rgba(23, 24, 29, 0.30)'}`,
+
+  [theme.breakpoints.between('tablet_768', 'desktop_1024')]: {
+    width: 32,
+    minWidth: 32,
+    height: 32,
+  },
+}));
+
+const Title = styled('div')<{ oneLineOnly: boolean }>(({ theme, oneLineOnly }) => ({
+  fontSize: 14,
   fontWeight: 600,
+  lineHeight: '20px',
+  marginTop: 8,
+
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
+
+  ...(oneLineOnly
+    ? {
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+
+        [theme.breakpoints.up('tablet_768')]: {
+          marginBottom: 16,
+        },
+      }
+    : {
+        marginBottom: 4,
+      }),
 }));
 
-const Description = styled.div<WithIsLight>(({ isLight }) => ({
+const Code = styled('div')(({ theme }) => ({
+  fontSize: 16,
+  fontWeight: 600,
+  lineHeight: '24px',
+  color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.gray[600],
+
+  [theme.breakpoints.up('tablet_768')]: {
+    alignSelf: 'center',
+  },
+}));
+
+const Description = styled('div')(({ theme }) => ({
   fontSize: 12,
-  fontStyle: 'normal',
   fontWeight: 400,
   lineHeight: 'normal',
-  maxWidth: 208,
-  color: isLight ? '#708390' : '#708390',
+  color: theme.palette.colors.gray[500],
 
-  [lightTheme.breakpoints.up('desktop_1024')]: {
-    maxWidth: 293.3,
-  },
-
-  [lightTheme.breakpoints.up('desktop_1280')]: {
-    maxWidth: 236,
+  [theme.breakpoints.up('tablet_768')]: {
+    marginBottom: 8,
   },
 }));
 
-const CardInformation = styled.div({
-  textAlign: 'center',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-});
+const ButtonContainer = styled('div')<{ isCentered: boolean }>(({ theme, isCentered }) => ({
+  [theme.breakpoints.up('tablet_768')]: {
+    marginTop: 'auto',
 
-const ImageStyle = styled(Image)({
-  borderRadius: 22,
-});
-
-const ContainerReadMore = styled.div({
-  display: 'flex',
-  justifyContent: 'center',
-  marginTop: 6,
-});
-
-const ContainerWithButton = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  height: '100%',
-  justifyContent: 'space-between',
-});
+    ...(isCentered && {
+      display: 'flex',
+      justifyContent: 'center',
+    }),
+  },
+}));
