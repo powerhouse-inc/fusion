@@ -16,9 +16,10 @@ import type { Theme } from '@mui/material';
 interface TeamHeaderProps {
   team: Team;
   className?: string;
+  withDescription?: boolean;
 }
 
-const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className }) => {
+const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className, withDescription = true }) => {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const chips =
     team.type === ResourceType.EcosystemActor
@@ -69,7 +70,7 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className }) => {
               <SocialMediaLinksButton socialMedia={team.socialMediaChannels?.[0]} />
             </LinksContainer>
           </Content>
-          <Description>{team.sentenceDescription}</Description>
+          {withDescription && <Description>{team.sentenceDescription}</Description>}
         </Container>
       </HeaderWrapper>
     </MainContainer>

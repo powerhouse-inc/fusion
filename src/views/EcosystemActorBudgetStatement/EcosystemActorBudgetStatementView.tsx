@@ -109,7 +109,7 @@ const EcosystemActorBudgetStatementView: React.FC<EcosystemActorBudgetStatementV
           />
         }
       />
-      <TeamHeader team={actor} />
+      <TeamHeader team={actor} withDescription={false} />
 
       <PageSeparator>
         <Container>

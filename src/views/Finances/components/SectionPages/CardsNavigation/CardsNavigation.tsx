@@ -191,6 +191,7 @@ const CardWrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   flex: '1',
   height: '100%',
+  boxSizing: 'border-box',
 
   [theme.breakpoints.up('desktop_1280')]: {
     paddingLeft: 24,
