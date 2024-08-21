@@ -1,9 +1,8 @@
-import { useMediaQuery } from '@mui/material';
 import { siteRoutes } from '@ses/config/routes';
 import { useThemeContext } from '@ses/core/context/ThemeContext';
 import { percentageRespectTo } from '@ses/core/utils/math';
 import { useRouter } from 'next/router';
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import type { BreadcrumbItem } from '@/components/Breadcrumb/Breadcrumb';
 import useBreakdownChart from './components/BreakdownChartSection/useBreakdownChart';
@@ -21,13 +20,11 @@ import {
   existingColorsDark,
   formatBudgetName,
 } from './utils/utils';
-import type { Theme } from '@mui/material';
 import type { BreakdownBudgetAnalytic } from '@ses/core/models/interfaces/analytic';
 import type { Budget } from '@ses/core/models/interfaces/budget';
 
 export const useFinancesView = (budgets: Budget[], allBudgets: Budget[], initialYear: string) => {
   const { isLight } = useThemeContext();
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const router = useRouter();
   const [year, setYear] = useState(initialYear);
 
@@ -123,25 +120,6 @@ export const useFinancesView = (budgets: Budget[], allBudgets: Budget[], initial
     [allMetrics.paymentsOnChain, budgets, budgetsAnalytics, colorsDark, colorsLight, isLight, year]
   );
 
-  // TODO: is this still necessary (Notice to reviewers: this is WIP)
-  // if there too many cards we need to use a swiper on desktop but paginated on mobile
-  const [canLoadMoreCards, setCanLoadMoreCards] = useState<boolean>(cardsNavigationInformation.length > 6);
-  const [showMoreCards, setShowMoreCards] = useState<boolean>(false);
-  useEffect(() => {
-    // update when the levels/budgets change
-    setCanLoadMoreCards(cardsNavigationInformation.length > 6);
-    setShowMoreCards(false);
-  }, [cardsNavigationInformation.length]);
-  const toggleShowMoreCards = () => {
-    if (!canLoadMoreCards) return;
-
-    setShowMoreCards(!showMoreCards);
-  };
-
-  // TODO: is this still necessary (Notice to reviewers: this is WIP)
-  // pagination only happens on mobile devices
-  const cardsToShow = !showMoreCards && isMobile ? cardsNavigationInformation.slice(0, 6) : cardsNavigationInformation;
-
   // All the logic required by the breakdown chart section
   const breakdownChartSectionData = useBreakdownChart(budgets, year, codePath, allBudgets);
 
@@ -167,12 +145,9 @@ export const useFinancesView = (budgets: Budget[], allBudgets: Budget[], initial
     handleChangeYears,
     cardOverViewSectionData,
     router,
-    cardsToShow,
+    cardsNavigationInformation,
     breakdownChartSectionData,
     breakdownTable,
-    canLoadMoreCards,
-    showMoreCards,
-    toggleShowMoreCards,
     expensesMetrics,
     expenseReportSection: expenseTrendFinances,
     reserveChart,
