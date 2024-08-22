@@ -52,7 +52,7 @@ const FinancesBarChartCard: FC<FinancesBarChartCardProps> = ({ revenueAndSpendin
           <LegendTitle>Spending</LegendTitle>
           <SpendingLegendButtons>
             <LegendButton index={3} startIcon={<CircleIcon />} disableRipple>
-              DAI Spent
+              USDS/DAI Expensed
             </LegendButton>
             <LegendButton index={4} startIcon={<CircleIcon />} disableRipple>
               MKR Vesting
@@ -224,7 +224,12 @@ const SpendingLegend = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('desktop_1280')]: {
     height: 120,
     flex: '1 0 0',
-    padding: '16px 24px',
+    padding: '16px  15.112px 16px 24px',
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    height: 120,
+    flex: '1 0 0',
+    padding: '16px  24px',
   },
 }));
 
@@ -282,9 +287,11 @@ const SpendingLegendButtons = styled('div')(({ theme }) => ({
 const LegendButton = styled(Button, {
   shouldForwardProp: (prop) => prop !== 'index',
 })<StyledButtonProps>(({ theme, index }) => ({
+  // all: 'unset',
   minWidth: 'auto',
   height: 18,
   display: 'flex',
+
   alignItems: 'center',
   padding: 0,
   fontWeight: 600,
@@ -293,6 +300,7 @@ const LegendButton = styled(Button, {
   textTransform: 'none',
   border: 'none',
   borderRadius: 0,
+  // border: '2px solid red',
   color: theme.palette.isLight ? theme.palette.colors.slate[900] : theme.palette.colors.slate[50],
   backgroundColor: 'transparent',
   boxShadow: 'none',
@@ -336,6 +344,8 @@ const LegendButton = styled(Button, {
   [theme.breakpoints.up('desktop_1280')]: {
     height: 24,
     fontSize: 16,
+    // width: 'fit-content',
+
     lineHeight: '24px',
 
     '& .MuiButton-startIcon': {
