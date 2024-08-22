@@ -189,9 +189,10 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
     },
   ];
   //
-  const canReset = false;
+  const canReset = selectedGranularity !== 'monthly' || selectedMetric !== 'Budget';
   const onReset = () => {
-    console.log('delete');
+    setSelectedMetric('Budget');
+    setSelectedGranularity('monthly');
   };
   // Show the toggle and scroll in the legend of the chart
   const showScrollAndToggle = series.length > 8;
