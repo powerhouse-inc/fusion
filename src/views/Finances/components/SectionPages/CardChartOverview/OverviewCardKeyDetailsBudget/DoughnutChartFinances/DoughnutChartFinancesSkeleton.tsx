@@ -41,21 +41,21 @@ const DoughnutChartFinancesSkeleton: React.FC = () => (
           <Skeleton variant="circular" width={8} height={8} />
           <Skeleton variant="rounded" width={135} height={12} />
         </ChartLegendLabel>
-        <Skeleton variant="rounded" width={106} height={7} style={{ marginLeft: 12 }} />
+        <Skeleton variant="rounded" width={106} height={12} style={{ marginLeft: 12 }} />
       </ChartLegendItem>
       <ChartLegendItem>
         <ChartLegendLabel>
           <Skeleton variant="circular" width={8} height={8} />
           <Skeleton variant="rounded" width={143} height={12} />
         </ChartLegendLabel>
-        <Skeleton variant="rounded" width={115} height={7} style={{ marginLeft: 12 }} />
+        <Skeleton variant="rounded" width={115} height={12} style={{ marginLeft: 12 }} />
       </ChartLegendItem>
       <ChartLegendItem>
         <ChartLegendLabel>
           <Skeleton variant="circular" width={8} height={8} />
           <Skeleton variant="rounded" width={156} height={12} />
         </ChartLegendLabel>
-        <Skeleton variant="rounded" width={104} height={7} style={{ marginLeft: 12 }} />
+        <Skeleton variant="rounded" width={104} height={12} style={{ marginLeft: 12 }} />
       </ChartLegendItem>
     </ChartLegendContainer>
   </ChartContainer>
@@ -99,22 +99,41 @@ const SVG = styled('svg')(({ theme }) => ({
     width: 148,
     height: 148,
   },
+
+  '& path': {
+    '&:nth-of-type(1)': {
+      fill: theme.palette.isLight ? '#ECF1F3' : '#373E4D',
+      stroke: theme.palette.isLight ? '#ECF1F3' : '#373E4D',
+    },
+    '&:nth-of-type(2)': {
+      fill: theme.palette.isLight ? '#CED3DC' : '#485265B2',
+      stroke: theme.palette.isLight ? '#CED3DC' : '#485265B2',
+    },
+    '&:nth-of-type(3)': {
+      fill: theme.palette.isLight ? '#E6E9ED' : '#48526566',
+      stroke: theme.palette.isLight ? '#E6E9ED' : '#48526566',
+    },
+  },
 }));
 
 const ChartLegendContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: 24,
+  gap: 16,
 }));
 
 const ChartLegendItem = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: 6.5,
+  gap: 4,
+
+  '& .MuiSkeleton-rounded': {
+    borderRadius: '4px!important',
+  },
 }));
 
 const ChartLegendLabel = styled('div')(() => ({
   display: 'flex',
-  alignItems: 'flex-end',
+  alignItems: 'center',
   gap: 4,
 }));

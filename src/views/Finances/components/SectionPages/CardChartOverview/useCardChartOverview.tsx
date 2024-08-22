@@ -256,7 +256,7 @@ export const useCardChartOverview = (
       : 5
     : isDesk1280
     ? numberItems >= 10
-      ? 10
+      ? 12
       : 5
     : 5;
 

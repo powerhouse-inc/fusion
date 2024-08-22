@@ -129,6 +129,9 @@ const Code = styled('div')(({ theme }) => ({
   fontWeight: 600,
   lineHeight: '24px',
   color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.gray[600],
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
 
   [theme.breakpoints.up('tablet_768')]: {
     alignSelf: 'center',

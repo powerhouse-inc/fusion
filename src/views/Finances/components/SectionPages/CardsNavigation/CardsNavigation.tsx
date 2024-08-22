@@ -130,7 +130,6 @@ const ContainerCardsNavigation = styled('div')<{ showSwiper: boolean; isCompact:
 
 const SwiperWrapper = styled('div')(({ theme }) => ({
   position: 'relative',
-  marginBottom: 32,
   maxWidth: '100%',
   width: '100%',
 
