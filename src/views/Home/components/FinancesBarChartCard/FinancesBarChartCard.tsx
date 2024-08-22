@@ -343,7 +343,7 @@ const LegendButton = styled(Button, {
     height: 24,
     fontSize: 16,
     lineHeight: '24px',
-
+    width: 'max-content',
     '& .MuiButton-startIcon': {
       transform: 'scale(1.5)',
     },
