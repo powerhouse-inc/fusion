@@ -229,7 +229,7 @@ const SpendingLegend = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('desktop_1440')]: {
     height: 120,
     flex: '1 0 0',
-    padding: '16px  24px',
+    padding: '16px 24px',
   },
 }));
 
@@ -287,7 +287,6 @@ const SpendingLegendButtons = styled('div')(({ theme }) => ({
 const LegendButton = styled(Button, {
   shouldForwardProp: (prop) => prop !== 'index',
 })<StyledButtonProps>(({ theme, index }) => ({
-  // all: 'unset',
   minWidth: 'auto',
   height: 18,
   display: 'flex',
@@ -300,7 +299,6 @@ const LegendButton = styled(Button, {
   textTransform: 'none',
   border: 'none',
   borderRadius: 0,
-  // border: '2px solid red',
   color: theme.palette.isLight ? theme.palette.colors.slate[900] : theme.palette.colors.slate[50],
   backgroundColor: 'transparent',
   boxShadow: 'none',
@@ -344,8 +342,6 @@ const LegendButton = styled(Button, {
   [theme.breakpoints.up('desktop_1280')]: {
     height: 24,
     fontSize: 16,
-    // width: 'fit-content',
-
     lineHeight: '24px',
 
     '& .MuiButton-startIcon': {
