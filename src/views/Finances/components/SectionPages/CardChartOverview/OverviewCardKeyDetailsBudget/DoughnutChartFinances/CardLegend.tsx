@@ -52,6 +52,8 @@ const ContainerLegend = styled('div')<{ isCoreThirdLevel: boolean; changeAlignme
 
     [theme.breakpoints.up('desktop_1280')]: {
       columnGap: 24,
+      rowGap: isCoreThirdLevel ? 10 : 8,
+      marginTop: isCoreThirdLevel ? 6 : 0,
     },
   })
 );

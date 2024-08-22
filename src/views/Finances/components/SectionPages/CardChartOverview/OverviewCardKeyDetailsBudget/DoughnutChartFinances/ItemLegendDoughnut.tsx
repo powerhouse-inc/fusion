@@ -108,7 +108,8 @@ const ValueDescription = styled('div')<{ isCoreThirdLevel: boolean }>(({ theme, 
   }),
 
   [theme.breakpoints.up('desktop_1280')]: {
-    fontSize: 14,
+    fontSize: isCoreThirdLevel ? 12 : 14,
+    lineHeight: isCoreThirdLevel ? '15px' : 'normal',
   },
 }));
 
@@ -123,15 +124,15 @@ const NameOrCode = styled('div')<{ isCoreThirdLevel: boolean }>(({ theme, isCore
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   fontSize: 12,
   fontWeight: 600,
-  lineHeight: isCoreThirdLevel ? '15px' : '18px',
+  lineHeight: '15px',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   width: isCoreThirdLevel ? 'fit-content' : 170,
 
   [theme.breakpoints.up('desktop_1280')]: {
-    fontSize: 14,
-    lineHeight: '24px',
+    fontSize: isCoreThirdLevel ? 12 : 14,
+    lineHeight: isCoreThirdLevel ? '15px' : '24px',
   },
 }));
 

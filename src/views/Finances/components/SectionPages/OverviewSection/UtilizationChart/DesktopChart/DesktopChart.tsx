@@ -24,7 +24,6 @@ import 'swiper/css';
 interface DesktopChartProps {
   seriesData: DoughnutSeries[];
   selectedMetric: AnalyticMetric;
-  isCoreThirdLevel?: boolean;
   changeAlignment: boolean;
   showSwiper: boolean;
   numberSliderPerLevel?: number;
@@ -33,7 +32,6 @@ interface DesktopChartProps {
 const DesktopChart: React.FC<DesktopChartProps> = ({
   seriesData,
   selectedMetric,
-  isCoreThirdLevel = true,
   changeAlignment,
   showSwiper,
   numberSliderPerLevel = 6,
@@ -43,6 +41,7 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
   const theme = useTheme();
   const [visibleSeries, setVisibleSeries] = useState<DoughnutSeries[]>(seriesData);
   const [legends, setLegends] = useState<DoughnutSeries[]>(seriesData);
+  const isDeepLevel = seriesData.length > 6;
 
   useEffect(() => {
     setVisibleSeries(seriesData);
@@ -289,7 +288,7 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
   }
 
   return (
-    <Container isCoreThirdLevel={isCoreThirdLevel}>
+    <Container isCoreThirdLevel={isDeepLevel}>
       <ContainerChart>
         <ReactECharts
           ref={chartRef}
@@ -306,7 +305,7 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
         </ContainerDaiIcon>
       </ContainerChart>
       {showSwiper ? (
-        <SwiperWrapper isCoreThirdLevel={isCoreThirdLevel} numberSliderPerLevel={numberSliderPerLevel}>
+        <SwiperWrapper isCoreThirdLevel={isDeepLevel} numberSliderPerLevel={numberSliderPerLevel}>
           <Swiper
             direction="horizontal"
             ref={ref}
@@ -316,7 +315,7 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
             {...swiperOptions}
           >
             <ContainerLegend
-              isCoreThirdLevel={isCoreThirdLevel}
+              isCoreThirdLevel={isDeepLevel}
               changeAlignment={changeAlignment}
               numberSlider={numberSlider}
             >
@@ -329,7 +328,7 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
                     toggleSeriesVisibility={toggleSeriesVisibility}
                     onLegendItemHover={onLegendItemHover}
                     onLegendItemLeave={onLegendItemLeave}
-                    isCoreThirdLevel={isCoreThirdLevel}
+                    isCoreThirdLevel={isDeepLevel}
                   />
                 </SwiperSlide>
               ))}
@@ -344,7 +343,7 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
             toggleSeriesVisibility={toggleSeriesVisibility}
             onLegendItemHover={onLegendItemHover}
             onLegendItemLeave={onLegendItemLeave}
-            isCoreThirdLevel={isCoreThirdLevel}
+            isCoreThirdLevel={isDeepLevel}
           />
         </ContainerLegendNotSwiper>
       )}
@@ -437,7 +436,7 @@ const SwiperWrapper = styled('div')<{ isCoreThirdLevel: boolean; numberSliderPer
     [theme.breakpoints.up('desktop_1280')]: {
       display: 'flex',
       position: 'relative',
-      ...(numberSliderPerLevel === 10 && {
+      ...(numberSliderPerLevel === 12 && {
         minWidth: 365,
       }),
     },
@@ -445,7 +444,7 @@ const SwiperWrapper = styled('div')<{ isCoreThirdLevel: boolean; numberSliderPer
     [theme.breakpoints.up('desktop_1440')]: {
       display: 'flex',
       position: 'relative',
-      ...(numberSliderPerLevel === 10 && {
+      ...(numberSliderPerLevel === 12 && {
         minWidth: 440,
       }),
     },
