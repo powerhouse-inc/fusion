@@ -39,7 +39,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     };
   }
 
-  const [projectsData, roadmaps] = await Promise.all([fetchProjects(actor.id), getScopeOfWorkState()]);
+  const [projectsData, roadmaps] = await Promise.all([fetchProjects(code), getScopeOfWorkState()]);
 
   // with the milestone id in the deliverables in no enough to identify the milestone and link to the
   // roadmap page, so we need to add the roadmap slug and milestone code to the deliverable

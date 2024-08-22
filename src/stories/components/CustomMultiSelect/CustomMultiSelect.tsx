@@ -310,7 +310,7 @@ const SelectContainer = styled.div<
       : active
       ? '1px solid #504DFF'
       : '1px solid #787A9B',
-    background: isLight ? (active ? '#EEEEFF' : 'red') : active ? '#100F33' : '#10191F',
+    background: isLight ? (active ? '#EEEEFF' : '#EEEEFF') : active ? '#100F33' : '#10191F',
   },
 
   [lightTheme.breakpoints.up(legacyBreakpoints ? 'table_834' : 'tablet_768')]: {

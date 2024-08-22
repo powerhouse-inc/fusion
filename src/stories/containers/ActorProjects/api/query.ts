@@ -2,7 +2,7 @@ import { GRAPHQL_ENDPOINT } from '@ses/config/endpoints';
 import request, { gql } from 'graphql-request';
 import type { ProjectsAndSupportedProjects } from '@ses/core/models/interfaces/projects';
 
-export const getProjectsQuery = (teamId: number | string) => ({
+export const getProjectsQuery = (teamCode: string) => ({
   query: gql`
     query TeamProjects($filter: ProjectFilter) {
       teamProjects(filter: $filter) {
@@ -135,15 +135,14 @@ export const getProjectsQuery = (teamId: number | string) => ({
   filter: {
     filter: {
       ownedBy: {
-        id: teamId.toString(),
-        ref: 'EcosystemActor',
+        code: teamCode,
       },
     },
   },
 });
 
-export const fetchProjects = async (id: string | number): Promise<ProjectsAndSupportedProjects> => {
-  const { query, filter } = getProjectsQuery(id);
+export const fetchProjects = async (code: string): Promise<ProjectsAndSupportedProjects> => {
+  const { query, filter } = getProjectsQuery(code);
   const res = await request<{ teamProjects: ProjectsAndSupportedProjects }>(GRAPHQL_ENDPOINT, query, filter);
 
   return res?.teamProjects;
