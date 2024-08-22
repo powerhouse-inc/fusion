@@ -4,6 +4,7 @@ import FilterTablet from './FilterTablet';
 import { defaultTriggerRenderer } from './defaults/Renderers';
 import useFiltersBundle from './useFiltersBundle';
 import type { FiltersBundleOptions } from './types';
+import type { breakpoints } from '@ses/styles/theme/themes';
 import type { FC } from 'react';
 
 const FiltersBundle: FC<FiltersBundleOptions> = ({
@@ -14,14 +15,16 @@ const FiltersBundle: FC<FiltersBundleOptions> = ({
   order = {},
   snapPoints,
   initialSnap = 0,
+  asPopover,
 }) => {
-  const { orderedFilters, resolution, triggerRef, areFiltersOpen, handleToggleOpenFilters } = useFiltersBundle({
-    filters,
-    order,
-  });
+  const { orderedFilters, resolution, triggerRef, areFiltersOpen, handleToggleOpenFilters, currentBreakpoint } =
+    useFiltersBundle({
+      filters,
+      order,
+    });
 
   const triggerButton = (renderTrigger ?? defaultTriggerRenderer)(handleToggleOpenFilters, triggerRef);
-
+  const showPopover = asPopover?.includes(currentBreakpoint as keyof typeof breakpoints);
   if (resolution.isMobile) {
     return (
       <>
@@ -39,7 +42,7 @@ const FiltersBundle: FC<FiltersBundleOptions> = ({
     );
   }
 
-  if (resolution.isTablet) {
+  if (resolution.isTablet || showPopover) {
     return (
       <>
         {triggerButton}

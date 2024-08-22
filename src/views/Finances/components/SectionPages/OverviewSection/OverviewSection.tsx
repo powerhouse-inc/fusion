@@ -13,7 +13,6 @@ interface OverviewSectionProps {
   selectedMetric: AnalyticMetric;
   handleMetricChange: (metric: AnalyticMetric) => void;
   // legend
-  isCoreThirdLevel: boolean;
   changeAlignment: boolean;
   showSwiper: boolean;
   numberSliderPerLevel?: number;
@@ -26,7 +25,6 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({
   selectedMetric,
   handleMetricChange,
   changeAlignment,
-  isCoreThirdLevel,
   showSwiper,
   numberSliderPerLevel,
 }) => (
@@ -36,7 +34,6 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({
       seriesData={seriesData}
       selectedMetric={selectedMetric}
       handleMetricChange={handleMetricChange}
-      isCoreThirdLevel={isCoreThirdLevel}
       changeAlignment={changeAlignment}
       showSwiper={showSwiper}
       numberSliderPerLevel={numberSliderPerLevel}
@@ -73,6 +70,7 @@ const MainContentSection = styled('div')(({ theme }) => ({
 
     '& > div:nth-of-type(1)': {
       maxWidth: 'calc(33.333333% - 22px)',
+      minWidth: 'calc(33.333333% - 22px)',
     },
   },
 }));

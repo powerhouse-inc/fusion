@@ -10,7 +10,6 @@ interface UtilizationChartProps {
   seriesData: DoughnutSeries[];
   selectedMetric: AnalyticMetric;
   handleMetricChange: (metric: AnalyticMetric) => void;
-  isCoreThirdLevel: boolean;
   changeAlignment: boolean;
   showSwiper: boolean;
   numberSliderPerLevel?: number;
@@ -20,7 +19,6 @@ const UtilizationChart: React.FC<UtilizationChartProps> = ({
   seriesData,
   selectedMetric,
   handleMetricChange,
-  isCoreThirdLevel,
   changeAlignment,
   showSwiper,
   numberSliderPerLevel,
@@ -32,7 +30,6 @@ const UtilizationChart: React.FC<UtilizationChartProps> = ({
       <DesktopChart
         seriesData={seriesData}
         selectedMetric={selectedMetric}
-        isCoreThirdLevel={isCoreThirdLevel}
         changeAlignment={changeAlignment}
         showSwiper={showSwiper}
         numberSliderPerLevel={numberSliderPerLevel}

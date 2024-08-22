@@ -101,12 +101,11 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
               seriesData={cardOverViewSectionData.doughnutSeriesData}
               handleMetricChange={cardOverViewSectionData.handleSelectedMetric}
               // legend
-              isCoreThirdLevel={levelNumber >= 3}
               changeAlignment={cardOverViewSectionData.changeAlignment}
               showSwiper={cardOverViewSectionData.showSwiper}
               numberSliderPerLevel={cardOverViewSectionData.numberSliderPerLevel}
             />
-            <CardsNavigation cardsNavigationInformation={cardsNavigationInformation} level={levelNumber} />
+            <CardsNavigation cardsNavigationInformation={cardsNavigationInformation} />
           </ContainerSections>
 
           <BreakdownChartSection
@@ -124,6 +123,9 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
             showLegendValue={breakdownChartSectionData.showLegendValue}
             isChecked={breakdownChartSectionData.isChecked}
             handleChangeSwitch={breakdownChartSectionData.handleChangeSwitch}
+            canReset={breakdownChartSectionData.canReset}
+            filters={breakdownChartSectionData.filters}
+            onReset={breakdownChartSectionData.onReset}
             showScrollAndToggle={breakdownChartSectionData.showScrollAndToggle}
           />
         </Container>
