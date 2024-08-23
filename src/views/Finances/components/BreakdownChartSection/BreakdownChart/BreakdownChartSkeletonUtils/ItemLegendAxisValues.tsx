@@ -10,10 +10,11 @@ const ItemLegendAxisValues: React.FC<Props> = ({ width }) => <ContainerSkeleton 
 export default ItemLegendAxisValues;
 
 const ContainerSkeleton = styled(Skeleton)(({ theme }) => ({
-  borderRadius: 12.5,
-  height: 8.75,
+  borderRadius: 6,
+  height: 8,
+  background: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.slate[400],
   [theme.breakpoints.up('tablet_768')]: {
-    borderRadius: 17.5,
-    height: 12.5,
+    borderRadius: 6,
+    height: 19,
   },
 }));
