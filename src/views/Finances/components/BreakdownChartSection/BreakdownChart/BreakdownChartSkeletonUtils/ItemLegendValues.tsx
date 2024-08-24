@@ -5,6 +5,7 @@ const ItemLegendValues: React.FC = () => (
   <ContainerItem>
     <ItemLegendCircle variant="circular" />
     <SkeletonItemRectangular variant="rectangular" />
+    <SkeletonItemValue variant="rectangular" />
   </ContainerItem>
 );
 
@@ -19,8 +20,9 @@ const ContainerItem = styled('div')({
 
 const SkeletonItemRectangular = styled(Skeleton)(({ theme }) => ({
   height: 10.5,
-  borderRadius: 15,
+  borderRadius: 6,
   width: 85,
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.slate[400],
   [theme.breakpoints.up('tablet_768')]: {
     height: 14,
     width: 109,
@@ -34,8 +36,16 @@ const SkeletonItemRectangular = styled(Skeleton)(({ theme }) => ({
 const ItemLegendCircle = styled(Skeleton)(({ theme }) => ({
   width: 12,
   height: 12,
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.slate[400],
   [theme.breakpoints.up('tablet_768')]: {
     width: 16,
     height: 16,
   },
+}));
+
+const SkeletonItemValue = styled(Skeleton)(({ theme }) => ({
+  width: 15,
+  height: 10.5,
+  borderRadius: 6,
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.slate[400],
 }));

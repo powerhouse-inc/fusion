@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import CircleAvatar from '@/components/CircleAvatar/CircleAvatar';
+import { getShortCode } from '@/core/utils/string';
 import { ButtonType } from '../../../core/enums/buttonTypeEnum';
 import { CustomButton } from '../CustomButton/CustomButton';
 import { getCorrectCodeFromActivity, getResourceType } from './utils/helpers';
@@ -18,7 +19,6 @@ interface CUActivityItemProps {
 
 export default function CUActivityItem({ activity, isNew }: CUActivityItemProps) {
   const activityCode = getCorrectCodeFromActivity(activity.activityFeed);
-
   const router = useRouter();
   const resourceType = getResourceType(activity.activityFeed);
   const isGlobal = !!activity.team || resourceType === ResourceType.Delegates;
@@ -45,10 +45,10 @@ export default function CUActivityItem({ activity, isNew }: CUActivityItemProps)
       url = `${siteRoutes.recognizedDelegateReport}?viewMonth=${month}`;
     } else if (resourceType === ResourceType.CoreUnit) {
       // it is a core unit
-      url = `${siteRoutes.coreUnitReports(activityCode?.shortCode ?? '')}?viewMonth=${month}`;
+      url = `${siteRoutes.coreUnitReports(getShortCode(activityCode?.shortCode ?? '') ?? '')}?viewMonth=${month}`;
     } else {
       // it is an ecosystem actor
-      url = `${siteRoutes.ecosystemActorReports(activityCode?.shortCode ?? '')}?viewMonth=${month}`;
+      url = `${siteRoutes.ecosystemActorReports(getShortCode(activityCode?.shortCode ?? ''))}?viewMonth=${month}`;
     }
 
     if (goToComments) {

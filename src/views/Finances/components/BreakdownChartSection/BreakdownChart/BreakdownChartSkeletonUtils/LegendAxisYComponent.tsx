@@ -35,16 +35,16 @@ const mobileAxisYValues = [
 const LegendAxisYItems: React.FC = () => (
   <LegendAxisY>
     <Mobile>
-      {mobileAxisYValues.map((dim, index) => (
+      {mobileAxisYValues.map((_, index) => (
         <LegendAxisYItemContainer key={index}>
-          <ItemLegendAxisValues width={dim.width} />
+          <ItemLegendAxisValues width={16} />
         </LegendAxisYItemContainer>
       ))}
     </Mobile>
     <Table>
-      {mobileAxisYValues.map((dim, index) => (
+      {mobileAxisYValues.map((_, index) => (
         <LegendAxisYItemContainer key={index}>
-          <ItemLegendAxisValues width={32} />
+          <ItemLegendAxisValues width={48} />
         </LegendAxisYItemContainer>
       ))}
     </Table>
@@ -74,13 +74,13 @@ const Table = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('tablet_768')]: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 32,
+    gap: 10,
     justifyContent: 'flex-end',
   },
   [theme.breakpoints.up('desktop_1024')]: {
-    gap: 36.75,
+    gap: 12,
   },
   [theme.breakpoints.up('desktop_1280')]: {
-    gap: 32,
+    gap: 20,
   },
 }));

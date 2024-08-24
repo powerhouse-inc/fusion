@@ -52,7 +52,7 @@ const FinancesBarChartCard: FC<FinancesBarChartCardProps> = ({ revenueAndSpendin
           <LegendTitle>Spending</LegendTitle>
           <SpendingLegendButtons>
             <LegendButton index={3} startIcon={<CircleIcon />} disableRipple>
-              DAI Spent
+              USDS/DAI Expensed
             </LegendButton>
             <LegendButton index={4} startIcon={<CircleIcon />} disableRipple>
               MKR Vesting
@@ -224,6 +224,11 @@ const SpendingLegend = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('desktop_1280')]: {
     height: 120,
     flex: '1 0 0',
+    padding: '16px  15.112px 16px 24px',
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    height: 120,
+    flex: '1 0 0',
     padding: '16px 24px',
   },
 }));
@@ -285,6 +290,7 @@ const LegendButton = styled(Button, {
   minWidth: 'auto',
   height: 18,
   display: 'flex',
+
   alignItems: 'center',
   padding: 0,
   fontWeight: 600,
@@ -337,7 +343,7 @@ const LegendButton = styled(Button, {
     height: 24,
     fontSize: 16,
     lineHeight: '24px',
-
+    width: 'max-content',
     '& .MuiButton-startIcon': {
       transform: 'scale(1.5)',
     },
