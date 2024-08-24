@@ -69,8 +69,8 @@ const MainContentSection = styled('div')(({ theme }) => ({
     gap: 32,
 
     '& > div:nth-of-type(1)': {
-      maxWidth: 'calc(33.333333% - 22px)',
-      minWidth: 'calc(33.333333% - 22px)',
+      maxWidth: 'calc(33.333333% - 18px)',
+      minWidth: 'calc(33.333333% - 18px)',
     },
   },
 }));
