@@ -1,12 +1,23 @@
 import { styled } from '@mui/material';
+import type { CheckboxFilter } from '../types';
+import type { ReactElement } from 'react';
 
 interface FilterAsListBaseProps extends React.PropsWithChildren {
   label: string;
+  element?: ReactElement;
+  filter?: CheckboxFilter;
 }
 
-const FilterAsListBase: React.FC<FilterAsListBaseProps> = ({ children, label }) => (
+const FilterAsListBase: React.FC<FilterAsListBaseProps> = ({ label, element, filter, children }) => (
   <Container>
-    <Label>{label}</Label>
+    {element !== undefined ? (
+      <ElementContainer onClick={filter !== undefined ? filter.onChange : undefined}>
+        <Label>{label}</Label>
+        {element}
+      </ElementContainer>
+    ) : (
+      <Label>{label}</Label>
+    )}
     <ListContainer>{children}</ListContainer>
   </Container>
 );
@@ -17,6 +28,14 @@ const Container = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
+}));
+
+const ElementContainer = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  paddingRight: 8,
+  cursor: 'pointer',
 }));
 
 const Label = styled('div')(({ theme }) => ({

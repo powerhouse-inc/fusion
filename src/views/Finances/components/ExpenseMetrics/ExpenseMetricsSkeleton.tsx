@@ -205,7 +205,7 @@ const MakerDAOExpenseMetricsSkeleton: FC = () => {
       </LinesContainer>
       <ChartCanvas>
         {Array.from({ length: 4 }).map((_, index) => (
-          <Fragment key={index}>
+          <Fragment key={`HorizontalLineWrapper-${index}`}>
             <HorizontalLineContainer>
               <YAxisLabel>
                 <Skeleton variant="rounded" width={isMobile ? 16 : 23} height={yAxisLabelHeight} />
@@ -229,7 +229,7 @@ const MakerDAOExpenseMetricsSkeleton: FC = () => {
       </ChartCanvas>
       <XAxisContainer>
         {[5, 6, 9, 7, 9, 5, 5, 7, 6, 7, 7, 7].map((width, index) => (
-          <XAxisLabel key={index}>
+          <XAxisLabel key={`XAxisLabel-${index}`}>
             <Skeleton variant="rounded" width={width} height={isMobile ? 8 : 12} />
           </XAxisLabel>
         ))}
@@ -241,7 +241,7 @@ const MakerDAOExpenseMetricsSkeleton: FC = () => {
       </YearXAxis>
       <LabelsContainer>
         {(isMobile ? [41, 50, 43, 128, 129] : [37, 33, 52, 154, 225]).map((width, index) => (
-          <Label key={index}>
+          <Label key={`LegendLabel-${index}`}>
             <Skeleton variant="circular" width={isMobile ? 12 : 16} height={isMobile ? 12 : 16} />
             <Skeleton variant="rounded" width={width} height={isMobile ? 10.5 : 14} />
           </Label>

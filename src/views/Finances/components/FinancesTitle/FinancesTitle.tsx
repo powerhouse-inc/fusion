@@ -116,8 +116,8 @@ const IconWrapper = styled('div')(({ theme }) => ({
   height: 24,
 
   '& svg': {
-    width: 15,
-    height: 15,
+    width: 16,
+    height: 16,
   },
   '& path': {
     fill: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[200],
@@ -143,6 +143,7 @@ const CopyWrapper = styled(Link)(({ theme }) => ({
   '& svg': {
     width: 20,
     height: 20,
+    marginBottom: 2,
   },
   cursor: 'pointer',
   ':hover': {

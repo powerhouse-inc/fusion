@@ -3,6 +3,7 @@ import { DateTime } from 'luxon';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
+import type { Filter } from '@/components/FiltersBundle/types';
 import { fetchAnalytics } from '@/views/Finances/api/queries';
 import type { LineChartSeriesData } from '@/views/Finances/utils/types';
 import { buildExpenseMetricsLineChartSeries } from '@/views/Finances/utils/utils';
@@ -12,19 +13,11 @@ export type CumulativeType = 'relative' | 'absolute';
 
 export const useExpenseMetrics = (year: string) => {
   const theme = useTheme();
-  const [selectedGranularity, setSelectedGranularity] = useState<AnalyticGranularity>('monthly');
-  const handleGranularityChange = (value: AnalyticGranularity) => {
-    setSelectedGranularity(value);
-  };
 
+  const [selectedGranularity, setSelectedGranularity] = useState<AnalyticGranularity>('monthly');
+  const [isCumulative, setIsCumulative] = useState(false);
   const [cumulativeType, setCumulativeType] = useState<CumulativeType>('relative');
-  const handleChangeCumulativeType = (value: CumulativeType) => {
-    setCumulativeType(value);
-  };
-  const [isCumulative, setIsCumulative] = useState<boolean>(false);
-  const handleToggleCumulative = () => {
-    setIsCumulative((prev) => !prev);
-  };
+  const [isUncategorizedActuals, setIsUncategorizedActuals] = useState(false);
 
   const router = useRouter();
   const urlPath = Array.isArray(router.query.path) ? router.query.path.join('/') : router.query.path;
@@ -138,15 +131,88 @@ export const useExpenseMetrics = (year: string) => {
     [data, inactiveSeries, theme.palette.isLight, selectedGranularity]
   );
 
+  const granularityItems = [
+    {
+      label: 'Monthly',
+      value: 'monthly',
+    },
+    {
+      label: 'Quarterly',
+      value: 'quarterly',
+    },
+    {
+      label: 'Annually',
+      value: 'annual',
+    },
+  ];
+
+  const cumulativeItems = [
+    {
+      label: 'Relative Cumulative',
+      description: 'Aggregated expense metrics relative to the start of the year.',
+      value: 'relative',
+    },
+    {
+      label: 'Absolute Cumulative',
+      description: 'A continuous aggregation of expenses over the entire dataset.',
+      value: 'absolute',
+    },
+  ];
+
+  const filters: Filter[] = [
+    {
+      type: 'select',
+      id: 'granularity',
+      label: 'Granularity',
+      options: granularityItems,
+      selected: selectedGranularity,
+      onChange: (value: string | number | (string | number)[]) => {
+        setSelectedGranularity(value as AnalyticGranularity);
+      },
+    },
+    {
+      type: 'checkbox',
+      id: 'cumulative',
+      label: 'Cumulative',
+      selected: isCumulative,
+      onChange: () => {
+        setIsCumulative((prev) => !prev);
+      },
+      options: cumulativeItems,
+      onOptionChange: (value: string | number) => {
+        setCumulativeType(value as CumulativeType);
+      },
+      selectedOptionValue: cumulativeType,
+    },
+    {
+      type: 'checkbox',
+      id: 'uncategorizedActuals',
+      label: 'Uncategorized Actuals',
+      selected: isUncategorizedActuals,
+      onChange: () => {
+        setIsUncategorizedActuals((prev) => !prev);
+      },
+    },
+  ];
+
+  const canReset = selectedGranularity !== 'monthly' || isCumulative || isUncategorizedActuals;
+
+  const onReset = () => {
+    setSelectedGranularity('monthly');
+    setIsCumulative(false);
+    setCumulativeType('relative');
+    setIsUncategorizedActuals(false);
+  };
+
   return {
     selectedGranularity,
-    handleGranularityChange,
     isCumulative,
-    handleToggleCumulative,
     cumulativeType,
-    handleChangeCumulativeType,
     isLoading,
     series,
     handleToggleSeries,
+    filters,
+    canReset,
+    onReset,
   };
 };
