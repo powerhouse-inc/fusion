@@ -157,16 +157,16 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
         <ExpenseMetricsSection
           expenseMetrics={{
             title: levelNumber === 1 ? 'Sky Expense Metrics' : 'Expense Metrics',
-            handleGranularityChange: expensesMetrics.handleGranularityChange,
             selectedGranularity: expensesMetrics.selectedGranularity,
             isCumulative: expensesMetrics.isCumulative,
-            handleToggleCumulative: expensesMetrics.handleToggleCumulative,
             cumulativeType: expensesMetrics.cumulativeType,
-            handleChangeCumulativeType: expensesMetrics.handleChangeCumulativeType,
             series: expensesMetrics.series,
             handleToggleSeries: expensesMetrics.handleToggleSeries,
             isLoading: expensesMetrics.isLoading,
             year,
+            filters: expensesMetrics.filters,
+            canReset: expensesMetrics.canReset,
+            onReset: expensesMetrics.onReset,
           }}
         />
         <ContainerReservesWaterfallChart>

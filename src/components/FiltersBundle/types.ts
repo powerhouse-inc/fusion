@@ -1,9 +1,9 @@
 import type { Theme } from '@mui/material';
 import type { breakpoints } from '@ses/styles/theme/themes';
-import type { CSSProperties, MutableRefObject } from 'react';
+import type { CSSProperties, MutableRefObject, ReactElement, ReactNode } from 'react';
 
 export type Breakpoint = 'mobile' | 'tablet' | 'desktop';
-export type FilterType = 'select' | 'radio'; // filter type identifier
+export type FilterType = 'select' | 'radio' | 'checkbox'; // filter type identifier
 
 export interface GenericFilter {
   id: string;
@@ -29,7 +29,7 @@ export interface SearchFilter {
 
 export interface SelectOption {
   value: string | number;
-  label: string | React.ReactElement;
+  label: string | ReactElement;
   extra?: {
     [key: string]: string;
   };
@@ -42,9 +42,9 @@ export interface SelectFilter extends GenericFilter {
   alwaysNumberedLabel?: boolean; // default is false
   options: SelectOption[];
   onChange: (value: SelectOption['value'] | SelectOption['value'][]) => void;
-  customOptionsRender?: (option: SelectOption, isActive: boolean, theme?: Theme) => React.ReactNode;
+  customOptionsRender?: (option: SelectOption, isActive: boolean, theme?: Theme) => ReactNode;
   withAll?: boolean;
-  customOptionsRenderAll?: (isActive: boolean, theme?: Theme) => React.ReactNode;
+  customOptionsRenderAll?: (isActive: boolean, theme?: Theme) => ReactNode;
   widthStyles?: {
     fullWidth?: boolean;
     width?: CSSProperties['width'];
@@ -54,7 +54,8 @@ export interface SelectFilter extends GenericFilter {
 
 export interface RadioOption {
   value: string | number;
-  label: string | React.ReactElement;
+  label: string | ReactElement;
+  description?: string;
   selected?: boolean; // default is false
   group?: boolean | string;
 }
@@ -65,10 +66,20 @@ export interface RadioFilter extends GenericFilter {
   onChange: (value: RadioOption['value']) => void;
 }
 
-// all available filters
-export type Filter = SelectFilter | RadioFilter; // add possible filter types here
+export interface CheckboxFilter extends GenericFilter {
+  type: 'checkbox';
+  selected: boolean;
+  onChange: () => void;
+  options?: RadioOption[];
+  customOptionsRender?: (option: RadioOption, isActive: boolean, theme?: Theme) => ReactNode;
+  onOptionChange?: (value: RadioOption['value']) => void;
+  selectedOptionValue?: string | number;
+}
 
-export type RenderTriggerFn = (onClick: () => void, ref: MutableRefObject<HTMLDivElement | null>) => React.ReactElement;
+// all available filters
+export type Filter = SelectFilter | RadioFilter | CheckboxFilter; // add possible filter types here
+
+export type RenderTriggerFn = (onClick: () => void, ref: MutableRefObject<HTMLDivElement | null>) => ReactElement;
 
 export interface FiltersBundleOptions {
   renderTrigger?: RenderTriggerFn; // default undefined (default trigger button is rendered)

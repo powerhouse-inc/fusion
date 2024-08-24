@@ -1,3 +1,4 @@
+import AbsoluteCumulativeFilterOption from 'public/assets/svg/absolute_cumulative_filter_option.svg';
 import AngleLeft from 'public/assets/svg/angle_left.svg';
 import AngleRight from 'public/assets/svg/angle_right.svg';
 import Arrow from 'public/assets/svg/arrow.svg';
@@ -39,6 +40,7 @@ import MemoCheck from 'public/assets/svg/memo_check.svg';
 import PersonSquare from 'public/assets/svg/person_square.svg';
 import PowerhouseIcon from 'public/assets/svg/powerhouse.svg';
 import RedditIcon from 'public/assets/svg/reddit.svg';
+import RelativeCumulativeFilterOption from 'public/assets/svg/relative_cumulative_filter_option.svg';
 import SkyLogoDesk from 'public/assets/svg/sky-desk.svg';
 import SkyLogoMobile from 'public/assets/svg/sky-mobile.svg';
 import ThemeIcon from 'public/assets/svg/theme.svg';
@@ -239,5 +241,13 @@ export const iconsPowerHose = [
   {
     Icon: FusionArrowUp,
     title: 'fusion_arrow_up',
+  },
+  {
+    Icon: RelativeCumulativeFilterOption,
+    title: 'relative_cumulative_filter_option',
+  },
+  {
+    Icon: AbsoluteCumulativeFilterOption,
+    title: 'absolute_cumulative_filter_option',
   },
 ];

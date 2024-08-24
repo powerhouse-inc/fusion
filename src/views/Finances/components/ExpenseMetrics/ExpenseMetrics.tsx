@@ -1,76 +1,81 @@
-// All comments will be removed in future PRs
 import { styled } from '@mui/material';
 import Card from '@/components/Card/Card';
+import FiltersBundle from '@/components/FiltersBundle/FiltersBundle';
+import type { Filter } from '@/components/FiltersBundle/types';
 import FinancesTitle from '@/views/Finances/components/FinancesTitle/FinancesTitle';
 import type { LineChartSeriesData } from '@/views/Finances/utils/types';
 import ExpenseMetricsChart from './ExpenseMetricsChart/ExpenseMetricsChart';
 import ExpenseMetricsSkeleton from './ExpenseMetricsSkeleton';
-// import TitleFilterComponent from './TitleFilterComponent';
 import type { CumulativeType } from './useExpenseMetrics';
 import type { AnalyticGranularity } from '@ses/core/models/interfaces/analytic';
 import type { FC } from 'react';
 
 interface Props {
   title: string;
-  handleGranularityChange: (value: AnalyticGranularity) => void;
   selectedGranularity: AnalyticGranularity;
   isCumulative: boolean;
-  handleToggleCumulative: () => void;
   cumulativeType: CumulativeType;
-  handleChangeCumulativeType: (value: CumulativeType) => void;
   series: LineChartSeriesData[];
   handleToggleSeries: (series: string) => void;
   year: string;
   isLoading: boolean;
+  filters: Filter[];
+  canReset: boolean;
+  onReset: () => void;
 }
 
 const ExpenseMetricsFinances: FC<Props> = ({
   title,
-  // handleGranularityChange,
   selectedGranularity,
   isCumulative,
-  // handleToggleCumulative,
   cumulativeType,
-  // handleChangeCumulativeType,
   series,
   handleToggleSeries,
   year,
   isLoading,
+  filters,
+  canReset,
+  onReset,
 }) => (
   <Container>
-    {/* <TitleFilterComponent
-      title={title}
-      handleChange={handleGranularityChange}
-      selectedValue={selectedGranularity}
-      isCumulative={isCumulative}
-      handleToggleCumulative={handleToggleCumulative}
-      cumulativeType={cumulativeType}
-      handleChangeCumulativeType={handleChangeCumulativeType}
-    /> */}
-    <FinancesTitle
-      year={year}
-      title={title}
-      tooltip={
-        <TooltipContent>
-          <p>
-            Explore Sky's financial evolution in detail with this advanced line chart, which offers both cumulative and
-            flat perspectives on expenses.
-          </p>
-          <p>
-            Select the 'Absolute Cumulative' mode for a continuous tally from inception, providing a comprehensive
-            overview of long-term financial movements.
-          </p>
-          <p>
-            Use the 'Relative Cumulative' mode, which resets at the start of each chosen period, to analyze expenses
-            within specific intervals.
-          </p>
-          <p>
-            Effortlessly switch between these views to discern overarching fiscal trends or to pinpoint financial
-            developments specific to a quarter or year, aiding in strategic decision-making and performance assessment.
-          </p>
-        </TooltipContent>
-      }
-    />
+    <Header>
+      <FinancesTitle
+        year={year}
+        title={title}
+        tooltip={
+          <TooltipContent>
+            <p>
+              Explore Sky's financial evolution in detail with this advanced line chart, which offers both cumulative
+              and flat perspectives on expenses.
+            </p>
+            <p>
+              Select the 'Absolute Cumulative' mode for a continuous tally from inception, providing a comprehensive
+              overview of long-term financial movements.
+            </p>
+            <p>
+              Use the 'Relative Cumulative' mode, which resets at the start of each chosen period, to analyze expenses
+              within specific intervals.
+            </p>
+            <p>
+              Effortlessly switch between these views to discern overarching fiscal trends or to pinpoint financial
+              developments specific to a quarter or year, aiding in strategic decision-making and performance
+              assessment.
+            </p>
+          </TooltipContent>
+        }
+      />
+      <FilterContainer>
+        <FiltersBundle
+          asPopover={['desktop']}
+          filters={filters}
+          resetFilters={{
+            canReset,
+            onReset,
+          }}
+          snapPoints={[490, 400, 250, 0]}
+        />
+      </FilterContainer>
+    </Header>
     {isLoading ? (
       <ExpenseMetricsSkeleton />
     ) : (
@@ -109,6 +114,13 @@ const Container = styled(Card)(({ theme }) => ({
   },
 }));
 
+const Header = styled('div')({
+  display: 'flex',
+  justifyContent: 'space-between',
+  flexWrap: 'wrap',
+  alignItems: 'flex-start',
+});
+
 const TooltipContent = styled('div')({
   display: 'flex',
   flexDirection: 'column',
@@ -118,3 +130,21 @@ const TooltipContent = styled('div')({
     margin: 0,
   },
 });
+
+const FilterContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'flex-end',
+  marginBottom: 22,
+
+  [theme.breakpoints.up('tablet_768')]: {
+    marginBottom: 20,
+  },
+
+  [theme.breakpoints.up('desktop_1024')]: {
+    marginBottom: 24,
+  },
+
+  [theme.breakpoints.up('desktop_1280')]: {
+    marginBottom: 26,
+  },
+}));

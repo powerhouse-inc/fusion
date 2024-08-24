@@ -42,7 +42,7 @@ const ExpenseMetricsChart: FC<ExpenseMetricsChartProps> = ({
   const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
   const isDesktop1024 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1024', 'desktop_1280'));
   const isDesktop1280 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1280', 'desktop_1440'));
-  const showLineYear = isMobile && selectedGranularity === 'monthly';
+  const showLineYear = isMobile && (selectedGranularity === 'monthly' || selectedGranularity === 'quarterly');
 
   const options: EChartsOption = {
     tooltip: {
@@ -396,12 +396,14 @@ const LegendContainer = styled('div')(({ theme }) => ({
   position: 'absolute',
   display: 'flex',
   justifyContent: 'center',
+  width: '100%',
   bottom: 0,
 
   [theme.breakpoints.up('tablet_768')]: {
     position: 'static',
     alignItems: 'center',
     flex: '1 0 0',
+    width: 'auto',
     padding: '0px 16px',
     borderRadius: 12,
     backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],

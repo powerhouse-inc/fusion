@@ -1,5 +1,6 @@
 import { styled } from '@mui/material';
 import SimpleBar from 'simplebar-react';
+import CustomCheckbox from './defaults/CustomCheckbox';
 import RadioAsList from './defaults/RadioAsList';
 import SelectAsList from './defaults/SelectAsList';
 import type { Filter } from './types';
@@ -19,6 +20,9 @@ const FilterList: React.FC<FilterListProps> = ({ filters, handleClose }) => (
           }
           case 'radio': {
             return <RadioAsList filter={filter} />;
+          }
+          case 'checkbox': {
+            return <CustomCheckbox filter={filter} />;
           }
           default: {
             throw new Error('Unknown filter type');
