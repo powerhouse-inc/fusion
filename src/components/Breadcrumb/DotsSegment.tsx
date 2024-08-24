@@ -1,4 +1,4 @@
-import { Menu, MenuItem, styled, useMediaQuery } from '@mui/material';
+import { ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper, styled, useMediaQuery } from '@mui/material';
 import Link from 'next/link';
 import Ellipsis from 'public/assets/svg/ellipsis.svg';
 import { useEffect, useId, useState } from 'react';
@@ -60,26 +60,37 @@ const DotsSegment: React.FC<DotsSegmentProps> = ({ items, defaultOpen = false })
           </SheetContent>
         </CustomSheet>
       ) : (
-        <StyledMenu
-          id={menuId}
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            'aria-labelledby': iconId,
-          }}
-          autoFocus={false}
-        >
-          {items.map((item, index) => (
-            <MenuItem key={index} onClick={handleClose} autoFocus={false}>
-              {isMobileOrTablet && index === items.length - 1 ? (
-                <span>{item.label}</span>
-              ) : (
-                <Link href={item.href}>{item.label}</Link>
-              )}
-            </MenuItem>
-          ))}
-        </StyledMenu>
+        <Popper open={open} anchorEl={anchorEl} role={undefined} placement="bottom-start" transition disablePortal>
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{
+                transformOrigin: placement === 'bottom-start' ? 'left top' : 'left bottom',
+              }}
+            >
+              <PaperStyled>
+                <ClickAwayListener onClickAway={handleClose}>
+                  <MenuList
+                    autoFocusItem={false}
+                    id="composition-menu"
+                    aria-labelledby="composition-button"
+                    disablePadding={true}
+                  >
+                    {items.map((item, index) => (
+                      <MenuItem key={index} onClick={handleClose} autoFocus={false}>
+                        {isMobileOrTablet && index === items.length - 1 ? (
+                          <span>{item.label}</span>
+                        ) : (
+                          <Link href={item.href}>{item.label}</Link>
+                        )}
+                      </MenuItem>
+                    ))}
+                  </MenuList>
+                </ClickAwayListener>
+              </PaperStyled>
+            </Grow>
+          )}
+        </Popper>
       )}
     </>
   );
@@ -108,20 +119,18 @@ const Icon = styled('div')(({ theme }) => ({
   },
 }));
 
-const StyledMenu = styled(Menu)(({ theme }) => ({
-  '& .MuiPaper-root': {
-    background: theme.palette.isLight ? 'white' : theme.palette.colors.charcoal[900],
-    boxShadow: theme.palette.isLight ? theme.fusionShadows.modules : theme.fusionShadows.darkMode,
-    padding: 16,
-    maxWidth: 273,
-    minWidth: 200,
+const PaperStyled = styled(Paper)(({ theme }) => ({
+  background: theme.palette.isLight ? 'white' : theme.palette.colors.charcoal[900],
+  boxShadow: theme.palette.isLight ? theme.fusionShadows.modules : theme.fusionShadows.darkMode,
+  padding: 16,
+  maxWidth: 273,
+  minWidth: 200,
 
-    '&.MuiPaper-rounded': {
-      borderRadius: 12,
-    },
+  '&.MuiPaper-rounded': {
+    borderRadius: '12px!important',
   },
 
-  '& .MuiMenu-list': {
+  '& .MuiList-root': {
     display: 'flex',
     flexDirection: 'column',
     gap: 8,
@@ -130,7 +139,6 @@ const StyledMenu = styled(Menu)(({ theme }) => ({
     background: theme.palette.isLight ? theme.palette.colors.gray[50] : '#373E4D4D',
     boxShadow: theme.fusionShadows.innerShadow,
     overflow: 'hidden',
-
     '& span, & a': {
       width: '100%',
       whiteSpace: 'nowrap',
@@ -139,19 +147,21 @@ const StyledMenu = styled(Menu)(({ theme }) => ({
       padding: 8,
     },
   },
-
   '& .MuiMenuItem-root': {
     padding: 0,
     fontSize: 14,
     fontWeight: 600,
     lineHeight: '17px',
-    color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
+    color: 'red',
     minHeight: 32,
+
+    '& a, & span': {
+      color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
+    },
 
     '& a': {
       fontWeight: 400,
     },
-
     '&:hover': {
       background: theme.palette.isLight ? theme.palette.colors.slate[50] : 'rgba(37, 42, 52, 0.2)',
     },
