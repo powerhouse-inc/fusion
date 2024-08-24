@@ -123,7 +123,7 @@ const ContainerCardsNavigation = styled('div')<{ showSwiper: boolean; isCompact:
 
     [theme.breakpoints.up('desktop_1280')]: {
       gap: 32,
-      ...(showSwiper && { margin: isCompact ? '0 -8px 0 -16px' : '0 -8px' }),
+      ...(showSwiper && { margin: isCompact ? '0 -16px 0 -16px' : '0 -8px' }),
     },
   })
 );
