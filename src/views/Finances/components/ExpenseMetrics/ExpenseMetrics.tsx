@@ -66,7 +66,7 @@ const ExpenseMetricsFinances: FC<Props> = ({
       />
       <FilterContainer>
         <FiltersBundle
-          asPopover={['desktop']}
+          asPopover={['tablet_768', 'desktop']}
           filters={filters}
           resetFilters={{
             canReset,

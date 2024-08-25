@@ -2,13 +2,13 @@ import { useMediaQuery } from '@mui/material';
 import lightTheme from '@ses/styles/theme/themes';
 import groupBy from 'lodash/groupBy';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
+import type { Filter, ResetFilter } from '@/components/FiltersBundle/types';
 import { fetchAnalytics } from '@/views/Finances/api/queries';
 import type { ItemRow, MetricValues, PeriodicSelectionFilter, TableFinances } from '@/views/Finances/utils/types';
 import { formatBudgetName } from '@/views/Finances/utils/utils';
 import { convertFilterToGranularity, isHeaderValuesZero, removePatternAfterSlash } from './utils';
-import type { MultiSelectItem } from '@ses/components/CustomMultiSelect/CustomMultiSelect';
 import type { Budget } from '@ses/core/models/interfaces/budget';
 
 interface TableData {
@@ -119,7 +119,6 @@ export const useBreakdownTable = (year: string, budgets: Budget[], allBudgets: B
     // no select any metric, this is delegate to a side effect
     return [];
   });
-  const defaultMetricsWithAllSelected = METRIC_FILTER_OPTIONS.slice(0, maxAmountOfActiveMetrics);
   const periodSelectOptions = isMobile
     ? ['Annually', 'Semi-annual']
     : isTable || isDesk1024 || isDesk1280
@@ -529,10 +528,6 @@ export const useBreakdownTable = (year: string, budgets: Budget[], allBudgets: B
 
   const isLoading = !analytics && !error && (tableHeader === null || tableBody === null);
 
-  // Avoid select all items when is mobile and different annually filter
-  const allowSelectAll = !!(periodFilter === 'Annually' && !isMobile);
-  const popupContainerHeight = allowSelectAll ? 260 : 218;
-
   // this state is used to avoid adding url params on mobile on the first render
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
   useEffect(() => {
@@ -643,39 +638,62 @@ export const useBreakdownTable = (year: string, budgets: Budget[], allBudgets: B
     updateUrl(value as PeriodicSelectionFilter, metrics);
   };
 
-  const selectMetrics = useMemo(
-    () =>
-      METRIC_FILTER_OPTIONS.map((filter) => ({
-        id: filter,
-        content: filter,
-      })) as MultiSelectItem[],
-    []
-  );
-
   const metricsMatch =
     JSON.stringify(activeMetrics.sort()) ===
     JSON.stringify(METRIC_FILTER_OPTIONS.slice(0, maxAmountOfActiveMetrics).sort());
 
-  const isDisabled =
-    metricsMatch && (isMobile ? selectedGranularity === 'semiAnnual' : selectedGranularity === 'quarterly');
+  // const isDisabled =
+  //   metricsMatch && (isMobile ? selectedGranularity === 'semiAnnual' : selectedGranularity === 'quarterly');
+
+  const resetFilters: ResetFilter = {
+    canReset: metricsMatch && (isMobile ? selectedGranularity === 'semiAnnual' : selectedGranularity === 'quarterly'),
+    onReset: handleResetMetrics,
+  };
+
+  const metricSelectId = useId();
+  const granularitySelectId = useId();
+  const filters: Filter[] = [
+    {
+      id: metricSelectId,
+      type: 'select',
+      options: METRIC_FILTER_OPTIONS.map((filter) => ({
+        label: filter,
+        value: filter,
+      })),
+      label: 'Metrics',
+      selected: activeMetrics,
+      multiple: true,
+      onChange: (value) => handleSelectChangeMetrics(value as string[]),
+      widthStyles: {
+        width: 140,
+        menuWidth: 220,
+      },
+    },
+    {
+      id: granularitySelectId,
+      type: 'select',
+      options: periodSelectOptions.map((filter) => ({
+        label: filter,
+        value: filter,
+      })),
+      label: 'Period',
+      selected: periodFilter,
+      onChange: (value) => handlePeriodChange(value as string),
+      widthStyles: {
+        width: 140,
+        menuWidth: 220,
+      },
+    },
+  ];
 
   return {
     isMobile,
     periodFilter,
     activeMetrics,
-    maxItems: maxAmountOfActiveMetrics,
-    minItems: 1,
-    allowSelectAll,
-    popupContainerHeight,
-    handleSelectChangeMetrics,
-    handleResetMetrics,
-    defaultMetricsWithAllSelected,
-    periodSelectOptions,
-    handlePeriodChange,
-    selectMetrics,
     tableHeader,
     tableBody,
     isLoading,
-    isDisabled,
+    filters,
+    resetFilters,
   };
 };

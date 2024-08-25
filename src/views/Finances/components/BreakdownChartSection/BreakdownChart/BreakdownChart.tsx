@@ -118,7 +118,6 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
         },
 
         formatter: function (params: BarChartSeries[]) {
-          console.log(params);
           // If all values are cero, don't show tooltip
           if (params.every((item) => item.value === 0)) {
             return '';
