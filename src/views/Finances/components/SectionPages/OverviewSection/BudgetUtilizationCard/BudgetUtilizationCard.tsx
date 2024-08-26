@@ -224,8 +224,14 @@ const DividerCardChart = styled('div')(({ theme }) => ({
     theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.slate[500]
   }`,
 
+  [theme.breakpoints.between('tablet_768', 'desktop_1024')]: {
+    margin: '10px auto',
+    width: '100%',
+    maxWidth: 302,
+  },
+
   [theme.breakpoints.up('desktop_1024')]: {
-    margin: '10px -32px',
+    margin: '10px 0',
   },
 }));
 

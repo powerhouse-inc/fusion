@@ -82,6 +82,10 @@ const ImageContainer = styled('div')(() => ({
 
   '& > a': {
     padding: '4px 8px 4px 8px',
+
+    '&:hover': {
+      padding: '4px 8px 4px 8px',
+    },
   },
 }));
 

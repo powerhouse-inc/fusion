@@ -4,7 +4,7 @@ import type { Meta } from '@storybook/react';
 import type { FigmaParams } from 'sb-figma-comparator';
 
 const meta: Meta<typeof CardNavigationFinance> = {
-  title: 'Fusion/Views/Finances/CardNavigationFinance',
+  title: 'Fusion/Views/Finances/Section/Main/CardNavigationFinance',
   component: CardNavigationFinance,
 
   parameters: {
@@ -24,9 +24,20 @@ const args = [
     href: '#',
     code: 'atlas/immutable',
   },
+  {
+    image: 'https://i.ibb.co/vXD0xDp/atlas.png',
+    title: 'Lorem ipsum',
+    description: '',
+    href: '#',
+    code: 'CODE',
+    isCompact: true,
+  },
 ];
-const [[LightMode, DarkMode]] = createThemeModeVariants(CardNavigationFinance, args);
-export { LightMode, DarkMode };
+const [[LightMode, DarkMode], [WithCompactViewLightMode, WithCompactViewDarkMode]] = createThemeModeVariants(
+  CardNavigationFinance,
+  args
+);
+export { LightMode, DarkMode, WithCompactViewLightMode, WithCompactViewDarkMode };
 
 LightMode.parameters = {
   figma: {

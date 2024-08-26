@@ -123,7 +123,7 @@ const ContainerCardsNavigation = styled('div')<{ showSwiper: boolean; isCompact:
 
     [theme.breakpoints.up('desktop_1280')]: {
       gap: 32,
-      ...(showSwiper && { margin: isCompact ? '0 -8px 0 -16px' : '0 -8px' }),
+      ...(showSwiper && { margin: isCompact ? '0 -22px 0 -16px' : '0 -8px' }),
     },
   })
 );
@@ -191,6 +191,8 @@ const CardWrapper = styled('div')(({ theme }) => ({
   flex: '1',
   height: '100%',
   boxSizing: 'border-box',
+  width: '100%',
+  minWidth: '100%',
 
   [theme.breakpoints.up('desktop_1280')]: {
     paddingLeft: 24,
