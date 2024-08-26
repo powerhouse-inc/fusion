@@ -36,6 +36,7 @@ const BreadcrumbYearNavigation: React.FC<BreadcrumbYearNavigationProps> = ({
             }))}
             onChange={(value) => handleChange(value as string)}
             selected={selectedValue}
+            menuProps={{ disableScrollLock: true }}
           />
         </RightContentContainer>
       }

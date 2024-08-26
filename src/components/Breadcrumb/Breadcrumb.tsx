@@ -48,29 +48,41 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items, rightContent, withMenusO
   const [mounted, setMounted] = useState<boolean>(false);
   const contentId = useId();
   const rightPartId = useId();
-  const isMobileOrTablet = useMediaQuery((theme: Theme) => theme.breakpoints.down('desktop_1024'));
+  const isMobileOrTablet = useMediaQuery((theme: Theme) => theme.breakpoints.down('desktop_1024'), {
+    defaultMatches: true,
+  });
 
   useEffect(() => {
     // trigger a re-render to calculate the segments width avoiding undefined document issues
     setMounted(true);
   }, []);
 
+  // adjust the segments width based on the content and right part width
   const [elementWidths, setElementWidths] = useState<[number, number]>([0, 0]);
   useEffect(() => {
+    const contentElement = document.getElementById(contentId);
+    const rightPartElement = document.getElementById(rightPartId);
+
     // update elementWidths when the window is resized to correctly calculate the segments width
     const getWidths = () => {
-      const contentElement = document.getElementById(contentId);
-      const rightPartElement = document.getElementById(rightPartId);
-
       if (contentElement && rightPartElement) {
         setElementWidths([contentElement.offsetWidth, rightPartElement.offsetWidth]);
       }
     };
 
-    getWidths(); // initial call
-    window.addEventListener('resize', getWidths);
+    // observe the elements to get the width
+    const contentObserver = new ResizeObserver(getWidths);
+    const rightPartObserver = new ResizeObserver(getWidths);
+
+    if (contentElement && rightPartElement) {
+      contentObserver.observe(contentElement);
+      rightPartObserver.observe(rightPartElement);
+    }
+
     return () => {
-      window.removeEventListener('resize', getWidths);
+      // remove the observers when the component is unmounted
+      contentObserver.disconnect();
+      rightPartObserver.disconnect();
     };
   }, [contentId, rightPartId]);
 

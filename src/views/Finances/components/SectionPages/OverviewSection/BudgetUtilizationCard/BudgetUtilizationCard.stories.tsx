@@ -4,7 +4,7 @@ import type { Meta } from '@storybook/react';
 import type { FigmaParams } from 'sb-figma-comparator';
 
 const meta: Meta<typeof BudgetUtilizationCard> = {
-  title: 'Fusion/Views/Finances/Budget Utilization Card',
+  title: 'Fusion/Views/Finances/Section/Main/Budget Utilization Card',
   component: BudgetUtilizationCard,
 
   parameters: {
