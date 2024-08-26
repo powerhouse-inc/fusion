@@ -12,7 +12,7 @@ import BreadcrumbYearNavigation from './components/SectionPages/BreadcrumbYearNa
 import BreakdownTable from './components/SectionPages/BreakdownTable/BreakdownTable';
 import CardsNavigation from './components/SectionPages/CardsNavigation/CardsNavigation';
 import ExpenseMetricsSection from './components/SectionPages/ExpenseMetricsSection/ExpenseMetricsSection';
-import DelegateExpenseTrendFinances from './components/SectionPages/ExpenseReports/ExpenseReports';
+import ExpenseReports from './components/SectionPages/ExpenseReports/ExpenseReports';
 import OverviewSection from './components/SectionPages/OverviewSection/OverviewSection';
 import ReservesWaterfallChartSection from './components/SectionPages/ReservesWaterfallChartSection/ReservesWaterfallChartSection';
 import { useFinancesView } from './useFinancesView';
@@ -187,7 +187,8 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
           />
         </ContainerReservesWaterfallChart>
         <ContainerLastReport>
-          <DelegateExpenseTrendFinances
+          <ExpenseReports
+            year={year}
             selectedMetric={expenseReportSection.selectedMetric}
             onMetricChange={expenseReportSection.onMetricChange}
             selectedStatuses={expenseReportSection.selectedStatuses}
@@ -283,10 +284,10 @@ const ContainerSections = styled('div')(({ theme }) => ({
 }));
 
 const ContainerLastReport = styled('div')(({ theme }) => ({
-  marginTop: 40,
+  marginTop: 24,
 
-  [theme.breakpoints.up('tablet_768')]: {
-    marginTop: 64,
+  [theme.breakpoints.up('desktop_1280')]: {
+    marginTop: 32,
   },
 }));
 

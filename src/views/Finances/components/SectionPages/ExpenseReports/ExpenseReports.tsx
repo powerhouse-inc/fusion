@@ -1,36 +1,34 @@
-import styled from '@emotion/styled';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
-import lightTheme from '@ses/styles/theme/themes';
-import React from 'react';
-
+import { styled } from '@mui/material';
+import { Fragment } from 'react';
 import TableEmptyState from '@/components/TableEmptyState/TableEmptyState';
 import BigButton from '@/views/CoreUnitAbout/components/Button/BigButton/BigButton';
+import FinancesTitle from '@/views/Finances/components/FinancesTitle/FinancesTitle';
 import type { DelegateExpenseTableHeader } from '@/views/Finances/utils/types';
 import DelegateExpenseTrendItem from '../../DelegateExpenseTrend/DelegateExpenseTrendItem';
 import HeaderDelegateExpense from '../../DelegateExpenseTrend/HeaderDelegateExpense';
-import SectionTitle from '../../SectionTitle/SectionTitle';
 import ExpenseReportsFilters from './ExpenseReportsFilters';
 import ExpenseReportsItemsSkeleton from './ExpenseReportsItemsSkeleton';
 import type { ExpenseReportsFiltersProps } from './ExpenseReportsFilters';
 import type { BudgetStatement } from '@ses/core/models/interfaces/budgetStatement';
-import type { WithIsLight } from '@ses/core/utils/typesHelpers';
+import type { FC } from 'react';
 import type { SWRInfiniteResponse } from 'swr/infinite';
 
 interface Props extends ExpenseReportsFiltersProps {
+  year: string;
   columns: DelegateExpenseTableHeader[];
   sortClick: (index: number) => void;
   expenseReportResponse: SWRInfiniteResponse<BudgetStatement[], unknown>;
   hasExpenseReport: boolean;
 }
 
-const ExpenseReports: React.FC<Props> = ({
+const ExpenseReports: FC<Props> = ({
+  year,
   columns,
   sortClick,
   expenseReportResponse,
   hasExpenseReport,
   ...filterProps // props from ExpenseReportsFiltersProps
 }) => {
-  const { isLight } = useThemeContext();
   const isLoading =
     expenseReportResponse.isLoading ||
     (expenseReportResponse.size > 0 &&
@@ -40,13 +38,14 @@ const ExpenseReports: React.FC<Props> = ({
   return (
     <Container>
       <HeaderContainer>
-        <SectionTitle
-          title="Budget Statements"
+        <FinancesTitle
+          year={year}
+          title="Expense Reports"
           tooltip={
             <TooltipContent>
               <p>
                 Access detailed insights into budget reporting activities, including contributors, reporting month,
-                actual expenditures, status, and recent modifications.{' '}
+                actual expenditures, status, and recent modifications.
               </p>
               <p>
                 Click "View" to dive into specific financial data by department, enabling effective monitoring and
@@ -65,11 +64,11 @@ const ExpenseReports: React.FC<Props> = ({
       )}
       <ItemSection>
         {expenseReportResponse.data?.map((page, index) => (
-          <React.Fragment key={`page-${index}`}>
+          <Fragment key={`page-${index}`}>
             {page.map((budget) => (
               <DelegateExpenseTrendItem key={index} budget={budget} selectedMetric={filterProps.selectedMetric} />
             ))}
-          </React.Fragment>
+          </Fragment>
         ))}
         {isLoading && <ExpenseReportsItemsSkeleton />}
         {!hasExpenseReport && (
@@ -80,12 +79,12 @@ const ExpenseReports: React.FC<Props> = ({
       {!isLoading &&
         !((expenseReportResponse.data?.[(expenseReportResponse.data?.length ?? 0) - 1]?.length ?? 0) < 10) && (
           <ContainerButton>
-            <DividerStyle isLight={isLight} />
+            <DividerStyle />
             <BigButtonStyled
               title={'Load More'}
               onClick={() => expenseReportResponse.setSize(expenseReportResponse.size + 1)}
             />
-            <DividerStyle isLight={isLight} />
+            <DividerStyle />
           </ContainerButton>
         )}
     </Container>
@@ -94,76 +93,76 @@ const ExpenseReports: React.FC<Props> = ({
 
 export default ExpenseReports;
 
-const Container = styled.div({
+const Container = styled('div')(() => ({
   display: 'flex',
   flex: 1,
   flexDirection: 'column',
   fontFamily: 'Inter, sans-serif',
-});
+}));
 
-const HeaderContainer = styled.div({
+const HeaderContainer = styled('div')(() => ({
   display: 'flex',
-  flexDirection: 'column',
+  justifyContent: 'space-between',
+  alignItems: 'flex-start',
   flexWrap: 'wrap',
-  gap: 24,
   marginBottom: 24,
+}));
 
-  [lightTheme.breakpoints.up('tablet_768')]: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: 40,
-  },
-});
-
-const ItemSection = styled.div({
+const ItemSection = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
-  [lightTheme.breakpoints.up('tablet_768')]: {
+
+  [theme.breakpoints.up('tablet_768')]: {
     gap: 16,
   },
-});
+}));
 
-const Header = styled.div({
+const Header = styled('div')(({ theme }) => ({
   display: 'none',
-  [lightTheme.breakpoints.up('desktop_1024')]: {
+
+  [theme.breakpoints.up('desktop_1024')]: {
     display: 'flex',
     flex: 1,
     width: '100%',
-    marginBottom: 16,
+    marginBottom: 8,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
   },
-});
+}));
 
-const ContainerButton = styled.div({
+const ContainerButton = styled('div')(({ theme }) => ({
   width: '100%',
   display: 'flex',
   flex: 1,
   alignItems: 'center',
   marginTop: 24,
-  [lightTheme.breakpoints.up('tablet_768')]: {
+
+  [theme.breakpoints.up('tablet_768')]: {
     marginTop: 40,
   },
-});
-const DividerStyle = styled.div<WithIsLight>(({ isLight }) => ({
-  background: isLight ? '#D4D9E1' : '#405361',
+}));
+
+const DividerStyle = styled('div')(({ theme }) => ({
+  background: theme.palette.isLight ? '#D4D9E1' : '#405361',
   height: 1,
   display: 'flex',
   flex: 1,
 }));
 
-const BigButtonStyled = styled(BigButton)({
+const BigButtonStyled = styled(BigButton)(({ theme }) => ({
   minWidth: 127,
   height: 31,
   padding: '8px 24px',
   letterSpacing: 1,
   color: '#708390',
-  [lightTheme.breakpoints.up('tablet_768')]: {
+
+  [theme.breakpoints.up('tablet_768')]: {
     minWidth: 207,
   },
-});
+}));
 
-const TooltipContent = styled.div({
+const TooltipContent = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
@@ -171,4 +170,4 @@ const TooltipContent = styled.div({
   p: {
     margin: 0,
   },
-});
+}));

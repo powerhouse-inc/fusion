@@ -1,21 +1,20 @@
-import styled from '@emotion/styled';
+import { styled, useTheme } from '@mui/material';
 import ArrowDown from '@ses/components/svg/arrow-down';
 import ArrowUp from '@ses/components/svg/arrow-up';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
 import { SortEnum } from '@ses/core/enums/sortEnum';
-import lightTheme from '@ses/styles/theme/themes';
-import React from 'react';
 import type { DelegateExpenseTableHeader } from '../../utils/types';
+import type { FC, CSSProperties } from 'react';
 
 export interface Props {
   columns: DelegateExpenseTableHeader[];
   sortClick?: (index: number) => void;
 }
 
-const HeaderDelegateExpense: React.FC<Props> = ({ columns, sortClick }) => {
-  const { isLight } = useThemeContext();
+const HeaderDelegateExpense: FC<Props> = ({ columns, sortClick }) => {
+  const theme = useTheme();
+
   return (
-    <TableHeader isLight={isLight}>
+    <TableHeader>
       <TableHeaderRow className="no-select">
         {columns
           .filter((column) => !column.hidden)
@@ -32,25 +31,25 @@ const HeaderDelegateExpense: React.FC<Props> = ({ columns, sortClick }) => {
                 <Arrows>
                   <ArrowUp
                     fill={
-                      isLight
+                      theme.palette.isLight
                         ? column.sort === SortEnum.Asc
-                          ? '#231536'
-                          : '#708390'
+                          ? theme.palette.colors.gray[900]
+                          : theme.palette.colors.slate[100]
                         : column.sort === SortEnum.Asc
-                        ? '#434358'
-                        : '#708390'
+                        ? theme.palette.colors.gray[50]
+                        : theme.palette.colors.slate[500]
                     }
                     style={{ margin: '4px 0' }}
                   />
                   <ArrowDown
                     fill={
-                      isLight
+                      theme.palette.isLight
                         ? column.sort === SortEnum.Desc
-                          ? '#231536'
-                          : '#708390'
+                          ? theme.palette.colors.gray[900]
+                          : theme.palette.colors.slate[100]
                         : column.sort === SortEnum.Desc
-                        ? '#434358'
-                        : '#708390'
+                        ? theme.palette.colors.gray[50]
+                        : theme.palette.colors.slate[500]
                     }
                   />
                 </Arrows>
@@ -63,41 +62,40 @@ const HeaderDelegateExpense: React.FC<Props> = ({ columns, sortClick }) => {
 };
 
 export default HeaderDelegateExpense;
-const TableHeader = styled.div<{ isLight: boolean; isGlobal?: boolean }>(({ isLight }) => ({
+
+const TableHeader = styled('div')(({ theme }) => ({
   display: 'none',
   position: 'relative',
-  background: isLight ? '#F7F8F9' : '#25273D',
-  color: isLight ? '#231536' : '#FFFFFF',
-  padding: '16px 0 14px',
-  borderRadius: '6px',
-  lineHeight: '22px',
-  boxShadow: isLight
-    ? 'inset .25px -.25px .25px .25px rgba(190, 190, 190, 0.25), 0px 20px 40px rgba(190, 190, 190, .25), 0px 1px 3px rgba(190, 190, 190, 0.25)'
-    : '0px 20px 40px rgba(7, 22, 40, 0.4)',
+  padding: '16px 0px',
+  borderTopLeftRadius: 12,
+  borderTopRightRadius: 12,
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : '#212630',
+  boxShadow: theme.palette.isLight ? '0px 2px 12px 0px rgba(37, 42, 52, 0.10)' : '1px 4px 15.3px 0px #141921',
 
-  [lightTheme.breakpoints.up('desktop_1024')]: {
+  [theme.breakpoints.up('desktop_1024')]: {
     display: 'block',
     flex: 1,
   },
 }));
 
-const TableHeaderRow = styled.div({
+const TableHeaderRow = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   flex: 1,
-});
+}));
 
-const TableHeaderTitle = styled.div<{
+const TableHeaderTitle = styled('div')<{
   width?: string;
-  styles?: React.CSSProperties;
+  styles?: CSSProperties;
   align: 'left' | 'center' | 'right';
-}>(({ width, styles, align }) => ({
+}>(({ width, styles, align, theme }) => ({
   display: 'flex',
   cursor: 'pointer',
   fontFamily: 'Inter, sans-serif',
-  fontSize: '16px',
-  fontWeight: 400,
+  fontSize: 16,
+  fontWeight: 500,
   lineHeight: '22px',
+  color: theme.palette.colors.gray[600],
 
   textAlign: align,
   ...(width && { width }),
@@ -105,11 +103,11 @@ const TableHeaderTitle = styled.div<{
   ...(styles || {}),
 }));
 
-const Arrows = styled.div({
+const Arrows = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   margin: '0 8px',
   cursor: 'pointer',
   boxSizing: 'unset',
-  marginTop: -3,
-});
+  marginTop: -1.5,
+}));

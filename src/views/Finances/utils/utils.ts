@@ -326,17 +326,17 @@ export const getHeadersExpenseReport = (
     sort: headersSort[0],
   },
   {
-    header: isSmallDesk ? 'Rep Month' : 'Reporting Month',
+    header: isSmallDesk ? 'R. Month' : 'Reporting Month',
     styles: {
       width: 130,
-      marginLeft: -22,
+      marginLeft: -24,
 
       [lightTheme.breakpoints.up('desktop_1280')]: {
-        width: 152,
-        marginLeft: -22,
+        width: 154,
+        marginLeft: -28,
       },
       [lightTheme.breakpoints.up('desktop_1440')]: {
-        marginLeft: -102,
+        marginLeft: -106,
       },
     },
     sortReverse: true,
@@ -352,24 +352,24 @@ export const getHeadersExpenseReport = (
     sort: headersSort[2],
     styles: {
       width: 130,
-      marginLeft: -26,
+      marginLeft: -28,
 
       [lightTheme.breakpoints.up('desktop_1280')]: {
         marginLeft: -52,
       },
       [lightTheme.breakpoints.up('desktop_1440')]: {
-        marginLeft: -90,
+        marginLeft: -94,
       },
     },
     sortReverse: true,
   },
-
   {
     header: 'Status',
     sort: headersSort[3],
     styles: {
       width: 100,
       marginLeft: -20,
+
       [lightTheme.breakpoints.up('desktop_1280')]: {
         marginLeft: -22,
       },
@@ -402,6 +402,7 @@ export const getHeadersExpenseReport = (
     sort: SortEnum.Disabled,
     styles: {
       width: 111,
+
       [lightTheme.breakpoints.up('desktop_1280')]: {
         marginLeft: 0,
         width: 110,
