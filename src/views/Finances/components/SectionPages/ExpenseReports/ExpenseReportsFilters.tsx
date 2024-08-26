@@ -1,17 +1,16 @@
-import styled from '@emotion/styled';
-import { useMediaQuery } from '@mui/material';
+import { styled, useMediaQuery } from '@mui/material';
 import { CustomMultiSelect } from '@ses/components/CustomMultiSelect/CustomMultiSelect';
 import ResetButton from '@ses/components/ResetButton/ResetButton';
-import ResponsiveButtonClearFilter from '@ses/components/ResponsiveButtonClearFilter/ResponsiveButtonClearFilter';
 import SingleItemSelect from '@ses/components/SingleItemSelect/SingleItemSelect';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
 import { BudgetStatus } from '@ses/core/models/interfaces/types';
 import { getExpenseReportStatusColor } from '@ses/core/utils/colors';
-import lightTheme from '@ses/styles/theme/themes';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
+// import FiltersBundle from '@/components/FiltersBundle/FiltersBundle';
+import type { Theme } from '@mui/material';
 import type { MultiSelectItem } from '@ses/components/CustomMultiSelect/CustomMultiSelect';
 import type { SelectItem } from '@ses/components/SingleItemSelect/SingleItemSelect';
 import type { AnalyticMetric } from '@ses/core/models/interfaces/analytic';
+import type { FC } from 'react';
 
 export interface ExpenseReportsFiltersProps {
   selectedMetric: AnalyticMetric;
@@ -23,7 +22,7 @@ export interface ExpenseReportsFiltersProps {
   isDisabled?: boolean;
 }
 
-const ExpenseReportsFilters: React.FC<ExpenseReportsFiltersProps> = ({
+const ExpenseReportsFilters: FC<ExpenseReportsFiltersProps> = ({
   selectedMetric,
   onMetricChange,
   selectedStatuses,
@@ -32,7 +31,8 @@ const ExpenseReportsFilters: React.FC<ExpenseReportsFiltersProps> = ({
   handleResetFilter,
   isDisabled = true,
 }) => {
-  const isMobile = useMediaQuery(lightTheme.breakpoints.down('tablet_768'));
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
+  const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
   const metricItems: SelectItem<AnalyticMetric>[] = useMemo(
     () => [
       {
@@ -42,7 +42,7 @@ const ExpenseReportsFilters: React.FC<ExpenseReportsFiltersProps> = ({
       {
         label: 'Net Protocol Outflow',
         value: 'ProtocolNetOutflow',
-        labelWhenSelected: 'Prtcol Outfl',
+        labelWhenSelected: 'Protocol Outflow',
       },
       {
         label: 'Net Expenses On-Chain',
@@ -59,70 +59,78 @@ const ExpenseReportsFilters: React.FC<ExpenseReportsFiltersProps> = ({
 
   return (
     <FilterContainer>
-      <Reset>
-        <ResetButton
-          onClick={handleResetFilter}
-          disabled={isDisabled}
-          hasIcon={false}
-          label="Reset filters"
-          legacyBreakpoints={false}
-        />
-      </Reset>
+      {isMobile && <div>Filter</div>}
+      {!isMobile && (
+        <>
+          <Reset>
+            <ResetButton
+              onClick={handleResetFilter}
+              disabled={isDisabled}
+              hasIcon={false}
+              label="Reset filters"
+              legacyBreakpoints={false}
+            />
+          </Reset>
 
-      <SelectContainer>
-        <SingleItemSelect
-          isMobile={isMobile}
-          useSelectedAsLabel
-          selected={selectedMetric}
-          onChange={(value: string) => onMetricChange(value as AnalyticMetric)}
-          items={metricItems}
-          PopperProps={{
-            placement: 'bottom-end',
-          }}
-        />
+          <SelectContainer>
+            <SingleItemSelect
+              isMobile={isMobile || isTablet} // Mobile behavior also in Tablet
+              useSelectedAsLabel
+              selected={selectedMetric}
+              onChange={(value: string) => onMetricChange(value as AnalyticMetric)}
+              items={metricItems}
+              PopperProps={{
+                placement: 'bottom-end',
+              }}
+            />
 
-        <CustomMultiSelectStyled
-          positionRight={true}
-          label="Status"
-          activeItems={selectedStatuses}
-          items={statusesItems}
-          width={120}
-          onChange={(items: string[]) => onStatusSelectChange(items as BudgetStatus[])}
-          withAll={true}
-          popupContainerWidth={256}
-          listItemWidth={224}
-          customAll={{
-            content: <FilterChip text="All" />,
-            id: 'all',
-            params: { isAll: true },
-            count: statusesItems?.reduce((acc, curr) => acc + curr.count, 0),
+            <CustomMultiSelectStyled
+              positionRight={true}
+              label="Status"
+              activeItems={selectedStatuses}
+              items={statusesItems}
+              width={120}
+              onChange={(items: string[]) => onStatusSelectChange(items as BudgetStatus[])}
+              withAll={true}
+              popupContainerWidth={256}
+              listItemWidth={224}
+              customAll={{
+                content: <FilterChip text="All" />,
+                id: 'all',
+                params: { isAll: true },
+                count: statusesItems?.reduce((acc, curr) => acc + curr.count, 0),
+              }}
+              popupContainerHeight={220}
+            />
+          </SelectContainer>
+        </>
+      )}
+      {(isMobile || isTablet) && (
+        <div>Sort</div>
+        /* <FiltersBundle
+          asPopover={['desktop']}
+          filters={filters}
+          resetFilters={{
+            canReset,
+            onReset,
           }}
-          popupContainerHeight={220}
-        />
-      </SelectContainer>
-      <ResponsiveButtonClearFilter handleResetFilter={handleResetFilter} isDisabled={isDisabled} />
+          snapPoints={[490, 400, 250, 0]}
+        /> */
+      )}
     </FilterContainer>
   );
 };
 
 export default ExpenseReportsFilters;
 
-export const FilterChip: React.FC<{ status?: BudgetStatus; text?: string }> = ({
-  status = BudgetStatus.Draft,
-  text,
-}) => {
-  const { isLight } = useThemeContext();
+export const FilterChip: FC<{ status?: BudgetStatus; text?: string }> = ({ status = BudgetStatus.Draft, text }) => {
   const variantColor = useMemo(() => getExpenseReportStatusColor(status), [status]);
 
-  return (
-    <ExpenseReportStatusStyled isLight={isLight} variantColorSet={variantColor}>
-      {text ?? status}
-    </ExpenseReportStatusStyled>
-  );
+  return <ExpenseReportStatusStyled variantColorSet={variantColor}>{text ?? status}</ExpenseReportStatusStyled>;
 };
 
-const ExpenseReportStatusStyled = styled.div<{ isLight: boolean; variantColorSet: { [key: string]: string } }>(
-  ({ isLight, variantColorSet }) => ({
+const ExpenseReportStatusStyled = styled('div')<{ variantColorSet: { [key: string]: string } }>(
+  ({ variantColorSet, theme }) => ({
     fontFamily: 'Inter, sans-serif',
     display: 'flex',
     alignItems: 'center',
@@ -133,37 +141,37 @@ const ExpenseReportStatusStyled = styled.div<{ isLight: boolean; variantColorSet
     height: '22px',
     width: 'fit-content',
     lineHeight: '13px',
-    border: `1px solid ${isLight ? variantColorSet.color : variantColorSet.darkColor}`,
-    background: isLight ? variantColorSet.background : variantColorSet.darkBackground,
-    color: isLight ? variantColorSet.color : variantColorSet.darkColor,
+    border: `1px solid ${theme.palette.isLight ? variantColorSet.color : variantColorSet.darkColor}`,
+    background: theme.palette.isLight ? variantColorSet.background : variantColorSet.darkBackground,
+    color: theme.palette.isLight ? variantColorSet.color : variantColorSet.darkColor,
   })
 );
 
-const FilterContainer = styled.div({
+const FilterContainer = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'flex-end',
   gap: 16,
   marginLeft: 'auto',
   zIndex: 5,
-});
+}));
 
-const Reset = styled.div({
+const Reset = styled('div')(({ theme }) => ({
   gridArea: 'reset',
   display: 'none',
   justifyContent: 'flex-end',
 
-  [lightTheme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     display: 'flex',
   },
-});
+}));
 
-const SelectContainer = styled.div({
+const SelectContainer = styled('div')(() => ({
   display: 'flex',
   gap: 16,
-});
+}));
 
-const CustomMultiSelectStyled = styled(CustomMultiSelect)({
+const CustomMultiSelectStyled = styled(CustomMultiSelect)(() => ({
   '& > div:nth-of-type(2)': {
     borderRadius: 6,
   },
-});
+}));
