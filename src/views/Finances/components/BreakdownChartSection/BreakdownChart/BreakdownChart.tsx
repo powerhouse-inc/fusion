@@ -2,7 +2,7 @@ import { styled, useMediaQuery, useTheme } from '@mui/material';
 import { zIndexEnum } from '@ses/core/enums/zIndexEnum';
 import { replaceAllNumberLetOneBeforeDot } from '@ses/core/utils/string';
 import ReactECharts from 'echarts-for-react';
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { usLocalizedNumber } from '@/core/utils/humanization';
 import type { BarChartSeries, BreakdownChartSeriesData } from '@/views/Finances/utils/types';
 import {
@@ -56,6 +56,104 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
 
   const isMobileOrLess = isMobile || isLessMobile;
   const showLineYear = (isMobile || isLessMobile) && selectedGranularity === 'monthly';
+  // Values for the grid
+  const getHeightGrid = useCallback(() => {
+    switch (true) {
+      case isLessMobile:
+        return 198;
+
+      case isMobile:
+        return 170;
+
+      case isTablet:
+        return 230;
+
+      case isDesktop1024:
+        return 225;
+
+      case isDesktop1280:
+        return 312;
+      case isDesktop1440:
+        return 314;
+      default:
+        return 312;
+    }
+  }, [isDesktop1024, isDesktop1280, isDesktop1440, isLessMobile, isMobile, isTablet]);
+
+  const getTopGrid = useCallback(() => {
+    switch (true) {
+      case isLessMobile:
+      case isMobile:
+      case isTablet:
+        return 10;
+
+      case isDesktop1024:
+        return 30;
+
+      case isDesktop1280:
+      case isDesktop1440:
+        return 11;
+
+      default:
+        return 11;
+    }
+  }, [isLessMobile, isMobile, isTablet, isDesktop1024, isDesktop1280, isDesktop1440]);
+
+  const getRightGrid = useCallback(() => {
+    switch (true) {
+      case isMobile:
+        return 4;
+
+      case isTablet:
+      case isDesktop1024:
+        return 0;
+
+      case isDesktop1280:
+      case isDesktop1440:
+        return 4;
+
+      default:
+        return 4;
+    }
+  }, [isMobile, isTablet, isDesktop1024, isDesktop1280, isDesktop1440]);
+
+  const getMarginYAxis = useCallback(() => {
+    switch (true) {
+      case isMobile:
+        return 5;
+
+      case isTablet:
+        return 8;
+
+      case isDesktop1024:
+        return 24;
+
+      case isDesktop1280:
+        return 30;
+
+      case isDesktop1440:
+        return 32;
+
+      default:
+        return 36;
+    }
+  }, [isDesktop1024, isDesktop1280, isDesktop1440, isMobile, isTablet]);
+
+  const getMarginXAxis = useCallback(() => {
+    switch (true) {
+      case isMobile:
+      case isTablet:
+        return 12;
+
+      case isDesktop1024:
+      case isDesktop1280:
+      case isDesktop1440:
+        return 16;
+
+      default:
+        return 16;
+    }
+  }, [isMobile, isTablet, isDesktop1024, isDesktop1280, isDesktop1440]);
 
   const xAxisStyles = useMemo(
     () => ({
@@ -173,7 +271,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
           }<span style="display:inline-block;margin-left:4px">${getSelectMetricText(selectedMetric)}</span></div>
               <div style="display:flex;flex-direction:${flexDirection};gap:${gap};${wrap}${minMax}">
                 ${filteredParams
-                  .reverse()
+                  .toReversed()
                   .map(
                     (item) =>
                       `<div style="display: flex;align-items:center;gap: 6px;">
@@ -202,21 +300,9 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
         },
       },
       grid: {
-        height: isLessMobile
-          ? 198
-          : isMobile
-          ? 170
-          : isTablet
-          ? 230
-          : isDesktop1024
-          ? 225
-          : isDesktop1280
-          ? 312
-          : isDesktop1440
-          ? 314
-          : 312,
-        top: isLessMobile ? 10 : isMobile ? 10 : isTablet ? 10 : isDesktop1024 ? 30 : isDesktop1280 ? 11 : 11,
-        right: isMobile ? 4 : isTablet ? 0 : isDesktop1024 ? 0 : isDesktop1280 ? 4 : 4,
+        height: getHeightGrid(),
+        top: getTopGrid(),
+        right: getRightGrid(),
       },
       xAxis: {
         show: true,
@@ -236,7 +322,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
           show: false,
         },
         axisLabel: {
-          margin: isMobile ? 12 : isTablet ? 12 : isDesktop1024 ? 16 : isDesktop1280 ? 16 : 16,
+          margin: getMarginXAxis(),
           color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[300],
           align: 'center',
           fontFamily: 'OpenSansCondensed, sans-serif',
@@ -245,13 +331,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
           baseline: 'top',
           interval: 0,
           formatter: function (value: string) {
-            const formatted = formatterBreakdownChart(
-              selectedGranularity as AnalyticGranularity,
-              isMobile,
-              year,
-              value,
-              isLessMobile
-            );
+            const formatted = formatterBreakdownChart(selectedGranularity, isMobile, year, value, isLessMobile);
             return formatted;
           },
           rich: {
@@ -268,7 +348,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
         axisLabel: {
           show: true,
           fontFamily: 'OpenSansCondensed, sans-serif',
-          margin: isMobile ? 10 : isTablet ? 8 : isDesktop1024 ? 24 : isDesktop1280 ? 30 : isDesktop1440 ? 32 : 36,
+          margin: getMarginYAxis(),
           formatter: function (value: number, index: number) {
             if (value === 0 && index === 0) {
               return value.toString();
@@ -297,9 +377,12 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
       series,
     }),
     [
+      getHeightGrid,
+      getMarginXAxis,
+      getMarginYAxis,
+      getRightGrid,
+      getTopGrid,
       isDesktop1024,
-      isDesktop1280,
-      isDesktop1440,
       isLessMobile,
       isMobile,
       isMobileOrLess,
