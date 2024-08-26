@@ -115,6 +115,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
           if (yPos + tooltipHeight + MORE_WITH > window.innerHeight) {
             yPos -= tooltipHeight;
           }
+          return [xPos, yPos];
         },
 
         formatter: function (params: BarChartSeries[]) {
