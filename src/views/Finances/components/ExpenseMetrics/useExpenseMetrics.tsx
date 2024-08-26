@@ -17,7 +17,6 @@ export const useExpenseMetrics = (year: string) => {
   const [selectedGranularity, setSelectedGranularity] = useState<AnalyticGranularity>('monthly');
   const [isCumulative, setIsCumulative] = useState(false);
   const [cumulativeType, setCumulativeType] = useState<CumulativeType>('relative');
-  const [isUncategorizedActuals, setIsUncategorizedActuals] = useState(false);
 
   const router = useRouter();
   const urlPath = Array.isArray(router.query.path) ? router.query.path.join('/') : router.query.path;
@@ -184,24 +183,14 @@ export const useExpenseMetrics = (year: string) => {
       },
       selectedOptionValue: cumulativeType,
     },
-    {
-      type: 'checkbox',
-      id: 'uncategorizedActuals',
-      label: 'Uncategorized Actuals',
-      selected: isUncategorizedActuals,
-      onChange: () => {
-        setIsUncategorizedActuals((prev) => !prev);
-      },
-    },
   ];
 
-  const canReset = selectedGranularity !== 'monthly' || isCumulative || isUncategorizedActuals;
+  const canReset = selectedGranularity !== 'monthly' || isCumulative;
 
   const onReset = () => {
     setSelectedGranularity('monthly');
     setIsCumulative(false);
     setCumulativeType('relative');
-    setIsUncategorizedActuals(false);
   };
 
   return {

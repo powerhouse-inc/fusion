@@ -85,6 +85,8 @@ const ExpenseMetricsChart: FC<ExpenseMetricsChartProps> = ({
         if (yPos + tooltipHeight + MORE_WITH > window.innerHeight) {
           yPos -= tooltipHeight;
         }
+
+        return [xPos, yPos];
       },
       formatter: (params: BarChartSeries[]) => {
         // If all values are cero, don't show tooltip
