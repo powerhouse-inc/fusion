@@ -130,24 +130,15 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
 
       <ConditionalWrapper period={breakdownTable.periodFilter}>
         <BreakdownTable
-          handleResetMetrics={breakdownTable.defaultMetricsWithAllSelected}
           activeItems={breakdownTable.activeMetrics}
-          handleChange={breakdownTable.handlePeriodChange}
-          handleResetFilter={breakdownTable.handleResetMetrics}
-          handleSelectChange={breakdownTable.handleSelectChangeMetrics}
-          metrics={breakdownTable.selectMetrics}
-          periodSelectOptions={breakdownTable.periodSelectOptions}
           selectedValue={breakdownTable.periodFilter}
           year={year}
-          maxItems={breakdownTable.maxItems}
-          minItems={breakdownTable.minItems}
-          allowSelectAll={breakdownTable.allowSelectAll}
-          popupContainerHeight={breakdownTable.popupContainerHeight}
           breakdownTable={breakdownTable.tableBody ?? []}
           isLoading={breakdownTable.isLoading}
           headerTable={breakdownTable.tableHeader ?? []}
           title={levelNumber === 1 ? 'MakerDAO Budget' : title}
-          isDisabled={breakdownTable.isDisabled}
+          filters={breakdownTable.filters}
+          resetFilters={breakdownTable.resetFilters}
         />
       </ConditionalWrapper>
       <Container>

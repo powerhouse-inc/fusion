@@ -14,6 +14,9 @@ interface SectionTitleProps {
   hash?: string;
 }
 
+/**
+ * @deprecated should be used FinancesTitle instead
+ */
 const SectionTitle: React.FC<SectionTitleProps> = ({ title, tooltip, hash }) => {
   const router = useRouter();
   const { isLight } = useThemeContext();

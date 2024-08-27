@@ -34,6 +34,7 @@ const FilterDesktop: React.FC<FilterDesktopProps> = ({ filters, searchFilter, re
               withAll={filter.withAll}
               customOptionsRenderAll={filter.customOptionsRenderAll as CustomSelectProps['customOptionsRenderAll']}
               style={filter.widthStyles}
+              menuProps={{ disableScrollLock: true }}
             />
           );
         }
@@ -46,6 +47,17 @@ const FilterDesktop: React.FC<FilterDesktopProps> = ({ filters, searchFilter, re
                   {option.label}
                 </label>
               ))}
+            </div>
+          );
+        }
+        case 'checkbox': {
+          return (
+            // TODO: implement a checkbox component UI for desktop
+            <div key={filter.id}>
+              <label>
+                <input type="checkbox" checked={filter.selected} />
+                {filter.label}
+              </label>
             </div>
           );
         }
