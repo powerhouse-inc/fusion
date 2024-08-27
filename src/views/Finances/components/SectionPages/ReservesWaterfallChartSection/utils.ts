@@ -35,7 +35,6 @@ export const getArraysWaterfall = (data: number[]) => {
     auxiliaryArray,
   };
 };
-
 export const builderWaterfallSeries = (
   data: number[],
   isMobile: boolean,
@@ -68,7 +67,7 @@ export const builderWaterfallSeries = (
   // Get the colors of each bar
   const helpBarColors = help.map((_, index: number) => {
     if (index === 0 || index === help.length - 1) {
-      return isLight ? '#83A7FF' : '#447AFB';
+      return '#329DFF';
     } else {
       return 'rgba(0,0,0,0)';
     }
@@ -107,9 +106,10 @@ export const builderWaterfallSeries = (
 
         rich: {
           colorful: {
-            color: isLight ? '#83A7FF' : '#447AFB',
-            fontSize: isMobile ? 8 : 12,
-            fontFamily: 'Inter, sans-serif',
+            color: isLight ? '#343839' : '#F4F4F4',
+            fontWeight: 700,
+            fontSize: isMobile ? 10 : 14,
+            fontFamily: 'Open Sans Condensed, sans-serif',
             align: 'center',
           },
           hidden: {

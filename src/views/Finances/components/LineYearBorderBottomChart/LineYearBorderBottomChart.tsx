@@ -14,7 +14,9 @@ const LineYearBorderBottomChart: React.FC<Props> = ({ year }) => (
 export default LineYearBorderBottomChart;
 
 const YearXAxis = styled('div')(({ theme }) => {
-  const border = `1px solid ${theme.palette.mode === 'light' ? '#6EDBD0' : '#1AAB9B'}`;
+  const border = `1px solid ${
+    theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700]
+  }`;
 
   return {
     position: 'absolute',
@@ -33,12 +35,12 @@ const YearXAxis = styled('div')(({ theme }) => {
 const YearText = styled('div')(({ theme }) => ({
   fontSize: 11,
   lineHeight: 'normal',
-  color: theme.palette.mode === 'light' ? '#139D8D' : '#2DC1B1',
+  color: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[800],
   position: 'absolute',
   bottom: -6,
   width: 52,
   left: '50%',
   transform: 'translateX(-50%)',
-  backgroundColor: theme.palette.mode === 'light' ? '#FFFFFF' : '#000000',
+  backgroundColor: theme.palette.isLight ? '#FFFFFF' : theme.palette.colors.charcoal[900],
   textAlign: 'center',
 }));

@@ -590,8 +590,8 @@ export const getMonthlyBarChartLabels = (isMobile: boolean, isWaterfall = false,
   const labels = useShortLabels || isMobile ? shortLabels : fullLabels;
 
   if (isWaterfall) {
-    const startLabel = isMobile ? '' : 'START';
-    const endLabel = isMobile ? '' : 'FINISH';
+    const startLabel = isMobile ? 'S' : 'START';
+    const endLabel = isMobile ? 'F' : 'FINISH';
     return [startLabel, ...labels, endLabel].filter(Boolean);
   }
 
@@ -669,7 +669,10 @@ export const formatterWaterfallChart = (
   if (isMobile) {
     switch (granularity) {
       case 'monthly':
-        return `{start|${value}}`;
+        if (index === 0 || index === 13) {
+          return `{mobileStyle|${value}}`;
+        }
+        return `${value}`;
       case 'quarterly':
         if (index === 0 || index === 5) {
           return '';

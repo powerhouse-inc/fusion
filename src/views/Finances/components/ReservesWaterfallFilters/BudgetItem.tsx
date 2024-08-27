@@ -1,76 +1,55 @@
-import styled from '@emotion/styled';
-import { Container } from '@ses/components/SelectItem/SelectItem';
-import Check from '@ses/components/svg/check';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
+import { styled } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
-import type { SelectItemProps } from '@ses/components/CustomMultiSelect/CustomMultiSelect';
-import type { WithIsLight } from '@ses/core/utils/typesHelpers';
+import type { ReactElement } from 'react';
 
-const BudgetItem: React.FC<SelectItemProps> = ({ checked = false, ...props }) => {
-  const { isLight } = useThemeContext();
+interface Props {
+  label: string | ReactElement;
+  image: string;
+  isActive?: boolean;
+}
 
-  return (
-    <StyledContainer
-      className="no-select"
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        minHeight: 40,
-        padding: 4,
-      }}
-      checked={checked}
-      isLight={isLight}
-      onClick={props.onClick}
-    >
-      {!props.params?.isAll && (
-        <>
-          <ImageContainer>
-            <Image
-              src={props.params?.url || '/assets/img/default-icon-cards-budget.svg'}
-              alt="Budget Icon"
-              fill={true}
-              unoptimized
-            />
-          </ImageContainer>
-        </>
-      )}
-
-      <Title isLight={isLight} checked={checked}>
-        {props.label}
-      </Title>
-      <CheckWrapper>
-        <Check fill={checked ? (isLight ? '#231536' : 'white') : isLight ? '#D1DEE6' : '#231536'} />
-      </CheckWrapper>
-    </StyledContainer>
-  );
-};
+const BudgetItem: React.FC<Props> = ({ image, label, isActive }) => (
+  <Container>
+    <ImageContainer>
+      <Image src={image ?? ''} alt="Budget Icon" fill={true} unoptimized />
+    </ImageContainer>
+    <Title isActive={isActive}>{label}</Title>
+  </Container>
+);
 
 export default BudgetItem;
 
-const CheckWrapper = styled.span({
-  alignSelf: 'center',
-  position: 'absolute',
-  right: 8,
-});
-
-const StyledContainer = styled(Container)<{ isLight: boolean; checked: boolean }>(({ isLight, checked }) => ({
+const Container = styled('div')(() => ({
   gap: 16,
   display: 'flex',
   position: 'relative',
-  '&:hover': {
-    background: isLight ? (checked ? '#EDEFFF' : '#F6F8F9') : checked ? '#231536' : '#25273D',
-  },
+  height: '100%',
 }));
 
-const ImageContainer = styled.div({
+const ImageContainer = styled('div')(({ theme }) => ({
   position: 'relative',
   width: 32,
   height: 32,
-});
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: '#FCFCFC',
+  borderRadius: '50%',
+  overflow: 'hidden',
+  filter: theme.palette.isLight
+    ? 'filter: drop-shadow(1.524px 3.048px 5.333px rgba(25, 144, 255, 0.20))'
+    : 'filter: drop-shadow(2px 4px 7px rgba(26, 171, 155, 0.25))',
+}));
 
-const Title = styled.span<WithIsLight & { checked: boolean }>(({ isLight, checked = false }) => ({
-  color: isLight ? (checked ? '#231536' : '#231536') : '#D2D4EF',
+const Title = styled('div')<{ isActive?: boolean }>(({ theme, isActive }) => ({
+  color: theme.palette.isLight
+    ? isActive
+      ? theme.palette.colors.gray[900]
+      : theme.palette.colors.gray[600]
+    : isActive
+    ? theme.palette.colors.gray[50]
+    : theme.palette.colors.charcoal[800],
   fontFamily: 'Inter, sans-serif',
   fontSize: 14,
   fontStyle: 'normal',

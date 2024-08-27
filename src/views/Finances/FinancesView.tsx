@@ -172,14 +172,10 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
             series={reserveChart.series}
             selectedGranularity={reserveChart.selectedGranularity}
             year={year}
-            activeItems={reserveChart.activeElements}
-            handleSelectChangeItem={reserveChart.handleSelectChange}
-            items={reserveChart.items}
-            popupContainerHeight={reserveChart.popupContainerHeight}
-            handleGranularityChange={reserveChart.handleGranularityChange}
-            handleResetFilter={reserveChart.handleResetFilter}
             isLoading={reserveChart.isLoading}
-            areDefaultFiltersSelected={reserveChart.areDefaultFiltersSelected}
+            canReset={reserveChart.canReset}
+            onReset={reserveChart.onReset}
+            filters={reserveChart.filters}
           />
         </ContainerReservesWaterfallChart>
         <ContainerLastReport>

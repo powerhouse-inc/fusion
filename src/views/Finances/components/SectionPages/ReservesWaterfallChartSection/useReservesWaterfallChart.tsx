@@ -1,13 +1,15 @@
-import { useMediaQuery } from '@mui/material';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
+import { useMediaQuery, useTheme } from '@mui/material';
 import lightTheme from '@ses/styles/theme/themes';
 import sortBy from 'lodash/sortBy';
 import { useEffect, useMemo, useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
+import type { Filter, SelectOption } from '@/components/FiltersBundle/types';
 import { fetchAnalytics } from '@/views/Finances/api/queries';
 
 import type { LegendItemsWaterfall } from '@/views/Finances/utils/types';
 import { formatBudgetName } from '@/views/Finances/utils/utils';
+import BudgetItem from '../../ReservesWaterfallFilters/BudgetItem';
+import CustomAllCategories from '../../ReservesWaterfallFilters/CustomAllCategories';
 import {
   builderWaterfallSeries,
   calculateAccumulatedArray,
@@ -16,12 +18,27 @@ import {
   processDataForWaterfall,
   sumValuesFromMapKeys,
 } from './utils';
-import type { MultiSelectItem } from '@ses/components/CustomMultiSelect/CustomMultiSelect';
+
 import type { AnalyticGranularity } from '@ses/core/models/interfaces/analytic';
 import type { Budget } from '@ses/core/models/interfaces/budget';
 
+const granularityItems = [
+  {
+    label: 'Monthly',
+    value: 'monthly',
+  },
+  {
+    label: 'Quarterly',
+    value: 'quarterly',
+  },
+  {
+    label: 'Annually',
+    value: 'annual',
+  },
+];
 export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], allBudgets: Budget[], year: string) => {
-  const { isLight } = useThemeContext();
+  const theme = useTheme();
+  const isLight = theme.palette.isLight;
   const isMobile = useMediaQuery(lightTheme.breakpoints.down('tablet_768'));
   const isTable = useMediaQuery(lightTheme.breakpoints.between('tablet_768', 'desktop_1024'));
   const [activeElements, setActiveElements] = useState<string[]>([]);
@@ -88,7 +105,6 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
     const series = builderWaterfallSeries(dataReady, isMobile, isTable, isLight);
     const valuesLine = calculateAccumulatedArray(dataReady);
     const linesChart = generateLineSeries(valuesLine, isLight, isMobile);
-
     series.push(...linesChart);
     return series;
   }, [activeElements, isLight, isMobile, isTable, selectedGranularity, summaryValues, totalToStartEachBudget]);
@@ -105,14 +121,15 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
     const combinedElementsFromAnalytics = [...budgets, ...newElements];
 
     return sortBy(combinedElementsFromAnalytics, (subBudget) => subBudget.name).map((budget) => ({
-      id: budget.codePath,
-      content: formatBudgetName(budget.name),
+      label: formatBudgetName(budget.name),
+      value: budget.codePath,
       count: 0,
-      params: {
+      extra: {
         url: budget.image,
       },
-    })) as MultiSelectItem[];
+    }));
   }, [allBudgets, budgets, selectAll]);
+
   // by default 8 items are visible and the others need to be scrolled (7 + 1 for the "Select all" item)
   const itemsCount = Math.min(8, items.length + 1);
   const popupContainerHeight = itemsCount * 40 + (itemsCount - 1) * 4;
@@ -121,19 +138,61 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
   const legendItems: LegendItemsWaterfall[] = [
     {
       title: 'Reserves Balance',
-      color: isLight ? '#83A7FF' : '#447AFB',
+      color: isLight ? theme.palette.colors.blue[700] : theme.palette.colors.blue[600],
     },
     {
       title: 'Outflow',
-      color: isLight ? '#CB3A0D' : '#A83815',
+      color: isLight ? theme.palette.colors.red[700] : theme.palette.colors.red[900],
     },
     {
       title: 'Inflow',
-      color: isLight ? '#2DC1B1' : '#1AAB9B',
+      color: isLight ? theme.palette.colors.green[700] : theme.palette.colors.green[900],
     },
   ];
   // if the default filters are selected then the "Reset filters" button should be disabled
   const areDefaultFiltersSelected = activeElements.length === selectAll.length && selectedGranularity === 'monthly';
+
+  // TODO: Implement the canReset and onReset
+  const canReset = false;
+  const onReset = () => {
+    console.log('not implemented');
+  };
+
+  const filters: Filter[] = [
+    {
+      type: 'select',
+      id: 'categories',
+      label: 'Categories',
+      selected: activeElements,
+      multiple: true,
+      withAll: true,
+      onChange: (value: string | number | (string | number)[]) => {
+        setActiveElements(value as string[]);
+      },
+      options: items,
+      customOptionsRender: (option: SelectOption, isActive: boolean) => (
+        <BudgetItem label={option?.label ?? ''} image={option?.extra?.url ?? ''} isActive={isActive} />
+      ),
+      customOptionsRenderAll: (isActive: boolean) => <CustomAllCategories label="All Categories" isActive={isActive} />,
+    },
+
+    {
+      type: 'select',
+      id: 'Granularity',
+      label: 'Granularity',
+      selected: selectedGranularity,
+      multiple: false,
+      onChange: (value: string | number | (string | number)[]) => {
+        setSelectedGranularity(value as AnalyticGranularity);
+      },
+      options: granularityItems,
+      withAll: false,
+      widthStyles: {
+        width: 'fit-content',
+        menuWidth: 350,
+      },
+    },
+  ];
   return {
     titleChart,
     legendItems,
@@ -147,5 +206,8 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
     handleSelectChange,
     isLoading,
     areDefaultFiltersSelected,
+    canReset,
+    onReset,
+    filters,
   };
 };
