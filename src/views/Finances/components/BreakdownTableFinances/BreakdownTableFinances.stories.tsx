@@ -17,12 +17,6 @@ export default meta;
 
 const args = [
   {
-    // activeItems: [],
-    // selectedValue: 'Quarterly',
-    // breakdownTable: [],
-    // isLoading: false,
-    // headerTable: [],
-    // title: 'Breakdown Table',
     year: '2024',
     filters: [
       {
