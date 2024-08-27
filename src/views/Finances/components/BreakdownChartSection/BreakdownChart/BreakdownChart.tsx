@@ -271,7 +271,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
           }<span style="display:inline-block;margin-left:4px">${getSelectMetricText(selectedMetric)}</span></div>
               <div style="display:flex;flex-direction:${flexDirection};gap:${gap};${wrap}${minMax}">
                 ${filteredParams
-                  .toReversed()
+                  .reverse()
                   .map(
                     (item) =>
                       `<div style="display: flex;align-items:center;gap: 6px;">
