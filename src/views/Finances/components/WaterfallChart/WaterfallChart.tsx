@@ -1,15 +1,13 @@
-import styled from '@emotion/styled';
-
-import { useMediaQuery } from '@mui/material';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
+import { styled, useMediaQuery, useTheme } from '@mui/material';
 import { replaceAllNumberLetOneBeforeDot } from '@ses/core/utils/string';
-import lightTheme from '@ses/styles/theme/themes';
+
 import ReactECharts from 'echarts-for-react';
 import { useEffect, useMemo, useRef } from 'react';
 import { formatterWaterfallChart, getChartAxisLabelByGranularity } from '../../utils/utils';
 import LegendItemChart from '../LegendItemChart/LegendItemChart';
 import LineYearBorderBottomChart from '../LineYearBorderBottomChart/LineYearBorderBottomChart';
 import type { LegendItemsWaterfall, LineWaterfall, WaterfallChartSeriesData } from '../../utils/types';
+import type { Theme } from '@mui/material';
 import type { AnalyticGranularity } from '@ses/core/models/interfaces/analytic';
 import type { EChartsOption } from 'echarts-for-react';
 
@@ -21,27 +19,39 @@ interface Props {
 }
 
 const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, series }) => {
-  const { isLight } = useThemeContext();
+  const theme = useTheme();
   const refWaterfallChart = useRef<EChartsOption | null>(null);
-  const isMobile = useMediaQuery(lightTheme.breakpoints.down('tablet_768'));
-  const upTable = useMediaQuery(lightTheme.breakpoints.up('tablet_768'));
-  const isTablet = useMediaQuery(lightTheme.breakpoints.between('tablet_768', 'desktop_1024'));
-  const isDesktop1024 = useMediaQuery(lightTheme.breakpoints.between('desktop_1024', 'desktop_1280'));
-  const isDesktop1280 = useMediaQuery(lightTheme.breakpoints.between('desktop_1280', 'desktop_1440'));
-  const isDesktop1440 = useMediaQuery(lightTheme.breakpoints.between('desktop_1440', 'desktop_1920'));
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
+  const upTable = useMediaQuery((theme: Theme) => theme.breakpoints.up('tablet_768'));
+  const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
+  const isDesktop1024 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1024', 'desktop_1280'));
+  const isDesktop1280 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1280', 'desktop_1440'));
+  const isDesktop1440 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1440', 'desktop_1920'));
   const showLineYear = isMobile && selectedGranularity === 'monthly';
 
   const xAxisStyles = useMemo(
     () => ({
-      fontFamily: 'Inter, sans-serif',
       textAlign: 'center',
-      fontWeight: 600,
-      fontSize: upTable ? 12 : 9,
+      fontWeight: 700,
+      fontSize: isMobile ? 12 : 14,
       verticalAlign: 'top',
       interval: 0,
       padding: [0, 0, 3, 0],
     }),
-    [upTable]
+    [isMobile]
+  );
+
+  // Start mobile style
+  const startFinishMobile = useMemo(
+    () => ({
+      ...xAxisStyles,
+      color: theme.palette.isLight
+        ? isMobile
+          ? theme.palette.colors.gray[900]
+          : theme.palette.colors.slate[100]
+        : theme.palette.colors.slate[50],
+    }),
+    [xAxisStyles, theme.palette.isLight, theme.palette.colors.gray, theme.palette.colors.slate, isMobile]
   );
 
   const xYearStyles = useMemo(
@@ -55,17 +65,17 @@ const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, s
   const startStyles = useMemo(
     () => ({
       ...xAxisStyles,
-      color: isLight ? (isMobile ? '#231536' : '#434358') : '#B6BCC2',
+      color: theme.palette.isLight ? theme.palette.colors.slate[400] : theme.palette.colors.slate[50],
     }),
-    [xAxisStyles, isLight, isMobile]
+    [xAxisStyles, theme.palette.isLight, theme.palette.colors.slate]
   );
 
   const startYearStyles = useMemo(
     () => ({
       ...xYearStyles,
-      color: isLight ? (isMobile ? '#231536' : '#434358') : '#B6BCC2',
+      color: theme.palette.isLight ? theme.palette.colors.slate[400] : theme.palette.colors.slate[50],
     }),
-    [xYearStyles, isLight, isMobile]
+    [xYearStyles, theme.palette.isLight, theme.palette.colors.slate]
   );
 
   const options: EChartsOption = useMemo(
@@ -94,12 +104,11 @@ const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, s
         },
         axisLabel: {
           margin: isMobile ? 16 : isTablet ? 24 : isDesktop1024 ? 24 : isDesktop1280 ? 24 : isDesktop1440 ? 26 : 24,
-          color: isLight ? '#B6BCC2' : '#546978',
+          color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[300],
           align: 'center',
-          fontFamily: 'Inter,san-serif',
-          fontWeight: isMobile ? 400 : 600,
-          fontSize: upTable ? 12 : 9,
-          height: upTable ? 15 : 11,
+          fontFamily: 'Open Sans Condensed, sans-serif',
+          fontWeight: 700,
+          fontSize: isMobile ? 12 : 14,
           interval: 0,
           formatter: function (value: string, index: number) {
             const formatted = formatterWaterfallChart(selectedGranularity, isMobile, year, value, index);
@@ -108,8 +117,9 @@ const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, s
           rich: {
             month: xAxisStyles,
             year: xYearStyles,
-            start: startStyles,
+            mobileStyle: startFinishMobile,
             startYear: startYearStyles,
+            start: startStyles,
           },
         },
       },
@@ -133,23 +143,22 @@ const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, s
             }
             return replaceAllNumberLetOneBeforeDot(value);
           },
-          color: isLight ? '#231536' : '#D2D4EF',
-          fontSize: isMobile ? 10 : isTablet ? 14 : 14,
-          height: upTable ? 15 : 12,
-          fontFamily: 'Inter, sans-serif',
+          color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[100],
+          fontSize: isMobile ? 12 : 14,
+          fontFamily: 'Open Sans Condensed, sans-serif',
           fontWeight: upTable ? 600 : 400,
         },
         verticalAlign: 'middle',
         height: upTable ? 15 : 12,
 
         type: 'value',
-        zlevel: 1,
+        zlevel: -1,
         axisLine: {
           show: false,
         },
         splitLine: {
           lineStyle: {
-            color: isLight ? '#31424E' : '#D8E0E3',
+            color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.charcoal[800],
             width: 0.25,
           },
         },
@@ -160,13 +169,17 @@ const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, s
       isDesktop1024,
       isDesktop1280,
       isDesktop1440,
-      isLight,
       isMobile,
       isTablet,
       selectedGranularity,
       series,
+      startFinishMobile,
       startStyles,
       startYearStyles,
+      theme.palette.colors.charcoal,
+      theme.palette.colors.gray,
+      theme.palette.colors.slate,
+      theme.palette.isLight,
       upTable,
       xAxisStyles,
       xYearStyles,
@@ -205,11 +218,11 @@ const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, s
 
 export default WaterfallChart;
 
-const Wrapper = styled.div({
+const Wrapper = styled('div')({
   width: '100%',
 });
 
-const ChartContainer = styled.div({
+const ChartContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -220,31 +233,31 @@ const ChartContainer = styled.div({
   marginLeft: 'auto',
   marginRight: 'auto',
 
-  [lightTheme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     height: 456,
     maxWidth: 700,
     width: 7040,
   },
 
-  [lightTheme.breakpoints.up('desktop_1024')]: {
+  [theme.breakpoints.up('desktop_1024')]: {
     maxWidth: 954,
     width: 954,
     height: 508,
   },
 
-  [lightTheme.breakpoints.up('desktop_1280')]: {
+  [theme.breakpoints.up('desktop_1280')]: {
     maxWidth: 1185,
     width: 1185,
     height: 508,
   },
-  [lightTheme.breakpoints.up('desktop_1440')]: {
+  [theme.breakpoints.up('desktop_1440')]: {
     maxWidth: 1192,
     height: 508,
     width: 1192,
   },
-});
+}));
 
-const LegendContainer = styled.div({
+const LegendContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
@@ -252,7 +265,7 @@ const LegendContainer = styled.div({
   paddingLeft: 2,
   gap: 32,
   marginTop: -2,
-  [lightTheme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -260,18 +273,18 @@ const LegendContainer = styled.div({
     paddingLeft: 0,
     marginTop: 42,
   },
-  [lightTheme.breakpoints.up('desktop_1024')]: {
+  [theme.breakpoints.up('desktop_1024')]: {
     marginBottom: 0,
     marginTop: -12,
   },
-  [lightTheme.breakpoints.up('desktop_1280')]: {
+  [theme.breakpoints.up('desktop_1280')]: {
     gap: 64,
     marginTop: -12,
     marginLeft: -6,
   },
-  [lightTheme.breakpoints.up('desktop_1440')]: {
+  [theme.breakpoints.up('desktop_1440')]: {
     gap: 64,
     marginTop: -12,
     marginLeft: -6,
   },
-});
+}));

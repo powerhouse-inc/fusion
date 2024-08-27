@@ -42,6 +42,7 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
     expenseReportSection,
     reserveChart,
     code,
+    isMobile,
   } = useFinancesView(budgets, allBudgets, initialYear);
 
   return (
@@ -167,19 +168,15 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
         />
         <ContainerReservesWaterfallChart>
           <ReservesWaterfallChartSection
-            title={`${levelNumber === 1 ? 'MakerDAO Finances' : title} Reserves`}
+            title={`${levelNumber === 1 ? (isMobile ? 'MakerDAO F.' : 'MakerDAO Finances') : title} Reserves`}
             legends={reserveChart.legendItems}
             series={reserveChart.series}
             selectedGranularity={reserveChart.selectedGranularity}
             year={year}
-            activeItems={reserveChart.activeElements}
-            handleSelectChangeItem={reserveChart.handleSelectChange}
-            items={reserveChart.items}
-            popupContainerHeight={reserveChart.popupContainerHeight}
-            handleGranularityChange={reserveChart.handleGranularityChange}
-            handleResetFilter={reserveChart.handleResetFilter}
             isLoading={reserveChart.isLoading}
-            areDefaultFiltersSelected={reserveChart.areDefaultFiltersSelected}
+            canReset={reserveChart.canReset}
+            onReset={reserveChart.onReset}
+            filters={reserveChart.filters}
           />
         </ContainerReservesWaterfallChart>
         <ContainerLastReport>

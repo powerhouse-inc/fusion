@@ -1,5 +1,5 @@
+import { useMediaQuery, useTheme } from '@mui/material';
 import { siteRoutes } from '@ses/config/routes';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
 import { percentageRespectTo } from '@ses/core/utils/math';
 import { useRouter } from 'next/router';
 import { useState, useMemo } from 'react';
@@ -20,11 +20,14 @@ import {
   existingColorsDark,
   formatBudgetName,
 } from './utils/utils';
+import type { Theme } from '@mui/material';
 import type { BreakdownBudgetAnalytic } from '@ses/core/models/interfaces/analytic';
 import type { Budget } from '@ses/core/models/interfaces/budget';
 
 export const useFinancesView = (budgets: Budget[], allBudgets: Budget[], initialYear: string) => {
-  const { isLight } = useThemeContext();
+  const theme = useTheme();
+  const isLight = theme.palette.isLight;
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('desktop_1024'));
   const router = useRouter();
   const [year, setYear] = useState(initialYear);
 
@@ -152,5 +155,6 @@ export const useFinancesView = (budgets: Budget[], allBudgets: Budget[], initial
     expenseReportSection: expenseTrendFinances,
     reserveChart,
     code,
+    isMobile,
   };
 };

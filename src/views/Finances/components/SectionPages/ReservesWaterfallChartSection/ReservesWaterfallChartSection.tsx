@@ -1,11 +1,12 @@
-import styled from '@emotion/styled';
-import lightTheme from '@ses/styles/theme/themes';
+import { styled } from '@mui/material';
 import React from 'react';
+import Card from '@/components/Card/Card';
+import FiltersBundle from '@/components/FiltersBundle/FiltersBundle';
+import type { Filter } from '@/components/FiltersBundle/types';
 import type { LegendItemsWaterfall, LineWaterfall, WaterfallChartSeriesData } from '@/views/Finances/utils/types';
-import ReservesWaterfallFilters from '../../ReservesWaterfallFilters/ReservesWaterfallFilters';
+import FinancesTitle from '../../FinancesTitle/FinancesTitle';
 import WaterfallChart from '../../WaterfallChart/WaterfallChart';
 import WaterfallSkeleton from '../../WaterfallChart/WaterfallSkeleton';
-import type { MultiSelectItem } from '@ses/components/CustomMultiSelect/CustomMultiSelect';
 import type { AnalyticGranularity } from '@ses/core/models/interfaces/analytic';
 
 interface Props {
@@ -14,14 +15,10 @@ interface Props {
   year: string;
   selectedGranularity: AnalyticGranularity;
   series: (WaterfallChartSeriesData | LineWaterfall)[];
-  activeItems: string[];
-  handleSelectChangeItem: (value: string[]) => void;
-  popupContainerHeight: number;
-  items: MultiSelectItem[];
-  handleGranularityChange: (value: AnalyticGranularity) => void;
-  handleResetFilter: () => void;
   isLoading: boolean;
-  areDefaultFiltersSelected: boolean;
+  filters: Filter[];
+  canReset: boolean;
+  onReset: () => void;
 }
 
 const ReservesWaterfallChartSection: React.FC<Props> = ({
@@ -30,28 +27,41 @@ const ReservesWaterfallChartSection: React.FC<Props> = ({
   selectedGranularity,
   series,
   year,
-  activeItems,
-  handleSelectChangeItem,
-  items,
-  popupContainerHeight,
-  handleGranularityChange,
-  handleResetFilter,
   isLoading,
-  areDefaultFiltersSelected,
+  filters,
+  canReset,
+  onReset,
 }) => (
-  <Container>
+  <Section>
     <ContainerTitleFilter>
-      <ReservesWaterfallFilters
+      <FinancesTitle
+        year={year}
         title={title}
-        activeItems={activeItems}
-        handleSelectChangeItem={handleSelectChangeItem}
-        handleGranularityChange={handleGranularityChange}
-        handleResetFilter={handleResetFilter}
-        selectedGranularity={selectedGranularity}
-        items={items}
-        popupContainerHeight={popupContainerHeight}
-        areDefaultFiltersSelected={areDefaultFiltersSelected}
+        tooltip={
+          <TooltipContent>
+            <p>Monitor the dynamics of Sky's reserves with precision using this interactive financial chart.</p>
+            <p>
+              It displays detailed inflows, outflows, and net balances, providing a clear picture of fiscal health.
+              Customize the analysis by filtering specific data points and adjusting the timeline to suit your needs.{' '}
+            </p>
+            <p>
+              Utilize this tool to identify trends in reserve movements, evaluate the sustainability of reserves, and
+              guide strategic financial planning.
+            </p>
+          </TooltipContent>
+        }
       />
+      <FilterContainer>
+        <FiltersBundle
+          asPopover={['desktop']}
+          filters={filters}
+          resetFilters={{
+            canReset,
+            onReset,
+          }}
+          snapPoints={[490, 400, 250, 0]}
+        />
+      </FilterContainer>
     </ContainerTitleFilter>
     <ContainerChart>
       {isLoading ? (
@@ -60,28 +70,64 @@ const ReservesWaterfallChartSection: React.FC<Props> = ({
         <WaterfallChart legends={legends} year={year} selectedGranularity={selectedGranularity} series={series} />
       )}
     </ContainerChart>
-  </Container>
+  </Section>
 );
 
 export default ReservesWaterfallChartSection;
 
-const Container = styled.div({
+const ContainerTitleFilter = styled('div')(() => ({
   display: 'flex',
-  flexDirection: 'column',
-  gap: 32,
-});
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  justifyContent: 'space-between',
+  alignItems: 'flex-start',
+}));
 
-const ContainerTitleFilter = styled.div({
+const ContainerChart = styled('div')({});
+
+const Section = styled(Card)(({ theme }) => ({
+  marginTop: 40,
+  width: '100%',
+  padding: '8px 8px 16px',
+  gap: 16,
+
+  [theme.breakpoints.up('tablet_768')]: {
+    padding: 16,
+    gap: 24,
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
+    padding: 24,
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    marginTop: 64,
+  },
+}));
+
+const TooltipContent = styled('div')({
   display: 'flex',
   flexDirection: 'column',
-  gap: 22,
-  [lightTheme.breakpoints.up('tablet_768')]: {
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    gap: 'revert',
+  gap: 8,
+
+  p: {
+    margin: 0,
   },
 });
 
-const ContainerChart = styled.div({});
+const FilterContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'flex-end',
+  marginBottom: 22,
+  [theme.breakpoints.up('tablet_768')]: {
+    marginBottom: 20,
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
+    marginBottom: 26,
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    marginBottom: 22,
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    marginBottom: 22,
+  },
+}));
