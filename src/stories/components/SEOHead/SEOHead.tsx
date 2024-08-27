@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import React, { useMemo } from 'react';
+import { toAbsoluteURL } from '@/core/utils/urls';
 import { useThemeContext } from '../../../core/context/ThemeContext';
 
 interface ImageType {
@@ -23,9 +24,13 @@ export const SEOHead = ({
   title,
   description,
   favicon,
-  image,
-  twitterImage,
-  twitterCard,
+  image = {
+    src: toAbsoluteURL('/assets/img/social-1200x628.png'),
+    width: 1200,
+    height: 628,
+  },
+  twitterImage = toAbsoluteURL('/assets/img/social-1200x628.png'),
+  twitterCard = 'summary_large_image',
   canonicalURL,
   children,
 }: SEOProps) => {
@@ -66,7 +71,7 @@ export const SEOHead = ({
       <meta property="og:title" key="og:title" content={title} />
       <meta property="og:description" key="og:description" content={description} />
       <meta property="og:type" content="website" />
-      <meta property="og:site_name" key="og:site_name" content="MakerDAO Ecosystem Performance Dashboard" />
+      <meta property="og:site_name" key="og:site_name" content="Sky Fusion Dashboard" />
       {image &&
         (typeof image === 'string' ? (
           <meta property="og:image" key="og:image" content={image} />
@@ -80,9 +85,9 @@ export const SEOHead = ({
 
       {/* Twitter card */}
       <meta name="twitter:title" key="twitter:title" content={title} />
-      <meta name="twitter:card" key="twitter:card" content={twitterCard || 'summary_large_image'} />
+      <meta name="twitter:card" key="twitter:card" content={twitterCard} />
       <meta name="twitter:description" key="twitter:description" content={description} />
-      <meta name="twitter:site" key="twitter:site" content="@MakerDAO" />
+      <meta name="twitter:site" key="twitter:site" content="@SkyEcosystem" />
       {twitterImage ? (
         <meta name="twitter:image" key="twitter:image" content={twitterImage} />
       ) : (
@@ -97,7 +102,7 @@ export const SEOHead = ({
       <link rel="apple-touch-icon" sizes="1024x1024" href="/icons/icon-1024.png" />
       <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512.png" />
       <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180.png" />
-      <link rel="apple-touch-icon" sizes="120x120" href="/icons/icon-120.png" />
+      <link rel="apple-touch-icon" sizes="120x120" href="/icons/icon-64.png" />
 
       {children}
       {canonicalURL && <link rel="canonical" href={canonicalURL} />}
