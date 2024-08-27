@@ -75,17 +75,12 @@ const ReservesWaterfallChartSection: React.FC<Props> = ({
 
 export default ReservesWaterfallChartSection;
 
-const ContainerTitleFilter = styled('div')(({ theme }) => ({
+const ContainerTitleFilter = styled('div')(() => ({
   display: 'flex',
-  flexDirection: 'column',
-  gap: 22,
-  [theme.breakpoints.up('tablet_768')]: {
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    gap: 'revert',
-  },
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  justifyContent: 'space-between',
+  alignItems: 'flex-start',
 }));
 
 const ContainerChart = styled('div')({});
@@ -93,11 +88,12 @@ const ContainerChart = styled('div')({});
 const Section = styled(Card)(({ theme }) => ({
   marginTop: 40,
   width: '100%',
-
   padding: '8px 8px 16px',
+  gap: 16,
 
   [theme.breakpoints.up('tablet_768')]: {
     padding: 16,
+    gap: 24,
   },
   [theme.breakpoints.up('desktop_1024')]: {
     padding: 24,
