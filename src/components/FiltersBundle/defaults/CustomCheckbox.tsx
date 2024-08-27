@@ -59,7 +59,7 @@ const CustomCheckbox: FC<CustomCheckboxProps> = ({ filter }) => {
                     checked={isActive}
                     value={option.value}
                     name={`${filter.id}-radio`}
-                    inputProps={{ 'aria-label': option.label as string }}
+                    inputProps={{ 'aria-label': typeof option.label === 'string' ? option.label : '' }}
                     disableRipple
                     size="small"
                   />

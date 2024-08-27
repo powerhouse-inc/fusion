@@ -5,7 +5,8 @@ import SingleItemSelect from '@ses/components/SingleItemSelect/SingleItemSelect'
 import { BudgetStatus } from '@ses/core/models/interfaces/types';
 import { getExpenseReportStatusColor } from '@ses/core/utils/colors';
 import { useMemo } from 'react';
-// import FiltersBundle from '@/components/FiltersBundle/FiltersBundle';
+import SortsBundle from '@/components/SortsBundle/SortsBundle';
+import type { Sort } from '@/components/SortsBundle/types';
 import type { Theme } from '@mui/material';
 import type { MultiSelectItem } from '@ses/components/CustomMultiSelect/CustomMultiSelect';
 import type { SelectItem } from '@ses/components/SingleItemSelect/SingleItemSelect';
@@ -20,6 +21,9 @@ export interface ExpenseReportsFiltersProps {
   statusesItems: MultiSelectItem[];
   handleResetFilter: () => void;
   isDisabled?: boolean;
+  sorts: Sort[];
+  canReset: boolean;
+  onReset: () => void;
 }
 
 const ExpenseReportsFilters: FC<ExpenseReportsFiltersProps> = ({
@@ -30,6 +34,9 @@ const ExpenseReportsFilters: FC<ExpenseReportsFiltersProps> = ({
   statusesItems,
   handleResetFilter,
   isDisabled = true,
+  sorts,
+  canReset,
+  onReset,
 }) => {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
@@ -106,16 +113,14 @@ const ExpenseReportsFilters: FC<ExpenseReportsFiltersProps> = ({
         </>
       )}
       {(isMobile || isTablet) && (
-        <div>Sort</div>
-        /* <FiltersBundle
-          asPopover={['desktop']}
-          filters={filters}
-          resetFilters={{
+        <SortsBundle
+          sorts={sorts}
+          resetSorts={{
             canReset,
             onReset,
           }}
-          snapPoints={[490, 400, 250, 0]}
-        /> */
+          snapPoints={[350, 280, 180, 0]}
+        />
       )}
     </FilterContainer>
   );
@@ -150,8 +155,10 @@ const ExpenseReportStatusStyled = styled('div')<{ variantColorSet: { [key: strin
 const FilterContainer = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'flex-end',
+  alignItems: 'center',
   gap: 16,
   marginLeft: 'auto',
+  marginRight: 8,
   zIndex: 5,
 }));
 

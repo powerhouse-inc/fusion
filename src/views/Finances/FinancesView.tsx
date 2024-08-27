@@ -200,6 +200,9 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
             expenseReportResponse={expenseReportSection.expenseReportResponse}
             isDisabled={expenseReportSection.isDisabled}
             hasExpenseReport={expenseReportSection.hasExpenseReports}
+            sorts={expenseReportSection.sorts}
+            canReset={expenseReportSection.canReset}
+            onReset={expenseReportSection.onReset}
           />
         </ContainerLastReport>
       </Container>
