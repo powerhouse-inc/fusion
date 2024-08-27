@@ -72,7 +72,7 @@ const ExpenseMetricsFinances: FC<Props> = ({
             canReset,
             onReset,
           }}
-          snapPoints={[490, 400, 250, 0]}
+          snapPoints={[450, 390, 180, 0]}
         />
       </FilterContainer>
     </Header>

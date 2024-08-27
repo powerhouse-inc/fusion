@@ -119,6 +119,7 @@ const DivWithRadioOption = styled('div')<{ isActive: boolean }>(({ theme, isActi
 const OptionContent = styled('div')(() => ({
   display: 'flex',
   gap: 8,
+  flex: '1 0 0',
 }));
 
 const CumulativeOptionIcon = styled('div')(({ theme }) => ({
@@ -160,7 +161,7 @@ const OptionDescription = styled('span')(({ theme }) => ({
   fontSize: 12,
   lineHeight: '18px',
   display: '-webkit-box',
-  WebkitLineClamp: 2,
+  WebkitLineClamp: 3,
   WebkitBoxOrient: 'vertical',
   overflow: 'hidden',
   textOverflow: 'ellipsis',

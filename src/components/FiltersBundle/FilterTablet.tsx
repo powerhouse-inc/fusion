@@ -106,7 +106,10 @@ const StyledMenuProps = (theme: Theme) => ({
       boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
       paddingBottom: '16px',
       '&.MuiPaper-elevation.MuiPaper-rounded': {
-        borderRadius: '12px',
+        borderRadius: '12px !important',
+      },
+      [theme.breakpoints.up('desktop_1024')]: {
+        minWidth: 379,
       },
     },
   },
