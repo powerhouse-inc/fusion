@@ -77,6 +77,10 @@ const HeaderTop = styled('div')(({ theme }) => ({
   padding: '8px 16px',
   background: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
 
+  '& a': {
+    borderColor: theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.charcoal[700],
+  },
+
   [theme.breakpoints.up('tablet_768')]: {
     flexDirection: 'row',
     alignItems: 'center',
