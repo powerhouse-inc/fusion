@@ -17,16 +17,44 @@ export default meta;
 
 const args = [
   {
-    metrics: [],
-    activeItems: [],
-    handleSelectChange: () => null,
-    handleResetFilter: () => null,
-    periodSelectOptions: ['Monthly', 'Quarterly', 'Annualy'],
-    handleChange: () => null,
-    onOpen: () => null,
-    onClose: () => null,
-    selectedValue: 'Quarterly',
-    isOpen: false,
+    year: '2024',
+    filters: [
+      {
+        id: '1',
+        type: 'select',
+        options: ['Budget', 'Forecast', 'Net Protocol Outflow', 'Net Expenses On-Chain', 'Actuals'].map((filter) => ({
+          label: filter,
+          value: filter,
+        })),
+        label: 'Metrics',
+        selected: ['Budget'],
+        multiple: true,
+        onChange: () => null,
+        widthStyles: {
+          width: 140,
+          menuWidth: 220,
+        },
+      },
+      {
+        id: '2',
+        type: 'select',
+        options: ['Monthly', 'Quarterly', 'Annualy'].map((filter) => ({
+          label: filter,
+          value: filter,
+        })),
+        label: 'Period',
+        selected: 'Monthly',
+        onChange: () => null,
+        widthStyles: {
+          width: 140,
+          menuWidth: 220,
+        },
+      },
+    ],
+    resetFilters: {
+      canReset: false,
+      onReset: () => null,
+    },
   },
 ];
 const [[LightMode, DarkMode]] = createThemeModeVariants(BreakdownTableFinances, args);

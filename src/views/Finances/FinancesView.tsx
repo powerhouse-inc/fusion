@@ -42,6 +42,7 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
     expenseReportSection,
     reserveChart,
     code,
+    isMobile,
   } = useFinancesView(budgets, allBudgets, initialYear);
 
   return (
@@ -113,10 +114,6 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
             year={year}
             selectedMetric={breakdownChartSectionData.selectedMetric}
             selectedGranularity={breakdownChartSectionData.selectedGranularity}
-            onMetricChange={breakdownChartSectionData.handleMetricChange}
-            onGranularityChange={breakdownChartSectionData.handleGranularityChange}
-            isDisabled={breakdownChartSectionData.isDisabled}
-            handleResetFilter={breakdownChartSectionData.handleResetFilterBreakDownChart}
             series={breakdownChartSectionData.series}
             handleToggleSeries={breakdownChartSectionData.handleToggleSeries}
             refBreakDownChart={breakdownChartSectionData.refBreakDownChart}
@@ -133,24 +130,15 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
 
       <ConditionalWrapper period={breakdownTable.periodFilter}>
         <BreakdownTable
-          handleResetMetrics={breakdownTable.defaultMetricsWithAllSelected}
           activeItems={breakdownTable.activeMetrics}
-          handleChange={breakdownTable.handlePeriodChange}
-          handleResetFilter={breakdownTable.handleResetMetrics}
-          handleSelectChange={breakdownTable.handleSelectChangeMetrics}
-          metrics={breakdownTable.selectMetrics}
-          periodSelectOptions={breakdownTable.periodSelectOptions}
           selectedValue={breakdownTable.periodFilter}
           year={year}
-          maxItems={breakdownTable.maxItems}
-          minItems={breakdownTable.minItems}
-          allowSelectAll={breakdownTable.allowSelectAll}
-          popupContainerHeight={breakdownTable.popupContainerHeight}
           breakdownTable={breakdownTable.tableBody ?? []}
           isLoading={breakdownTable.isLoading}
           headerTable={breakdownTable.tableHeader ?? []}
           title={levelNumber === 1 ? 'MakerDAO Budget' : title}
-          isDisabled={breakdownTable.isDisabled}
+          filters={breakdownTable.filters}
+          resetFilters={breakdownTable.resetFilters}
         />
       </ConditionalWrapper>
       <Container>
@@ -171,19 +159,15 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
         />
         <ContainerReservesWaterfallChart>
           <ReservesWaterfallChartSection
-            title={`${levelNumber === 1 ? 'MakerDAO Finances' : title} Reserves`}
+            title={`${levelNumber === 1 ? (isMobile ? 'MakerDAO F.' : 'MakerDAO Finances') : title} Reserves`}
             legends={reserveChart.legendItems}
             series={reserveChart.series}
             selectedGranularity={reserveChart.selectedGranularity}
             year={year}
-            activeItems={reserveChart.activeElements}
-            handleSelectChangeItem={reserveChart.handleSelectChange}
-            items={reserveChart.items}
-            popupContainerHeight={reserveChart.popupContainerHeight}
-            handleGranularityChange={reserveChart.handleGranularityChange}
-            handleResetFilter={reserveChart.handleResetFilter}
             isLoading={reserveChart.isLoading}
-            areDefaultFiltersSelected={reserveChart.areDefaultFiltersSelected}
+            canReset={reserveChart.canReset}
+            onReset={reserveChart.onReset}
+            filters={reserveChart.filters}
           />
         </ContainerReservesWaterfallChart>
         <ContainerLastReport>

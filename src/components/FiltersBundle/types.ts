@@ -2,7 +2,6 @@ import type { Theme } from '@mui/material';
 import type { breakpoints } from '@ses/styles/theme/themes';
 import type { CSSProperties, MutableRefObject, ReactElement, ReactNode } from 'react';
 
-export type Breakpoint = 'mobile' | 'tablet' | 'desktop';
 export type FilterType = 'select' | 'radio' | 'checkbox'; // filter type identifier
 
 export interface GenericFilter {
@@ -86,7 +85,7 @@ export interface FiltersBundleOptions {
   searchFilter?: SearchFilter; // default undefined (no search)
   resetFilters?: ResetFilter; // default undefined (no reset button)
   filters: Filter[];
-  order?: Partial<Record<Breakpoint, string[]>>;
+  order?: Partial<Record<keyof typeof breakpoints, string[]>>;
   snapPoints?: number[];
   initialSnap?: number; // this is the index of the previous array
   asPopover?: (keyof typeof breakpoints | 'desktop')[];

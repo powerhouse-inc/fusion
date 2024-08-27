@@ -78,10 +78,17 @@ const Name = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('tablet_768')]: {
     fontSize: 14,
     lineHeight: '22px',
+    width: 'fit-content',
+    maxWidth: 212,
+    textAlign: 'start',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
   [theme.breakpoints.up('desktop_1280')]: {
     fontSize: 16,
     lineHeight: '24px',
+    maxWidth: 250,
   },
 }));
 

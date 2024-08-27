@@ -188,14 +188,14 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
       },
     },
   ];
-  //
+
   const canReset = selectedGranularity !== 'monthly' || selectedMetric !== 'Budget';
   const onReset = () => {
     setSelectedMetric('Budget');
     setSelectedGranularity('monthly');
   };
   // Show the toggle and scroll in the legend of the chart
-  const showScrollAndToggle = series.length > 8;
+  const showScrollAndToggle = isMobile ? series.length > 6 : series.length > 8;
 
   const showLegendValue = !(levelNumber > 1);
   return {

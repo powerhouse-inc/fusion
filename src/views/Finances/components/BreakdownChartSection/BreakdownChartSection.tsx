@@ -13,12 +13,8 @@ import type { EChartsOption } from 'echarts-for-react';
 export interface BreakdownChartSectionProps {
   isLoading: boolean;
   selectedMetric: AnalyticMetric;
-  onMetricChange: (value: AnalyticMetric) => void;
   selectedGranularity: AnalyticGranularity;
-  onGranularityChange: (value: AnalyticGranularity) => void;
   year: string;
-  isDisabled?: boolean;
-  handleResetFilter: () => void;
   series: BreakdownChartSeriesData[];
   handleToggleSeries: (series: string) => void;
   refBreakDownChart: React.RefObject<EChartsOption | null>;
@@ -57,7 +53,7 @@ const BreakdownChartSection: React.FC<BreakdownChartSectionProps> = ({
 
       <FilterContainer>
         <FiltersBundle
-          asPopover={['desktop']}
+          asPopover={['tablet_768', 'desktop']}
           filters={filters}
           resetFilters={{
             canReset,

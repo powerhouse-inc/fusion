@@ -55,7 +55,7 @@ const FinancesTitle: React.FC<SectionTitleProps> = ({ title, tooltip, hash, year
             </IconWrapper>
           </SESTooltip>
         </Tooltip>
-        <CopyWrapper href={href}>
+        <CopyWrapper href={href} target="_blank">
           <ArrowLink />
         </CopyWrapper>
       </Container>
