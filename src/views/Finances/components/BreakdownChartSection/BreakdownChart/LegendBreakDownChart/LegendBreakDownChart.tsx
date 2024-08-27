@@ -67,7 +67,7 @@ const LegendBreakDownChart: FC<Props> = ({
       </LegendContainer>
     ) : (
       <SimpleContainer>
-        <SimpleContainerSeries>
+        <SimpleContainerSeries showLessGap={series.length === 7}>
           {series.map((element, index) => (
             <LegendItemBreakDownChart
               index={index}
@@ -215,12 +215,12 @@ const SimpleContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const SimpleContainerSeries = styled('div')(({ theme }) => ({
+const SimpleContainerSeries = styled('div')<{ showLessGap?: boolean }>(({ theme, showLessGap = false }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'flex-start',
-  rowGap: 24,
+  rowGap: showLessGap ? 16 : 24,
   height: '100%',
 
   [theme.breakpoints.up('tablet_768')]: {
