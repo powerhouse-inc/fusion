@@ -188,7 +188,7 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
       },
     },
   ];
-  //
+
   const canReset = selectedGranularity !== 'monthly' || selectedMetric !== 'Budget';
   const onReset = () => {
     setSelectedMetric('Budget');

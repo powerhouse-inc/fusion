@@ -1,8 +1,50 @@
 import { BreakdownBudgetAnalyticBuilder } from '@ses/core/businessLogic/builders/analyticBuilder';
 import { BudgetBuilder } from '@ses/core/businessLogic/builders/budgetBuilder';
 import { createThemeModeVariants } from '@ses/core/utils/storybook/factories';
+import type { AnalyticMetric } from '@/core/models/interfaces/analytic';
+import type { SelectItem } from '@/stories/components/SingleItemSelect/SingleItemSelect';
 import BreakdownChartSection from './BreakdownChartSection';
 import type { Meta } from '@storybook/react';
+
+const metricItems: SelectItem<AnalyticMetric>[] = [
+  {
+    label: 'Budget',
+    value: 'Budget',
+  },
+  {
+    label: 'Forecast',
+    value: 'Forecast',
+  },
+  {
+    label: 'Net Protocol Outflow',
+    value: 'ProtocolNetOutflow',
+    labelWhenSelected: 'Protocol Outflow',
+  },
+  {
+    label: 'Net Expenses On-Chain',
+    value: 'PaymentsOnChain',
+    labelWhenSelected: 'Net On-Chain',
+  },
+  {
+    label: 'Actuals',
+    value: 'Actuals',
+  },
+];
+
+const granularityItems = [
+  {
+    label: 'Monthly',
+    value: 'monthly',
+  },
+  {
+    label: 'Quarterly',
+    value: 'quarterly',
+  },
+  {
+    label: 'Annually',
+    value: 'annual',
+  },
+];
 
 const smallNumbersItems = {
   isLoading: false,
@@ -13,6 +55,36 @@ const smallNumbersItems = {
   onGranularityChange: () => null,
   isDisabled: false,
   handleResetFilter: () => null,
+  filters: [
+    {
+      type: 'select',
+      id: 'Metrics',
+      label: 'Metrics',
+      selected: 'Budget',
+      multiple: false,
+      onChange: () => null,
+      options: metricItems,
+      withAll: false,
+      widthStyles: {
+        width: 'fit-content',
+        menuWidth: 350,
+      },
+    },
+    {
+      type: 'select',
+      id: 'Granularity',
+      label: 'Granularity',
+      selected: 'monthly',
+      multiple: false,
+      onChange: () => null,
+      options: granularityItems,
+      withAll: false,
+      widthStyles: {
+        width: 'fit-content',
+        menuWidth: 350,
+      },
+    },
+  ],
   budgets: [
     new BudgetBuilder()
       .withCode('id')
@@ -396,6 +468,7 @@ const meta: Meta<typeof BreakdownChartSection> = {
   },
 };
 export default meta;
+
 const args = [
   {
     ...smallNumbersItems,
@@ -459,7 +532,8 @@ LightMode.parameters = {
     },
     component: {
       375: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16:12963&m=dev',
+        component:
+          'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16:12963&t=vRPm1L2jptP12l29-4',
         options: {
           componentStyle: {
             width: 343,
@@ -471,7 +545,8 @@ LightMode.parameters = {
         },
       },
       768: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16:10909&m=dev',
+        component:
+          'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16:10909&t=vRPm1L2jptP12l29-4',
         options: {
           componentStyle: {
             width: 704,
@@ -531,7 +606,7 @@ ManyItems.parameters = {
   figma: {
     component: {
       1280: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16:5967&m=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16:1620&m=dev',
         options: {
           componentStyle: {
             width: 1312,
