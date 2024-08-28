@@ -19,6 +19,7 @@ import DiscordIcon from 'public/assets/svg/discord.svg';
 import Ellipsis from 'public/assets/svg/ellipsis.svg';
 import Expand from 'public/assets/svg/expand.svg';
 import ExternalLink from 'public/assets/svg/external_link.svg';
+import Filter from 'public/assets/svg/filter.svg';
 import Fire from 'public/assets/svg/fire.svg';
 import Forum from 'public/assets/svg/forum.svg';
 import FusionArrowCollapse from 'public/assets/svg/fusion_arrow_collapse.svg';
@@ -44,6 +45,7 @@ import RedditIcon from 'public/assets/svg/reddit.svg';
 import RelativeCumulativeFilterOption from 'public/assets/svg/relative_cumulative_filter_option.svg';
 import SkyLogoDesk from 'public/assets/svg/sky-desk.svg';
 import SkyLogoMobile from 'public/assets/svg/sky-mobile.svg';
+import Sort from 'public/assets/svg/sort.svg';
 import ThemeIcon from 'public/assets/svg/theme.svg';
 import ThumbsUp from 'public/assets/svg/thumbs_up.svg';
 import TwitterIcon from 'public/assets/svg/twitter.svg';
@@ -259,5 +261,13 @@ export const iconsPowerHose = [
   {
     Icon: USDSCircle,
     title: 'usds_circle',
+  },
+  {
+    Icon: Filter,
+    title: 'filter',
+  },
+  {
+    Icon: Sort,
+    title: 'sort',
   },
 ];
