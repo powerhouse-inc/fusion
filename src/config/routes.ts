@@ -9,6 +9,7 @@ export const siteRoutes = {
   ecosystemActorReports: (code: string) => `/contributors/ecosystem-actors/${code}/budget-statements`,
   ecosystemActorProjects: (code: string) => `/contributors/ecosystem-actors/${code}/projects`,
   coreUnitsOverview: '/contributors/core-units',
+  // TODO: remove this route as this page was removed
   financesOverview: '/',
   finances: (path?: string) => `/finances${path ? `/${path}` : ''}`,
   coreUnitAbout: (shortCode: string) => `/contributors/core-units/${shortCode}`,
@@ -16,7 +17,7 @@ export const siteRoutes = {
   coreUnitActivityFeed: (shortCode: string) => `/contributors/core-units/${shortCode}/activity-feed`,
   globalActivityFeed: '/activity-feed',
   cookiesPolicy: '/cookies-policy',
-  recognizedDelegateReport: '/contributors/recognized-delegates/finances/reports',
+  recognizedDelegateReport: '/contributors/recognized-delegates/budget-statements',
   recognizedDelegate: '/contributors/recognized-delegates',
   endgame: '/endgame',
   roadmapMilestones: (slug: string) => `/roadmaps/${slug}`,
