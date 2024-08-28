@@ -32,7 +32,7 @@ const CardNavigationFinance: React.FC<Props> = ({ image, title, description, hre
         <Code isCompact={isCompact}>{code}</Code>
       </HeaderContainer>
 
-      <Title oneLineOnly={isCompact}>{title}</Title>
+      <Title isCompact={isCompact}>{title}</Title>
       {!isCompact && <Description>{truncatedDescription}</Description>}
 
       {!isMobile && (
@@ -101,15 +101,14 @@ const ImageWrapper = styled('div')(({ theme }) => ({
   },
 }));
 
-const Title = styled('div')<{ oneLineOnly: boolean }>(({ theme, oneLineOnly }) => ({
+const Title = styled('div')<{ isCompact: boolean }>(({ theme, isCompact }) => ({
   fontSize: 14,
   fontWeight: 600,
   lineHeight: '20px',
   marginTop: 8,
-
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
 
-  ...(oneLineOnly
+  ...(isCompact
     ? {
         overflow: 'hidden',
         whiteSpace: 'nowrap',
@@ -121,6 +120,11 @@ const Title = styled('div')<{ oneLineOnly: boolean }>(({ theme, oneLineOnly }) =
       }
     : {
         marginBottom: 4,
+
+        [theme.breakpoints.up('desktop_1024')]: {
+          fontSize: 16,
+          lineHeight: '24px',
+        },
       }),
 }));
 
