@@ -2,7 +2,6 @@ import { styled } from '@mui/material';
 import { siteRoutes } from '@ses/config/routes';
 import { useHeaderSummary } from '@ses/core/hooks/useHeaderSummary';
 import React from 'react';
-import { toAbsoluteURL } from '../../../core/utils/urls';
 import ActivityTable from '../../components/CUActivityTable/ActivityTable';
 import { CoreUnitSummary } from '../../components/CoreUnitSummary/CoreUnitSummary';
 import { SEOHead } from '../../components/SEOHead/SEOHead';
@@ -25,8 +24,6 @@ const CUActivityFeedContainer: React.FC<CUActivityContainerProps> = ({ coreUnit,
       <SEOHead
         title={`${coreUnit.name} Core Unit | Activity Feed`}
         description={`Learn about the ${coreUnit.name} Core Unit's activity: updates to Core Unit Expense Reports, FTEs, and more.`}
-        image={coreUnit.image || toAbsoluteURL('/assets/img/social-1200x630.png')}
-        twitterCard={coreUnit.image ? 'summary' : 'summary_large_image'}
         canonicalURL={siteRoutes.coreUnitActivityFeed(coreUnit.shortCode)}
       />
       <CoreUnitSummary
