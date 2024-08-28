@@ -92,7 +92,9 @@ const Wrapper = styled('div')<{ hasSmokeLeft: boolean; hasSmokeRight: boolean }>
         left: 0,
         width: 59,
         height: '100%',
-        background: 'linear-gradient(90deg, #FCFCFC 21.24%, rgba(252, 252, 252, 0.00) 100%)',
+        background: theme.palette.isLight
+          ? 'linear-gradient(90deg, #FCFCFC 21.24%, rgba(252, 252, 252, 0.00) 100%)'
+          : 'linear-gradient(90deg, #232832 21.24%, rgba(252, 252, 252, 0.00) 100%)',
       },
     }),
 
@@ -106,7 +108,9 @@ const Wrapper = styled('div')<{ hasSmokeLeft: boolean; hasSmokeRight: boolean }>
         right: 0,
         width: 59,
         height: '100%',
-        background: 'linear-gradient(270deg, #FCFCFC 21.24%, rgba(252, 252, 252, 0.00) 100%)',
+        background: theme.palette.isLight
+          ? 'linear-gradient(270deg, #FCFCFC 21.24%, rgba(252, 252, 252, 0.00) 100%)'
+          : 'linear-gradient(270deg, #232832 21.24%, rgba(252, 252, 252, 0.00) 100%)',
       },
     }),
 
