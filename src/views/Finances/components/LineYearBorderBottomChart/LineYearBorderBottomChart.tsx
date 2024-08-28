@@ -20,7 +20,7 @@ const YearXAxis = styled('div')(({ theme }) => {
 
   return {
     position: 'absolute',
-    bottom: 33,
+    bottom: 40,
     left: 40,
     right: 5,
     height: 11,

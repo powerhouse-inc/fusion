@@ -662,6 +662,7 @@ export const formatterBreakdownChart = (
 export const formatterWaterfallChart = (
   granularity: AnalyticGranularity,
   isMobile: boolean,
+  isTable: boolean,
   year: string,
   value: string,
   index: number
@@ -688,6 +689,30 @@ export const formatterWaterfallChart = (
         return `{start|${value}}`;
     }
   }
+
+  if (isTable) {
+    switch (granularity) {
+      case 'monthly':
+        if (index === 0 || index === 13) {
+          return `{start|${value}}\n{startYear|${index === 13 ? Number(year) + 1 : year}}`;
+        }
+
+        return `${value.slice(0, 1)}’{value|${year.slice(2, 4)}}`;
+      case 'quarterly':
+        if (index === 0 || index === 5) {
+          return '';
+        }
+        return `{month|${value}}\n{year|${year}}`;
+      case 'annual':
+        if (index === 0 || index === 2) {
+          return '';
+        }
+        return `{month|${year}}`;
+      default:
+        return `{start|${value}}`;
+    }
+  }
+
   switch (granularity) {
     case 'monthly':
       if (index === 0 || index === 13) {
