@@ -233,23 +233,11 @@ DarkModeDesk1024.parameters = {};
 
 LightModeDesk.parameters = {
   chromatic: {
-    viewports: [1024, 10280, 1440],
+    viewports: [1280, 1440],
   },
 
   figma: {
     component: {
-      1024: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16:7119&m=dev',
-        options: {
-          componentStyle: {
-            width: 960,
-          },
-          style: {
-            top: 0,
-            left: -116,
-          },
-        },
-      },
       1280: {
         component:
           'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-4540&t=ZAfNaMFDnhe4qiqB-4',
