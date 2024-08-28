@@ -63,7 +63,7 @@ const variantsArgs = [
       list: [
         {
           bold: 'Diverse Ecosystem',
-          text: 'Expansion with more SubDAOs, each addressing unique market need and interests.',
+          text: 'Expansion with more SubDAOs, each addressing unique market needs and interests.',
         },
         {
           bold: 'Enhance Connectivity',
@@ -71,7 +71,7 @@ const variantsArgs = [
         },
         {
           bold: 'Governance Evolution',
-          text: 'SubDAOs gain autonomy, supported by innovative UI adn AI tools.',
+          text: 'SubDAOs gain autonomy, supported by innovative UI and AI tools.',
         },
       ],
     },
