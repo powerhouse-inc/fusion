@@ -1,4 +1,4 @@
-import { styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
 import type { ReactElement } from 'react';
@@ -20,7 +20,7 @@ const BudgetItem: React.FC<Props> = ({ image, label, isActive }) => (
 
 export default BudgetItem;
 
-const Container = styled('div')(() => ({
+const Container = styled(Box)(() => ({
   gap: 16,
   display: 'flex',
   position: 'relative',
@@ -49,7 +49,7 @@ const Title = styled('div')<{ isActive?: boolean }>(({ theme, isActive }) => ({
       : theme.palette.colors.gray[600]
     : isActive
     ? theme.palette.colors.gray[50]
-    : theme.palette.colors.charcoal[800],
+    : theme.palette.colors.gray[50],
   fontFamily: 'Inter, sans-serif',
   fontSize: 14,
   fontStyle: 'normal',
