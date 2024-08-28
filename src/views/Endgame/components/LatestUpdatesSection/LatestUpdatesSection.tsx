@@ -57,7 +57,7 @@ const LatestUpdatesSection: React.FC = () => (
           list: [
             {
               bold: 'Diverse Ecosystem',
-              text: 'Expansion with more SubDAOs, each addressing unique market need and interests.',
+              text: 'Expansion with more SubDAOs, each addressing unique market needs and interests.',
             },
             {
               bold: 'Enhance Connectivity',
@@ -65,7 +65,7 @@ const LatestUpdatesSection: React.FC = () => (
             },
             {
               bold: 'Governance Evolution',
-              text: 'SubDAOs gain autonomy, supported by innovative UI adn AI tools.',
+              text: 'SubDAOs gain autonomy, supported by innovative UI and AI tools.',
             },
           ],
         }}
@@ -82,7 +82,7 @@ const LatestUpdatesSection: React.FC = () => (
         status={EndgameUpdateStatus.TODO}
         description={{
           paragraph:
-            'The transition to a standalone L1 blockchain, hosting core tokenomics and govenance, marks a pivotal point for scalability and integration of real-world assets, DeFi, and corss-blockchain operations.',
+            'The transition to a standalone L1 blockchain, hosting core tokenomics and governance, marks a pivotal point for scalability and integration of real-world assets, DeFi, and cross-blockchain operations.',
           list: [
             {
               bold: 'Introducing NewChain',
@@ -119,7 +119,7 @@ const LatestUpdatesSection: React.FC = () => (
             },
             {
               bold: 'Achievement of Ultimate Vision',
-              text: 'Realization of dynamic, ever-expanding ecosystem with a stable financial foundation.',
+              text: 'Realization of a dynamic, ever-expanding ecosystem with a stable financial foundation.',
             },
             {
               bold: 'Permanent Infrastructure',
