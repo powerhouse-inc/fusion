@@ -29,10 +29,10 @@ const CardNavigationFinance: React.FC<Props> = ({ image, title, description, hre
           {isMobile && <InternalLinkButton href={href} />}
         </ImageContainer>
 
-        <Code>{code}</Code>
+        <Code isCompact={isCompact}>{code}</Code>
       </HeaderContainer>
 
-      <Title oneLineOnly={isCompact}>{title}</Title>
+      <Title isCompact={isCompact}>{title}</Title>
       {!isCompact && <Description>{truncatedDescription}</Description>}
 
       {!isMobile && (
@@ -49,18 +49,14 @@ export default CardNavigationFinance;
 const NavigationCard = styled(Card)<{ isCompact: boolean }>(({ theme, isCompact }) => ({
   flexDirection: 'column',
   width: '100%',
-  padding: '8px 16px 16px',
+  padding: isCompact ? 8 : '8px 16px 16px',
 
   [theme.breakpoints.up('tablet_768')]: {
     flex: 1,
   },
 
-  [theme.breakpoints.up('desktop_1024')]: {
-    padding: isCompact ? '8px 16px 16px' : '8px 24px 16px',
-  },
-
   [theme.breakpoints.up('desktop_1280')]: {
-    padding: isCompact ? '8px 16px 16px' : '8px 32px 16px',
+    padding: '8px 16px 16px',
   },
 }));
 
@@ -105,15 +101,14 @@ const ImageWrapper = styled('div')(({ theme }) => ({
   },
 }));
 
-const Title = styled('div')<{ oneLineOnly: boolean }>(({ theme, oneLineOnly }) => ({
+const Title = styled('div')<{ isCompact: boolean }>(({ theme, isCompact }) => ({
   fontSize: 14,
   fontWeight: 600,
   lineHeight: '20px',
   marginTop: 8,
-
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
 
-  ...(oneLineOnly
+  ...(isCompact
     ? {
         overflow: 'hidden',
         whiteSpace: 'nowrap',
@@ -125,13 +120,18 @@ const Title = styled('div')<{ oneLineOnly: boolean }>(({ theme, oneLineOnly }) =
       }
     : {
         marginBottom: 4,
+
+        [theme.breakpoints.up('desktop_1024')]: {
+          fontSize: 16,
+          lineHeight: '24px',
+        },
       }),
 }));
 
-const Code = styled('div')(({ theme }) => ({
-  fontSize: 16,
+const Code = styled('div')<{ isCompact: boolean }>(({ theme, isCompact }) => ({
+  fontSize: isCompact ? 14 : 16,
   fontWeight: 600,
-  lineHeight: '24px',
+  lineHeight: isCompact ? '22px' : '24px',
   color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.gray[600],
   whiteSpace: 'nowrap',
   overflow: 'hidden',

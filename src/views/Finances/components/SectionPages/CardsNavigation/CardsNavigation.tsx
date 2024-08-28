@@ -62,7 +62,7 @@ const CardsNavigation: React.FC<Props> = ({ cardsNavigationInformation }) => {
   };
 
   return (
-    <ContainerCardsNavigation showSwiper={showSwiper} isCompact={isDeepLevel}>
+    <ContainerCardsNavigation showSwiper={showSwiper} isCompact={isDeepLevel} items={cardsNavigationInformation.length}>
       {showSwiper ? (
         <SwiperWrapper>
           <Swiper
@@ -109,8 +109,8 @@ const CardsNavigation: React.FC<Props> = ({ cardsNavigationInformation }) => {
 
 export default CardsNavigation;
 
-const ContainerCardsNavigation = styled('div')<{ showSwiper: boolean; isCompact: boolean }>(
-  ({ theme, showSwiper, isCompact }) => ({
+const ContainerCardsNavigation = styled('div')<{ showSwiper: boolean; isCompact: boolean; items: number }>(
+  ({ theme, showSwiper, isCompact, items }) => ({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'nowrap',
@@ -123,7 +123,16 @@ const ContainerCardsNavigation = styled('div')<{ showSwiper: boolean; isCompact:
 
     [theme.breakpoints.up('desktop_1280')]: {
       gap: 32,
-      ...(showSwiper && { margin: isCompact ? '0 -22px 0 -16px' : '0 -8px' }),
+      ...(showSwiper
+        ? {
+            margin: isCompact ? '0 -8px 0 -16px' : '0 -8px',
+          }
+        : {
+            '& > div': {
+              minWidth: `calc(100% / ${items} - ${Math.abs(32 / items - 32)}px)`,
+              maxWidth: `calc(100% / ${items} - ${Math.abs(32 / items - 32)}px)`,
+            },
+          }),
     },
   })
 );

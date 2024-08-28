@@ -369,7 +369,7 @@ const Container = styled('div')<{ isCoreThirdLevel: boolean }>(({ theme, isCoreT
   },
 
   [theme.breakpoints.up('desktop_1280')]: {
-    gap: isCoreThirdLevel ? 40 : 64,
+    gap: isCoreThirdLevel ? 40 : 32,
   },
 }));
 
