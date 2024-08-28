@@ -47,6 +47,9 @@ const args = [
     popupContainerHeight: 120,
     isDisabled: true,
     series: builderWaterfallSeries(data, true, false, true),
+    filters: [],
+    canReset: true,
+    onReset: () => null,
   },
   {
     selectedGranularity: 'monthly',
@@ -74,6 +77,9 @@ const args = [
     items: [],
     popupContainerHeight: 120,
     isDisabled: true,
+    filters: [],
+    canReset: true,
+    onReset: () => null,
   },
   {
     selectedGranularity: 'monthly',
@@ -101,6 +107,9 @@ const args = [
     items: [],
     popupContainerHeight: 120,
     isDisabled: true,
+    filters: [],
+    canReset: true,
+    onReset: () => null,
   },
 ];
 
