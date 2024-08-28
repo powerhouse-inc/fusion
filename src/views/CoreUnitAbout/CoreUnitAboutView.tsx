@@ -10,7 +10,6 @@ import { getMarkdownInformation } from '@/core/businessLogic/coreUnitAbout';
 import { getFTEsFromCoreUnit } from '@/core/businessLogic/coreUnits';
 import type { Team } from '@/core/models/interfaces/team';
 import { ResourceType } from '@/core/models/interfaces/types';
-import { toAbsoluteURL } from '@/core/utils/urls';
 import { SEOHead } from '@/stories/components/SEOHead/SEOHead';
 import TeamMember from '@/views/CoreUnitAbout/components/TeamMember/TeamMember';
 import BigButton from './components/Button/BigButton/BigButton';
@@ -50,10 +49,8 @@ const CoreUnitAboutView = ({ code, coreUnits, cuAbout }: Props) => {
   return (
     <ContainerAbout>
       <SEOHead
-        title={`About ${cuAbout.name} Core Unit at MakerDAO`}
-        description={`Learn about the ${cuAbout.name} Core Unit at MakerDAO: their mandate, vision, mission, strategy, and more.`}
-        image={cuAbout.image || toAbsoluteURL('/assets/img/social-1200x630.png')}
-        twitterCard={cuAbout.image ? 'summary' : 'summary_large_image'}
+        title={`Sky Fusion - ${cuAbout.name} Ecosystem Contributor`}
+        description={`Learn about the ${cuAbout.name} Ecosystem Contributor at Sky: their mandate, vision, mission, strategy, and more.`}
         canonicalURL={siteRoutes.coreUnitAbout(code)}
       />
 

@@ -2,7 +2,6 @@ import { styled } from '@mui/material';
 import IconTitleWithCode from '@ses/components/IconTitleWithCode/IconTitleWithCode';
 import { SEOHead } from '@ses/components/SEOHead/SEOHead';
 import { BudgetMetricsModalProvider } from '@ses/core/context/BudgetMetricsModalContext';
-import { toAbsoluteURL } from '@ses/core/utils/urls';
 import React from 'react';
 import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
@@ -48,14 +47,14 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
   return (
     <PageContainer>
       <SEOHead
-        title="MakerDAO | Finances"
-        description="MakerDAO Finances page provides a structured overview of MakerDAO's budgets, from high-level finances to detailed legacy and endgame allocations "
-        image={{
-          src: toAbsoluteURL('/assets/img/social-385x200.png'),
-          width: 385,
-          height: 200,
-        }}
-        twitterImage={toAbsoluteURL('/assets/img/social-1200x630.png')}
+        title="Sky Fusion - Sky Ecosystem Finances"
+        description={
+          levelNumber === 1
+            ? "Learn about Sky Ecosystem's Finances through aggregated views: budget utilization, expenses, operational reserves, and breakdown charts."
+            : `Learn about ${
+                title.toLowerCase().endsWith('budget') ? `${title}'s` : `${title} Budget's`
+              } Finances through aggregated views: from budget utilization, Expenses, operational reserves, and breakdown charts.`
+        }
       />
 
       <BudgetMetricsModalProvider>
