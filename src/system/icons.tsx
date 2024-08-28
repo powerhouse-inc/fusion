@@ -14,6 +14,7 @@ import Clock from 'public/assets/svg/clock.svg';
 import Close from 'public/assets/svg/close.svg';
 import Comments from 'public/assets/svg/comments.svg';
 import DAI from 'public/assets/svg/dai.svg';
+import DAICircle from 'public/assets/svg/dai_circle.svg';
 import DiscordIcon from 'public/assets/svg/discord.svg';
 import Ellipsis from 'public/assets/svg/ellipsis.svg';
 import Expand from 'public/assets/svg/expand.svg';
@@ -46,6 +47,7 @@ import SkyLogoMobile from 'public/assets/svg/sky-mobile.svg';
 import ThemeIcon from 'public/assets/svg/theme.svg';
 import ThumbsUp from 'public/assets/svg/thumbs_up.svg';
 import TwitterIcon from 'public/assets/svg/twitter.svg';
+import USDSCircle from 'public/assets/svg/usds_circle.svg';
 import X from 'public/assets/svg/x.svg';
 import YoutubeIcon from 'public/assets/svg/youtube.svg';
 
@@ -249,5 +251,13 @@ export const iconsPowerHose = [
   {
     Icon: AbsoluteCumulativeFilterOption,
     title: 'absolute_cumulative_filter_option',
+  },
+  {
+    Icon: DAICircle,
+    title: 'dai_circle',
+  },
+  {
+    Icon: USDSCircle,
+    title: 'usds_circle',
   },
 ];
