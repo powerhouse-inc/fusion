@@ -1,4 +1,5 @@
 import { styled } from '@mui/material';
+import { useEffect, useId, useState } from 'react';
 import type { AnalyticMetric } from '@/core/models/interfaces/analytic';
 
 const FILTERS: {
@@ -32,35 +33,89 @@ interface FilterTabsProps {
   onChangeTab: (metric: AnalyticMetric) => void;
 }
 
-const FilterTabs: React.FC<FilterTabsProps> = ({ selectedMetric, onChangeTab }) => (
-  <Wrapper className="no-select">
-    <TabContainer>
-      {FILTERS.map((tab) => (
-        <Tab key={tab.value} onClick={() => onChangeTab(tab.value)} active={tab.value === selectedMetric}>
-          {tab.label}
-        </Tab>
-      ))}
-    </TabContainer>
-  </Wrapper>
-);
+const FilterTabs: React.FC<FilterTabsProps> = ({ selectedMetric, onChangeTab }) => {
+  const id = useId();
+  const [hasSmoke, setHasSmoke] = useState<[boolean, boolean]>([false, false]);
+
+  useEffect(() => {
+    const tab = document.getElementById(id);
+    if (!tab) return;
+
+    const handleScroll = () => {
+      const hasLeft = tab.scrollLeft > 8;
+      const hasRight = tab.scrollWidth - tab.scrollLeft - tab.clientWidth > 8;
+
+      setHasSmoke([hasLeft, hasRight]);
+    };
+
+    tab.onscroll = handleScroll;
+    handleScroll();
+
+    return () => {
+      tab.onscroll = null;
+    };
+  }, [id]);
+
+  return (
+    <Wrapper className="no-select" hasSmokeLeft={hasSmoke[0]} hasSmokeRight={hasSmoke[1]}>
+      <TabContainer id={id}>
+        {FILTERS.map((tab) => (
+          <Tab key={tab.value} onClick={() => onChangeTab(tab.value)} active={tab.value === selectedMetric}>
+            {tab.label}
+          </Tab>
+        ))}
+      </TabContainer>
+    </Wrapper>
+  );
+};
 
 export default FilterTabs;
 
-const Wrapper = styled('div')(({ theme }) => ({
-  background: theme.palette.isLight ? theme.palette.colors.gray[50] : '#232832',
-  overflow: 'hidden',
-  borderRadius: '12px 12px 0px 0px',
-  position: 'relative',
-  maxWidth: '100%',
-  boxShadow: theme.palette.isLight
-    ? '1px 0px 15px 0px rgba(117, 117, 117, 0.15)'
-    : '4px 0px 12.3px 0px rgba(23, 24, 29, 0.30)',
+const Wrapper = styled('div')<{ hasSmokeLeft: boolean; hasSmokeRight: boolean }>(
+  ({ theme, hasSmokeLeft, hasSmokeRight }) => ({
+    background: theme.palette.isLight ? theme.palette.colors.gray[50] : '#232832',
+    overflow: 'hidden',
+    borderRadius: '12px 12px 0px 0px',
+    position: 'relative',
+    maxWidth: '100%',
+    boxShadow: theme.palette.isLight
+      ? '1px 0px 15px 0px rgba(117, 117, 117, 0.15)'
+      : '4px 0px 12.3px 0px rgba(23, 24, 29, 0.30)',
 
-  [theme.breakpoints.up('tablet_768')]: {
-    minWidth: 192,
-    borderRadius: '12px 0px 0px 12px',
-  },
-}));
+    ...(hasSmokeLeft && {
+      '&::before': {
+        pointerEvents: 'none',
+        touchAction: 'none',
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: 59,
+        height: '100%',
+        background: 'linear-gradient(90deg, #FCFCFC 21.24%, rgba(252, 252, 252, 0.00) 100%)',
+      },
+    }),
+
+    ...(hasSmokeRight && {
+      '&::after': {
+        pointerEvents: 'none',
+        touchAction: 'none',
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        width: 59,
+        height: '100%',
+        background: 'linear-gradient(270deg, #FCFCFC 21.24%, rgba(252, 252, 252, 0.00) 100%)',
+      },
+    }),
+
+    [theme.breakpoints.up('tablet_768')]: {
+      minWidth: 192,
+      borderRadius: '12px 0px 0px 12px',
+    },
+  })
+);
 
 const TabContainer = styled('div')(({ theme }) => ({
   display: 'flex',
