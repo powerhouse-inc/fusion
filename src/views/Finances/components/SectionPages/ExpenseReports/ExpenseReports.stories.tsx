@@ -20,18 +20,26 @@ const expenseReportResponse = {
 
 const args = [
   {
+    year: '2024',
     columns: getHeadersExpenseReport(ENUM_FOR_STORIES, 'Actuals', false),
     sortClick: () => null,
     selectedMetric: 'Actuals',
     expenseReportResponse,
     hasExpenseReport: true,
+    sorts: [],
+    canReset: true,
+    onReset: () => null,
   },
   {
+    year: '2023',
     columns: getHeadersExpenseReport(ENUM_FOR_STORIES, 'Actuals', true),
     sortClick: () => null,
     selectedMetric: 'Actuals',
     expenseReportResponse,
     hasExpenseReport: true,
+    sorts: [],
+    canReset: false,
+    onReset: () => null,
   },
 ];
 const [[LightMode, DarkMode], [DeskLightMode1024, DeskLightMode1024Dark]] = createThemeModeVariants(
