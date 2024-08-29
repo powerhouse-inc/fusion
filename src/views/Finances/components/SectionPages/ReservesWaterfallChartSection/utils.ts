@@ -65,6 +65,13 @@ export const builderWaterfallSeries = (
     return element;
   });
 
+  const mobileStyle = {
+    fontSize: 10,
+    fontFamily: 'Open Sans Condensed, sans-serif',
+    fontWeight: 700,
+    position: 'top',
+  };
+
   // Get the colors of each bar
   const helpBarColors = help.map((_, index: number) => {
     if (index === 0 || index === help.length - 1) {
@@ -94,7 +101,7 @@ export const builderWaterfallSeries = (
           if (formatted.value === '0.0') return '';
           if (isMobile) {
             if (params.dataIndex === 0 || params.dataIndex === help.length - 1) {
-              return `{colorful|${formatted.value}${formatted.suffix}}`;
+              return `{colorful|${formatted.value}\n${formatted.suffix}}`;
             }
             return `{hidden|${formatted.value}}`;
           } else {
@@ -107,9 +114,9 @@ export const builderWaterfallSeries = (
 
         rich: {
           colorful: {
-            color: isLight ? '#343839' : '#F4F4F4',
+            color: isLight ? '#343839' : '#D7D8D9',
             fontWeight: 700,
-            fontSize: isMobile ? 10 : 14,
+            fontSize: isMobile ? 10 : isTable ? 12 : 14,
             fontFamily: 'Open Sans Condensed, sans-serif',
             align: 'center',
           },
@@ -131,28 +138,39 @@ export const builderWaterfallSeries = (
         disabled: true,
       },
       itemStyle: {
-        borderRadius: 4,
-        color: isLight ? '#CB3A0D' : '#A83815',
-        shadowOffsetY: -2,
-        shadowColor: isLight ? '#CB3A0D' : '#A83815',
+        borderRadius: isMobile ? 4 : 8,
+        color: isLight ? '#F07B72' : '#EA4335',
       },
       isVisible: true,
       label: {
         show: true,
-        color: isLight ? '#CB3A0D' : '#A83815',
-        fontFamily: 'Inter, sans-serif',
+        color: '#F07B72',
+        fontWeight: 700,
+        fontFamily: 'Open Sans Condensed, sans-serif',
+        fontSize: isMobile ? 10 : isTable ? 12 : 14,
 
-        fontSize: isMobile ? 8 : 12,
         position: 'bottom',
         formatter: (params: EChartsOption) => {
-          const formatted = twoSignificantDigitsHumanization(params.value, true);
+          const { value, suffix } = twoSignificantDigitsHumanization(params.value, true);
 
-          if (formatted.value === '0.0') return '';
+          if (value === '0.0') return '';
           if (isMobile) {
-            const numberWithoutZero = formatted.value.replace('0.', '.');
-            return `${numberWithoutZero}${formatted.suffix}`;
+            const numberWithoutZero = value.replace('0.', '.');
+
+            return `{value|${numberWithoutZero}}\n{suffix|${suffix}}`;
           }
-          return `-${formatted.value}${formatted.suffix}`;
+          return `-${value}${suffix}`;
+        },
+
+        rich: {
+          value: {
+            ...mobileStyle,
+            color: '#F07B72',
+          },
+          suffix: {
+            ...mobileStyle,
+            color: '#F07B72',
+          },
         },
       },
       stack: 'all',
@@ -166,28 +184,43 @@ export const builderWaterfallSeries = (
         disabled: true,
       },
       itemStyle: {
-        shadowOffsetY: -2,
-        shadowColor: isLight ? '#2DC1B1' : '#1AAB9B',
-        borderRadius: 4,
-        color: isLight ? '#2DC1B1' : '#1AAB9B',
+        borderRadius: isMobile ? 4 : 8,
+        color: isLight ? '#4FC86F' : '#34A853',
       },
       isVisible: true,
       label: {
         show: true,
-        color: isLight ? '#2DC1B1' : '#1AAB9B',
-        fontSize: isMobile ? 8 : 12,
-        fontFamily: 'Inter, sans-serif',
+        color: '#4FC86F',
+        fontSize: isMobile ? 10 : isTable ? 12 : 14,
+        fontFamily: 'Open Sans Condensed, sans-serif',
+        fontWeight: 700,
         position: 'top',
         formatter: (params: EChartsOption) => {
-          const formatted = twoSignificantDigitsHumanization(params.value, true);
+          const { value, suffix } = twoSignificantDigitsHumanization(params.value, true);
 
-          if (formatted.value === '0.0') return '';
+          if (value === '0.0') return '';
           if (isMobile) {
-            const numberWithoutZero = formatted.value.replace('0.', '.');
-            return `${numberWithoutZero}${formatted.suffix}`;
+            const numberWithoutZero = value.replace('0.', '.');
+            return `{value|${numberWithoutZero}} \n {suffix|${suffix}}`;
           }
 
-          return `+${formatted.value}${formatted.suffix}`;
+          return `+${value}${suffix}`;
+        },
+        rich: {
+          value: {
+            color: '#4FC86F',
+            fontSize: 10,
+            fontFamily: 'Open Sans Condensed, sans-serif',
+            fontWeight: 700,
+            position: 'top',
+          },
+          suffix: {
+            color: '#4FC86F',
+            fontSize: 10,
+            fontFamily: 'Open Sans Condensed, sans-serif',
+            fontWeight: 700,
+            position: 'top',
+          },
         },
       },
       stack: 'all',

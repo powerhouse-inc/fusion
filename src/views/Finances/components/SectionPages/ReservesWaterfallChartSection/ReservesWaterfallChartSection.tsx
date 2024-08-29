@@ -59,7 +59,7 @@ const ReservesWaterfallChartSection: React.FC<Props> = ({
             canReset,
             onReset,
           }}
-          snapPoints={[490, 400, 250, 0]}
+          snapPoints={[1, 400, 250, 0]}
         />
       </FilterContainer>
     </ContainerTitleFilter>
