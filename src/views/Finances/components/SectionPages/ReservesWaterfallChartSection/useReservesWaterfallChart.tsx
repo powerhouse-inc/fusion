@@ -11,8 +11,6 @@ import BudgetItem from '../../ReservesWaterfallFilters/BudgetItem';
 import CustomAllCategories from '../../ReservesWaterfallFilters/CustomAllCategories';
 import {
   builderWaterfallSeries,
-  calculateAccumulatedArray,
-  generateLineSeries,
   getAnalyticForWaterfall,
   processDataForWaterfall,
   sumValuesFromMapKeys,
@@ -104,9 +102,6 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
     const valuesToShow = sumValuesFromMapKeys(summaryValues, activeElements, selectedGranularity);
     const dataReady = processDataForWaterfall(valuesToShow, activeElements, totalToStartEachBudget);
     const series = builderWaterfallSeries(dataReady, isMobile, isTable, isDesk1024, isLight);
-    const valuesLine = calculateAccumulatedArray(dataReady);
-    const linesChart = generateLineSeries(valuesLine, isLight, isMobile);
-    series.push(...linesChart);
     return series;
   }, [
     activeElements,

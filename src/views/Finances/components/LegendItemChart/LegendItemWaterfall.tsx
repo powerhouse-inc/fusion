@@ -53,9 +53,8 @@ const Title = styled('div')(({ theme }) => ({
   fontStyle: 'normal',
   fontWeight: 600,
   lineHeight: '18px',
-  color: theme.palette.isLight ? theme.palette.colors.slate[900] : theme.palette.colors.gray[50],
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   [theme.breakpoints.up('tablet_768')]: {
-    color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
     fontSize: 14,
     fontWeight: 600,
     lineHeight: '22px',

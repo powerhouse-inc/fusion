@@ -82,10 +82,10 @@ const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, s
   const options: EChartsOption = useMemo(
     () => ({
       grid: {
-        top: isMobile ? 16 : isTablet ? 18 : isDesktop1024 ? 16 : isDesktop1280 ? 18 : 22,
+        top: isMobile ? 16 : isTablet ? 18 : isDesktop1024 ? 16 : isDesktop1280 ? 18 : isDesktop1440 ? 16 : 22,
         left: isMobile ? 40 : isTablet ? 68 : isDesktop1024 ? 70 : isDesktop1280 ? 55 : isDesktop1440 ? 68 : 65,
         right: isMobile ? 0 : isTablet ? 0 : isDesktop1024 ? 0 : isDesktop1280 ? 4 : 30,
-        height: isMobile ? 178 : isTablet ? 220 : isDesktop1024 ? 240 : isDesktop1280 ? 300 : isDesktop1440 ? 380 : 380,
+        height: isMobile ? 178 : isTablet ? 220 : isDesktop1024 ? 240 : isDesktop1280 ? 300 : isDesktop1440 ? 310 : 310,
       },
       xAxis: {
         type: 'category',
@@ -206,7 +206,9 @@ const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, s
             height: '100%',
             width: '100%',
           }}
-          opts={{ renderer: 'svg' }}
+          opts={{
+            renderer: 'svg',
+          }}
         />
         {showLineYear && <LineYearBorderBottomChart year={year} />}
       </ChartContainer>
@@ -225,7 +227,6 @@ const Wrapper = styled('div')({
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-
   alignItems: 'center',
 });
 
@@ -250,7 +251,7 @@ const ChartContainer = styled('div')(({ theme }) => ({
     height: 412,
   },
   [theme.breakpoints.up('desktop_1440')]: {
-    height: 508,
+    height: 440,
     width: '100%',
   },
 }));
@@ -281,7 +282,7 @@ const LegendContainer = styled('div')(({ theme }) => ({
   },
   [theme.breakpoints.up('desktop_1440')]: {
     gap: 64,
-    marginTop: -12,
+    marginTop: -40,
     marginLeft: 2,
   },
 }));
