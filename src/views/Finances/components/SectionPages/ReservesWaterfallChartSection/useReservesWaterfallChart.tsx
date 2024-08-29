@@ -183,6 +183,10 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
         maxHeight: isMobile ? '100%' : 200,
         overflowY: 'auto',
       },
+      itemOptionStyles: {
+        height: 40,
+        alignItems: 'center',
+      },
     },
 
     {
