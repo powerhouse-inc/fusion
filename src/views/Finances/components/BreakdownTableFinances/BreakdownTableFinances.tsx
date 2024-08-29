@@ -19,7 +19,7 @@ const BreakdownTableFinances = ({ year, filters, resetFilters }: Props) => (
     />
 
     <FilterContainer>
-      <FiltersBundle filters={filters} resetFilters={resetFilters} asPopover={[]} />
+      <FiltersBundle filters={filters} resetFilters={resetFilters} asPopover={[]} snapPoints={[450, 250, 0]} />
     </FilterContainer>
   </Container>
 );

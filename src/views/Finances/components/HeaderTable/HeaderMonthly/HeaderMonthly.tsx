@@ -1,12 +1,8 @@
-import styled from '@emotion/styled';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
-import lightTheme from '@ses/styles/theme/themes';
-import React from 'react';
+import { styled } from '@mui/material';
 import type { MetricValues } from '@/views/Finances/utils/types';
 import { filterActiveMetrics } from '@/views/Finances/utils/utils';
 import { orderMetrics } from '../utils';
 import CellMonthly from './CellMonthly';
-import type { WithIsLight } from '@ses/core/utils/typesHelpers';
 
 interface Props {
   title: string;
@@ -18,12 +14,11 @@ export const HeaderMonthly: React.FC<Props> = ({ title, activeMetrics, headerTab
   const keysMetrics = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Total'];
   const metricsActive = filterActiveMetrics(activeMetrics, headerTable);
 
-  const { isLight } = useThemeContext();
   return (
-    <Container isLight={isLight}>
+    <Container>
       <ContainerAnnually>
         <ContainerTitle>
-          <Title isLight={isLight}>{title}</Title>
+          <Title>{title}</Title>
         </ContainerTitle>
         <ContainerYear>
           <ContainerAnnuallyCell>
@@ -33,6 +28,7 @@ export const HeaderMonthly: React.FC<Props> = ({ title, activeMetrics, headerTab
                 title={month}
                 key={month}
                 activeMetrics={orderMetrics(undefined, activeMetrics)}
+                isTotal={month === 'Total'}
               />
             ))}
           </ContainerAnnuallyCell>
@@ -44,35 +40,37 @@ export const HeaderMonthly: React.FC<Props> = ({ title, activeMetrics, headerTab
 
 export default HeaderMonthly;
 
-const Container = styled.div<WithIsLight>(({ isLight }) => ({
+const Container = styled('div')(({ theme }) => ({
   fontFamily: 'Inter, sans-serif',
   display: 'flex',
   flex: 1,
   justifyContent: 'flex-start',
-  borderRadius: 6,
-  backgroundColor: isLight ? '#E5E9EC' : '#405361',
-  boxShadow: isLight ? '0px 1px 3px 0px rgba(190, 190, 190, 0.25), 0px 20px 40px 0px rgba(219, 227, 237, 0.40)' : 'red',
+  borderRadius: 12,
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : '#212630',
+  boxShadow: theme.palette.isLight ? theme.fusionShadows.chartsShadows : '1px 4px 15.3px 0px #141921',
   alignItems: 'center',
   whiteSpace: 'pre',
   overflow: 'hidden',
-  height: 97,
+  minHeight: 93,
+
   '&::-webkit-scrollbar': {
     width: 0,
     height: 0,
   },
 }));
-const ContainerAnnually = styled.div({
+
+const ContainerAnnually = styled('div')(({ theme }) => ({
   display: 'flex',
   flex: 1,
   flexDirection: 'row',
   alignItems: 'center',
 
-  [lightTheme.breakpoints.up('desktop_1440')]: {
+  [theme.breakpoints.up('desktop_1440')]: {
     maxWidth: 1312,
   },
-});
+}));
 
-const ContainerAnnuallyCell = styled.div({
+const ContainerAnnuallyCell = styled('div')({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
@@ -82,8 +80,8 @@ const ContainerAnnuallyCell = styled.div({
   paddingBottom: 10,
 });
 
-const Title = styled.div<WithIsLight>(({ isLight }) => ({
-  color: isLight ? '#231536' : '#D2D4EF',
+const Title = styled('div')(({ theme }) => ({
+  color: theme.palette.isLight ? theme.palette.colors.slate[900] : theme.palette.colors.gray[200],
   fontFamily: 'Inter, sans-serif',
   fontSize: 16,
   fontStyle: 'normal',
@@ -95,7 +93,7 @@ const Title = styled.div<WithIsLight>(({ isLight }) => ({
   paddingRight: 8,
 }));
 
-const ContainerTitle = styled.div({
+const ContainerTitle = styled('div')(({ theme }) => ({
   display: 'flex',
   padding: '16px 0px 16px 32px',
   alignItems: 'center',
@@ -103,12 +101,13 @@ const ContainerTitle = styled.div({
   height: 48,
   paddingTop: 10,
   paddingBottom: 10,
-  [lightTheme.breakpoints.up('desktop_1920')]: {
+
+  [theme.breakpoints.up('desktop_1920')]: {
     minWidth: 230,
   },
-});
+}));
 
-const ContainerYear = styled.div({
+const ContainerYear = styled('div')({
   display: 'flex',
   flex: 1,
   flexDirection: 'column',
