@@ -111,10 +111,10 @@ const HeaderContainer = styled('div')(() => ({
 const ItemSection = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: 8,
+  gap: 16,
 
-  [theme.breakpoints.up('tablet_768')]: {
-    gap: 16,
+  [theme.breakpoints.up('desktop_1024')]: {
+    gap: 8,
   },
 }));
 
@@ -144,7 +144,7 @@ const ContainerButton = styled('div')(({ theme }) => ({
 }));
 
 const DividerStyle = styled('div')(({ theme }) => ({
-  background: theme.palette.isLight ? '#D4D9E1' : '#405361',
+  backgroundColor: theme.palette.isLight ? '#D4D9E1' : '#405361',
   height: 1,
   display: 'flex',
   flex: 1,
