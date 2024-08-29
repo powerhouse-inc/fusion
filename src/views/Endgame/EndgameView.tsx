@@ -1,6 +1,5 @@
 import { Box, styled } from '@mui/material';
 import { SEOHead } from '@ses/components/SEOHead/SEOHead';
-import { toAbsoluteURL } from '@ses/core/utils/urls';
 import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
 import KeyChangesBudgetTransitionStatusImportantLink from '@/views/Endgame/components/KeyChangesBudgetTransitionStatusImportantLink/KeyChangesBudgetTransitionStatusImportantLink';
@@ -38,14 +37,8 @@ const EndgameView: FC<EndgameViewProps> = ({ budgetTransitionAnalytics, yearsRan
   return (
     <EndgamePageContainer>
       <SEOHead
-        title="MakerDAO Endgame | Endgame Overview"
-        description="MakerDAO Endgame provides a comprehensive overview of Endgame governance, operations, token upgrades and budget structure."
-        image={{
-          src: toAbsoluteURL('/assets/img/endgame/endgame-social-385x200.png'),
-          width: 385,
-          height: 200,
-        }}
-        twitterImage={toAbsoluteURL('/assets/img/endgame/endgame-social-1200x630.png')}
+        title="Sky Fusion - Sky Endgame Overview"
+        description="Sky Endgame page provides a comprehensive overview of the transition from legacy MakerDAO: governance, operations, token upgrades and budget structure changes."
       />
       <Container>
         <IntroductoryHeadline />

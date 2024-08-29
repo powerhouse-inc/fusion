@@ -1,6 +1,5 @@
 import { styled } from '@mui/material';
 import { SEOHead } from '@ses/components/SEOHead/SEOHead';
-import { toAbsoluteURL } from '@ses/core/utils/urls';
 import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
 import type { ExtendedExecutiveProposal } from '@/core/models/interfaces/makervote';
@@ -38,13 +37,7 @@ const HomeView: FC<HomeViewProps> = ({
   <HomeViewContainer>
     <SEOHead
       title="Sky Fusion Dashboard"
-      description="Sky Fusion Dashboard"
-      image={{
-        src: toAbsoluteURL('/assets/img/social-385x200.png'),
-        width: 385,
-        height: 200,
-      }}
-      twitterImage={toAbsoluteURL('/assets/img/social-1200x630.png')}
+      description="Sky Fusion Dashboard offers key data insights into the Sky Ecosystem's finances, governance, contributors, and roadmaps."
     />
 
     <Container>

@@ -5,7 +5,6 @@ import { getMarkdownInformation } from '@ses/core/businessLogic/coreUnitAbout';
 import { useFlagsActive } from '@ses/core/hooks/useFlagsActive';
 import { ResourceType } from '@ses/core/models/interfaces/types';
 import { removeAtlasFromPath } from '@ses/core/utils/string';
-import { toAbsoluteURL } from '@ses/core/utils/urls';
 import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import TeamBreadcrumbContent from '@/components/Breadcrumb/CustomContents/TeamBreadcrumbContent';
 import Container from '@/components/Container/Container';
@@ -34,13 +33,8 @@ export const EcosystemActorAboutView: React.FC<Props> = ({ actors, actor }) => {
   return (
     <PageContainer>
       <SEOHead
-        title={`About ${actor.name} Ecosystem Actor at MakerDAO`}
-        description={`Learn about the ${actor.name} Ecosystem Actor at MakerDAO: their mandate, scope, vision, strategy, and more.`}
-        image={{
-          src: toAbsoluteURL('/assets/img/social-385x200.png'),
-          width: 385,
-          height: 200,
-        }}
+        title={`Sky Fusion - ${actor.name} Ecosystem Contributor`}
+        description={`Learn about the ${actor.name} Ecosystem Contributor at Sky: their mandate, vision, mission, strategy, and more.`}
         canonicalURL={siteRoutes.ecosystemActorAbout(actor.shortCode)}
       />
       <Breadcrumb

@@ -5,7 +5,6 @@ import { ModalCategoriesProvider } from '@ses/core/context/CategoryModalContext'
 import { CommentActivityContext } from '@ses/core/context/CommentActivityContext';
 import { BudgetStatus } from '@ses/core/models/dto/coreUnitDTO';
 import { ResourceType } from '@ses/core/models/interfaces/types';
-import { toAbsoluteURL } from '@ses/core/utils/urls';
 import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import TeamBreadcrumbContent from '@/components/Breadcrumb/CustomContents/TeamBreadcrumbContent';
 import { BudgetStatementActuals } from '@/components/BudgetStatement/BudgetStatementActuals/BudgetStatementActuals';
@@ -69,10 +68,8 @@ const EcosystemActorBudgetStatementView: React.FC<EcosystemActorBudgetStatementV
   return (
     <PageContainer>
       <SEOHead
-        title={`${actor.name} Ecosystem Actor | Finances`}
-        description={`Learn about the ${actor.name} Ecosystem Actor at MakerDAO: their mandate, scope, vision, strategy, and more.`}
-        image={actor.image || toAbsoluteURL('/assets/img/social-1200x630.png')}
-        twitterCard={actor.image ? 'summary' : 'summary_large_image'}
+        title={`Sky Fusion - ${actor.name} Budget Statements`}
+        description={`Learn about ${actor.name}'s Budget Statements: their total funding overview from reported expenses to accessible reserves.`}
         canonicalURL={siteRoutes.ecosystemActorReports(actor.shortCode)}
       />
       <Breadcrumb

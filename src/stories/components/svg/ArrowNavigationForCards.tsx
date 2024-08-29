@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type { FC } from 'react';
 
 interface Props {
   width?: number;
@@ -7,13 +7,7 @@ interface Props {
   fill?: string;
 }
 
-const ArrowNavigationForCards: React.FC<Props> = ({
-  fill = '#434358',
-  className,
-  height = 33,
-  width = 32,
-  ...props
-}) => (
+const ArrowNavigationForCards: FC<Props> = ({ fill = '#434358', className, height = 33, width = 32, ...props }) => (
   <svg
     className={className}
     width={width}

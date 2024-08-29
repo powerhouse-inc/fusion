@@ -1,12 +1,12 @@
 import { styled } from '@mui/material';
 import { SEOHead } from '@ses/components/SEOHead/SEOHead';
-import { toAbsoluteURL } from '@ses/core/utils/urls';
 import lightTheme from '@ses/styles/theme/themes';
 import React from 'react';
 import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
 import FiltersBundle from '@/components/FiltersBundle/FiltersBundle';
 import TableEmptyState from '@/components/TableEmptyState/TableEmptyState';
+import { siteRoutes } from '@/config/routes';
 import ActorTable from './components/ActorTable/ActorTable';
 import { useEcosystemActorsIndexView } from './useEcosystemActorsIndexView';
 import type { Team } from '@ses/core/models/interfaces/team';
@@ -35,16 +35,11 @@ const EcosystemActorsIndexView: React.FC<Props> = ({ actors, stories = false }) 
   return (
     <ExtendedPageContainer>
       <SEOHead
-        title={'MakerDAO Ecosystem Actors | Endgame Overview'}
+        title={'Sky Fusion - Ecosystem Actors'}
         description={
-          'MakerDAO Ecosystem Actors provides a centralized directory of ecosystem actors and their roles for a clear understanding of who is involved in the ecosystem'
+          'Learn about Ecosystem Actors as contributor teams in the Sky Ecosystem: their key information like role, work scope, activity, and more.'
         }
-        image={{
-          src: toAbsoluteURL('/assets/img/social-385x200.png'),
-          width: 385,
-          height: 200,
-        }}
-        twitterImage={toAbsoluteURL('/assets/img/social-1200x630.png')}
+        canonicalURL={siteRoutes.ecosystemActors}
       />
       <Container>
         <ContainerText>
