@@ -19,5 +19,5 @@ const Title = styled('div')<{ isActive?: boolean }>(({ theme, isActive = true })
       : theme.palette.colors.gray[300]
     : isActive
     ? theme.palette.colors.gray[50]
-    : theme.palette.colors.charcoal[800],
+    : theme.palette.colors.gray[50],
 }));

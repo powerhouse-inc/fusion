@@ -1,5 +1,4 @@
 import { useMediaQuery, useTheme } from '@mui/material';
-import lightTheme from '@ses/styles/theme/themes';
 import sortBy from 'lodash/sortBy';
 import { useEffect, useMemo, useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
@@ -18,6 +17,7 @@ import {
   processDataForWaterfall,
   sumValuesFromMapKeys,
 } from './utils';
+import type { Theme } from '@mui/material';
 
 import type { AnalyticGranularity } from '@ses/core/models/interfaces/analytic';
 import type { Budget } from '@ses/core/models/interfaces/budget';
@@ -39,8 +39,9 @@ const granularityItems = [
 export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], allBudgets: Budget[], year: string) => {
   const theme = useTheme();
   const isLight = theme.palette.isLight;
-  const isMobile = useMediaQuery(lightTheme.breakpoints.down('tablet_768'));
-  const isTable = useMediaQuery(lightTheme.breakpoints.between('tablet_768', 'desktop_1024'));
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
+  const isTable = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
+  const isDesk1024 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1024', 'desktop_1280'));
   const [activeElements, setActiveElements] = useState<string[]>([]);
   const [selectedGranularity, setSelectedGranularity] = useState<AnalyticGranularity>('monthly');
   const [resetActiveElements, setResetActiveElements] = useState(true);
@@ -102,12 +103,21 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
   const series = useMemo(() => {
     const valuesToShow = sumValuesFromMapKeys(summaryValues, activeElements, selectedGranularity);
     const dataReady = processDataForWaterfall(valuesToShow, activeElements, totalToStartEachBudget);
-    const series = builderWaterfallSeries(dataReady, isMobile, isTable, isLight);
+    const series = builderWaterfallSeries(dataReady, isMobile, isTable, isDesk1024, isLight);
     const valuesLine = calculateAccumulatedArray(dataReady);
     const linesChart = generateLineSeries(valuesLine, isLight, isMobile);
     series.push(...linesChart);
     return series;
-  }, [activeElements, isLight, isMobile, isTable, selectedGranularity, summaryValues, totalToStartEachBudget]);
+  }, [
+    activeElements,
+    isDesk1024,
+    isLight,
+    isMobile,
+    isTable,
+    selectedGranularity,
+    summaryValues,
+    totalToStartEachBudget,
+  ]);
 
   const items = useMemo(() => {
     // This to catch some analytics that don't have budgets

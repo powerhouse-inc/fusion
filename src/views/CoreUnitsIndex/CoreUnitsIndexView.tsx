@@ -1,7 +1,6 @@
 import { styled } from '@mui/material';
 import { SEOHead } from '@ses/components/SEOHead/SEOHead';
 import { siteRoutes } from '@ses/config/routes';
-import { toAbsoluteURL } from '@ses/core/utils/urls';
 import React from 'react';
 import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
@@ -31,14 +30,8 @@ const CoreUnitsIndexView: React.FC<Props> = ({ coreUnits }) => {
   return (
     <PageContainer>
       <SEOHead
-        title="MakerDAO Ecosystem Performance Dashboard | Maker Expenses"
-        description="MakerDAO Ecosystem Performance Dashboard provides a transparent analysis of Core Unit teams' finances, projects, and their position in the DAO."
-        image={{
-          src: toAbsoluteURL('/assets/img/social-385x200.png'),
-          width: 385,
-          height: 200,
-        }}
-        twitterImage={toAbsoluteURL('/assets/img/social-1200x630.png')}
+        title="Sky Fusion - Legacy Ecosystem"
+        description="Learn about Core Units as legacy contributor teams: their key information, activity, expenditures, FTE numbers, and more."
         canonicalURL={siteRoutes.coreUnitsOverview}
       />
       <Container>

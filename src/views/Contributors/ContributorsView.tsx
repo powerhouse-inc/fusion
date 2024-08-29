@@ -8,8 +8,8 @@ import { currentTeams, legacyTeams } from './staticData';
 const ContributorsView: React.FC = () => (
   <ContributorsPageContainer>
     <SEOHead
-      title="MakerDAO | Contributors"
-      description="MakerDAO Contributors  page provides an overview of the categories, descriptions and number of teams contributing to the Endgame Ecosystem."
+      title="Sky Fusion - Ecosystem Contributors"
+      description="Learn about the current and legacy contributor teams and individuals in the Sky Ecosystem: Ecosystem Actors, Aligned Delegates, Keepers, and more."
     />
     <Container>
       <SectionsContainer>

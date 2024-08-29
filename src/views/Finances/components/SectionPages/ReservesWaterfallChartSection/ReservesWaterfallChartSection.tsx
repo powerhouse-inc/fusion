@@ -53,7 +53,7 @@ const ReservesWaterfallChartSection: React.FC<Props> = ({
       />
       <FilterContainer>
         <FiltersBundle
-          asPopover={['desktop']}
+          asPopover={['tablet_768', 'desktop']}
           filters={filters}
           resetFilters={{
             canReset,
@@ -83,7 +83,10 @@ const ContainerTitleFilter = styled('div')(() => ({
   alignItems: 'flex-start',
 }));
 
-const ContainerChart = styled('div')({});
+const ContainerChart = styled('div')({
+  display: 'flex',
+  width: '100%',
+});
 
 const Section = styled(Card)(({ theme }) => ({
   marginTop: 40,
@@ -96,10 +99,15 @@ const Section = styled(Card)(({ theme }) => ({
     gap: 24,
   },
   [theme.breakpoints.up('desktop_1024')]: {
-    padding: 24,
+    padding: '16px 58px 24px ',
   },
   [theme.breakpoints.up('desktop_1280')]: {
     marginTop: 64,
+    padding: '16px 71px 24px ',
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    marginTop: 64,
+    padding: '16px 80px 24px ',
   },
 }));
 

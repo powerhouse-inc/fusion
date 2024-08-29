@@ -39,6 +39,7 @@ export const builderWaterfallSeries = (
   data: number[],
   isMobile: boolean,
   isTable: boolean,
+  isDesk1024: boolean,
   isLight: boolean
 ): (WaterfallChartSeriesData | LineWaterfall)[] => {
   const { inFlow, outFlow, auxiliaryArray } = getArraysWaterfall(data);
@@ -75,7 +76,7 @@ export const builderWaterfallSeries = (
   const series = [
     {
       name: 'Reserves Balance',
-      barWidth: isMobile ? 19 : isTable ? 39 : 48,
+      barWidth: isMobile ? 16 : isTable ? 32 : isDesk1024 ? 44 : 48,
       data: help.map((item) => (Math.abs(item) < UMBRAL_CHART_WATERFALL ? 0 : item)),
       emphasis: {
         disabled: true,
@@ -124,7 +125,7 @@ export const builderWaterfallSeries = (
     },
     {
       name: 'Outflow',
-      barWidth: isMobile ? 19 : 39,
+      barWidth: isMobile ? 16 : isTable ? 32 : isDesk1024 ? 44 : 48,
       data: outFlow,
       emphasis: {
         disabled: true,
@@ -159,7 +160,7 @@ export const builderWaterfallSeries = (
     },
     {
       name: 'IntFlow',
-      barWidth: isMobile ? 19 : 39,
+      barWidth: isMobile ? 16 : isTable ? 32 : isDesk1024 ? 44 : 48,
       data: inFlow,
       emphasis: {
         disabled: true,

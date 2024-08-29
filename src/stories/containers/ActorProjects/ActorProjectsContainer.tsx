@@ -1,7 +1,6 @@
 import { styled } from '@mui/material';
 import { SEOHead } from '@ses/components/SEOHead/SEOHead';
 import { siteRoutes } from '@ses/config/routes';
-import { toAbsoluteURL } from '@ses/core/utils/urls';
 import React from 'react';
 import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import TeamBreadcrumbContent from '@/components/Breadcrumb/CustomContents/TeamBreadcrumbContent';
@@ -42,16 +41,8 @@ const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, 
   return (
     <PageWrapper>
       <SEOHead
-        title={'MakerDAO Ecosystem Actors | Projects'}
-        description={
-          "MakerDAO Ecosystem Actors Projects page provides a comprehensive overview of Ecosystem Actor's" +
-          ' ongoing work activities, their status, and progress.'
-        }
-        image={{
-          src: toAbsoluteURL('/assets/img/social-385x200.png'),
-          width: 385,
-          height: 200,
-        }}
+        title={`Sky Fusion - ${actor.name} Ecosystem Contributor Projects`}
+        description={`Learn about ${actor.name} Ecosystem Contributor's Project work: scope, deliverables, targets, resources, and key results for owned & supported projects.`}
         canonicalURL={siteRoutes.ecosystemActorProjects(actor.shortCode)}
       />
       <Breadcrumb

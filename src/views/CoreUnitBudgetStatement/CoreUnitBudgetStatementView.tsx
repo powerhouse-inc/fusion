@@ -21,7 +21,6 @@ import type { Team } from '@/core/models/interfaces/team';
 import AdditionalNotesSection from '../../components/AdditionalNotesSection/AdditionalNotesSection';
 import CuHeadlineText from '../../components/CuHeadlineText/CuHeadlineText';
 import { CommentActivityContext } from '../../core/context/CommentActivityContext';
-import { toAbsoluteURL } from '../../core/utils/urls';
 import { SEOHead } from '../../stories/components/SEOHead/SEOHead';
 import { TRANSPARENCY_IDS_ENUM, useCoreUnitBudgetStatementView } from './useCoreUnitBudgetStatementView';
 import type { SnapshotLimitPeriods } from '@ses/core/hooks/useBudgetStatementPager';
@@ -75,10 +74,8 @@ const CoreUnitBudgetStatementView = ({
   return (
     <PageContainer>
       <SEOHead
-        title={`${coreUnit.name} Core Unit | Finances`}
-        description={`Learn about the ${coreUnit.name} Core Unit at MakerDAO: their finances, expense reports, and more.`}
-        image={coreUnit.image || toAbsoluteURL('/assets/img/social-1200x630.png')}
-        twitterCard={coreUnit.image ? 'summary' : 'summary_large_image'}
+        title={`Sky Fusion - ${coreUnit.name} Budget Statements`}
+        description={`Learn about ${coreUnit.name}'s Budget Statements: their total funding overview from reported expenses to accessible reserves.`}
         canonicalURL={siteRoutes.coreUnitReports(coreUnit.shortCode)}
       />
 
