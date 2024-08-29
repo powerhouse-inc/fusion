@@ -124,6 +124,36 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
             onReset={breakdownChartSectionData.onReset}
             showScrollAndToggle={breakdownChartSectionData.showScrollAndToggle}
           />
+
+          <ExpenseMetricsSection
+            expenseMetrics={{
+              title: levelNumber === 1 ? 'Sky Expense Metrics' : 'Expense Metrics',
+              selectedGranularity: expensesMetrics.selectedGranularity,
+              isCumulative: expensesMetrics.isCumulative,
+              cumulativeType: expensesMetrics.cumulativeType,
+              series: expensesMetrics.series,
+              handleToggleSeries: expensesMetrics.handleToggleSeries,
+              isLoading: expensesMetrics.isLoading,
+              year,
+              filters: expensesMetrics.filters,
+              canReset: expensesMetrics.canReset,
+              onReset: expensesMetrics.onReset,
+            }}
+          />
+
+          <ContainerReservesWaterfallChart>
+            <ReservesWaterfallChartSection
+              title={`${levelNumber === 1 ? (isMobile ? 'MakerDAO F.' : 'MakerDAO Finances') : title} Reserves`}
+              legends={reserveChart.legendItems}
+              series={reserveChart.series}
+              selectedGranularity={reserveChart.selectedGranularity}
+              year={year}
+              isLoading={reserveChart.isLoading}
+              canReset={reserveChart.canReset}
+              onReset={reserveChart.onReset}
+              filters={reserveChart.filters}
+            />
+          </ContainerReservesWaterfallChart>
         </Container>
       </BudgetMetricsModalProvider>
 
@@ -140,35 +170,8 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
           resetFilters={breakdownTable.resetFilters}
         />
       </ConditionalWrapper>
+
       <Container>
-        <ExpenseMetricsSection
-          expenseMetrics={{
-            title: levelNumber === 1 ? 'Sky Expense Metrics' : 'Expense Metrics',
-            selectedGranularity: expensesMetrics.selectedGranularity,
-            isCumulative: expensesMetrics.isCumulative,
-            cumulativeType: expensesMetrics.cumulativeType,
-            series: expensesMetrics.series,
-            handleToggleSeries: expensesMetrics.handleToggleSeries,
-            isLoading: expensesMetrics.isLoading,
-            year,
-            filters: expensesMetrics.filters,
-            canReset: expensesMetrics.canReset,
-            onReset: expensesMetrics.onReset,
-          }}
-        />
-        <ContainerReservesWaterfallChart>
-          <ReservesWaterfallChartSection
-            title={`${levelNumber === 1 ? (isMobile ? 'MakerDAO F.' : 'MakerDAO Finances') : title} Reserves`}
-            legends={reserveChart.legendItems}
-            series={reserveChart.series}
-            selectedGranularity={reserveChart.selectedGranularity}
-            year={year}
-            isLoading={reserveChart.isLoading}
-            canReset={reserveChart.canReset}
-            onReset={reserveChart.onReset}
-            filters={reserveChart.filters}
-          />
-        </ContainerReservesWaterfallChart>
         <ContainerLastReport>
           <ExpenseReports
             year={year}
