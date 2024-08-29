@@ -1,11 +1,10 @@
 import { useMediaQuery } from '@mui/material';
-import lightTheme from '@ses/styles/theme/themes';
-import React from 'react';
 import HeaderAnnually from './HeaderAnnually/HeaderAnnually';
 import HeaderMonthly from './HeaderMonthly/HeaderMonthly';
 import HeaderQuarterly from './HeaderQuarterly/HeaderQuarterly';
 import HeaderSemiAnnual from './HeaderSemiAnnual/HeaderSemiAnnual';
 import type { MetricValues, PeriodicSelectionFilter } from '../../utils/types';
+import type { Theme } from '@mui/material';
 
 interface Props {
   period: PeriodicSelectionFilter;
@@ -16,7 +15,7 @@ interface Props {
 }
 
 const HeaderTable: React.FC<Props> = ({ title, year, period, headerTable, activeMetrics }) => {
-  const isPhone = useMediaQuery(lightTheme.breakpoints.down('tablet_768'));
+  const isPhone = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
 
   if (isPhone && period === 'Semi-annual') {
     return (
