@@ -179,6 +179,10 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
         <BudgetItem label={option?.label ?? ''} image={option?.extra?.url ?? ''} isActive={isActive} />
       ),
       customOptionsRenderAll: (isActive: boolean) => <CustomAllCategories label="All Categories" isActive={isActive} />,
+      containerStyles: {
+        maxHeight: isMobile ? '100%' : 200,
+        overflowY: 'auto',
+      },
     },
 
     {
