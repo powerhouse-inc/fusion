@@ -1,5 +1,4 @@
-import { styled, useMediaQuery, useTheme } from '@mui/material';
-import ArrowNavigationForCards from '@ses/components/svg/ArrowNavigationForCards';
+import { styled, useMediaQuery } from '@mui/material';
 import MultiUsers from '@ses/components/svg/MultiUsers';
 import MultiUsersMobile from '@ses/components/svg/MultiUsersMobile';
 import { siteRoutes } from '@ses/config/routes';
@@ -10,11 +9,11 @@ import { DateTime } from 'luxon';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import CircleAvatarWithIcon from '@/components/CircleAvatar/CircleAvatarWithIcon';
+import InternalLinkButton from '@/components/InternalLinkButton/InternalLinkButton';
 import { AllowedOwnerType } from '@/views/BudgetStatement/types';
 import ExpenseReportStatusIndicator from '@/views/CoreUnitBudgetStatement/components/ExpenseReportStatusIndicator/ExpenseReportStatusIndicator';
 import LastModifiedActorCoreUnit from '@/views/CoreUnitsIndex/components/LastModifiedActorCoreUnit/LastModifiedActorCoreUnit';
 import { getLastActivityDate } from '../../utils/utils';
-import ViewButton from '../ViewButton/ViewButton';
 import type { Theme } from '@mui/material';
 import type { AnalyticMetric } from '@ses/core/models/interfaces/analytic';
 import type { BudgetStatement } from '@ses/core/models/interfaces/budgetStatement';
@@ -27,7 +26,6 @@ interface Props {
 }
 
 const DelegateExpenseTrendItem: FC<Props> = ({ budget, selectedMetric, now = DateTime.now() }) => {
-  const theme = useTheme();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const lastModified = getLastActivityDate(budget);
   const lastModifiedRelative = capitalizeSentence(
@@ -123,12 +121,12 @@ const DelegateExpenseTrendItem: FC<Props> = ({ budget, selectedMetric, now = Dat
             </ContainerStatus>
           </ContainerIconName>
           <ArrowMobile>
-            <ArrowNavigationForCards width={32} height={32} fill={theme.palette.isLight ? '#434358' : '#B7A6CD'} />
+            <InternalLinkButton href={link || ''} buttonType="primary" />
           </ArrowMobile>
         </ContainerMobile>
         <ReportingMonth>
           <LabelDescription>Reporting Month</LabelDescription>
-          <Date>{reportMonth}</Date>
+          <StyledDate>{reportMonth}</StyledDate>
         </ReportingMonth>
         <TotalActualsTable>
           <LabelDescription>{metricLabel}</LabelDescription>
@@ -140,14 +138,14 @@ const DelegateExpenseTrendItem: FC<Props> = ({ budget, selectedMetric, now = Dat
             <ExpenseReportStatusIndicatorTable budgetStatus={budget.status} showCTA={false} />
           </StatusTable>
           <ContainerArrow>
-            <ArrowNavigationForCards width={32} height={32} fill={theme.palette.isLight ? '#434358' : '#B7A6CD'} />
+            <InternalLinkButton href={link || ''} buttonType="primary" />
           </ContainerArrow>
         </ContainerStatusTable>
         <LastModifiedDesk>
           <LabelLastModifiedText>{lastModifiedRelative}</LabelLastModifiedText>
         </LastModifiedDesk>
         <ViewContainer>
-          <ViewButton title="View" />
+          <InternalLinkButton href={link || ''} buttonType="primary" label="View" />
         </ViewContainer>
       </ContainerDesk>
       <Divider />
@@ -155,7 +153,7 @@ const DelegateExpenseTrendItem: FC<Props> = ({ budget, selectedMetric, now = Dat
         <ContainerReportingMobile>
           <ReportingMobile>
             <LabelTagMobile>Reporting Month</LabelTagMobile>
-            <Date>{reportMonth}</Date>
+            <StyledDate>{reportMonth}</StyledDate>
           </ReportingMobile>
         </ContainerReportingMobile>
         <TotalContainerMobile>
@@ -337,7 +335,7 @@ const Title = styled('div')(({ theme }) => ({
   },
 }));
 
-const Date = styled('div')(({ theme }) => ({
+const StyledDate = styled('div')(({ theme }) => ({
   fontSize: 14,
   fontWeight: 600,
   lineHeight: '22px',
@@ -544,7 +542,7 @@ const LastModifiedDesk = styled('div')(({ theme }) => ({
 
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'flex',
-    width: 160,
+    width: 130,
     marginLeft: 0,
   },
   [theme.breakpoints.up('desktop_1280')]: {
@@ -558,14 +556,13 @@ const LastModifiedDesk = styled('div')(({ theme }) => ({
 const ViewContainer = styled('div')(({ theme }) => ({
   display: 'none',
 
-  [theme.breakpoints.between('desktop_1024', 'desktop_1280')]: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    marginRight: -2,
-  },
-  [theme.breakpoints.up('desktop_1280')]: {
-    display: 'flex',
-    marginTop: 2,
+  [theme.breakpoints.up('desktop_1024')]: {
+    display: 'block',
+    alignSelf: 'center',
+    height: 'fit-content',
+    '& > a': {
+      padding: '4px 16px 4px 24px',
+    },
   },
 }));
 
@@ -579,38 +576,42 @@ const ContainerDesk = styled('div')(({ theme }) => ({
 }));
 
 const LabelLastModifiedText = styled('div')(({ theme }) => ({
-  color: theme.palette.isLight ? '#231536' : '#EDEFFF',
   display: 'flex',
   alignItems: 'center',
-  fontSize: 14,
-  fontStyle: 'normal',
   fontWeight: 600,
-  lineHeight: 'normal',
+  fontSize: 12,
+  lineHeight: '18px',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
+
+  [theme.breakpoints.up('desktop_1280')]: {
+    fontSize: 14,
+    lineHeight: '22px',
+  },
 }));
 
 const ContainerArrow = styled('div')(({ theme }) => ({
   display: 'none',
 
   [theme.breakpoints.between('tablet_768', 'desktop_1024')]: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: theme.palette.isLight ? '#F9FAFF' : 'rgba(60, 62, 100, 0.50)',
-    borderRadius: 6,
-    width: 48,
-    height: 63,
-    boxShadow: theme.palette.isLight ? '0px 2px 3px 0px #DEE1F4' : '0px 2px 3px 0px #040C27',
+    display: 'block',
+    '& > a': {
+      padding: '4px 16px',
+      '&:hover': {
+        padding: '4px 16px',
+      },
+    },
   },
 }));
 
 const ArrowMobile = styled('div')(({ theme }) => ({
   display: 'flex',
-  width: 32,
-  height: 32,
-  backgroundColor: theme.palette.isLight ? '#F0F2FA' : 'rgba(60, 62, 100, 0.50)',
-  boxShadow: theme.palette.isLight ? '0px 2px 3px 0px #DEE1F4' : ' 0px 2px 3px 0px #040C27;',
-  marginTop: 2,
-  borderRadius: 6,
+  alignSelf: 'flex-start',
+  '& > a': {
+    padding: '4px 8px',
+    '&:hover': {
+      padding: '4px 8px',
+    },
+  },
 
   [theme.breakpoints.up('tablet_768')]: {
     display: 'none',
@@ -699,16 +700,26 @@ const ReportingMobile = styled('div')(() => ({
 }));
 
 const LastModifiedStyled = styled(LastModifiedActorCoreUnit)(({ theme }) => ({
+  padding: '4px 16px',
   '& > div:first-of-type': {
-    color: '#9FAFB9',
     marginTop: 0,
+    color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[400],
   },
   '& > div:last-of-type': {
-    color: '#708390',
+    fontSize: 14,
+    lineHeight: '22px',
+    color: theme.palette.isLight ? theme.palette.colors.slate[200] : theme.palette.colors.slate[300],
   },
 
   [theme.breakpoints.between('tablet_768', 'desktop_1024')]: {
-    padding: '3px 10px',
-    minHeight: 25,
+    padding: '4px 10px',
+    '& > div:first-of-type': {
+      fontSize: 12,
+      lineHeight: '18px',
+      color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[400],
+    },
+    '& > div:last-of-type': {
+      color: theme.palette.isLight ? theme.palette.colors.slate[200] : theme.palette.colors.slate[300],
+    },
   },
 }));
