@@ -50,7 +50,7 @@ const MainContainer = styled('div')<{ isTotal: boolean }>(({ theme, isTotal }) =
       height: 48,
       left: 10,
       borderRight: `1px solid ${
-        theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.charcoal[800]
+        theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.charcoal[800]
       }`,
 
       [theme.breakpoints.up('tablet_768')]: {
