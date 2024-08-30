@@ -1,12 +1,8 @@
-import styled from '@emotion/styled';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
+import { styled } from '@mui/material';
 import { usLocalizedNumber } from '@ses/core/utils/humanization';
-import lightTheme from '@ses/styles/theme/themes';
-import React from 'react';
 import LinkCellComponent from '../LinkCellComponent/LinkCellComponent';
 import { filterMetricValues } from '../SectionPages/BreakdownTable/utils';
 import type { MetricValues } from '../../utils/types';
-import type { WithIsLight } from '@ses/core/utils/typesHelpers';
 
 interface Props {
   metrics: string[];
@@ -17,15 +13,13 @@ interface Props {
 
 const CellTable: React.FC<Props> = ({ metrics, value, href, isSummaryRow }) => {
   const element = filterMetricValues(value, metrics as (keyof MetricValues)[]);
-  const { isLight } = useThemeContext();
+
   return (
-    <Cell isLight={isLight}>
+    <Cell>
       <LinkCellComponent href={href} isSummaryRow={isSummaryRow}>
         <SpacedValues>
           {metrics.map((metric, index) => (
-            <Span key={index} isLight={isLight}>
-              {usLocalizedNumber(element[metric as keyof MetricValues] ?? 0, 0)}
-            </Span>
+            <Span key={index}>{usLocalizedNumber(element[metric as keyof MetricValues] ?? 0, 0)}</Span>
           ))}
         </SpacedValues>
       </LinkCellComponent>
@@ -35,34 +29,43 @@ const CellTable: React.FC<Props> = ({ metrics, value, href, isSummaryRow }) => {
 
 export default CellTable;
 
-const Cell = styled.td<WithIsLight>(({ isLight }) => ({
-  borderRight: `1px solid ${isLight ? '#D8E0E3' : '#405361'}`,
+const Cell = styled('td')(({ theme }) => ({
   padding: '16px 8px',
   textAlign: 'center',
   fontSize: 12,
   position: 'relative',
-  [lightTheme.breakpoints.up('desktop_1280')]: {
+
+  '&:not(:last-of-type)': {
+    borderRight: `1px solid ${
+      theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.charcoal[800]
+    }`,
+  },
+
+  [theme.breakpoints.up('desktop_1280')]: {
     padding: '16px 20px',
   },
 }));
 
-const SpacedValues = styled.div({
+const SpacedValues = styled('div')({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
 });
 
-const Span = styled.span<WithIsLight>(({ isLight }) => ({
-  color: isLight ? '#231536' : '#D2D4EF',
+const Span = styled('span')(({ theme }) => ({
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[200],
   minWidth: 77.5,
   textAlign: 'center',
-  [lightTheme.breakpoints.up('desktop_1280')]: {
+
+  [theme.breakpoints.up('desktop_1280')]: {
     minWidth: 83.5,
   },
-  [lightTheme.breakpoints.up('desktop_1440')]: {
+
+  [theme.breakpoints.up('desktop_1440')]: {
     minWidth: 93.5,
   },
-  [lightTheme.breakpoints.up('desktop_1920')]: {
+
+  [theme.breakpoints.up('desktop_1920')]: {
     minWidth: 80,
   },
 }));

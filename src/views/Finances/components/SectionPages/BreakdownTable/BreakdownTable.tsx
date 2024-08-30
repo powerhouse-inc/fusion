@@ -77,8 +77,9 @@ const TableWrapper = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   gap: 16,
 
-  [theme.breakpoints.up('tablet_768')]: {
-    marginTop: 24,
+  [theme.breakpoints.up('desktop_1024')]: {
+    marginTop: 8,
+    gap: 8,
   },
 }));
 
