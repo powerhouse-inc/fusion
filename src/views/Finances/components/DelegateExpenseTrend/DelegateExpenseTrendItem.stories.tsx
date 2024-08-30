@@ -8,11 +8,12 @@ const meta: Meta<typeof DelegateExpenseTrendItem> = {
   component: DelegateExpenseTrendItem,
   parameters: {
     chromatic: {
-      viewports: [375, 768, 1194, 1280, 1440, 1920],
+      viewports: [375, 768, 1024, 1280, 1440],
     },
     date: new Date('2023-09-24T09:08:34.123'),
   },
 };
+
 export default meta;
 
 const variantsArgs = [
@@ -26,16 +27,27 @@ const variantsArgs = [
   },
 ];
 
-const [[DelegateExpense, DelegateExpenseDark], [DelegateExpenseMobile, DelegateExpenseMobileDark]] =
-  createThemeModeVariants(DelegateExpenseTrendItem, variantsArgs);
-export { DelegateExpense, DelegateExpenseDark, DelegateExpenseMobile, DelegateExpenseMobileDark };
+const [[DelegateExpense, DelegateExpenseDark]] = createThemeModeVariants(DelegateExpenseTrendItem, variantsArgs);
+
+export { DelegateExpense, DelegateExpenseDark };
 
 DelegateExpense.parameters = {
   figma: {
     component: {
+      375: {
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-13799&m=dev',
+        options: {
+          style: {
+            left: -40,
+            top: -20,
+          },
+          componentStyle: {
+            width: 343,
+          },
+        },
+      },
       768: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=28966:332118&mode=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-11846&m=dev',
         options: {
           style: {
             left: -12,
@@ -47,8 +59,7 @@ DelegateExpense.parameters = {
         },
       },
       1024: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=28966:330577&mode=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-7727&m=dev',
         options: {
           style: {
             left: -1,
@@ -60,36 +71,19 @@ DelegateExpense.parameters = {
         },
       },
       1280: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=28966:335244&mode=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-5148&m=dev',
         options: {
           style: {
             left: -4,
-
             top: -2,
           },
           componentStyle: {
-            width: 1184,
+            width: 1200,
           },
         },
       },
       1440: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=28966:336774&mode=dev',
-        options: {
-          style: {
-            left: -4,
-
-            top: -2,
-          },
-          componentStyle: {
-            width: 1312,
-          },
-        },
-      },
-      1920: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=28966:333775&mode=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=8660-57207&m=dev',
         options: {
           style: {
             left: -4,
@@ -105,26 +99,3 @@ DelegateExpense.parameters = {
 };
 
 DelegateExpenseDark.parameters = {};
-DelegateExpenseMobile.parameters = {
-  chromatic: {
-    viewports: [375],
-  },
-  figma: {
-    component: {
-      375: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=28966:338145&mode=dev',
-        options: {
-          style: {
-            left: -40,
-            top: -20,
-          },
-          componentStyle: {
-            width: 343,
-          },
-        },
-      },
-    },
-  },
-};
-DelegateExpenseMobileDark.parameters = {};
