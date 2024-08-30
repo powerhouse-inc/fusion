@@ -1,11 +1,7 @@
-import styled from '@emotion/styled';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
+import { styled } from '@mui/material';
 import { usLocalizedNumber } from '@ses/core/utils/humanization';
-import lightTheme from '@ses/styles/theme/themes';
-import React from 'react';
 import type { MetricValues } from '@/views/Finances/utils/types';
 import { getKeyMetric, getShortNameForMetric } from '@/views/Finances/utils/utils';
-import type { WithIsLight } from '@ses/core/utils/typesHelpers';
 
 interface Props {
   title: string;
@@ -15,77 +11,87 @@ interface Props {
   activeMetrics: string[];
 }
 
-export const CellMonthly: React.FC<Props> = ({ metrics, title, isTotal = false, className, activeMetrics }) => {
-  const { isLight } = useThemeContext();
-  return (
-    <ContainerCell isLight={isLight} isTotal={isTotal} className={className}>
-      <Month isLight={isLight}>{title}</Month>
-      {activeMetrics?.map((metric, index) => (
-        <Metrics key={index}>
-          <Name isLight={isLight}>{getShortNameForMetric(metric)}</Name>
-          <Amount isLight={isLight}>
-            {usLocalizedNumber(metrics[getKeyMetric(metric) as keyof MetricValues] ?? 0)}
-          </Amount>
-        </Metrics>
-      ))}
-    </ContainerCell>
-  );
-};
+export const CellMonthly: React.FC<Props> = ({ metrics, title, isTotal = false, className, activeMetrics }) => (
+  <ContainerCell isTotal={isTotal} className={className}>
+    <Month>{title}</Month>
+    {activeMetrics?.map((metric, index) => (
+      <Metrics key={index}>
+        <Name>{getShortNameForMetric(metric)}</Name>
+        <Amount>{usLocalizedNumber(metrics[getKeyMetric(metric) as keyof MetricValues] ?? 0)}</Amount>
+      </Metrics>
+    ))}
+  </ContainerCell>
+);
 
 export default CellMonthly;
 
-const ContainerCell = styled.div<WithIsLight & { isTotal: boolean }>(({ isLight, isTotal }) => ({
+const ContainerCell = styled('div')<{ isTotal: boolean }>(({ theme, isTotal }) => ({
+  position: 'relative',
   fontFamily: 'Inter, sans-serif',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  color: isLight ? '#231536' : '#D2D4EF',
   minWidth: 87,
   fontWeight: 500,
-  backgroundColor: isLight ? (isTotal ? 'rgba(209, 222, 230, 0.50)' : 'transparent') : isTotal ? '#374752' : '#405361',
+  backgroundColor: isTotal
+    ? theme.palette.isLight
+      ? theme.palette.colors.gray[200]
+      : theme.palette.colors.charcoal[900]
+    : 'transparent',
+
   ...(isTotal && {
     padding: '16px 0px 16px 0px',
+    marginTop: -16,
+    marginBottom: -16,
   }),
-  [lightTheme.breakpoints.up('desktop_1920')]: {
+
+  ...(!isTotal && {
+    ':after': {
+      content: '""',
+      position: 'absolute',
+      height: 48,
+      left: 0,
+      borderRight: `1px solid ${
+        theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.charcoal[800]
+      }`,
+    },
+  }),
+
+  [theme.breakpoints.up('desktop_1920')]: {
     minWidth: 80,
   },
 }));
 
-const Month = styled.div<WithIsLight>(({ isLight }) => ({
-  color: isLight ? '#231536' : '#D2D4EF',
+const Month = styled('div')(({ theme }) => ({
   textAlign: 'center',
-  fontFamily: 'Inter, sans-serif',
-  fontSize: 18,
+  fontSize: 20,
   fontStyle: 'normal',
-  fontWeight: 500,
+  fontWeight: 600,
   lineHeight: 'normal',
+  color: theme.palette.isLight ? theme.palette.colors.slate[900] : theme.palette.colors.gray[200],
   marginBottom: 8,
 }));
 
-const Metrics = styled.div({
+const Metrics = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   width: 70.5,
 });
-const Name = styled.div<WithIsLight>({
+
+const Name = styled('div')(({ theme }) => ({
   marginBottom: 4,
-  fontSize: 11,
-  fontWeight: 500,
+  fontSize: 12,
+  fontWeight: 400,
   textAlign: 'center',
   fontStyle: 'normal',
   lineHeight: 'normal',
-  color: '#708390',
-  [lightTheme.breakpoints.up('desktop_1024')]: {
-    textAlign: 'center',
-  },
-  [lightTheme.breakpoints.up('desktop_1920')]: {
-    marginBottom: 2,
-  },
-});
-const Amount = styled.div<WithIsLight>(({ isLight }) => ({
-  color: isLight ? '#231536' : '#D2D4EF',
+  color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.gray[700],
+}));
+
+const Amount = styled('div')(({ theme }) => ({
   fontSize: 12,
   fontWeight: 600,
   textAlign: 'center',
+  color: theme.palette.isLight ? theme.palette.colors.slate[900] : theme.palette.colors.gray[200],
 }));

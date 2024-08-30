@@ -2,6 +2,7 @@ import { Check } from '@mui/icons-material';
 import { styled, useTheme } from '@mui/material';
 import FilterAsListBase from './FilterAsListBase';
 import type { SelectFilter, SelectOption } from '../types';
+import type { CSSProperties } from 'react';
 
 interface SelectAsListProps {
   filter: SelectFilter;
@@ -40,7 +41,10 @@ const SelectAsList: React.FC<SelectAsListProps> = ({ filter, onClose }) => {
 
   return (
     <FilterAsListBase label={filter.label}>
-      <SelectContainer>
+      <SelectContainer
+        customMaxHeight={filter?.containerStyles?.maxHeight}
+        customOverflowY={filter?.containerStyles?.overflowY}
+      >
         {filter.withAll && (
           <CustomOption onClick={handleChangeAll} isSelected={isAllSelected}>
             {(filter.customOptionsRenderAll && filter.customOptionsRenderAll(isAllSelected || false, theme)) ||
@@ -51,7 +55,13 @@ const SelectAsList: React.FC<SelectAsListProps> = ({ filter, onClose }) => {
           </CustomOption>
         )}
         {filter.options.map((option) => (
-          <CustomOption key={option.value} onClick={() => handleChange(option.value)} isSelected={isActive(option)}>
+          <CustomOption
+            key={option.value}
+            onClick={() => handleChange(option.value)}
+            isSelected={isActive(option)}
+            height={filter.itemOptionStyles?.height}
+            alignItems={filter.itemOptionStyles?.alignItems}
+          >
             {filter.customOptionsRender ? filter.customOptionsRender(option, isActive(option), theme) : option.label}
             {filter.multiple && (
               <CheckIcon className={`check ${isActive(option) ? 'active' : ''}`} width={16} height={16} />
@@ -65,22 +75,31 @@ const SelectAsList: React.FC<SelectAsListProps> = ({ filter, onClose }) => {
 
 export default SelectAsList;
 
-const SelectContainer = styled('div')(() => ({
+const SelectContainer = styled('div')<{
+  customMaxHeight?: number | string;
+  customOverflowY?: CSSProperties['overflowY'];
+}>(({ customMaxHeight, customOverflowY }) => ({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  height: 'auto',
   overflow: 'hidden',
   background: 'transparent',
-  border: 'none',
-  outline: 'none',
   gap: '8px',
   alignContent: 'center',
+  border: 'none',
+  outline: 'none',
+  height: customMaxHeight ?? 'auto',
+  overflowY: customOverflowY || 'hidden',
 }));
 
-const CustomOption = styled('div')<{ isSelected: boolean }>(({ theme, isSelected }) => ({
+const CustomOption = styled('div')<{
+  isSelected: boolean;
+  height?: CSSProperties['height'];
+  alignItems?: CSSProperties['alignItems'];
+}>(({ theme, isSelected, height = 32, alignItems }) => ({
   padding: '4px 8px',
-  height: '32px',
+  height,
+  alignItems,
   fontSize: 14,
   fontWeight: isSelected ? 600 : 400,
   lineHeight: '22px',

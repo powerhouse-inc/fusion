@@ -49,6 +49,16 @@ export interface SelectFilter extends GenericFilter {
     width?: CSSProperties['width'];
     menuWidth?: number; // value in px
   };
+  // Style for container of options
+  containerStyles?: {
+    maxHeight?: number | string | undefined;
+    overflowY?: CSSProperties['overflowY'];
+  };
+  // Height of the items default should be 32px for container of options
+  itemOptionStyles?: {
+    height?: CSSProperties['height'];
+    alignItems?: CSSProperties['alignItems'];
+  };
 }
 
 export interface RadioOption {

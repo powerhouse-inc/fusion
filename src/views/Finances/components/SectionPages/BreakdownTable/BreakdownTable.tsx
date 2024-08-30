@@ -1,6 +1,4 @@
-import styled from '@emotion/styled';
-import lightTheme from '@ses/styles/theme/themes';
-import React from 'react';
+import { styled } from '@mui/material';
 import type { Filter, ResetFilter } from '@/components/FiltersBundle/types';
 import BreakdownTableFinances from '../../BreakdownTableFinances/BreakdownTableFinances';
 import FinancesTable from '../../FinancesTable/FinancesTable';
@@ -64,33 +62,36 @@ const BreakdownTable: React.FC<Props> = ({
 
 export default BreakdownTable;
 
-const TableHeader = styled.div({
+const TableHeader = styled('div')(({ theme }) => ({
   marginTop: 24,
-  [lightTheme.breakpoints.up('tablet_768')]: {
+
+  [theme.breakpoints.up('tablet_768')]: {
     display: 'flex',
     flexDirection: 'column',
   },
-});
+}));
 
-const TableWrapper = styled.div({
+const TableWrapper = styled('div')(({ theme }) => ({
   marginTop: 16,
   display: 'flex',
   flexDirection: 'column',
   gap: 16,
-  [lightTheme.breakpoints.up('tablet_768')]: {
+
+  [theme.breakpoints.up('tablet_768')]: {
     marginTop: 24,
   },
-});
+}));
 
-const MainContainer = styled.div({
+const MainContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flex: 1,
   flexDirection: 'column',
   marginTop: 40,
-  [lightTheme.breakpoints.up('desktop_1280')]: {
+
+  [theme.breakpoints.up('desktop_1280')]: {
     marginTop: 64,
   },
-});
+}));
 
 const SkeletonWrapper = styled('div')({
   marginTop: 24,

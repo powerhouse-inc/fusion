@@ -20,17 +20,23 @@ const BudgetItem: React.FC<Props> = ({ image, label, isActive }) => (
 
 export default BudgetItem;
 
-const Container = styled(Box)(() => ({
-  gap: 16,
+const Container = styled(Box)(({ theme }) => ({
   display: 'flex',
   position: 'relative',
   height: '100%',
+  gap: 8,
+  alignItems: 'center',
+  [theme.breakpoints.up('tablet_768')]: {
+    gap: 16,
+  },
 }));
 
 const ImageContainer = styled('div')(({ theme }) => ({
   position: 'relative',
-  width: 32,
-  height: 32,
+  width: 24,
+  height: 24,
+  minWidth: 24,
+  minHeight: 24,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -40,6 +46,12 @@ const ImageContainer = styled('div')(({ theme }) => ({
   filter: theme.palette.isLight
     ? 'filter: drop-shadow(1.524px 3.048px 5.333px rgba(25, 144, 255, 0.20))'
     : 'filter: drop-shadow(2px 4px 7px rgba(26, 171, 155, 0.25))',
+  [theme.breakpoints.up('tablet_768')]: {
+    width: 32,
+    height: 32,
+    minWidth: 32,
+    minHeight: 32,
+  },
 }));
 
 const Title = styled('div')<{ isActive?: boolean }>(({ theme, isActive }) => ({
@@ -55,7 +67,13 @@ const Title = styled('div')<{ isActive?: boolean }>(({ theme, isActive }) => ({
   fontStyle: 'normal',
   fontWeight: 400,
   lineHeight: 'normal',
-  display: 'flex',
-  flexWrap: 'wrap',
-  width: 200,
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  [theme.breakpoints.up('tablet_768')]: {
+    width: 180,
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
+    width: 250,
+  },
 }));
