@@ -10,7 +10,7 @@ export const HeaderRowSkeleton = () => {
         width={61}
         height={10}
         sx={{
-          borderRadius: 13.5,
+          borderRadius: 6,
         }}
       />
       <ItemStyledSkeleton
@@ -18,7 +18,7 @@ export const HeaderRowSkeleton = () => {
         width={61}
         height={10}
         sx={{
-          borderRadius: 13.5,
+          borderRadius: 6,
         }}
       />
     </TwoItemsSkeletonContainer>
@@ -36,7 +36,7 @@ export const HeaderRowSkeleton = () => {
             width={56}
             height={9.62}
             sx={{
-              borderRadius: 13.5,
+              borderRadius: 6,
             }}
           />
         </ContainerItem>
@@ -46,7 +46,7 @@ export const HeaderRowSkeleton = () => {
             width={56}
             height={9.62}
             sx={{
-              borderRadius: 13.5,
+              borderRadius: 6,
             }}
           />
         </ContainerItem>
@@ -56,7 +56,7 @@ export const HeaderRowSkeleton = () => {
             width={56}
             height={9.62}
             sx={{
-              borderRadius: 13.5,
+              borderRadius: 6,
             }}
           />
         </ContainerItem>
@@ -69,7 +69,7 @@ export const HeaderRowSkeleton = () => {
             width={61}
             height={9.62}
             sx={{
-              borderRadius: 13.5,
+              borderRadius: 6,
             }}
           />
         </ContainerItem>
@@ -79,7 +79,7 @@ export const HeaderRowSkeleton = () => {
             width={61}
             height={9.62}
             sx={{
-              borderRadius: 13.5,
+              borderRadius: 6,
             }}
           />
         </ContainerItem>
@@ -89,7 +89,7 @@ export const HeaderRowSkeleton = () => {
             width={61}
             height={9.62}
             sx={{
-              borderRadius: 13.5,
+              borderRadius: 6,
             }}
           />
         </ContainerItem>
@@ -99,7 +99,7 @@ export const HeaderRowSkeleton = () => {
             width={61}
             height={9.62}
             sx={{
-              borderRadius: 13.5,
+              borderRadius: 6,
             }}
           />
         </ContainerItem>
@@ -109,7 +109,7 @@ export const HeaderRowSkeleton = () => {
             width={61}
             height={10.5}
             sx={{
-              borderRadius: 13.5,
+              borderRadius: 6,
             }}
           />
         </ContainerItem>
@@ -175,20 +175,24 @@ const Container = styled('div')(({ theme }) => ({
   justifyContent: 'space-between',
   width: '100%',
   padding: '16px 8px',
-  borderRadius: 6,
+  borderRadius: 12,
   minHeight: 48,
   overflow: 'hidden',
   alignItems: 'center',
-  background: theme.palette.mode === 'light' ? 'rgba(236, 239, 249, 0.50)' : 'rgb(64, 83, 97, 0.30)',
+  background: theme.palette.isLight ? theme.palette.colors.slate[50] : '#212630',
+
   [theme.breakpoints.up('tablet_768')]: {
     padding: '16px 0px 16px 8px',
   },
+
   [theme.breakpoints.up('desktop_1024')]: {
     padding: '16px 8px ',
   },
+
   [theme.breakpoints.up('desktop_1280')]: {
     padding: '8px 8px ',
   },
+
   [theme.breakpoints.up('desktop_1440')]: {
     padding: '16px 16px ',
   },
@@ -247,7 +251,7 @@ const TwoItemsSkeletonContainer = styled('div')(({ theme }) => ({
 }));
 
 const ItemStyledSkeleton = styled(Skeleton)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'light' ? '#D1DEE6' : '#31424E',
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.charcoal[800],
 }));
 
 const Mobile = styled('div')(({ theme }) => ({
