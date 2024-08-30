@@ -16,14 +16,22 @@ const BreakdownTableSkeleton = () => (
 
 export default BreakdownTableSkeleton;
 
-const Container = styled('div')({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 8,
-});
-
-const WrapperTable = styled('div')({
+const Container = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 16,
-});
+
+  [theme.breakpoints.up('desktop_1024')]: {
+    gap: 8,
+  },
+}));
+
+const WrapperTable = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 16,
+
+  [theme.breakpoints.up('desktop_1024')]: {
+    gap: 8,
+  },
+}));

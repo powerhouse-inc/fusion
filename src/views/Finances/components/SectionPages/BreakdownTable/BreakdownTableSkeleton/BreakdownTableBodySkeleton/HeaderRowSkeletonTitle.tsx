@@ -9,7 +9,7 @@ const HeaderRowSkeletonTitle = () => (
         width={38}
         height={9.62}
         sx={{
-          borderRadius: 13.5,
+          borderRadius: 6,
         }}
       />
       <ItemStyledSkeleton
@@ -17,7 +17,7 @@ const HeaderRowSkeletonTitle = () => (
         width={51}
         height={9.62}
         sx={{
-          borderRadius: 13.5,
+          borderRadius: 6,
         }}
       />
       <ItemStyledSkeleton
@@ -25,7 +25,7 @@ const HeaderRowSkeletonTitle = () => (
         width={39}
         height={9.62}
         sx={{
-          borderRadius: 13.5,
+          borderRadius: 6,
         }}
       />
     </Mobile>
@@ -36,7 +36,7 @@ const HeaderRowSkeletonTitle = () => (
         width={119}
         height={12.15}
         sx={{
-          borderRadius: 13.5,
+          borderRadius: 6,
         }}
       />
       <ItemStyledSkeleton
@@ -44,7 +44,7 @@ const HeaderRowSkeletonTitle = () => (
         width={90}
         height={12.15}
         sx={{
-          borderRadius: 13.5,
+          borderRadius: 6,
         }}
       />
     </Tablet>
@@ -55,7 +55,7 @@ const HeaderRowSkeletonTitle = () => (
         width={90}
         height={12.15}
         sx={{
-          borderRadius: 13.5,
+          borderRadius: 6,
         }}
       />
 
@@ -64,7 +64,7 @@ const HeaderRowSkeletonTitle = () => (
         width={119}
         height={12.15}
         sx={{
-          borderRadius: 13.5,
+          borderRadius: 6,
         }}
       />
     </Desk1024>
@@ -75,7 +75,7 @@ const HeaderRowSkeletonTitle = () => (
         width={190}
         height={12.15}
         sx={{
-          borderRadius: 13.5,
+          borderRadius: 6,
         }}
       />
     </Desk1280>
@@ -86,7 +86,7 @@ const HeaderRowSkeletonTitle = () => (
         width={160}
         height={12.51}
         sx={{
-          borderRadius: 13.5,
+          borderRadius: 6,
         }}
       />
     </Desk1440>
@@ -156,5 +156,5 @@ const Desk1440 = styled('div')(({ theme }) => ({
 }));
 
 const ItemStyledSkeleton = styled(Skeleton)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'light' ? '#D1DEE6' : '#31424E',
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.charcoal[800],
 }));

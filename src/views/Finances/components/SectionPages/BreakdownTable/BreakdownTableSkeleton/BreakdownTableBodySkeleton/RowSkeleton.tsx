@@ -17,7 +17,7 @@ const RowSkeleton: React.FC<Props> = ({ numberItemsHeader, numberWith, backgroun
         width={61}
         height={10}
         sx={{
-          borderRadius: 13.5,
+          borderRadius: 6,
         }}
       />
       <ItemStyledSkeleton
@@ -25,7 +25,7 @@ const RowSkeleton: React.FC<Props> = ({ numberItemsHeader, numberWith, backgroun
         width={61}
         height={10}
         sx={{
-          borderRadius: 13.5,
+          borderRadius: 6,
         }}
       />
     </TwoItemsSkeletonContainer>
@@ -40,7 +40,7 @@ const RowSkeleton: React.FC<Props> = ({ numberItemsHeader, numberWith, backgroun
               width={numberWith[index]}
               height={9.62}
               sx={{
-                borderRadius: 13.5,
+                borderRadius: 6,
               }}
             />
           ))}
@@ -54,7 +54,7 @@ const RowSkeleton: React.FC<Props> = ({ numberItemsHeader, numberWith, backgroun
             width={56}
             height={9.62}
             sx={{
-              borderRadius: 13.5,
+              borderRadius: 6,
             }}
           />
         </ContainerItem>
@@ -64,7 +64,7 @@ const RowSkeleton: React.FC<Props> = ({ numberItemsHeader, numberWith, backgroun
             width={56}
             height={9.62}
             sx={{
-              borderRadius: 13.5,
+              borderRadius: 6,
             }}
           />
         </ContainerItem>
@@ -74,7 +74,7 @@ const RowSkeleton: React.FC<Props> = ({ numberItemsHeader, numberWith, backgroun
             width={56}
             height={9.62}
             sx={{
-              borderRadius: 13.5,
+              borderRadius: 6,
             }}
           />
         </ContainerItem>
@@ -87,7 +87,7 @@ const RowSkeleton: React.FC<Props> = ({ numberItemsHeader, numberWith, backgroun
             width={56}
             height={9.62}
             sx={{
-              borderRadius: 13.5,
+              borderRadius: 6,
             }}
           />
         </ContainerItem>
@@ -97,7 +97,7 @@ const RowSkeleton: React.FC<Props> = ({ numberItemsHeader, numberWith, backgroun
             width={56}
             height={9.62}
             sx={{
-              borderRadius: 13.5,
+              borderRadius: 6,
             }}
           />
         </ContainerItem>
@@ -107,7 +107,7 @@ const RowSkeleton: React.FC<Props> = ({ numberItemsHeader, numberWith, backgroun
             width={56}
             height={9.62}
             sx={{
-              borderRadius: 13.5,
+              borderRadius: 6,
             }}
           />
         </ContainerItem>
@@ -117,7 +117,7 @@ const RowSkeleton: React.FC<Props> = ({ numberItemsHeader, numberWith, backgroun
             width={56}
             height={9.62}
             sx={{
-              borderRadius: 13.5,
+              borderRadius: 6,
             }}
           />
         </ContainerItem>
@@ -127,7 +127,7 @@ const RowSkeleton: React.FC<Props> = ({ numberItemsHeader, numberWith, backgroun
             width={56}
             height={9.62}
             sx={{
-              borderRadius: 13.5,
+              borderRadius: 6,
             }}
           />
         </ContainerItem>
@@ -264,7 +264,7 @@ const ContainerItemsHeader = styled('div')({
 });
 
 const ItemStyledSkeleton = styled(Skeleton)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'light' ? '#D1DEE6' : '#31424E',
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.charcoal[800],
 }));
 
 const Mobile = styled('div')(({ theme }) => ({
