@@ -166,6 +166,22 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
   const filters: Filter[] = [
     {
       type: 'select',
+      id: 'Granularity',
+      label: 'Granularity',
+      selected: selectedGranularity,
+      multiple: false,
+      onChange: (value: string | number | (string | number)[]) => {
+        setSelectedGranularity(value as AnalyticGranularity);
+      },
+      options: granularityItems,
+      withAll: false,
+      widthStyles: {
+        width: 'fit-content',
+        menuWidth: 350,
+      },
+    },
+    {
+      type: 'select',
       id: 'categories',
       label: 'Categories',
       selected: activeElements,
@@ -183,29 +199,21 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
         maxHeight: isMobile ? '100%' : 200,
         overflowY: 'auto',
       },
-      itemOptionStyles: {
-        height: 40,
-        alignItems: 'center',
-      },
-    },
-
-    {
-      type: 'select',
-      id: 'Granularity',
-      label: 'Granularity',
-      selected: selectedGranularity,
-      multiple: false,
-      onChange: (value: string | number | (string | number)[]) => {
-        setSelectedGranularity(value as AnalyticGranularity);
-      },
-      options: granularityItems,
-      withAll: false,
-      widthStyles: {
-        width: 'fit-content',
-        menuWidth: 350,
-      },
+      ...(!isMobile &&
+        !isTable && {
+          itemOptionStyles: {
+            height: 40,
+            alignItems: 'center',
+          },
+        }),
     },
   ];
+
+  const startPoint = useMemo(
+    () => items.length * 32 + 310,
+
+    [items.length]
+  );
   return {
     titleChart,
     legendItems,
@@ -222,5 +230,6 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
     canReset,
     onReset,
     filters,
+    startPoint,
   };
 };

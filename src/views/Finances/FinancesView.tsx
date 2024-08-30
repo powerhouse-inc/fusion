@@ -43,7 +43,6 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
     code,
     isMobile,
   } = useFinancesView(budgets, allBudgets, initialYear);
-
   return (
     <PageContainer>
       <SEOHead
@@ -152,6 +151,7 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
               canReset={reserveChart.canReset}
               onReset={reserveChart.onReset}
               filters={reserveChart.filters}
+              startPoint={reserveChart.startPoint}
             />
           </ContainerReservesWaterfallChart>
         </Container>
