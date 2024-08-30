@@ -76,9 +76,9 @@ const ExpenseReports: FC<Props> = ({
       {!isLoading &&
         !((expenseReportResponse.data?.[(expenseReportResponse.data?.length ?? 0) - 1]?.length ?? 0) < 10) && (
           <ContainerButton>
-            <DividerStyle />
+            <DividerStyled />
             <BigButtonStyled title={'Load More'} onClick={() => expenseReportResponse.setSize((size) => size + 1)} />
-            <DividerStyle />
+            <DividerStyled />
           </ContainerButton>
         )}
     </Container>
@@ -133,22 +133,40 @@ const ContainerButton = styled('div')(() => ({
   marginTop: 24,
 }));
 
-const DividerStyle = styled('div')(({ theme }) => ({
-  backgroundColor: theme.palette.isLight ? '#D4D9E1' : '#405361',
-  height: 1,
+const DividerStyled = styled('div')(({ theme }) => ({
   display: 'flex',
   flex: 1,
+  borderBottom: `1px solid ${
+    theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.charcoal[800]
+  }`,
+  '&:has(+ button:hover)': {
+    borderColor: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700],
+  },
 }));
 
 const BigButtonStyled = styled(BigButton)(({ theme }) => ({
   minWidth: 127,
   height: 31,
+  fontWeight: 600,
+  lineHeight: '15px',
   padding: '8px 24px',
   letterSpacing: 1,
-  color: '#708390',
+
+  '&:hover': {
+    borderColor: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700],
+    color: theme.palette.isLight ? theme.palette.colors.slate[300] : theme.palette.colors.charcoal[600],
+    backgroundColor: 'transparent',
+    '& + div': {
+      borderColor: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700],
+    },
+  },
+  '&:active, &:focus': {
+    backgroundColor: 'transparent',
+  },
 
   [theme.breakpoints.up('tablet_768')]: {
     minWidth: 207,
+    padding: '8px 64px',
   },
 }));
 
