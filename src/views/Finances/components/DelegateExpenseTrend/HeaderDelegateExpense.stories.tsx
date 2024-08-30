@@ -6,7 +6,13 @@ import type { Meta } from '@storybook/react';
 const meta: Meta<typeof HeaderDelegateExpense> = {
   title: 'Fusion/Views/Finances/HeaderDelegateExpense',
   component: HeaderDelegateExpense,
+  parameters: {
+    chromatic: {
+      viewports: [1024, 1280, 1440],
+    },
+  },
 };
+
 export default meta;
 
 const variantsArgs = [
@@ -22,47 +28,33 @@ const [[HeaderDelegate, HeaderDelegateDark], [HeaderDelegate1024, HeaderDelegate
   HeaderDelegateExpense,
   variantsArgs
 );
+
 export { HeaderDelegate, HeaderDelegateDark, HeaderDelegate1024, HeaderDelegate1024Dark };
 
 HeaderDelegate.parameters = {
   chromatic: {
-    viewports: [1280, 1440, 1920],
+    viewports: [1280, 1440],
   },
   figma: {
     component: {
       1280: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=22935:214492&mode=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-5135&m=dev',
         options: {
           style: {
-            left: -40,
-            top: -20,
+            left: -14,
+            top: -11,
           },
           componentStyle: {
-            width: 1184,
+            width: 1200,
           },
         },
       },
       1440: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=22935:200754&mode=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=8660-57194&m=dev',
         options: {
           style: {
-            left: -40,
-            top: -20,
-          },
-          componentStyle: {
-            width: 1312,
-          },
-        },
-      },
-      1920: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=22935:205054&mode=dev',
-        options: {
-          style: {
-            left: -40,
-            top: -22,
+            left: -14,
+            top: -11,
           },
           componentStyle: {
             width: 1312,
@@ -80,12 +72,11 @@ HeaderDelegate1024.parameters = {
   figma: {
     component: {
       1024: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=24542:204278&mode=design&t=y0gKYTesgoKVR9cb-4',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-7714&m=dev',
         options: {
           style: {
-            left: -40,
-            top: -20,
+            left: -14,
+            top: -11,
           },
           componentStyle: {
             width: 960,
@@ -95,5 +86,6 @@ HeaderDelegate1024.parameters = {
     },
   },
 };
-HeaderDelegate1024Dark.parameters = {};
+
 HeaderDelegateDark.parameters = {};
+HeaderDelegate1024Dark.parameters = {};
