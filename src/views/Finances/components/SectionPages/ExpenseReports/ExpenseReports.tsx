@@ -1,5 +1,4 @@
 import { styled } from '@mui/material';
-import { Fragment } from 'react';
 import TableEmptyState from '@/components/TableEmptyState/TableEmptyState';
 import BigButton from '@/views/CoreUnitAbout/components/Button/BigButton/BigButton';
 import FinancesTitle from '@/views/Finances/components/FinancesTitle/FinancesTitle';
@@ -40,7 +39,7 @@ const ExpenseReports: FC<Props> = ({
       <HeaderContainer>
         <FinancesTitle
           year={year}
-          title="Expense Reports"
+          title="Budget Statements"
           tooltip={
             <TooltipContent>
               <p>
@@ -63,13 +62,11 @@ const ExpenseReports: FC<Props> = ({
         </Header>
       )}
       <ItemSection>
-        {expenseReportResponse.data?.map((page, index) => (
-          <Fragment key={`page-${index}`}>
-            {page.map((budget) => (
-              <DelegateExpenseTrendItem key={index} budget={budget} selectedMetric={filterProps.selectedMetric} />
-            ))}
-          </Fragment>
-        ))}
+        {expenseReportResponse.data?.map((page) =>
+          page.map((budget) => (
+            <DelegateExpenseTrendItem key={budget.id} budget={budget} selectedMetric={filterProps.selectedMetric} />
+          ))
+        )}
         {isLoading && <ExpenseReportsItemsSkeleton />}
         {!hasExpenseReport && (
           <TableEmptyState description="There are no contributors available with this combination of filters" />
@@ -80,10 +77,7 @@ const ExpenseReports: FC<Props> = ({
         !((expenseReportResponse.data?.[(expenseReportResponse.data?.length ?? 0) - 1]?.length ?? 0) < 10) && (
           <ContainerButton>
             <DividerStyle />
-            <BigButtonStyled
-              title={'Load More'}
-              onClick={() => expenseReportResponse.setSize(expenseReportResponse.size + 1)}
-            />
+            <BigButtonStyled title={'Load More'} onClick={() => expenseReportResponse.setSize((size) => size + 1)} />
             <DividerStyle />
           </ContainerButton>
         )}
@@ -131,16 +125,12 @@ const Header = styled('div')(({ theme }) => ({
   },
 }));
 
-const ContainerButton = styled('div')(({ theme }) => ({
+const ContainerButton = styled('div')(() => ({
   width: '100%',
   display: 'flex',
   flex: 1,
   alignItems: 'center',
   marginTop: 24,
-
-  [theme.breakpoints.up('tablet_768')]: {
-    marginTop: 40,
-  },
 }));
 
 const DividerStyle = styled('div')(({ theme }) => ({

@@ -345,7 +345,9 @@ export const getHeadersExpenseReport = (
   {
     header:
       selectedMetric === 'ProtocolNetOutflow'
-        ? 'Protocol Outflow'
+        ? isSmallDesk
+          ? 'Prtcol Outflow'
+          : 'Protocol Outflow'
         : selectedMetric === 'PaymentsOnChain'
         ? 'Net On-Chain'
         : selectedMetric,
