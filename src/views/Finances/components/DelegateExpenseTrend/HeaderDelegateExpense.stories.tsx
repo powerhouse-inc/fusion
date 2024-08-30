@@ -41,8 +41,8 @@ HeaderDelegate.parameters = {
         component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-5135&m=dev',
         options: {
           style: {
-            left: -40,
-            top: -20,
+            left: -14,
+            top: -11,
           },
           componentStyle: {
             width: 1200,
@@ -53,8 +53,8 @@ HeaderDelegate.parameters = {
         component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=8660-57194&m=dev',
         options: {
           style: {
-            left: -40,
-            top: -20,
+            left: -14,
+            top: -11,
           },
           componentStyle: {
             width: 1312,
@@ -75,8 +75,8 @@ HeaderDelegate1024.parameters = {
         component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-7714&m=dev',
         options: {
           style: {
-            left: -40,
-            top: -20,
+            left: -14,
+            top: -11,
           },
           componentStyle: {
             width: 960,

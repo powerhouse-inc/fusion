@@ -38,8 +38,8 @@ DelegateExpense.parameters = {
         component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-13799&m=dev',
         options: {
           style: {
-            left: -40,
-            top: -20,
+            left: -4,
+            top: -1,
           },
           componentStyle: {
             width: 343,
@@ -50,8 +50,8 @@ DelegateExpense.parameters = {
         component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-11846&m=dev',
         options: {
           style: {
-            left: -12,
-            top: -8,
+            left: -4,
+            top: -2,
           },
           componentStyle: {
             width: 704,
@@ -62,8 +62,8 @@ DelegateExpense.parameters = {
         component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-7727&m=dev',
         options: {
           style: {
-            left: -1,
-            top: -1,
+            left: -14,
+            top: -11,
           },
           componentStyle: {
             width: 960,
@@ -74,8 +74,8 @@ DelegateExpense.parameters = {
         component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-5148&m=dev',
         options: {
           style: {
-            left: -4,
-            top: -2,
+            left: -14,
+            top: -11,
           },
           componentStyle: {
             width: 1200,
@@ -86,8 +86,8 @@ DelegateExpense.parameters = {
         component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=8660-57207&m=dev',
         options: {
           style: {
-            left: -4,
-            top: -2,
+            left: -14,
+            top: -10,
           },
           componentStyle: {
             width: 1312,

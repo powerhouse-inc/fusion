@@ -65,7 +65,7 @@ LightMode.parameters = {
           },
           style: {
             top: 0,
-            left: -40,
+            left: -5,
           },
         },
       },
@@ -76,8 +76,8 @@ LightMode.parameters = {
             width: 704,
           },
           style: {
-            top: -1,
-            left: -12,
+            top: 0,
+            left: -5,
           },
         },
       },
@@ -88,8 +88,8 @@ LightMode.parameters = {
             width: 1200,
           },
           style: {
-            top: -1,
-            left: -1,
+            top: 0,
+            left: -2,
           },
         },
       },
@@ -100,8 +100,8 @@ LightMode.parameters = {
             width: 1312,
           },
           style: {
-            top: -1,
-            left: -1,
+            top: 0,
+            left: -2,
           },
         },
       },
@@ -122,8 +122,8 @@ Desk1024LightMode.parameters = {
             width: 960,
           },
           style: {
-            top: -1,
-            left: -2,
+            top: 0,
+            left: 0,
           },
         },
       },
