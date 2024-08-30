@@ -55,7 +55,13 @@ const SelectAsList: React.FC<SelectAsListProps> = ({ filter, onClose }) => {
           </CustomOption>
         )}
         {filter.options.map((option) => (
-          <CustomOption key={option.value} onClick={() => handleChange(option.value)} isSelected={isActive(option)}>
+          <CustomOption
+            key={option.value}
+            onClick={() => handleChange(option.value)}
+            isSelected={isActive(option)}
+            height={filter.itemOptionStyles?.height}
+            alignItems={filter.itemOptionStyles?.alignItems}
+          >
             {filter.customOptionsRender ? filter.customOptionsRender(option, isActive(option), theme) : option.label}
             {filter.multiple && (
               <CheckIcon className={`check ${isActive(option) ? 'active' : ''}`} width={16} height={16} />
@@ -86,9 +92,14 @@ const SelectContainer = styled('div')<{
   overflowY: customOverflowY || 'hidden',
 }));
 
-const CustomOption = styled('div')<{ isSelected: boolean }>(({ theme, isSelected }) => ({
+const CustomOption = styled('div')<{
+  isSelected: boolean;
+  height?: CSSProperties['height'];
+  alignItems?: CSSProperties['alignItems'];
+}>(({ theme, isSelected, height = 32, alignItems }) => ({
   padding: '4px 8px',
-  height: '32px',
+  height,
+  alignItems,
   fontSize: 14,
   fontWeight: isSelected ? 600 : 400,
   lineHeight: '22px',

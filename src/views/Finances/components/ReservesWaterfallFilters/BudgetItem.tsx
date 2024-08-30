@@ -24,8 +24,8 @@ const Container = styled(Box)(({ theme }) => ({
   display: 'flex',
   position: 'relative',
   height: '100%',
-
   gap: 8,
+  alignItems: 'center',
   [theme.breakpoints.up('tablet_768')]: {
     gap: 16,
   },
@@ -47,10 +47,10 @@ const ImageContainer = styled('div')(({ theme }) => ({
     ? 'filter: drop-shadow(1.524px 3.048px 5.333px rgba(25, 144, 255, 0.20))'
     : 'filter: drop-shadow(2px 4px 7px rgba(26, 171, 155, 0.25))',
   [theme.breakpoints.up('tablet_768')]: {
-    width: 24,
-    height: 24,
-    minWidth: 24,
-    minHeight: 24,
+    width: 32,
+    height: 32,
+    minWidth: 32,
+    minHeight: 32,
   },
 }));
 
