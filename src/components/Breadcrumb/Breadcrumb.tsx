@@ -1,9 +1,9 @@
-import { Link, styled, useMediaQuery } from '@mui/material';
+import { styled } from '@mui/material';
+import Link from 'next/link';
 import AngleRight from 'public/assets/svg/angle_right.svg';
 import { useEffect, useId, useMemo, useState } from 'react';
 import Container from '@/components/Container/Container';
 import DotsSegment from './DotsSegment';
-import type { Theme } from '@mui/material';
 
 export interface BreadcrumbItem {
   label: string;
@@ -21,11 +21,12 @@ interface BreadcrumbProps {
   items: BreadcrumbItem[];
   rightContent?: React.ReactElement;
   withMenusOpened?: boolean; // to manage the menu in the stories
+  maxSegmentWidthMobile?: number;
   className?: string;
 }
 
 const MAX_ALLOWED_WIDTH = 250;
-const MAX_ALLOWED_WIDTH_MOBILE = 100;
+const MAX_SEGMENT_WIDTH_MOBILE_DEFAULT = 100;
 const THREE_DOTS_WIDTH = 60;
 
 const getTextWidth = (text: string, font: string) => {
@@ -44,13 +45,16 @@ const getTextWidth = (text: string, font: string) => {
   return metrics.width;
 };
 
-const Breadcrumb: React.FC<BreadcrumbProps> = ({ items, rightContent, withMenusOpened = false, className }) => {
+const Breadcrumb: React.FC<BreadcrumbProps> = ({
+  items,
+  rightContent,
+  withMenusOpened = false,
+  className,
+  maxSegmentWidthMobile = MAX_SEGMENT_WIDTH_MOBILE_DEFAULT,
+}) => {
   const [mounted, setMounted] = useState<boolean>(false);
   const contentId = useId();
   const rightPartId = useId();
-  const isMobileOrTablet = useMediaQuery((theme: Theme) => theme.breakpoints.down('desktop_1024'), {
-    defaultMatches: true,
-  });
 
   useEffect(() => {
     // trigger a re-render to calculate the segments width avoiding undefined document issues
@@ -59,6 +63,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items, rightContent, withMenusO
 
   // adjust the segments width based on the content and right part width
   const [elementWidths, setElementWidths] = useState<[number, number]>([0, 0]);
+
   useEffect(() => {
     const contentElement = document.getElementById(contentId);
     const rightPartElement = document.getElementById(rightPartId);
@@ -78,6 +83,9 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items, rightContent, withMenusO
       contentObserver.observe(contentElement);
       rightPartObserver.observe(rightPartElement);
     }
+
+    // Initial width calculation
+    getWidths();
 
     return () => {
       // remove the observers when the component is unmounted
@@ -105,90 +113,69 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items, rightContent, withMenusO
     return itemsExtended;
   }, [items, mounted]);
 
-  const [groupedItems, setGroupedItems] = useState<BreadcrumbItemExtended[]>(() => {
-    if (itemsExtended.length > 3) {
-      return [
-        itemsExtended[0],
-        {
-          label: '...',
-          href: '',
-          labelWidth: 0,
-          recommendedWidth: THREE_DOTS_WIDTH,
-          attachedItems: itemsExtended.slice(1, itemsExtended.length - 2),
-        },
-        // 2 last items
-        ...itemsExtended.slice(-2),
-      ];
-    }
-    return itemsExtended;
-  });
-
-  // group items in segments to show at most 3 items
-  useEffect(() => {
+  const groupedItems = useMemo(() => {
     if (itemsExtended.length <= 3) {
-      setGroupedItems(itemsExtended);
-    } else {
-      setGroupedItems([
-        itemsExtended[0],
-        {
-          label: '...',
-          href: '',
-          labelWidth: 0,
-          recommendedWidth: THREE_DOTS_WIDTH,
-          attachedItems: itemsExtended.slice(1, itemsExtended.length - 2),
-        },
-        // 2 last items
-        ...itemsExtended.slice(-2),
-      ]);
+      return itemsExtended;
     }
+    return [
+      itemsExtended[0],
+      {
+        label: '...',
+        href: '',
+        labelWidth: 0,
+        recommendedWidth: THREE_DOTS_WIDTH,
+        attachedItems: itemsExtended.slice(1, itemsExtended.length - 2),
+      },
+      ...itemsExtended.slice(-2),
+    ];
   }, [itemsExtended]);
 
   const separator = <AngleRight width={24} height={24} />;
-  const mobileRecommendedSegmentWidth = elementWidths[0] - elementWidths[1] - 64 - 16;
+  const mobileRecommendedSegmentWidth = mounted
+    ? Math.max(10, (elementWidths[0] ?? 0) - (elementWidths[1] ?? 0) - 64 - 16)
+    : undefined;
 
   return (
     <Wrapper className={className}>
       <BreadcrumbCard>
         <Container>
           <Content id={contentId}>
-            <SegmentsContainer>
-              {isMobileOrTablet ? (
-                <>
-                  {itemsExtended.length > 1 && (
-                    <Segment>
-                      <DotsSegment items={items} defaultOpen={withMenusOpened} />
-                      {separator}
-                    </Segment>
-                  )}
-                  <Segment maxWidth={mobileRecommendedSegmentWidth < 10 ? 10 : mobileRecommendedSegmentWidth}>
-                    <EllipseSegment>{itemsExtended?.[itemsExtended.length - 1]?.label}</EllipseSegment>
-                  </Segment>
-                </>
-              ) : (
-                groupedItems.map((item, index) => (
-                  <Segment key={item.label} maxWidth={item.recommendedWidth}>
-                    {index !== groupedItems.length - 1 ? (
-                      item.label === '...' ? (
-                        <>
-                          <DotsSegment items={item.attachedItems ?? []} defaultOpen={withMenusOpened} />
-                          {separator}
-                        </>
-                      ) : (
-                        <>
-                          <Link href={item.href}>
-                            <EllipseSegment>{item.label}</EllipseSegment>
-                            {item.number !== undefined && item.number !== null ? <b>({item.number})</b> : null}
-                          </Link>{' '}
-                          {separator}
-                        </>
-                      )
-                    ) : (
-                      <EllipseSegment>{item.label}</EllipseSegment>
-                    )}
-                  </Segment>
-                ))
+            <MobileAndTablet>
+              {itemsExtended.length > 1 && (
+                <Segment>
+                  <DotsSegment items={items} defaultOpen={withMenusOpened} />
+                  {separator}
+                </Segment>
               )}
-            </SegmentsContainer>
+
+              <Segment maxWidth={mobileRecommendedSegmentWidth} maxSegmentWidthMobile={maxSegmentWidthMobile}>
+                <EllipseSegment>{itemsExtended?.[itemsExtended.length - 1]?.label}</EllipseSegment>
+              </Segment>
+            </MobileAndTablet>
+            <Desktop>
+              {groupedItems.map((item, index) => (
+                <Segment key={item.label} maxWidth={item.recommendedWidth}>
+                  {index !== groupedItems.length - 1 ? (
+                    item.label === '...' ? (
+                      <>
+                        <DotsSegment items={item.attachedItems ?? []} defaultOpen={withMenusOpened} />
+                        {separator}
+                      </>
+                    ) : (
+                      <>
+                        <Link href={item.href}>
+                          <EllipseSegment>{item.label}</EllipseSegment>
+                          {item.number !== undefined && item.number !== null ? <b>({item.number})</b> : null}
+                        </Link>{' '}
+                        {separator}
+                      </>
+                    )
+                  ) : (
+                    <EllipseSegment>{item.label}</EllipseSegment>
+                  )}
+                </Segment>
+              ))}
+            </Desktop>
 
             <RightContentContainer id={rightPartId}>{rightContent}</RightContentContainer>
           </Content>
@@ -250,49 +237,67 @@ const SegmentsContainer = styled('div')(() => ({
   width: '100%',
 }));
 
-const Segment = styled('div')<{ maxWidth?: number }>(({ theme, maxWidth }) => ({
+const MobileAndTablet = styled(SegmentsContainer)(({ theme }) => ({
   display: 'flex',
-  alignItems: 'center',
-  gap: 4,
-  fontSize: 16,
-  lineHeight: '24px',
-  fontWeight: 600,
-  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.charcoal[100],
-  maxWidth: maxWidth || MAX_ALLOWED_WIDTH_MOBILE,
 
-  '& a': {
-    color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[300],
-    textDecoration: 'none',
-    fontWeight: 400,
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  },
-
-  '& b': {
-    fontWeight: 600,
-    lineHeight: '21px',
-    marginLeft: 4,
-  },
-
-  '& svg': {
-    minWidth: 24,
-  },
-
-  '&:hover': {
-    a: {
-      color: theme.palette.colors.slate[200],
-    },
-
-    b: {
-      color: theme.palette.isLight ? theme.palette.colors.slate[200] : theme.palette.colors.slate[100],
-    },
-
-    'svg path': {
-      fill: theme.palette.isLight ? theme.palette.colors.slate[300] : theme.palette.colors.slate[200],
-    },
+  [theme.breakpoints.up('desktop_1024')]: {
+    display: 'none',
   },
 }));
+
+const Desktop = styled(SegmentsContainer)(({ theme }) => ({
+  display: 'none',
+
+  [theme.breakpoints.up('desktop_1024')]: {
+    display: 'flex',
+  },
+}));
+
+const Segment = styled('div')<{ maxWidth?: number; maxSegmentWidthMobile?: number }>(
+  ({ theme, maxWidth, maxSegmentWidthMobile }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    gap: 4,
+    fontSize: 16,
+    lineHeight: '24px',
+    fontWeight: 600,
+    color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.charcoal[100],
+    maxWidth: maxWidth || maxSegmentWidthMobile || MAX_SEGMENT_WIDTH_MOBILE_DEFAULT,
+
+    '& a': {
+      color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[300],
+      textDecoration: 'none',
+      fontWeight: 400,
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+    },
+
+    '& b': {
+      fontWeight: 600,
+      lineHeight: '21px',
+      marginLeft: 4,
+    },
+
+    '& svg': {
+      minWidth: 24,
+    },
+
+    '&:hover': {
+      a: {
+        color: theme.palette.colors.slate[200],
+      },
+
+      b: {
+        color: theme.palette.isLight ? theme.palette.colors.slate[200] : theme.palette.colors.slate[100],
+      },
+
+      'svg path': {
+        fill: theme.palette.isLight ? theme.palette.colors.slate[300] : theme.palette.colors.slate[200],
+      },
+    },
+  })
+);
 
 const EllipseSegment = styled('span')(() => ({
   whiteSpace: 'nowrap',
