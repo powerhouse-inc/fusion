@@ -1,12 +1,11 @@
-import { styled } from '@mui/material';
+import { styled, useTheme } from '@mui/material';
 import { Close } from '@ses/components/svg/close';
 import { useBudgetMetricsModalContext } from '@ses/core/context/BudgetMetricsModalContext';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
 import SimpleBar from 'simplebar-react';
 import BasicModal from '@/components/AdvancedInnerTable/BasicModal/BasicModal';
 
 const BudgetMetricsModal: React.FC = () => {
-  const { isLight } = useThemeContext();
+  const theme = useTheme();
   const { openModal, handleOpenModal } = useBudgetMetricsModalContext();
 
   return (
@@ -16,8 +15,8 @@ const BudgetMetricsModal: React.FC = () => {
       slotProps={{
         backdrop: {
           sx: {
-            background: isLight ? 'rgba(52, 52, 66, 0.1)' : 'rgba(0, 22, 78, 0.1)',
-            backdropFilter: isLight ? 'blur(4px);' : 'blur(4px)',
+            background: theme.palette.isLight ? 'rgba(37, 42, 52, 0.10)' : 'rgba(37, 42, 52, 0.10)',
+            backdropFilter: 'blur(2.5px)',
           },
         },
       }}
@@ -25,7 +24,7 @@ const BudgetMetricsModal: React.FC = () => {
       <Container>
         <Header>
           <ContainerTitle>
-            <MetricTitle>About budget metrics</MetricTitle>
+            <ModalTitle>About budget metrics</ModalTitle>
             <ContainerClose>
               <StyledClose onClick={handleOpenModal} />
             </ContainerClose>
@@ -35,7 +34,7 @@ const BudgetMetricsModal: React.FC = () => {
           </ContainerDescription>
         </Header>
         <ContainerScroll>
-          <SimpleBarStyled scrollbarMaxSize={64}>
+          <SimpleBarStyled>
             <InsideModal>
               <MetricItem>
                 <MetricTitle>Budget</MetricTitle>
@@ -96,11 +95,11 @@ const BasicModalExtended = styled(BasicModal)(({ theme }) => ({
     width: 'max(90%, 770px)',
     height: 'calc(100% - 128px)',
     marginBottom: 64,
-    maxHeight: 558,
+    maxHeight: 532,
   },
 
   [theme.breakpoints.up('desktop_1024')]: {
-    maxWidth: 729,
+    maxWidth: 928,
   },
 }));
 
@@ -109,13 +108,10 @@ const Container = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   overflowY: 'auto',
   height: '100%',
-  background: theme.palette.mode === 'light' ? '#FFFFFF' : '#10191F',
-  boxShadow:
-    theme.palette.mode === 'light'
-      ? '0px 20px 40px rgba(219, 227, 237, 0.4), 0px 1px 3px rgba(190, 190, 190, 0.25)'
-      : '10px 15px 20px 6px rgba(20, 0, 141, 0.1)',
-  borderTopLeftRadius: '6px',
-  borderTopRightRadius: '6px',
+  background: theme.palette.isLight ? '#fff' : theme.palette.colors.charcoal[900],
+  boxShadow: theme.palette.isLight ? theme.fusionShadows.modules : theme.fusionShadows.darkMode,
+  borderTopLeftRadius: '12px',
+  borderTopRightRadius: '12px',
   paddingBottom: 16,
 
   '::-webkit-scrollbar': {
@@ -127,32 +123,23 @@ const Container = styled('div')(({ theme }) => ({
   },
 
   [theme.breakpoints.up('desktop_1024')]: {
-    maxWidth: 729,
+    maxWidth: 928,
     paddingBottom: 32,
   },
 }));
 
 const Header = styled('div')(({ theme }) => ({
-  paddingLeft: 16,
-  paddingRight: 16,
-  paddingTop: 16,
-  paddingBottom: 19,
+  padding: '16px 16px 19px',
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
   borderTopLeftRadius: 16,
   borderTopRightRadius: 16,
-  background: theme.palette.mode === 'light' ? '#FFFFFF' : '#10191F',
-  boxShadow:
-    theme.palette.mode === 'light'
-      ? '0px 20px 40px rgba(219, 227, 237, 0.4), 0px 1px 3px rgba(190, 190, 190, 0.25)'
-      : ' 10px 15px 20px 6px rgba(20, 0, 141, 0.1)',
+  background: theme.palette.isLight ? '#FFFFFF' : theme.palette.colors.charcoal[900],
+  boxShadow: theme.palette.isLight ? theme.fusionShadows.modules : theme.fusionShadows.darkMode,
 
   [theme.breakpoints.up('tablet_768')]: {
-    paddingLeft: 24,
-    paddingRight: 24,
-    paddingTop: 24,
-    paddingBottom: 16,
+    padding: '24px 24px 16px',
   },
 
   [theme.breakpoints.up('desktop_1024')]: {
@@ -174,19 +161,18 @@ const ContainerTitle = styled('div')(({ theme }) => ({
 }));
 
 const Description = styled('div')(({ theme }) => ({
-  fontWeight: 400,
+  fontWeight: 600,
   fontSize: 14,
   lineHeight: '17px',
   fontFamily: 'Inter, sans-serif',
   fontStyle: 'normal',
-  color: theme.palette.mode === 'light' ? '#231536' : '#D2D4EF',
+  color: theme.palette.isLight ? theme.palette.colors.gray[500] : theme.palette.colors.gray[600],
   width: '100%',
 
   [theme.breakpoints.up('tablet_768')]: {
     width: 435,
-    fontWeight: 400,
     fontSize: 16,
-    lineHeight: '22px',
+    lineHeight: '24px',
     alignItems: 'baseline',
   },
 
@@ -248,7 +234,7 @@ const SimpleBarStyled = styled(SimpleBar)(({ theme }) => ({
   '.simplebar-scrollbar::before': {
     width: 4,
     marginLeft: 4,
-    background: '#1aab9b',
+    background: theme.palette.isLight ? theme.palette.colors.slate[400] : theme.palette.colors.slate[300],
     borderRadius: 20,
   },
 
@@ -268,7 +254,7 @@ const SimpleBarStyled = styled(SimpleBar)(({ theme }) => ({
 const InsideModal = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: 32,
+  gap: 24,
   padding: '16px 16px 0',
 
   [theme.breakpoints.up('tablet_768')]: {
@@ -295,28 +281,41 @@ const MetricItem = styled('div')(() => ({
   gap: 8,
 }));
 
+const ModalTitle = styled('div')(({ theme }) => ({
+  fontWeight: 700,
+  fontSize: 14,
+  lineHeight: '18px',
+  fontStyle: 'normal',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
+
+  [theme.breakpoints.up('tablet_768')]: {
+    fontSize: 20,
+    lineHeight: '120%',
+  },
+}));
+
 const MetricTitle = styled('div')(({ theme }) => ({
   fontWeight: 700,
   fontSize: 14,
-  lineHeight: '17px',
+  lineHeight: '18px',
   fontStyle: 'normal',
-  color: theme.palette.mode === 'light' ? '#231536' : '#D2D4EF',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
 
   [theme.breakpoints.up('tablet_768')]: {
-    fontSize: 16,
-    lineHeight: '19px',
+    fontSize: 18,
+    lineHeight: '120%',
   },
 }));
 
 const MetricDescription = styled('div')(({ theme }) => ({
-  fontWeight: 400,
+  fontWeight: 500,
   fontSize: 14,
   lineHeight: '17px',
   fontStyle: 'normal',
-  color: theme.palette.mode === 'light' ? '#231536' : '#D2D4EF',
+  color: theme.palette.isLight ? theme.palette.colors.gray[500] : theme.palette.colors.gray[600],
 
   [theme.breakpoints.up('tablet_768')]: {
     fontSize: 16,
-    lineHeight: '22px',
+    lineHeight: '24px',
   },
 }));
