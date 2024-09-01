@@ -121,8 +121,18 @@ const ContainerCardsNavigation = styled('div')<{ showSwiper: boolean; isCompact:
       gap: 24,
     },
 
+    // if there is only one item, we need to show the item in just one column
+    ...(items === 1 && {
+      [theme.breakpoints.up('desktop_1024')]: {
+        '& > div:nth-of-type(1)': {
+          maxWidth: 'calc(33.333333% - 16px)',
+        },
+      },
+    }),
+
     [theme.breakpoints.up('desktop_1280')]: {
       gap: 32,
+
       ...(showSwiper
         ? {
             margin: isCompact ? '0 -8px 0 -16px' : '0 -8px',
@@ -133,6 +143,14 @@ const ContainerCardsNavigation = styled('div')<{ showSwiper: boolean; isCompact:
               maxWidth: `calc(100% / ${items} - ${Math.abs(32 / items - 32)}px)`,
             },
           }),
+
+      // if there is only one item, we need to show the item in just one column
+      ...(items === 1 && {
+        '& > div:nth-of-type(1)': {
+          maxWidth: 'calc(33.333333% - 21.333px)',
+          minWidth: 'calc(33.333333% - 21.333px)',
+        },
+      }),
     },
   })
 );
