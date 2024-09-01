@@ -245,20 +245,17 @@ export const useCardChartOverview = (
   const changeAlignment = numberItems > 4;
 
   const showSwiper = ((isTable || isDesk1024) && numberItems >= 4) || (isDesk1280 && numberItems >= 10);
+  const isDeepLevel = doughnutSeriesData.length > 6;
 
-  const numberSliderPerLevel = isTable
-    ? numberItems >= 4 && levelNumber < 3
-      ? 3
-      : 5
-    : isDesk1024
-    ? numberItems >= 4 && levelNumber < 3
-      ? 3
-      : 5
-    : isDesk1280
-    ? numberItems >= 10
-      ? 12
-      : 5
-    : 5;
+  const numberSliderPerLevel = (() => {
+    if (isTable || isDesk1024) {
+      return isDeepLevel ? 5 : 3;
+    }
+    if (isDesk1280) {
+      return numberItems >= 10 ? 12 : 5;
+    }
+    return 5;
+  })();
 
   return {
     paymentsOnChain: isHasSubLevels ? metric.paymentsOnChain : budgetWithNotChildren.paymentsOnChain,
