@@ -8,10 +8,12 @@ import type { Filter } from './types';
 interface FilterListProps {
   filters: Filter[];
   handleClose: () => void;
+  // Add this props many items and want to add scroll
+  heightForScroll?: boolean;
 }
 
-const FilterList: React.FC<FilterListProps> = ({ filters, handleClose }) => (
-  <SimpleBarStyled>
+const FilterList: React.FC<FilterListProps> = ({ filters, handleClose, heightForScroll = false }) => (
+  <SimpleBarStyled heightForScroll={heightForScroll}>
     <Container>
       {filters.map((filter) => {
         switch (filter.type) {
@@ -42,12 +44,13 @@ const Container = styled('div')(() => ({
   padding: '0 16px',
 }));
 
-const SimpleBarStyled = styled(SimpleBar)(({ theme }) => ({
+const SimpleBarStyled = styled(SimpleBar)<{ heightForScroll?: boolean }>(({ theme, heightForScroll }) => ({
   overflowY: 'auto',
   maxHeight: '100%',
   '.simplebar-scrollbar::before': {
     width: 4,
     marginLeft: 0,
+    height: 64,
     background: theme.palette.isLight ? theme.palette.colors.charcoal[500] : theme.palette.colors.charcoal[700],
     borderRadius: 12,
   },
@@ -55,6 +58,6 @@ const SimpleBarStyled = styled(SimpleBar)(({ theme }) => ({
     maxHeight: '450px',
   },
   [theme.breakpoints.up('desktop_1024')]: {
-    maxHeight: '100%',
+    maxHeight: heightForScroll ? 496 : '100%',
   },
 }));

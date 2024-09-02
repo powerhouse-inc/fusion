@@ -12,6 +12,7 @@ interface FilterTabletProps {
   searchFilter?: SearchFilter;
   resetFilters?: ResetFilter;
   anchorEl: MutableRefObject<HTMLDivElement | null>;
+  heightForScroll?: boolean;
 }
 
 const FilterTablet: React.FC<FilterTabletProps> = ({
@@ -21,6 +22,7 @@ const FilterTablet: React.FC<FilterTabletProps> = ({
   searchFilter,
   anchorEl,
   resetFilters,
+  heightForScroll,
 }) => {
   const theme = useTheme();
   return (
@@ -47,7 +49,7 @@ const FilterTablet: React.FC<FilterTabletProps> = ({
           />
         </FullWidthSearch>
       )}
-      <FilterList filters={filters} handleClose={handleClose} />
+      <FilterList filters={filters} handleClose={handleClose} heightForScroll={heightForScroll} />
     </Popover>
   );
 };

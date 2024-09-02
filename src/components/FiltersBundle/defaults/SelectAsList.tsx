@@ -41,10 +41,7 @@ const SelectAsList: React.FC<SelectAsListProps> = ({ filter, onClose }) => {
 
   return (
     <FilterAsListBase label={filter.label}>
-      <SelectContainer
-        customMaxHeight={filter?.containerStyles?.maxHeight}
-        customOverflowY={filter?.containerStyles?.overflowY}
-      >
+      <SelectContainer>
         {filter.withAll && (
           <CustomOption onClick={handleChangeAll} isSelected={isAllSelected}>
             {(filter.customOptionsRenderAll && filter.customOptionsRenderAll(isAllSelected || false, theme)) ||
@@ -75,10 +72,7 @@ const SelectAsList: React.FC<SelectAsListProps> = ({ filter, onClose }) => {
 
 export default SelectAsList;
 
-const SelectContainer = styled('div')<{
-  customMaxHeight?: number | string;
-  customOverflowY?: CSSProperties['overflowY'];
-}>(({ customMaxHeight, customOverflowY }) => ({
+const SelectContainer = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
@@ -88,9 +82,7 @@ const SelectContainer = styled('div')<{
   alignContent: 'center',
   border: 'none',
   outline: 'none',
-  height: customMaxHeight ?? 'auto',
-  overflowY: customOverflowY || 'hidden',
-}));
+});
 
 const CustomOption = styled('div')<{
   isSelected: boolean;
