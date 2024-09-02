@@ -83,8 +83,8 @@ const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, s
     () => ({
       grid: {
         top: isMobile ? 16 : isTablet ? 18 : isDesktop1024 ? 16 : isDesktop1280 ? 18 : isDesktop1440 ? 16 : 22,
-        left: isMobile ? 40 : isTablet ? 68 : isDesktop1024 ? 70 : isDesktop1280 ? 55 : isDesktop1440 ? 68 : 65,
-        right: isMobile ? 0 : isTablet ? 0 : isDesktop1024 ? 0 : isDesktop1280 ? 4 : 30,
+        left: isMobile ? 40 : isTablet ? 68 : isDesktop1024 ? 70 : isDesktop1280 ? 55 : isDesktop1440 ? 130 : 65,
+        right: isMobile ? 0 : isTablet ? 0 : isDesktop1024 ? 0 : isDesktop1280 ? 4 : 65,
         height: isMobile ? 178 : isTablet ? 220 : isDesktop1024 ? 240 : isDesktop1280 ? 300 : isDesktop1440 ? 310 : 310,
       },
       xAxis: {
@@ -282,7 +282,7 @@ const LegendContainer = styled('div')(({ theme }) => ({
   },
   [theme.breakpoints.up('desktop_1440')]: {
     gap: 64,
-    marginTop: -40,
+    marginTop: -38,
     marginLeft: 2,
   },
 }));
