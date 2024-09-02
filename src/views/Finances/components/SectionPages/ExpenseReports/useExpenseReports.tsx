@@ -9,7 +9,6 @@ import useSWRInfinite from 'swr/infinite';
 import type { Sort, Option } from '@/components/SortsBundle/types';
 import { getExpenseReportsQuery, getExpenseReportsStatusesQuery } from '@/views/Finances/api/queries';
 import { getHeadersExpenseReport } from '@/views/Finances/utils/utils';
-import { FilterChip } from './ExpenseReportsFilters';
 import type { Theme } from '@mui/material';
 import type { AnalyticMetric } from '@ses/core/models/interfaces/analytic';
 import type { BudgetStatement } from '@ses/core/models/interfaces/budgetStatement';
@@ -147,23 +146,23 @@ export const useExpenseReports = (budgetPath: string) => {
       },
       [
         {
-          id: BudgetStatus.Draft,
-          content: <FilterChip status={BudgetStatus.Draft} />,
+          label: 'Draft',
+          value: BudgetStatus.Draft,
           count: 0,
         },
         {
-          id: BudgetStatus.Review,
-          content: <FilterChip status={BudgetStatus.Review} />,
+          label: 'Review',
+          value: BudgetStatus.Review,
           count: 0,
         },
         {
-          id: BudgetStatus.Final,
-          content: <FilterChip status={BudgetStatus.Final} />,
+          label: 'Final',
+          value: BudgetStatus.Final,
           count: 0,
         },
         {
-          id: BudgetStatus.Escalated,
-          content: <FilterChip status={BudgetStatus.Escalated} />,
+          label: 'Escalated',
+          value: BudgetStatus.Escalated,
           count: 0,
         },
       ]

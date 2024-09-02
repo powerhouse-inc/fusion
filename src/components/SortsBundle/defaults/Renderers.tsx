@@ -9,8 +9,11 @@ export const defaultTriggerRenderer: RenderTriggerFn = (onClick, ref) => (
 );
 
 const SortContainer = styled('div')(({ theme }) => ({
-  width: 10,
-  height: 20,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: 24,
+  height: 24,
   color: theme.palette.colors.slate[300],
   '&:hover': {
     color: theme.palette.isLight ? theme.palette.colors.slate[400] : theme.palette.colors.slate[200],
