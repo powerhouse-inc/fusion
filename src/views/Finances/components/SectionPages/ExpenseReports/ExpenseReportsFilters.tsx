@@ -1,16 +1,13 @@
 import { styled, useMediaQuery } from '@mui/material';
-import { CustomMultiSelect } from '@ses/components/CustomMultiSelect/CustomMultiSelect';
-import ResetButton from '@ses/components/ResetButton/ResetButton';
-import SingleItemSelect from '@ses/components/SingleItemSelect/SingleItemSelect';
-import { BudgetStatus } from '@ses/core/models/interfaces/types';
-import { getExpenseReportStatusColor } from '@ses/core/utils/colors';
+import { getFusionExpenseReportStatusColor } from '@ses/core/utils/colors';
 import { useMemo } from 'react';
+import FiltersBundle from '@/components/FiltersBundle/FiltersBundle';
+import type { Filter, ResetFilter } from '@/components/FiltersBundle/types';
 import SortsBundle from '@/components/SortsBundle/SortsBundle';
 import type { Sort } from '@/components/SortsBundle/types';
 import type { Theme } from '@mui/material';
-import type { MultiSelectItem } from '@ses/components/CustomMultiSelect/CustomMultiSelect';
-import type { SelectItem } from '@ses/components/SingleItemSelect/SingleItemSelect';
 import type { AnalyticMetric } from '@ses/core/models/interfaces/analytic';
+import type { BudgetStatus } from '@ses/core/models/interfaces/types';
 import type { FC } from 'react';
 
 export interface ExpenseReportsFiltersProps {
@@ -18,7 +15,11 @@ export interface ExpenseReportsFiltersProps {
   onMetricChange: (value: AnalyticMetric) => void;
   selectedStatuses: BudgetStatus[];
   onStatusSelectChange: (value: BudgetStatus[]) => void;
-  statusesItems: MultiSelectItem[];
+  statusesItems: {
+    label: string;
+    value: BudgetStatus;
+    count: number;
+  }[];
   handleResetFilter: () => void;
   isDisabled?: boolean;
   sorts: Sort[];
@@ -38,23 +39,20 @@ const ExpenseReportsFilters: FC<ExpenseReportsFiltersProps> = ({
   canReset,
   onReset,
 }) => {
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
-  const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
-  const metricItems: SelectItem<AnalyticMetric>[] = useMemo(
+  const isSmallDesk = useMediaQuery((theme: Theme) => theme.breakpoints.down('desktop_1024'));
+  const metricItems = useMemo(
     () => [
       {
         label: 'Forecast',
         value: 'Forecast',
       },
       {
-        label: 'Net Protocol Outflow',
+        label: 'Protocol Outflow',
         value: 'ProtocolNetOutflow',
-        labelWhenSelected: 'Protocol Outflow',
       },
       {
-        label: 'Net Expenses On-Chain',
+        label: 'Net On-Chain',
         value: 'PaymentsOnChain',
-        labelWhenSelected: 'Net On-Chain',
       },
       {
         label: 'Actuals',
@@ -63,56 +61,53 @@ const ExpenseReportsFilters: FC<ExpenseReportsFiltersProps> = ({
     ],
     []
   );
+  const statusOptions = statusesItems.map((status) => ({
+    label: status.label,
+    value: status.value,
+  }));
+  const filters: Filter[] = [
+    {
+      type: 'select',
+      id: 'expense-reports-metrics-filter',
+      label: 'Metrics',
+      options: metricItems,
+      selected: selectedMetric,
+      onChange: (value) => onMetricChange(value as AnalyticMetric),
+      widthStyles: {
+        width: 'fit-content',
+        menuWidth: 220,
+        maxWidth: isSmallDesk ? 130 : 184,
+      },
+    },
+    {
+      type: 'select',
+      id: 'expense-reports-status-filter',
+      label: 'Status',
+      options: statusOptions,
+      selected: selectedStatuses,
+      multiple: true,
+      onChange: (values) => onStatusSelectChange(values as BudgetStatus[]),
+      customOptionsRender: (option) => (
+        <FilterChip status={option.value as BudgetStatus} text={option.label as string} />
+      ),
+      widthStyles: {
+        width: 'fit-content',
+        menuWidth: 220,
+        maxWidth: 130,
+      },
+      withAll: true,
+      customOptionsRenderAll: () => <AllStatusText>All Status</AllStatusText>,
+    },
+  ];
+  const resetFilters: ResetFilter = {
+    canReset: !isDisabled,
+    onReset: handleResetFilter,
+  };
 
   return (
     <FilterContainer>
-      {isMobile && <div>Filter</div>}
-      {!isMobile && (
-        <>
-          <Reset>
-            <ResetButton
-              onClick={handleResetFilter}
-              disabled={isDisabled}
-              hasIcon={false}
-              label="Reset filters"
-              legacyBreakpoints={false}
-            />
-          </Reset>
-
-          <SelectContainer>
-            <SingleItemSelect
-              isMobile={isMobile || isTablet} // Mobile behavior also in Tablet
-              useSelectedAsLabel
-              selected={selectedMetric}
-              onChange={(value: string) => onMetricChange(value as AnalyticMetric)}
-              items={metricItems}
-              PopperProps={{
-                placement: 'bottom-end',
-              }}
-            />
-
-            <CustomMultiSelectStyled
-              positionRight={true}
-              label="Status"
-              activeItems={selectedStatuses}
-              items={statusesItems}
-              width={120}
-              onChange={(items: string[]) => onStatusSelectChange(items as BudgetStatus[])}
-              withAll={true}
-              popupContainerWidth={256}
-              listItemWidth={224}
-              customAll={{
-                content: <FilterChip text="All" />,
-                id: 'all',
-                params: { isAll: true },
-                count: statusesItems?.reduce((acc, curr) => acc + curr.count, 0),
-              }}
-              popupContainerHeight={220}
-            />
-          </SelectContainer>
-        </>
-      )}
-      {(isMobile || isTablet) && (
+      <FiltersBundle filters={filters} resetFilters={resetFilters} asPopover={[]} snapPoints={[525, 455, 225, 0]} />
+      {isSmallDesk && (
         <SortsBundle
           sorts={sorts}
           resetSorts={{
@@ -128,31 +123,13 @@ const ExpenseReportsFilters: FC<ExpenseReportsFiltersProps> = ({
 
 export default ExpenseReportsFilters;
 
-export const FilterChip: FC<{ status?: BudgetStatus; text?: string }> = ({ status = BudgetStatus.Draft, text }) => {
-  const variantColor = useMemo(() => getExpenseReportStatusColor(status), [status]);
+export const FilterChip: FC<{ status: BudgetStatus; text: string }> = ({ status, text }) => {
+  const variantColor = useMemo(() => getFusionExpenseReportStatusColor(status), [status]);
 
-  return <ExpenseReportStatusStyled variantColorSet={variantColor}>{text ?? status}</ExpenseReportStatusStyled>;
+  return <ExpenseReportStatusStyled variantColorSet={variantColor}>{text}</ExpenseReportStatusStyled>;
 };
 
-const ExpenseReportStatusStyled = styled('div')<{ variantColorSet: { [key: string]: string } }>(
-  ({ variantColorSet, theme }) => ({
-    fontFamily: 'Inter, sans-serif',
-    display: 'flex',
-    alignItems: 'center',
-    fontWeight: 400,
-    fontSize: '11px',
-    borderRadius: '12px',
-    padding: '4px 8px',
-    height: '22px',
-    width: 'fit-content',
-    lineHeight: '13px',
-    border: `1px solid ${theme.palette.isLight ? variantColorSet.color : variantColorSet.darkColor}`,
-    background: theme.palette.isLight ? variantColorSet.background : variantColorSet.darkBackground,
-    color: theme.palette.isLight ? variantColorSet.color : variantColorSet.darkColor,
-  })
-);
-
-const FilterContainer = styled('div')(() => ({
+const FilterContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'flex-end',
   alignItems: 'center',
@@ -160,25 +137,32 @@ const FilterContainer = styled('div')(() => ({
   marginLeft: 'auto',
   marginRight: 8,
   zIndex: 5,
+
+  [theme.breakpoints.up('desktop_1024')]: {
+    marginRight: 0,
+  },
 }));
 
-const Reset = styled('div')(({ theme }) => ({
-  gridArea: 'reset',
-  display: 'none',
-  justifyContent: 'flex-end',
+const AllStatusText = styled('h4')(({ theme }) => ({
+  margin: 0,
+  fontWeight: 500,
+  fontSize: 14,
+  lineHeight: '22px',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
+}));
 
-  [theme.breakpoints.up('tablet_768')]: {
+const ExpenseReportStatusStyled = styled('div')<{ variantColorSet: { [key: string]: string } }>(
+  ({ variantColorSet, theme }) => ({
+    fontFamily: 'Inter, sans-serif',
     display: 'flex',
-  },
-}));
-
-const SelectContainer = styled('div')(() => ({
-  display: 'flex',
-  gap: 16,
-}));
-
-const CustomMultiSelectStyled = styled(CustomMultiSelect)(() => ({
-  '& > div:nth-of-type(2)': {
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontWeight: 600,
+    fontSize: '14px',
     borderRadius: 6,
-  },
-}));
+    padding: '1px 16px',
+    lineHeight: '22px',
+    color: theme.palette.isLight ? variantColorSet.color : variantColorSet.darkColor,
+    backgroundColor: theme.palette.isLight ? variantColorSet.background : variantColorSet.darkBackground,
+  })
+);

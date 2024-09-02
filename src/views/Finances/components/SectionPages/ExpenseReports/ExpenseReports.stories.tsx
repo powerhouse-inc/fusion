@@ -1,3 +1,4 @@
+import { BudgetStatus } from '@ses/core/models/interfaces/types';
 import { createThemeModeVariants } from '@ses/core/utils/storybook/factories';
 import { ENUM_FOR_STORIES, getHeadersExpenseReport, mockDataApiTeam } from '@/views/Finances/utils/utils';
 import ExpenseReports from './ExpenseReports';
@@ -33,6 +34,29 @@ const args = [
     sorts: [],
     canReset: true,
     onReset: () => null,
+    statusesItems: [
+      {
+        label: 'Final',
+        value: BudgetStatus.Final,
+        count: 0,
+      },
+      {
+        label: 'Escalated',
+        value: BudgetStatus.Escalated,
+        count: 0,
+      },
+      {
+        label: 'Review',
+        value: BudgetStatus.Review,
+        count: 0,
+      },
+      {
+        label: 'Draft',
+        value: BudgetStatus.Draft,
+        count: 0,
+      },
+    ],
+    selectedStatuses: [],
   },
   {
     year: '2023',
@@ -44,6 +68,29 @@ const args = [
     sorts: [],
     canReset: false,
     onReset: () => null,
+    statusesItems: [
+      {
+        label: 'Final',
+        value: BudgetStatus.Final,
+        count: 0,
+      },
+      {
+        label: 'Escalated',
+        value: BudgetStatus.Escalated,
+        count: 0,
+      },
+      {
+        label: 'Review',
+        value: BudgetStatus.Review,
+        count: 0,
+      },
+      {
+        label: 'Draft',
+        value: BudgetStatus.Draft,
+        count: 0,
+      },
+    ],
+    selectedStatuses: [],
   },
 ];
 

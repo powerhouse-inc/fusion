@@ -220,6 +220,7 @@ export const getColorRole = (user: UserDTO) => {
   }
 };
 
+// Remove this function after the reskin is done (currently have 1 reference)
 export const getExpenseReportStatusColor = (
   variant: BudgetStatus
 ): { color: string; background: string; darkColor: string; darkBackground: string } => {
@@ -252,6 +253,42 @@ export const getExpenseReportStatusColor = (
         darkColor: colorPalette.blue[50],
         background: colorPalette.blue[100],
         darkBackground: '#0084FF66',
+      };
+  }
+};
+
+export const getFusionExpenseReportStatusColor = (
+  variant: BudgetStatus
+): { color: string; background: string; darkColor: string; darkBackground: string } => {
+  switch (variant) {
+    case BudgetStatus.Review:
+      return {
+        color: colorPalette.orange[800],
+        darkColor: colorPalette.orange[100],
+        background: colorPalette.orange[100],
+        darkBackground: colorPalette.orange[900],
+      };
+    case BudgetStatus.Final:
+      return {
+        color: colorPalette.green[800],
+        darkColor: colorPalette.green[50],
+        background: colorPalette.green[100],
+        darkBackground: colorPalette.green[900],
+      };
+    case BudgetStatus.Escalated:
+      return {
+        color: colorPalette.red[800],
+        darkColor: colorPalette.red[100],
+        background: colorPalette.red[100],
+        darkBackground: colorPalette.red[900],
+      };
+
+    default: // default to draft
+      return {
+        color: colorPalette.blue[800],
+        darkColor: colorPalette.blue[50],
+        background: colorPalette.blue[100],
+        darkBackground: colorPalette.blue[900],
       };
   }
 };
