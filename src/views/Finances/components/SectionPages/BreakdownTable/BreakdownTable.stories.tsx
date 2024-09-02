@@ -1,5 +1,8 @@
+import { SWRConfig, unstable_serialize as unstableSerialize } from 'swr';
 import { createThemeModeVariants } from '@/core/utils/storybook/factories';
 import BreakdownTable from './BreakdownTable';
+import { quarterlyResponseMocked, semiAnnualResponseMocked } from './storiesDataMock';
+import { useBreakdownTable } from './useBreakdownTable';
 import type { Meta } from '@storybook/react';
 
 export default {
@@ -58,4 +61,46 @@ const loadingArgs = [
 
 const [[LoadingLightMode, LoadingDarkMode]] = createThemeModeVariants(BreakdownTable, loadingArgs, false);
 
-export { LoadingLightMode, LoadingDarkMode };
+// This component is needed to fetch and manage the state of the breakdown table data
+// Additionally, it ensures that the SWR data is cached so the story has predictable results
+// and don't need to query directly the API
+const WrapperComponent = () => {
+  const { periodFilter, activeMetrics, tableHeader, tableBody, isLoading, filters, resetFilters } = useBreakdownTable(
+    '2024',
+    [],
+    []
+  );
+
+  return (
+    <BreakdownTable
+      activeItems={activeMetrics}
+      selectedValue={periodFilter}
+      year="2024"
+      breakdownTable={tableBody ?? []}
+      isLoading={isLoading}
+      headerTable={tableHeader ?? []}
+      title="MakerDAO Budget"
+      filters={filters}
+      resetFilters={resetFilters}
+    />
+  );
+};
+
+const [[DefaultLightMode, DefaultDarkMode]] = createThemeModeVariants(
+  () => (
+    <SWRConfig
+      value={{
+        fallback: {
+          [unstableSerialize(['semiAnnual', '2024', 'atlas', 3])]: semiAnnualResponseMocked,
+          [unstableSerialize(['quarterly', '2024', 'atlas', 3])]: quarterlyResponseMocked,
+        },
+      }}
+    >
+      <WrapperComponent />
+    </SWRConfig>
+  ),
+  1,
+  false
+);
+
+export { DefaultLightMode, DefaultDarkMode, LoadingLightMode, LoadingDarkMode };
