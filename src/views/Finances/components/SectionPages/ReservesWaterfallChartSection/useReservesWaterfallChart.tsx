@@ -158,9 +158,9 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
   const areDefaultFiltersSelected = activeElements.length === selectAll.length && selectedGranularity === 'monthly';
 
   // TODO: Implement the canReset and onReset
-  const canReset = false;
+  const canReset = selectedGranularity !== 'monthly' || activeElements.length !== selectAll.length;
   const onReset = () => {
-    console.log('not implemented');
+    handleResetFilter();
   };
 
   const filters: Filter[] = [
