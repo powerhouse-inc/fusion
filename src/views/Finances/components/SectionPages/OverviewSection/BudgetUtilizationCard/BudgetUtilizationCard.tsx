@@ -18,7 +18,7 @@ const BudgetUtilizationCard: React.FC<QuarterCardProps> = ({ paymentsOnChain, bu
 
   const humanizedActuals = threeDigitsPrecisionHumanization(paymentsOnChain);
   const humanizedBudgetCap = threeDigitsPrecisionHumanization(budgetCap);
-  const percent = usLocalizedNumber(percentageRespectTo(paymentsOnChain, budgetCap), 0);
+  const percent = percentageRespectTo(paymentsOnChain, budgetCap);
 
   return (
     <CardContainer>
@@ -41,7 +41,18 @@ const BudgetUtilizationCard: React.FC<QuarterCardProps> = ({ paymentsOnChain, bu
       </PredictionWrapper>
       <Description>Budget Utilization</Description>
       <DividerCardChart />
-      <Percent isRightPartZero={budgetCap === 0}>{budgetCap === 0 ? '-- ' : percent}%</Percent>
+      <Percent isRightPartZero={budgetCap === 0}>
+        {budgetCap === 0
+          ? '-- '
+          : percent === 0
+          ? 0
+          : percent < 0.1
+          ? '<0.1'
+          : percent < 1
+          ? usLocalizedNumber(percent, 2)
+          : usLocalizedNumber(percent, 1)}
+        %
+      </Percent>
       <BarWrapper>
         <HorizontalBudgetBarStyled actuals={paymentsOnChain} prediction={0} budgetCap={budgetCap} />
       </BarWrapper>
