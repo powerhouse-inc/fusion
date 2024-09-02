@@ -74,8 +74,9 @@ const ExpenseReportsFilters: FC<ExpenseReportsFiltersProps> = ({
       selected: selectedMetric,
       onChange: (value) => onMetricChange(value as AnalyticMetric),
       widthStyles: {
-        width: isSmallDesk ? 130 : 184,
+        width: 'fit-content',
         menuWidth: 220,
+        maxWidth: isSmallDesk ? 130 : 184,
       },
     },
     {
@@ -90,8 +91,9 @@ const ExpenseReportsFilters: FC<ExpenseReportsFiltersProps> = ({
         <FilterChip status={option.value as BudgetStatus} text={option.label as string} />
       ),
       widthStyles: {
-        width: 130,
+        width: 'fit-content',
         menuWidth: 220,
+        maxWidth: 130,
       },
       withAll: true,
       customOptionsRenderAll: () => <AllStatusText>All Status</AllStatusText>,

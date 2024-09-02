@@ -38,6 +38,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
       variant="outlined"
       fullWidth={style?.fullWidth || false}
       width={style?.width || 97}
+      maxWidth={style?.maxWidth}
       className={className}
     >
       <StyledSelect
@@ -100,11 +101,16 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 
 export default CustomSelect;
 
-const StyledFormControl = styled(FormControl)<{ fullWidth: boolean; width: CSSProperties['width'] }>(
-  ({ fullWidth, width }) => ({
-    width: fullWidth ? '100%' : `${width}px`,
-  })
-);
+const StyledFormControl = styled(FormControl)<{
+  fullWidth: boolean;
+  width: CSSProperties['width'];
+  maxWidth: CSSProperties['maxWidth'];
+}>(({ fullWidth, width, maxWidth }) => ({
+  width: fullWidth ? '100%' : `${width}px`,
+  ...(maxWidth !== undefined && {
+    maxWidth,
+  }),
+}));
 
 const StyledSelect = styled(Select)(({ theme }) => ({
   backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.charcoal[800],
