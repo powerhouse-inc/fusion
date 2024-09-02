@@ -146,8 +146,13 @@ export const useExpenseReports = (budgetPath: string) => {
       },
       [
         {
-          label: 'Draft',
-          value: BudgetStatus.Draft,
+          label: 'Final',
+          value: BudgetStatus.Final,
+          count: 0,
+        },
+        {
+          label: 'Escalated',
+          value: BudgetStatus.Escalated,
           count: 0,
         },
         {
@@ -156,13 +161,8 @@ export const useExpenseReports = (budgetPath: string) => {
           count: 0,
         },
         {
-          label: 'Final',
-          value: BudgetStatus.Final,
-          count: 0,
-        },
-        {
-          label: 'Escalated',
-          value: BudgetStatus.Escalated,
+          label: 'Draft',
+          value: BudgetStatus.Draft,
           count: 0,
         },
       ]
