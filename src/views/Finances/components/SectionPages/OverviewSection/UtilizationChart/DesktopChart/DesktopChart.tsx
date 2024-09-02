@@ -288,7 +288,7 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
   }
 
   return (
-    <Container isCoreThirdLevel={isDeepLevel}>
+    <Container isDeepLevel={isDeepLevel}>
       <ContainerChart>
         <ReactECharts
           ref={chartRef}
@@ -305,7 +305,7 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
         </ContainerDaiIcon>
       </ContainerChart>
       {showSwiper ? (
-        <SwiperWrapper isCoreThirdLevel={isDeepLevel} numberSliderPerLevel={numberSliderPerLevel}>
+        <SwiperWrapper isDeepLevel={isDeepLevel} numberSliderPerLevel={numberSliderPerLevel}>
           <Swiper
             direction="horizontal"
             ref={ref}
@@ -314,11 +314,7 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
             pagination={true}
             {...swiperOptions}
           >
-            <ContainerLegend
-              isCoreThirdLevel={isDeepLevel}
-              changeAlignment={changeAlignment}
-              numberSlider={numberSlider}
-            >
+            <ContainerLegend isDeepLevel={isDeepLevel} changeAlignment={changeAlignment} numberSlider={numberSlider}>
               {Array.from(doughnutSeriesChunks.entries()).map(([index, dataChunk]) => (
                 <SwiperSlide key={index}>
                   <CardLegend
@@ -328,7 +324,7 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
                     toggleSeriesVisibility={toggleSeriesVisibility}
                     onLegendItemHover={onLegendItemHover}
                     onLegendItemLeave={onLegendItemLeave}
-                    isCoreThirdLevel={isDeepLevel}
+                    isDeepLevel={isDeepLevel}
                   />
                 </SwiperSlide>
               ))}
@@ -343,7 +339,7 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
             toggleSeriesVisibility={toggleSeriesVisibility}
             onLegendItemHover={onLegendItemHover}
             onLegendItemLeave={onLegendItemLeave}
-            isCoreThirdLevel={isDeepLevel}
+            isDeepLevel={isDeepLevel}
           />
         </ContainerLegendNotSwiper>
       )}
@@ -353,7 +349,7 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
 
 export default DesktopChart;
 
-const Container = styled('div')<{ isCoreThirdLevel: boolean }>(({ theme, isCoreThirdLevel }) => ({
+const Container = styled('div')<{ isDeepLevel: boolean }>(({ theme, isDeepLevel }) => ({
   display: 'none',
 
   [theme.breakpoints.up('tablet_768')]: {
@@ -369,7 +365,7 @@ const Container = styled('div')<{ isCoreThirdLevel: boolean }>(({ theme, isCoreT
   },
 
   [theme.breakpoints.up('desktop_1280')]: {
-    gap: isCoreThirdLevel ? 40 : 32,
+    gap: isDeepLevel ? 40 : 32,
   },
 }));
 
@@ -389,14 +385,14 @@ const ContainerChart = styled('div')(({ theme }) => ({
   },
 }));
 
-const ContainerLegend = styled('div')<{ isCoreThirdLevel: boolean; changeAlignment: boolean; numberSlider: number }>(
-  ({ theme, isCoreThirdLevel, changeAlignment, numberSlider }) => ({
+const ContainerLegend = styled('div')<{ isDeepLevel: boolean; changeAlignment: boolean; numberSlider: number }>(
+  ({ theme, isDeepLevel, changeAlignment, numberSlider }) => ({
     display: 'flex',
-    flex: isCoreThirdLevel && numberSlider >= 2 ? 1 : 'none',
+    flex: isDeepLevel && numberSlider >= 2 ? 1 : 'none',
     flexDirection: 'column',
     flexWrap: 'wrap',
-    justifyContent: isCoreThirdLevel && changeAlignment ? 'flex-start' : changeAlignment ? 'flex-start' : 'center',
-    gap: isCoreThirdLevel ? 16 : 14,
+    justifyContent: isDeepLevel && changeAlignment ? 'flex-start' : changeAlignment ? 'flex-start' : 'center',
+    gap: isDeepLevel ? 16 : 14,
     maxWidth: '100%',
     position: 'relative',
 
@@ -416,8 +412,8 @@ const ContainerLegendNotSwiper = styled('div')(() => ({
   position: 'relative',
 }));
 
-const SwiperWrapper = styled('div')<{ isCoreThirdLevel: boolean; numberSliderPerLevel: number }>(
-  ({ theme, isCoreThirdLevel, numberSliderPerLevel }) => ({
+const SwiperWrapper = styled('div')<{ isDeepLevel: boolean; numberSliderPerLevel: number }>(
+  ({ theme, isDeepLevel, numberSliderPerLevel }) => ({
     display: 'none',
 
     [theme.breakpoints.up('tablet_768')]: {
@@ -427,7 +423,7 @@ const SwiperWrapper = styled('div')<{ isCoreThirdLevel: boolean; numberSliderPer
     },
 
     [theme.breakpoints.up('desktop_1024')]: {
-      marginTop: isCoreThirdLevel ? 0 : 16,
+      marginTop: isDeepLevel ? 0 : 16,
       display: 'flex',
       width: 250,
       minWidth: 250,

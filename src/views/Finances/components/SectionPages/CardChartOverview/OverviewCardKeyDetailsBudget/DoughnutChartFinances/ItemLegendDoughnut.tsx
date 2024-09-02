@@ -4,7 +4,7 @@ import type { DoughnutSeries } from '@/views/Finances/utils/types';
 import { getShortCode } from '../../utils';
 
 interface Props {
-  isCoreThirdLevel?: boolean;
+  isDeepLevel?: boolean;
   changeAlignment: boolean;
   doughnutData: DoughnutSeries;
   toggleSeriesVisibility: (seriesName: string) => void;
@@ -14,7 +14,7 @@ interface Props {
 
 const ItemLegendDoughnut: React.FC<Props> = ({
   changeAlignment,
-  isCoreThirdLevel = true,
+  isDeepLevel = true,
   doughnutData,
   onLegendItemHover,
   onLegendItemLeave,
@@ -26,18 +26,18 @@ const ItemLegendDoughnut: React.FC<Props> = ({
     <LegendItem
       key={doughnutData.name}
       changeAlignment={changeAlignment}
-      isCoreThirdLevel={isCoreThirdLevel}
+      isDeepLevel={isDeepLevel}
       onClick={() => toggleSeriesVisibility(doughnutData.name)}
       onMouseEnter={() => onLegendItemHover(doughnutData.name)}
       onMouseLeave={() => onLegendItemLeave(doughnutData.name)}
     >
       <IconWithName>
         <LegendIcon backgroundColor={doughnutData.color || 'blue'} />
-        <NameOrCode isCoreThirdLevel={isCoreThirdLevel} className="name">
-          {isCoreThirdLevel ? getShortCode(doughnutData?.code || '') : doughnutData.name}
+        <NameOrCode isDeepLevel={isDeepLevel} className="name">
+          {isDeepLevel ? getShortCode(doughnutData?.code || '') : doughnutData.name}
         </NameOrCode>
       </IconWithName>
-      <ValueDescription isCoreThirdLevel={isCoreThirdLevel}>
+      <ValueDescription isDeepLevel={isDeepLevel}>
         <Percent className="percentage">{`(${
           doughnutData.percent === 0
             ? 0
@@ -59,10 +59,10 @@ const ItemLegendDoughnut: React.FC<Props> = ({
 
 export default ItemLegendDoughnut;
 
-const LegendItem = styled('div')<{ isCoreThirdLevel: boolean; changeAlignment: boolean }>(
-  ({ theme, isCoreThirdLevel, changeAlignment }) => ({
+const LegendItem = styled('div')<{ isDeepLevel: boolean; changeAlignment: boolean }>(
+  ({ theme, isDeepLevel, changeAlignment }) => ({
     display: 'flex',
-    flexDirection: isCoreThirdLevel ? 'row' : 'column',
+    flexDirection: isDeepLevel ? 'row' : 'column',
     gap: 2,
     fontSize: 12,
     fontFamily: 'Inter, sans-serif',
@@ -95,21 +95,21 @@ const LegendIcon = styled('div')<{ backgroundColor: string }>(({ backgroundColor
   borderRadius: '50%',
 }));
 
-const ValueDescription = styled('div')<{ isCoreThirdLevel: boolean }>(({ theme, isCoreThirdLevel }) => ({
+const ValueDescription = styled('div')<{ isDeepLevel: boolean }>(({ theme, isDeepLevel }) => ({
   fontSize: 12,
   fontWeight: 500,
-  lineHeight: isCoreThirdLevel ? '24px' : 'normal',
+  lineHeight: isDeepLevel ? '24px' : 'normal',
   display: 'flex',
-  marginLeft: isCoreThirdLevel ? 4 : 14,
-  ...(isCoreThirdLevel && {
+  marginLeft: isDeepLevel ? 4 : 14,
+  ...(isDeepLevel && {
     whiteSpace: 'revert',
     overflow: 'revert',
     textOverflow: 'revert',
   }),
 
   [theme.breakpoints.up('desktop_1280')]: {
-    fontSize: isCoreThirdLevel ? 12 : 14,
-    lineHeight: isCoreThirdLevel ? '15px' : 'normal',
+    fontSize: isDeepLevel ? 12 : 14,
+    lineHeight: isDeepLevel ? '15px' : 'normal',
   },
 }));
 
@@ -120,7 +120,7 @@ const IconWithName = styled('div')({
   alignItems: 'center',
 });
 
-const NameOrCode = styled('div')<{ isCoreThirdLevel: boolean }>(({ theme, isCoreThirdLevel }) => ({
+const NameOrCode = styled('div')<{ isDeepLevel: boolean }>(({ theme, isDeepLevel }) => ({
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   fontSize: 12,
   fontWeight: 600,
@@ -128,11 +128,11 @@ const NameOrCode = styled('div')<{ isCoreThirdLevel: boolean }>(({ theme, isCore
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  width: isCoreThirdLevel ? 'fit-content' : 170,
+  width: isDeepLevel ? 'fit-content' : 170,
 
   [theme.breakpoints.up('desktop_1280')]: {
-    fontSize: isCoreThirdLevel ? 12 : 14,
-    lineHeight: isCoreThirdLevel ? '15px' : '24px',
+    fontSize: isDeepLevel ? 12 : 14,
+    lineHeight: isDeepLevel ? '15px' : '24px',
   },
 }));
 
