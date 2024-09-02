@@ -1,6 +1,5 @@
 import { createThemeModeVariants } from '@/core/utils/storybook/factories';
 import BreakdownTable from './BreakdownTable';
-import { useBreakdownTable } from './useBreakdownTable';
 import type { Meta } from '@storybook/react';
 
 export default {
@@ -59,30 +58,4 @@ const loadingArgs = [
 
 const [[LoadingLightMode, LoadingDarkMode]] = createThemeModeVariants(BreakdownTable, loadingArgs, false);
 
-const [[DefaultLightMode, DefaultDarkMode]] = createThemeModeVariants(
-  () => {
-    const { periodFilter, activeMetrics, tableHeader, tableBody, isLoading, filters, resetFilters } = useBreakdownTable(
-      '2024',
-      [],
-      []
-    );
-
-    return (
-      <BreakdownTable
-        activeItems={activeMetrics}
-        selectedValue={periodFilter}
-        year="2024"
-        breakdownTable={tableBody ?? []}
-        isLoading={isLoading}
-        headerTable={tableHeader ?? []}
-        title="MakerDAO Budget"
-        filters={filters}
-        resetFilters={resetFilters}
-      />
-    );
-  },
-  1,
-  false
-);
-
-export { DefaultLightMode, DefaultDarkMode, LoadingLightMode, LoadingDarkMode };
+export { LoadingLightMode, LoadingDarkMode };
