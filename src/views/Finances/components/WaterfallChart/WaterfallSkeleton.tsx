@@ -1,56 +1,17 @@
 import { Skeleton, styled, useMediaQuery } from '@mui/material';
 import React from 'react';
+import BarWaterfall from './BarWaterfall';
+import LegendAxis from './LegendAxis';
+import LegendItems from './LegendItems';
+import LegendAxisYItem from './LegendYitems';
 import type { Theme } from '@mui/material';
 
 const WaterfallSkeleton = () => {
   const arrayLegendAxisY = Array.from({ length: 9 }, () => 0);
-  const arrayLegendAxisX = Array.from({ length: 14 }, () => 0);
+  const arrayLegendAxisX = Array.from({ length: 12 }, () => 0);
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
-  const isDesk1024 = useMediaQuery((theme: Theme) => theme.breakpoints.up('desktop_1024'));
-
-  const barWaterfall = (height: number, auxiliaryHeight: number, top = true, isHasLine = true) => (
-    <ContainerBar>
-      <AuxiliaryContainer height={auxiliaryHeight} />
-      <ContainerBarLine top={top} isHasLine={isHasLine}>
-        <SkeletonBarStyle variant="rectangular" width={isMobile ? 19 : isTablet ? 39 : 39} height={height} />
-      </ContainerBarLine>
-    </ContainerBar>
-  );
-
-  const legendAxisYItem = (width: number, height: number) => (
-    <Skeleton
-      variant="rectangular"
-      width={width}
-      height={height}
-      sx={{ borderRadius: isMobile ? 12.5 : isTablet ? 17.5 : 17.5 }}
-    />
-  );
-
-  const legendAxisXMobile = (width = 7) => (
-    <Skeleton variant="circular" width={width} height={7.75} sx={{ borderRadius: 11.25 }} />
-  );
-
-  const ItemLegendValues = (circleDimension: number, itemWith: number) => (
-    <ContainerItem>
-      <Skeleton variant="circular" width={circleDimension} height={circleDimension} />
-      <Skeleton variant="rectangular" width={itemWith} height={14} sx={{ borderRadius: 15 }} />
-    </ContainerItem>
-  );
-  const lineMobile = (
-    <LineContainer>
-      <SkeletonLineMobileLeft variant="rectangular" width={170} height={11} sx={{}} />
-      <CircleElementStyled variant="circular" width={28} height={13} />
-
-      <SkeletonLineMobileRight variant="rectangular" width={170} height={11} sx={{}} />
-    </LineContainer>
-  );
-  const axisXNotMobile = (monthWith: number, yearWidth: number) => (
-    <ContainerAxisXNotMobile>
-      <Skeleton variant="rectangular" width={monthWith} height={10.5} sx={{ borderRadius: 15 }} />
-      <Skeleton variant="rectangular" width={yearWidth} height={10.5} sx={{ borderRadius: 15 }} />
-    </ContainerAxisXNotMobile>
-  );
+  const isDesk1024 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1024', 'desktop_1280'));
 
   return (
     <Container>
@@ -58,78 +19,121 @@ const WaterfallSkeleton = () => {
         <LegendAxisY>
           {arrayLegendAxisY.map((_, index) => (
             <LegendAxisYItemContainer key={index}>
-              {legendAxisYItem(isMobile ? 22 : isTablet ? 32 : 32, isMobile ? 8.7 : isTablet ? 12.5 : 12.5)}
+              {
+                <LegendAxisYItem
+                  height={isMobile ? 4 : isTablet ? 19 : 19}
+                  width={isMobile ? 20 : isTablet ? 48 : 48}
+                />
+              }
             </LegendAxisYItemContainer>
           ))}
         </LegendAxisY>
-        <ContainerBars>
-          <ContainerBar>{barWaterfall(isMobile ? 190 : isTablet ? 378 : 378, 0, true)}</ContainerBar>
-          <ContainerBar>{barWaterfall(isMobile ? 40 : isTablet ? 84 : 84, 0, false)}</ContainerBar>
-          <ContainerBar>
-            {barWaterfall(isMobile ? 16 : isTablet ? 32 : 32, isMobile ? 40 : isTablet ? 80 : 80, false)}
-          </ContainerBar>
-          <ContainerBar>
-            {barWaterfall(isMobile ? 17 : isTablet ? 32 : 32, isMobile ? 57 : isTablet ? 110 : 110, false)}
-          </ContainerBar>
-          <ContainerBar>
-            {barWaterfall(isMobile ? 26 : isTablet ? 52 : 52, isMobile ? 48 : isTablet ? 90 : 90)}
-          </ContainerBar>
-          <ContainerBar>
-            {barWaterfall(isMobile ? 44 : isTablet ? 78 : 78, isMobile ? 48 : isTablet ? 90 : 90, false)}
-          </ContainerBar>
-          <ContainerBar>
-            {barWaterfall(isMobile ? 5 : isTablet ? 18 : 18, isMobile ? 90 : isTablet ? 170 : 170, false)}
-          </ContainerBar>
-          <ContainerBar>
-            {barWaterfall(isMobile ? 17 : isTablet ? 36 : 36, isMobile ? 90 : isTablet ? 185 : 185, false)}
-          </ContainerBar>
-          <ContainerBar>
-            {barWaterfall(isMobile ? 25 : isTablet ? 60 : 60, isMobile ? 83 : isTablet ? 160 : isDesk1024 ? 160 : 160)}
-          </ContainerBar>
-          <ContainerBar>
-            {barWaterfall(isMobile ? 24 : isTablet ? 60 : 60, isMobile ? 60 : isTablet ? 100 : isDesk1024 ? 100 : 100)}
-          </ContainerBar>
-          <ContainerBar>
-            {barWaterfall(isMobile ? 45 : isTablet ? 98 : 98, isMobile ? 60 : isTablet ? 100 : 100, false)}
-          </ContainerBar>
-          <ContainerBar>
-            {barWaterfall(isMobile ? 14 : isTablet ? 39 : 39, isMobile ? 105 : isTablet ? 195 : 195, false)}
-          </ContainerBar>
-          <ContainerBar>
-            {barWaterfall(isMobile ? 12 : isTablet ? 28 : 28, isMobile ? 123 : isTablet ? 232 : 232, false)}
-          </ContainerBar>
-          <ContainerBar isLast>
-            {barWaterfall(isMobile ? 55 : isTablet ? 110 : 125, isMobile ? 135 : isTablet ? 260 : 260, true, false)}
-          </ContainerBar>
-        </ContainerBars>
+        <ContainerBarsMobile>
+          <BarWaterfall heightInflow={19} heightOutFlow={190} marginBottom={4} isLastOrFirstOutFlow />
+          <BarWaterfall heightInflow={42} heightOutFlow={19} marginBottom={120} />
+          <BarWaterfall heightInflow={36} heightOutFlow={19} marginBottom={100} />
+          <BarWaterfall heightInflow={36} heightOutFlow={19} marginBottom={90} />
+          <BarWaterfall heightInflow={19} heightOutFlow={40} marginBottom={110} />
+          <BarWaterfall heightInflow={62} heightOutFlow={19} marginBottom={75} />
+          <BarWaterfall heightInflow={19} heightOutFlow={19} marginBottom={60} />
+          <BarWaterfall heightInflow={19} heightOutFlow={30} marginBottom={45} />
+          <BarWaterfall heightInflow={19} heightOutFlow={50} marginBottom={70} />
+          <BarWaterfall heightInflow={19} heightOutFlow={50} marginBottom={100} />
+          <BarWaterfall heightInflow={36} heightOutFlow={19} marginBottom={60} />
+          <BarWaterfall heightInflow={28} heightOutFlow={19} marginBottom={35} />
+          <BarWaterfall heightInflow={24} heightOutFlow={19} marginBottom={10} />
+          <BarWaterfall heightInflow={19} heightOutFlow={20} marginBottom={2} isLastOrFirstOutFlow />
+        </ContainerBarsMobile>
+
+        <ContainerBarsTable>
+          <BarWaterfall heightInflow={19} heightOutFlow={190} marginBottom={4} isLastOrFirstOutFlow />
+          <BarWaterfall heightInflow={65} heightOutFlow={19} marginBottom={130} />
+          <BarWaterfall heightInflow={45} heightOutFlow={19} marginBottom={120} />
+          <BarWaterfall heightInflow={45} heightOutFlow={19} marginBottom={130} />
+          <BarWaterfall heightInflow={19} heightOutFlow={45} marginBottom={150} />
+          <BarWaterfall heightInflow={70} heightOutFlow={19} marginBottom={90} />
+          <BarWaterfall heightInflow={19} heightOutFlow={19} marginBottom={80} />
+          <BarWaterfall heightInflow={19} heightOutFlow={35} marginBottom={65} />
+          <BarWaterfall heightInflow={19} heightOutFlow={55} marginBottom={85} />
+          <BarWaterfall heightInflow={19} heightOutFlow={55} marginBottom={120} />
+          <BarWaterfall heightInflow={45} heightOutFlow={19} marginBottom={80} />
+          <BarWaterfall heightInflow={30} heightOutFlow={19} marginBottom={50} />
+          <BarWaterfall heightInflow={25} heightOutFlow={19} marginBottom={25} />
+          <BarWaterfall heightInflow={19} heightOutFlow={22} marginBottom={4} isLastOrFirstOutFlow />
+        </ContainerBarsTable>
+
+        <ContainerBarsDesk1024>
+          <BarWaterfall heightInflow={19} heightOutFlow={190} marginBottom={4} isLastOrFirstOutFlow />
+          <BarWaterfall heightInflow={65} heightOutFlow={19} marginBottom={130} />
+          <BarWaterfall heightInflow={45} heightOutFlow={19} marginBottom={120} />
+          <BarWaterfall heightInflow={45} heightOutFlow={19} marginBottom={130} />
+          <BarWaterfall heightInflow={19} heightOutFlow={45} marginBottom={150} />
+          <BarWaterfall heightInflow={70} heightOutFlow={19} marginBottom={90} />
+          <BarWaterfall heightInflow={19} heightOutFlow={19} marginBottom={80} />
+          <BarWaterfall heightInflow={19} heightOutFlow={35} marginBottom={65} />
+          <BarWaterfall heightInflow={19} heightOutFlow={55} marginBottom={85} />
+          <BarWaterfall heightInflow={19} heightOutFlow={55} marginBottom={120} />
+          <BarWaterfall heightInflow={45} heightOutFlow={19} marginBottom={80} />
+          <BarWaterfall heightInflow={30} heightOutFlow={19} marginBottom={50} />
+          <BarWaterfall heightInflow={25} heightOutFlow={19} marginBottom={25} />
+          <BarWaterfall heightInflow={19} heightOutFlow={22} marginBottom={4} isLastOrFirstOutFlow />
+        </ContainerBarsDesk1024>
+        <ContainerBarsDesk>
+          <BarWaterfall heightInflow={19} heightOutFlow={300} marginBottom={4} isLastOrFirstOutFlow />
+          <BarWaterfall heightInflow={84} heightOutFlow={19} marginBottom={216} />
+          <BarWaterfall heightInflow={48} heightOutFlow={19} marginBottom={183} />
+          <BarWaterfall heightInflow={48} heightOutFlow={19} marginBottom={151} />
+          <BarWaterfall heightInflow={19} heightOutFlow={52} marginBottom={184} />
+          <BarWaterfall heightInflow={78} heightOutFlow={19} marginBottom={106} />
+          <BarWaterfall heightInflow={19} heightOutFlow={19} marginBottom={86} />
+          <BarWaterfall heightInflow={19} heightOutFlow={36} marginBottom={52} />
+          <BarWaterfall heightInflow={19} heightOutFlow={60} marginBottom={87} />
+          <BarWaterfall heightInflow={19} heightOutFlow={60} marginBottom={147} />
+          <BarWaterfall heightInflow={48} heightOutFlow={19} marginBottom={83} />
+          <BarWaterfall heightInflow={37} heightOutFlow={19} marginBottom={47} />
+          <BarWaterfall heightInflow={28} heightOutFlow={19} marginBottom={2} />
+          <BarWaterfall heightInflow={19} heightOutFlow={26} marginBottom={2} isLastOrFirstOutFlow />
+        </ContainerBarsDesk>
       </ContainerLegendY>
-      {
-        <ContainerAxisX>
-          {isMobile ? (
-            <>
-              {arrayLegendAxisX.map((_, index) => (
-                <ItemXAxis key={index}>
-                  {' '}
-                  {legendAxisXMobile(
-                    index === (0 || 1 || 8 || 13) ? 6 : index === (2 || 4) ? 9 : index === (5 || 6) ? 5 : 9
-                  )}
-                </ItemXAxis>
-              ))}
-            </>
-          ) : (
-            <>
-              {arrayLegendAxisX.map(() => (
-                <>{axisXNotMobile(44, 34)}</>
-              ))}
-            </>
-          )}
-        </ContainerAxisX>
-      }
-      {isMobile && <ContainerLine>{lineMobile}</ContainerLine>}
+
+      <ContainerAxisX>
+        {isMobile ? (
+          <ContainerAxisXMobile>
+            {arrayLegendAxisX.map((_, index) => (
+              <ItemXAxis key={index}>
+                <LegendAxis width={16} />
+              </ItemXAxis>
+            ))}
+          </ContainerAxisXMobile>
+        ) : (
+          <ContainerAxisXDesk>
+            <LegendAxis monthWith={40} yearWidth={32} />
+            {arrayLegendAxisX.map(() => (
+              <LegendAxis monthWith={isTablet ? 32 : isDesk1024 ? 34 : 32} yearWidth={40} />
+            ))}
+            <LegendAxis monthWith={40} yearWidth={32} />
+          </ContainerAxisXDesk>
+        )}
+      </ContainerAxisX>
+
+      <LineContainer>
+        <SkeletonLineMobileLeft variant="rectangular" width={130} height={11} />
+        <CircleElementStyled variant="circular" width={28} height={13} />
+        <SkeletonLineMobileRight variant="rectangular" width={130} height={11} />
+      </LineContainer>
       <ContainerLegends>
-        {ItemLegendValues(isMobile ? 8 : isTablet ? 12 : 12, isMobile ? 101 : isTablet ? 154 : 154)}
-        {ItemLegendValues(isMobile ? 8 : isTablet ? 12 : 12, isMobile ? 45 : isTablet ? 80 : 80)}
-        {ItemLegendValues(isMobile ? 8 : isTablet ? 12 : 12, isMobile ? 35 : isTablet ? 66 : 66)}
+        <LegendItems
+          circleDimension={isMobile ? 8 : isTablet ? 12 : 12}
+          legendWith={isMobile ? 60 : isTablet ? 154 : 154}
+        />
+        <LegendItems
+          circleDimension={isMobile ? 8 : isTablet ? 12 : 12}
+          legendWith={isMobile ? 60 : isMobile ? 45 : isTablet ? 80 : 80}
+        />
+        <LegendItems
+          circleDimension={isMobile ? 8 : isTablet ? 12 : 12}
+          legendWith={isMobile ? 60 : isMobile ? 35 : isTablet ? 66 : 66}
+        />
       </ContainerLegends>
     </Container>
   );
@@ -140,39 +144,23 @@ export default WaterfallSkeleton;
 const Container = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: 16,
-  paddingLeft: 7,
+  position: 'relative',
   width: '100%',
-  maxWidth: 343,
-  height: 275,
-  marginLeft: 'auto',
-  marginRight: 'auto',
-  marginBottom: 32,
-
   [theme.breakpoints.up('tablet_768')]: {
-    height: 485,
-    paddingLeft: 'revert',
-    paddingRight: 'revert',
-    maxWidth: 700,
-    width: 704,
-    marginBottom: 0,
+    height: '100%',
   },
 
   [theme.breakpoints.up('desktop_1024')]: {
-    maxWidth: 954,
-    width: 954,
-    height: 508,
+    width: '100%',
   },
 
   [theme.breakpoints.up('desktop_1280')]: {
-    maxWidth: 1185,
-    width: 1185,
-    height: 508,
+    width: '100%',
   },
   [theme.breakpoints.up('desktop_1440')]: {
-    maxWidth: 1192,
-    height: 508,
-    width: 1192,
+    height: '100%',
+
+    width: '100%',
   },
 }));
 
@@ -183,108 +171,54 @@ const ContainerLegendY = styled('div')(({ theme }) => ({
   gap: 8,
   width: '100%',
   [theme.breakpoints.up('tablet_768')]: {
-    gap: 20,
-  },
-  [theme.breakpoints.up('desktop_1280')]: {
-    gap: 40,
-  },
-}));
-
-const ContainerBar = styled('div')<{ isLast?: boolean }>(({ theme, isLast = false }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  width: 19,
-  gap: 3,
-  borderRadius: 10,
-  [theme.breakpoints.up('tablet_768')]: {
-    width: isLast ? 40 : 48,
-    gap: 'revert',
-  },
-}));
-
-const LegendAxisY = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 16,
-  [theme.breakpoints.up('tablet_768')]: {
-    gap: 32,
-  },
-}));
-
-const ContainerBars = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'row',
-  gap: 3,
-  [theme.breakpoints.up('tablet_768')]: {
-    gap: 'revert',
-    '& > div:last-of-type': {
-      width: 40,
-    },
-  },
-  [theme.breakpoints.up('desktop_1024')]: {
     gap: 16,
+    height: '100%',
   },
+  [theme.breakpoints.up('desktop_1024')]: {},
   [theme.breakpoints.up('desktop_1280')]: {
-    gap: 32,
+    gap: 24,
   },
 }));
 
-const AuxiliaryContainer = styled('div')<{ height: number }>(({ height }) => ({
-  height,
-  backgroundColor: 'transparent',
+const LegendAxisY = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
 }));
 
 const ContainerAxisX = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
+  justifyContent: 'space-between',
   gap: 8,
   paddingLeft: 30,
+  marginTop: 6,
   [theme.breakpoints.up('tablet_768')]: {
     paddingLeft: 60,
     gap: 10,
   },
   [theme.breakpoints.up('desktop_1024')]: {
     gap: 16,
-    paddingLeft: 50,
+    paddingLeft: 65,
   },
   [theme.breakpoints.up('desktop_1280')]: {
     gap: 32,
+    marginTop: 12,
     paddingLeft: 70,
-  },
-}));
-const ContainerAxisXNotMobile = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 4.5,
-  alignItems: 'center',
-  width: 38,
-  [theme.breakpoints.up('tablet_768')]: {
-    width: 37,
-    gap: 8,
-  },
-  [theme.breakpoints.up('desktop_1024')]: {
-    width: 48,
-    gap: 8,
   },
 }));
 
 const ItemXAxis = styled('div')({
-  width: 19,
+  width: 16,
+  display: 'flex',
   textAlign: 'center',
 });
 
-const LineContainer = styled('div')({
-  display: 'flex',
-  flexDirection: 'row',
-});
-
-const ContainerItem = styled('div')({
-  display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'center',
-  gap: 4,
-});
+// const LineContainer = styled('div')({
+//   display: 'flex',
+//   flexDirection: 'row',
+//   width: '100%',
+// });
 
 const ContainerLegends = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -292,87 +226,39 @@ const ContainerLegends = styled('div')(({ theme }) => ({
   justifyContent: 'center',
   marginTop: 24,
   [theme.breakpoints.up('tablet_768')]: {
-    height: 446,
     gap: 64,
   },
 }));
 
-const ContainerLine = styled('div')({
-  marginLeft: 32,
-});
+const LineContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  overflow: 'hidden',
+  gap: 4,
+  paddingLeft: 32,
+  marginBottom: 8,
+  marginTop: 4,
+  [theme.breakpoints.up('tablet_768')]: {
+    display: 'none',
+  },
+}));
 
 const LegendAxisYItemContainer = styled('div')({});
 
-const ContainerBarLine = styled('div')<{ top?: boolean; isHasLine: boolean }>(
-  ({ theme, top = true, isHasLine = true }) => ({
-    position: 'relative',
-    ...(isHasLine && {
-      '&:after': {
-        content: '""',
-        position: 'absolute',
-        width: 10,
-        right: -10,
-        top: top ? 0 : 'unset',
-        bottom: top ? 'unset' : 0,
-        border: `2px solid ${theme.palette.mode === 'light' ? '#ECF1F3' : '#31424E'}`,
-      },
-    }),
-
-    [theme.breakpoints.up('tablet_768')]: {
-      ...(isHasLine && {
-        '&:after': {
-          content: '""',
-          position: 'absolute',
-          width: 10,
-          right: -10,
-          top: top ? 0 : 'unset',
-          bottom: top ? 'unset' : 0,
-          border: `2px solid ${theme.palette.mode === 'light' ? '#ECF1F3' : '#31424E'}`,
-        },
-      }),
-    },
-    [theme.breakpoints.up('desktop_1024')]: {
-      ...(isHasLine && {
-        '&:after': {
-          content: '""',
-          position: 'absolute',
-          width: 26,
-          right: -26,
-          top: top ? 0 : 'unset',
-          bottom: top ? 'unset' : 0,
-          border: `2px solid ${theme.palette.mode === 'light' ? '#ECF1F3' : '#31424E'}`,
-        },
-      }),
-    },
-    [theme.breakpoints.up('desktop_1280')]: {
-      ...(isHasLine && {
-        '&:after': {
-          content: '""',
-          position: 'absolute',
-          width: 42,
-          right: -42,
-          top: top ? 0 : 'unset',
-          bottom: top ? 'unset' : 0,
-          border: `2px solid ${theme.palette.mode === 'light' ? '#ECF1F3' : '#31424E'}`,
-        },
-      }),
-    },
-  })
-);
-
-const SkeletonBarStyle = styled(Skeleton)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'light' ? '#ECF1F3' : '#31424E',
-}));
-
 const SkeletonLineMobileLeft = styled(Skeleton)(({ theme }) => ({
-  borderLeft: `1px solid ${theme.palette.mode === 'light' ? '#ECF1F3' : '#31424E'}`,
-  borderBottom: `1px solid ${theme.palette.mode === 'light' ? '#ECF1F3' : '#31424E'}`,
+  borderLeft: `1px solid ${
+    theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.slate[400]
+  }`,
+  flex: 1,
+  borderBottom: `1px solid ${
+    theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.slate[400]
+  }`,
   backgroundColor: 'transparent',
 }));
 
 const CircleElementStyled = styled(Skeleton)(({ theme }) => ({
   borderRadius: 12.5,
-  backgroundColor: theme.palette.mode === 'light' ? '#ECF1F3' : '#31424E',
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.slate[400],
   marginLeft: 12,
   marginRight: 12,
   marginTop: 4,
@@ -381,8 +267,72 @@ const CircleElementStyled = styled(Skeleton)(({ theme }) => ({
 const SkeletonLineMobileRight = styled(Skeleton)(({ theme }) => ({
   borderBottomLeftRadius: 3,
   borderBottomRightRadius: 3,
-  display: 'flex',
-  borderRight: `1px solid ${theme.palette.mode === 'light' ? '#ECF1F3' : '#31424E'}`,
-  borderBottom: `1px solid ${theme.palette.mode === 'light' ? '#ECF1F3' : '#31424E'}`,
+
+  flex: 1,
+  borderRight: `1px solid ${
+    theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.slate[400]
+  }`,
+  borderBottom: `1px solid ${
+    theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.slate[400]
+  }`,
   backgroundColor: 'transparent',
+}));
+
+const ContainerBarsMobile = styled('div')(({ theme }) => ({
+  display: 'flex',
+  position: 'relative',
+  flexDirection: 'row',
+  alignItems: 'end',
+
+  justifyContent: 'space-between',
+  width: '100%',
+
+  [theme.breakpoints.up('tablet_768')]: {
+    display: 'none',
+  },
+}));
+
+const ContainerBarsTable = styled('div')(({ theme }) => ({
+  display: 'none',
+  [theme.breakpoints.between('tablet_768', 'desktop_1024')]: {
+    display: 'flex',
+    position: 'relative',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    alignItems: 'end',
+  },
+}));
+const ContainerBarsDesk1024 = styled('div')(({ theme }) => ({
+  display: 'none',
+  [theme.breakpoints.between('desktop_1024', 'desktop_1280')]: {
+    display: 'flex',
+
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    alignItems: 'end',
+  },
+}));
+const ContainerBarsDesk = styled('div')(({ theme }) => ({
+  display: 'none',
+  [theme.breakpoints.up('desktop_1280')]: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'end',
+  },
+}));
+
+const ContainerAxisXMobile = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  width: '100%',
+}));
+
+const ContainerAxisXDesk = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  width: '100%',
 }));
