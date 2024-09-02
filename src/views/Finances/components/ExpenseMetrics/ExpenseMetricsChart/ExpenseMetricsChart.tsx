@@ -333,7 +333,6 @@ const ChartContainer = styled('div')(({ theme }) => ({
       maxWidth: 385,
     },
   },
-
   [theme.breakpoints.up('desktop_1024')]: {
     height: 288,
 
@@ -341,22 +340,19 @@ const ChartContainer = styled('div')(({ theme }) => ({
       maxWidth: 526,
     },
   },
-
   [theme.breakpoints.up('desktop_1280')]: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    gap: 0,
-    maxWidth: 536,
-    height: 432,
+    gap: 32,
+    height: 353,
+    marginTop: 24,
 
     '& > div:first-of-type': {
-      maxWidth: '100%',
+      maxWidth: 765,
     },
   },
-
   [theme.breakpoints.up('desktop_1440')]: {
-    maxWidth: 592,
-    height: 432,
+    '& > div:first-of-type': {
+      maxWidth: 840,
+    },
   },
 }));
 
@@ -410,15 +406,6 @@ const LegendContainer = styled('div')(({ theme }) => ({
     borderRadius: 12,
     backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
   },
-
-  [theme.breakpoints.up('desktop_1280')]: {
-    position: 'absolute',
-    alignItems: 'flex-start',
-    flex: 'none',
-    padding: 0,
-    borderRadius: 0,
-    backgroundColor: 'transparent',
-  },
 }));
 
 const LegendWrapper = styled('div')(({ theme }) => ({
@@ -431,11 +418,6 @@ const LegendWrapper = styled('div')(({ theme }) => ({
     flexDirection: 'column',
     alignItems: 'flex-start',
     gap: 24,
-  },
-
-  [theme.breakpoints.up('desktop_1280')]: {
-    flexDirection: 'row',
-    gap: '16px 24px',
   },
 }));
 
@@ -455,7 +437,6 @@ const LegendItem = styled('div')(({ theme }) => ({
     fontSize: 14,
     lineHeight: '22px',
   },
-
   [theme.breakpoints.up('desktop_1280')]: {
     fontSize: 16,
     lineHeight: '24px',

@@ -100,17 +100,11 @@ const Container = styled(Card)(({ theme }) => ({
   [theme.breakpoints.up('tablet_768')]: {
     padding: 16,
   },
-
   [theme.breakpoints.up('desktop_1024')]: {
     padding: '16px 24px 24px',
   },
-
   [theme.breakpoints.up('desktop_1280')]: {
-    maxWidth: 584,
-  },
-
-  [theme.breakpoints.up('desktop_1440')]: {
-    maxWidth: 640,
+    padding: 24,
   },
 }));
 
@@ -125,7 +119,6 @@ const TooltipContent = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
-
   p: {
     margin: 0,
   },
@@ -139,11 +132,9 @@ const FilterContainer = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('tablet_768')]: {
     marginBottom: 20,
   },
-
   [theme.breakpoints.up('desktop_1024')]: {
     marginBottom: 24,
   },
-
   [theme.breakpoints.up('desktop_1280')]: {
     marginBottom: 26,
   },

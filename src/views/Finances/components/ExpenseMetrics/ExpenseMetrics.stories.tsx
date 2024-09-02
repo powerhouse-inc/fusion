@@ -87,7 +87,7 @@ LightMode.parameters = {
         },
       },
       1280: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-4246&m=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=8660-46831&m=dev',
         options: {
           componentStyle: {
             width: 584,
@@ -99,7 +99,7 @@ LightMode.parameters = {
         },
       },
       1440: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=8-10584&m=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=8942-102294&m=dev',
         options: {
           componentStyle: {
             width: 640,
