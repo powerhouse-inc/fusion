@@ -90,7 +90,6 @@ const BreakdownChartSection: React.FC<BreakdownChartSectionProps> = ({
 export default BreakdownChartSection;
 
 const Section = styled(Card)(({ theme }) => ({
-  marginTop: 40,
   width: '100%',
 
   padding: '8px 8px 16px',
@@ -100,9 +99,6 @@ const Section = styled(Card)(({ theme }) => ({
   },
   [theme.breakpoints.up('desktop_1024')]: {
     padding: 24,
-  },
-  [theme.breakpoints.up('desktop_1280')]: {
-    marginTop: 64,
   },
 }));
 

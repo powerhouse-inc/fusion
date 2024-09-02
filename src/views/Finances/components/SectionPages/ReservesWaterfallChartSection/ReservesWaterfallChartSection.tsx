@@ -108,7 +108,7 @@ const Section = styled(Card)(({ theme }) => ({
     padding: '16px 71px 24px ',
   },
   [theme.breakpoints.up('desktop_1440')]: {
-    padding: '16px 80px 24px ',
+    padding: '16px 24px 24px ',
   },
 }));
 
