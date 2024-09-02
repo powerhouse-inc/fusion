@@ -157,38 +157,12 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
   // if the default filters are selected then the "Reset filters" button should be disabled
   const areDefaultFiltersSelected = activeElements.length === selectAll.length && selectedGranularity === 'monthly';
 
-  // TODO: Implement the canReset and onReset
-  const canReset = false;
+  const canReset = selectedGranularity !== 'monthly' || activeElements.length !== selectAll.length;
   const onReset = () => {
-    console.log('not implemented');
+    handleResetFilter();
   };
 
   const filters: Filter[] = [
-    {
-      type: 'select',
-      id: 'categories',
-      label: 'Categories',
-      selected: activeElements,
-      multiple: true,
-      withAll: true,
-      onChange: (value: string | number | (string | number)[]) => {
-        setActiveElements(value as string[]);
-      },
-      options: items,
-      customOptionsRender: (option: SelectOption, isActive: boolean) => (
-        <BudgetItem label={option?.label ?? ''} image={option?.extra?.url ?? ''} isActive={isActive} />
-      ),
-      customOptionsRenderAll: (isActive: boolean) => <CustomAllCategories label="All Categories" isActive={isActive} />,
-      containerStyles: {
-        maxHeight: isMobile ? '100%' : 200,
-        overflowY: 'auto',
-      },
-      itemOptionStyles: {
-        height: 40,
-        alignItems: 'center',
-      },
-    },
-
     {
       type: 'select',
       id: 'Granularity',
@@ -205,7 +179,36 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
         menuWidth: 350,
       },
     },
+    {
+      type: 'select',
+      id: 'categories',
+      label: 'Categories',
+      selected: activeElements,
+      multiple: true,
+      withAll: true,
+      onChange: (value: string | number | (string | number)[]) => {
+        setActiveElements(value as string[]);
+      },
+      options: items,
+      customOptionsRender: (option: SelectOption, isActive: boolean) => (
+        <BudgetItem label={option?.label ?? ''} image={option?.extra?.url ?? ''} isActive={isActive} />
+      ),
+      customOptionsRenderAll: (isActive: boolean) => <CustomAllCategories label="All Categories" isActive={isActive} />,
+      ...(!isMobile &&
+        !isTable && {
+          itemOptionStyles: {
+            height: 40,
+            alignItems: 'center',
+          },
+        }),
+    },
   ];
+
+  const startPoint = useMemo(
+    () => items.length * 32 + 310,
+
+    [items.length]
+  );
   return {
     titleChart,
     legendItems,
@@ -222,5 +225,6 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
     canReset,
     onReset,
     filters,
+    startPoint,
   };
 };

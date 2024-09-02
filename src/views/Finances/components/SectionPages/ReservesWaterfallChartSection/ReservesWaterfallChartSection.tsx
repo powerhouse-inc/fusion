@@ -19,6 +19,7 @@ interface Props {
   filters: Filter[];
   canReset: boolean;
   onReset: () => void;
+  startPoint: number;
 }
 
 const ReservesWaterfallChartSection: React.FC<Props> = ({
@@ -31,6 +32,7 @@ const ReservesWaterfallChartSection: React.FC<Props> = ({
   filters,
   canReset,
   onReset,
+  startPoint,
 }) => (
   <Section>
     <ContainerTitleFilter>
@@ -53,13 +55,14 @@ const ReservesWaterfallChartSection: React.FC<Props> = ({
       />
       <FilterContainer>
         <FiltersBundle
+          heightForScroll
           asPopover={['tablet_768', 'desktop']}
           filters={filters}
           resetFilters={{
             canReset,
             onReset,
           }}
-          snapPoints={[1, 400, 250, 0]}
+          snapPoints={[startPoint, 300, 250, 0]}
         />
       </FilterContainer>
     </ContainerTitleFilter>
