@@ -51,5 +51,4 @@ const CurrencyBreakdown = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  border: '1px solid red',
 }));

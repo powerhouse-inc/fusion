@@ -92,7 +92,6 @@ const ContainerChart = styled('div')({
 });
 
 const Section = styled(Card)(({ theme }) => ({
-  marginTop: 40,
   width: '100%',
   padding: '8px 8px 16px',
   gap: 16,
@@ -105,11 +104,10 @@ const Section = styled(Card)(({ theme }) => ({
     padding: '16px 58px 24px ',
   },
   [theme.breakpoints.up('desktop_1280')]: {
-    marginTop: 64,
+    marginTop: 32,
     padding: '16px 71px 24px ',
   },
-  [theme.breakpoints.up('desktop_1280')]: {
-    marginTop: 64,
+  [theme.breakpoints.up('desktop_1440')]: {
     padding: '16px 80px 24px ',
   },
 }));

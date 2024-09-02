@@ -140,20 +140,18 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
             }}
           />
 
-          <ContainerReservesWaterfallChart>
-            <ReservesWaterfallChartSection
-              title={`${levelNumber === 1 ? (isMobile ? 'MakerDAO F.' : 'MakerDAO Finances') : title} Reserves`}
-              legends={reserveChart.legendItems}
-              series={reserveChart.series}
-              selectedGranularity={reserveChart.selectedGranularity}
-              year={year}
-              isLoading={reserveChart.isLoading}
-              canReset={reserveChart.canReset}
-              onReset={reserveChart.onReset}
-              filters={reserveChart.filters}
-              startPoint={reserveChart.startPoint}
-            />
-          </ContainerReservesWaterfallChart>
+          <ReservesWaterfallChartSection
+            title={`${levelNumber === 1 ? (isMobile ? 'MakerDAO F.' : 'MakerDAO Finances') : title} Reserves`}
+            legends={reserveChart.legendItems}
+            series={reserveChart.series}
+            selectedGranularity={reserveChart.selectedGranularity}
+            year={year}
+            isLoading={reserveChart.isLoading}
+            canReset={reserveChart.canReset}
+            onReset={reserveChart.onReset}
+            filters={reserveChart.filters}
+            startPoint={reserveChart.startPoint}
+          />
         </Container>
       </BudgetMetricsModalProvider>
 
@@ -277,13 +275,5 @@ const ContainerLastReport = styled('div')(({ theme }) => ({
 
   [theme.breakpoints.up('desktop_1280')]: {
     marginTop: 32,
-  },
-}));
-
-const ContainerReservesWaterfallChart = styled('div')(({ theme }) => ({
-  marginTop: 40,
-
-  [theme.breakpoints.up('tablet_768')]: {
-    marginTop: 64,
   },
 }));
