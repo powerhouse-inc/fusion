@@ -13,10 +13,10 @@ interface CloseProps {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export const Close = ({
-  fill = '#231536',
+  fill = '#343839',
   width = 20,
   height = 20,
-  fillDark = '#EDEFFF',
+  fillDark = '#FCFCFC',
   onClick,
   className,
   ...props
