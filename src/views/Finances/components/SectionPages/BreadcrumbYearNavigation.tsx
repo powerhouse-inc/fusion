@@ -22,6 +22,7 @@ const BreadcrumbYearNavigation: React.FC<BreadcrumbYearNavigationProps> = ({
   return (
     <Breadcrumb
       items={breakdownItems}
+      maxSegmentWidthMobile={76}
       rightContent={
         <RightContentContainer>
           <BudgetButton onClick={handleOpenModal}>

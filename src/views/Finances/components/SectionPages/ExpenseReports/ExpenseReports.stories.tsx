@@ -7,9 +7,13 @@ const meta: Meta<typeof ExpenseReports> = {
   title: 'Fusion/Views/Finances/Section/Expense Reports Finances',
   component: ExpenseReports,
   parameters: {
+    chromatic: {
+      viewports: [375, 768, 1024, 1280, 1440],
+    },
     date: new Date('2023-09-18T12:23:00Z'),
   },
 };
+
 export default meta;
 
 const expenseReportResponse = {
@@ -42,102 +46,61 @@ const args = [
     onReset: () => null,
   },
 ];
-const [[LightMode, DarkMode], [DeskLightMode1024, DeskLightMode1024Dark]] = createThemeModeVariants(
-  ExpenseReports,
-  args
-);
-export { LightMode, DarkMode, DeskLightMode1024, DeskLightMode1024Dark };
+
+const [[LightMode, DarkMode], [Desk1024LightMode, Desk1024DarkMode]] = createThemeModeVariants(ExpenseReports, args);
+
+export { LightMode, DarkMode, Desk1024LightMode, Desk1024DarkMode };
 
 LightMode.parameters = {
   chromatic: {
-    viewports: [375, 768, 1280, 1440, 1920],
+    viewports: [375, 768, 1280, 1440],
   },
   figma: {
     component: {
       375: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=24365:95542&mode=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-13776&m=dev',
         options: {
           componentStyle: {
             width: 343,
           },
           style: {
             top: 0,
-            left: -40,
+            left: -5,
           },
         },
       },
       768: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=24369:100461&mode=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-11821&m=dev',
         options: {
           componentStyle: {
             width: 704,
           },
           style: {
-            top: -1,
-            left: -12,
+            top: 0,
+            left: -5,
           },
         },
       },
       1280: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=22935:214487&mode=design&t=dTByGfvKLwYnVbvR-4',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-5111&m=dev',
         options: {
           componentStyle: {
-            width: 1184,
+            width: 1200,
           },
           style: {
-            top: -1,
-            left: -1,
+            top: 0,
+            left: -2,
           },
         },
       },
       1440: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=22935:200749&mode=design&t=dTByGfvKLwYnVbvR-4',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=8-11437&m=dev',
         options: {
           componentStyle: {
             width: 1312,
           },
           style: {
-            top: -1,
-            left: -1,
-          },
-        },
-      },
-      1920: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=22935:205049&mode=design&t=dTByGfvKLwYnVbvR-4',
-        options: {
-          componentStyle: {
-            width: 1312,
-          },
-          style: {
-            top: -1,
-            left: -1,
-          },
-        },
-      },
-    },
-  },
-};
-
-DeskLightMode1024.parameters = {
-  chromatic: {
-    viewports: [1024],
-  },
-  figma: {
-    component: {
-      1024: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=24542:202230&mode=dev',
-        options: {
-          componentStyle: {
-            width: 960,
-          },
-          style: {
-            top: -1,
+            top: 0,
             left: -2,
           },
         },
@@ -146,5 +109,27 @@ DeskLightMode1024.parameters = {
   },
 };
 
+Desk1024LightMode.parameters = {
+  chromatic: {
+    viewports: [1024],
+  },
+  figma: {
+    component: {
+      1024: {
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-7690&m=dev',
+        options: {
+          componentStyle: {
+            width: 960,
+          },
+          style: {
+            top: 0,
+            left: 0,
+          },
+        },
+      },
+    },
+  },
+};
+
 DarkMode.parameters = {};
-DeskLightMode1024Dark.parameters = {};
+Desk1024DarkMode.parameters = {};

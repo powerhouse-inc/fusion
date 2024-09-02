@@ -4,7 +4,7 @@ import type { DoughnutSeries } from '@/views/Finances/utils/types';
 import ItemLegendDoughnut from './ItemLegendDoughnut';
 
 interface Props {
-  isCoreThirdLevel?: boolean;
+  isDeepLevel?: boolean;
   changeAlignment: boolean;
   doughnutSeriesData: DoughnutSeries[];
   toggleSeriesVisibility: (seriesName: string) => void;
@@ -14,7 +14,7 @@ interface Props {
 
 const CardLegend: React.FC<Props> = ({
   changeAlignment,
-  isCoreThirdLevel = true,
+  isDeepLevel = true,
   doughnutSeriesData,
   onLegendItemHover,
   onLegendItemLeave,
@@ -22,7 +22,7 @@ const CardLegend: React.FC<Props> = ({
 }) => {
   const sortedDoughnutSeries = sortDoughnutSeriesByValue(doughnutSeriesData);
   return (
-    <ContainerLegend isCoreThirdLevel={isCoreThirdLevel} changeAlignment={changeAlignment}>
+    <ContainerLegend isDeepLevel={isDeepLevel} changeAlignment={changeAlignment}>
       {sortedDoughnutSeries.map((data, index) => (
         <ItemLegendDoughnut
           key={index}
@@ -31,7 +31,7 @@ const CardLegend: React.FC<Props> = ({
           onLegendItemHover={onLegendItemHover}
           onLegendItemLeave={onLegendItemLeave}
           toggleSeriesVisibility={toggleSeriesVisibility}
-          isCoreThirdLevel={isCoreThirdLevel}
+          isDeepLevel={isDeepLevel}
         />
       ))}
     </ContainerLegend>
@@ -40,20 +40,20 @@ const CardLegend: React.FC<Props> = ({
 
 export default CardLegend;
 
-const ContainerLegend = styled('div')<{ isCoreThirdLevel: boolean; changeAlignment: boolean }>(
-  ({ theme, isCoreThirdLevel, changeAlignment }) => ({
+const ContainerLegend = styled('div')<{ isDeepLevel: boolean; changeAlignment: boolean }>(
+  ({ theme, isDeepLevel, changeAlignment }) => ({
     display: 'flex',
     flexDirection: 'column',
     flexWrap: 'wrap',
-    justifyContent: isCoreThirdLevel && changeAlignment ? 'flex-start' : changeAlignment ? 'flex-start' : 'center',
-    gap: isCoreThirdLevel ? 4 : 8,
+    justifyContent: isDeepLevel && changeAlignment ? 'flex-start' : changeAlignment ? 'flex-start' : 'center',
+    gap: isDeepLevel ? 4 : 8,
     maxWidth: '100%',
     maxHeight: 155,
 
     [theme.breakpoints.up('desktop_1280')]: {
       columnGap: 24,
-      rowGap: isCoreThirdLevel ? 10 : 8,
-      marginTop: isCoreThirdLevel ? 6 : 0,
+      rowGap: isDeepLevel ? 10 : 8,
+      marginTop: isDeepLevel ? 6 : 0,
     },
   })
 );

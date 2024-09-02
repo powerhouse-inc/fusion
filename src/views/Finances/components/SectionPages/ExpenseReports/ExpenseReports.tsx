@@ -1,5 +1,4 @@
 import { styled } from '@mui/material';
-import { Fragment } from 'react';
 import TableEmptyState from '@/components/TableEmptyState/TableEmptyState';
 import BigButton from '@/views/CoreUnitAbout/components/Button/BigButton/BigButton';
 import FinancesTitle from '@/views/Finances/components/FinancesTitle/FinancesTitle';
@@ -40,7 +39,7 @@ const ExpenseReports: FC<Props> = ({
       <HeaderContainer>
         <FinancesTitle
           year={year}
-          title="Expense Reports"
+          title="Budget Statements"
           tooltip={
             <TooltipContent>
               <p>
@@ -63,13 +62,11 @@ const ExpenseReports: FC<Props> = ({
         </Header>
       )}
       <ItemSection>
-        {expenseReportResponse.data?.map((page, index) => (
-          <Fragment key={`page-${index}`}>
-            {page.map((budget) => (
-              <DelegateExpenseTrendItem key={index} budget={budget} selectedMetric={filterProps.selectedMetric} />
-            ))}
-          </Fragment>
-        ))}
+        {expenseReportResponse.data?.map((page) =>
+          page.map((budget) => (
+            <DelegateExpenseTrendItem key={budget.id} budget={budget} selectedMetric={filterProps.selectedMetric} />
+          ))
+        )}
         {isLoading && <ExpenseReportsItemsSkeleton />}
         {!hasExpenseReport && (
           <TableEmptyState description="There are no contributors available with this combination of filters" />
@@ -79,12 +76,9 @@ const ExpenseReports: FC<Props> = ({
       {!isLoading &&
         !((expenseReportResponse.data?.[(expenseReportResponse.data?.length ?? 0) - 1]?.length ?? 0) < 10) && (
           <ContainerButton>
-            <DividerStyle />
-            <BigButtonStyled
-              title={'Load More'}
-              onClick={() => expenseReportResponse.setSize(expenseReportResponse.size + 1)}
-            />
-            <DividerStyle />
+            <DividerStyled />
+            <BigButtonStyled title={'Load More'} onClick={() => expenseReportResponse.setSize((size) => size + 1)} />
+            <DividerStyled />
           </ContainerButton>
         )}
     </Container>
@@ -131,34 +125,48 @@ const Header = styled('div')(({ theme }) => ({
   },
 }));
 
-const ContainerButton = styled('div')(({ theme }) => ({
+const ContainerButton = styled('div')(() => ({
   width: '100%',
   display: 'flex',
   flex: 1,
   alignItems: 'center',
   marginTop: 24,
-
-  [theme.breakpoints.up('tablet_768')]: {
-    marginTop: 40,
-  },
 }));
 
-const DividerStyle = styled('div')(({ theme }) => ({
-  backgroundColor: theme.palette.isLight ? '#D4D9E1' : '#405361',
-  height: 1,
+const DividerStyled = styled('div')(({ theme }) => ({
   display: 'flex',
   flex: 1,
+  borderBottom: `1px solid ${
+    theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.charcoal[800]
+  }`,
+  '&:has(+ button:hover)': {
+    borderColor: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700],
+  },
 }));
 
 const BigButtonStyled = styled(BigButton)(({ theme }) => ({
   minWidth: 127,
   height: 31,
+  fontWeight: 600,
+  lineHeight: '15px',
   padding: '8px 24px',
   letterSpacing: 1,
-  color: '#708390',
+
+  '&:hover': {
+    borderColor: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700],
+    color: theme.palette.isLight ? theme.palette.colors.slate[300] : theme.palette.colors.charcoal[600],
+    backgroundColor: 'transparent',
+    '& + div': {
+      borderColor: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700],
+    },
+  },
+  '&:active, &:focus': {
+    backgroundColor: 'transparent',
+  },
 
   [theme.breakpoints.up('tablet_768')]: {
     minWidth: 207,
+    padding: '8px 64px',
   },
 }));
 

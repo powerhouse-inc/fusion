@@ -1,5 +1,4 @@
 import { Button, styled } from '@mui/material';
-import React from 'react';
 
 interface Props {
   onClick?: () => void;
@@ -9,7 +8,7 @@ interface Props {
 }
 
 const BigButton = ({ onClick, title = 'Back', className }: Props) => (
-  <StyledBigButton onClick={onClick} className={className}>
+  <StyledBigButton onClick={onClick} className={className} disableRipple>
     {title}
   </StyledBigButton>
 );

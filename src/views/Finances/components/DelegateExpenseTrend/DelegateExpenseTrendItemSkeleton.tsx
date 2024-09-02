@@ -7,14 +7,15 @@ const DelegateExpenseTrendItemSkeleton = () => {
 
   const avatar = (
     <AvatarContainer>
-      <Skeleton variant="circular" width={isMobile || isTablet ? 40 : 33} height={isMobile || isTablet ? 40 : 33} />
-      <IconSkeleton variant="circular" width={isMobile || isTablet ? 22 : 20} height={isMobile || isTablet ? 22 : 20} />
+      <Skeleton variant="circular" width={32} height={32} />
+      <IconSkeleton variant="circular" width={20} height={20} />
     </AvatarContainer>
   );
+
   const footer = (
     <FooterContainer>
-      <Skeleton variant="rounded" width={105} height={10.5} />
-      <Skeleton variant="rounded" width={84} height={12.25} />
+      <Skeleton variant="rounded" width={78} height={18} />
+      <Skeleton variant="rounded" width={84} height={22} />
     </FooterContainer>
   );
 
@@ -26,28 +27,26 @@ const DelegateExpenseTrendItemSkeleton = () => {
             {avatar}
             <MobileNameContainer>
               <NameContainer>
-                <Skeleton variant="rounded" width={28} height={12.25} />
-                <Skeleton variant="rounded" width={130} height={12.25} />
+                <Skeleton variant="rounded" width={27} height={18} />
+                <Skeleton variant="rounded" width={176} height={18} />
               </NameContainer>
-
-              <Skeleton variant="rounded" width={98} height={26} />
+              <Skeleton variant="rounded" width={67} height={24} />
             </MobileNameContainer>
             <ViewButton>
-              <Skeleton variant="rounded" width={19} height={14} />
+              <Skeleton variant="rounded" width={40} height={32} />
             </ViewButton>
           </DataContainer>
-
+          <Divider />
           <ValuesContainer>
             <ValueSet>
-              <Skeleton variant="rounded" width={88} height={9.63} />
-              <Skeleton variant="rounded" width={82} height={12.25} />
+              <Skeleton variant="rounded" width={97} height={18} />
+              <Skeleton variant="rounded" width={82} height={22} />
             </ValueSet>
             <ValueSet>
-              <Skeleton variant="rounded" width={68} height={9.63} />
-              <Skeleton variant="rounded" width={97} height={12.25} />
+              <Skeleton variant="rounded" width={43} height={18} />
+              <Skeleton variant="rounded" width={97} height={22} />
             </ValueSet>
           </ValuesContainer>
-
           {footer}
         </ContentContainer>
       )}
@@ -55,32 +54,31 @@ const DelegateExpenseTrendItemSkeleton = () => {
         <ContentContainer>
           <DataContainer>
             <ContributorContainer>
-              <Skeleton variant="rounded" width={113} height={12.25} />
+              <Skeleton variant="rounded" width={98} height={18} />
               <ContributorInfo>
                 {avatar}
                 <NameContainer>
-                  <Skeleton variant="rounded" width={28} height={12.25} />
-                  <Skeleton variant="rounded" width={132} height={12.25} />
+                  <Skeleton variant="rounded" width={27} height={22} />
+                  <Skeleton variant="rounded" width={167} height={22} />
                 </NameContainer>
               </ContributorInfo>
             </ContributorContainer>
             <ValueSet>
-              <Skeleton variant="rounded" width={112} height={12.25} />
-              <Skeleton variant="rounded" width={82} height={16} />
+              <Skeleton variant="rounded" width={97} height={18} />
+              <Skeleton variant="rounded" width={82} height={22} />
             </ValueSet>
             <ValueSet>
-              <Skeleton variant="rounded" width={86} height={12.25} />
-              <Skeleton variant="rounded" width={97} height={16} />
+              <Skeleton variant="rounded" width={43} height={18} />
+              <Skeleton variant="rounded" width={97} height={17} />
             </ValueSet>
             <StatusContainer>
-              <Skeleton variant="rounded" width={43} height={12.25} />
-              <Skeleton variant="rounded" width={98} height={26} />
+              <Skeleton variant="rounded" width={38} height={18} />
+              <Skeleton variant="rounded" width={67} height={24} />
             </StatusContainer>
             <ViewButton>
-              <Skeleton variant="rounded" width={32} height={32} style={{ borderRadius: 6 }} />
+              <Skeleton variant="rounded" width={56} height={32} />
             </ViewButton>
           </DataContainer>
-
           {footer}
         </ContentContainer>
       )}
@@ -89,24 +87,24 @@ const DelegateExpenseTrendItemSkeleton = () => {
           <ContributorInfo>
             {avatar}
             <NameContainer>
-              <Skeleton variant="rounded" width={28} height={12.25} />
-              <Skeleton variant="rounded" width={132} height={12.25} />
+              <Skeleton variant="rounded" width={27} height={22} />
+              <Skeleton variant="rounded" width={168} height={22} />
             </NameContainer>
           </ContributorInfo>
           <ReportingMonthContainer>
-            <Skeleton variant="rounded" width={82} height={16} />
+            <Skeleton variant="rounded" width={82} height={17} />
           </ReportingMonthContainer>
           <ValueContainer>
-            <Skeleton variant="rounded" width={97} height={16} />
+            <Skeleton variant="rounded" width={97} height={17} />
           </ValueContainer>
           <StatusContainer>
-            <Skeleton variant="rounded" width={98} height={26} />
+            <Skeleton variant="rounded" width={67} height={24} />
           </StatusContainer>
           <LastUpdateContainer>
-            <Skeleton variant="rounded" width={124} height={16} />
+            <Skeleton variant="rounded" width={84} height={17} />
           </LastUpdateContainer>
           <ViewButton>
-            <Skeleton variant="rounded" width={46} height={16} />
+            <Skeleton variant="rounded" width={110} height={32} />
           </ViewButton>
         </ContentContainer>
       )}
@@ -117,23 +115,27 @@ const DelegateExpenseTrendItemSkeleton = () => {
 export default DelegateExpenseTrendItemSkeleton;
 
 const ItemContainer = styled('div')(({ theme }) => ({
+  boxSizing: 'border-box',
   display: 'flex',
-  justifyContent: 'center',
+  flex: 1,
   padding: '16px 16px 0',
-  borderRadius: 6,
-  background: theme.palette.mode === 'light' ? '#fff' : '#10191F',
-  boxShadow:
-    theme.palette.mode === 'light'
-      ? '0px 1px 3px 0px rgba(190, 190, 190, 0.25), 0px 20px 40px 0px rgba(219, 227, 237, 0.40)'
-      : '0px 1px 3px 0px rgba(30, 23, 23, 0.25), 0px 20px 40px -40px rgba(7, 22, 40, 0.40)',
-  border: theme.palette.mode === 'light' ? '1px solid #ECEFF9' : 'none',
+  border: theme.palette.isLight ? `1px solid ${theme.palette.colors.slate[50]}` : 'none',
+  borderRadius: 12,
+  backgroundColor: theme.palette.isLight ? '#FFF' : theme.palette.colors.charcoal[900],
+  boxShadow: theme.palette.isLight ? '2px 4px 7px 0px rgba(107, 122, 150, 0.25)' : '1px 4px 15.3px 0px #141921',
 
   [theme.breakpoints.up('tablet_768')]: {
-    padding: '8px 8px 0 16px',
+    padding: '8px 8px 0px 16px',
   },
-
   [theme.breakpoints.up('desktop_1024')]: {
-    padding: 16,
+    padding: '12px 16px',
+    border: 'none',
+    borderRadius: 0,
+    boxShadow: theme.palette.isLight ? '0px 2px 12px 0px rgba(37, 42, 52, 0.10)' : '1px 4px 15.3px 0px #141921',
+    '&:last-of-type': {
+      borderBottomLeftRadius: 12,
+      borderBottomRightRadius: 12,
+    },
   },
 }));
 
@@ -141,17 +143,19 @@ const ContentContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  gap: 32,
+  gap: 8,
   width: '100%',
-
-  [theme.breakpoints.up('tablet_768')]: {
-    gap: 24,
+  '& .MuiSkeleton-root': {
+    backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.charcoal[800],
+  },
+  '& .MuiSkeleton-rounded': {
+    borderRadius: 6,
   },
 
   [theme.breakpoints.up('desktop_1024')]: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 16,
+    gap: 0,
   },
 }));
 
@@ -163,33 +167,28 @@ const DataContainer = styled('div')(({ theme }) => ({
 
   [theme.breakpoints.up('tablet_768')]: {
     justifyContent: 'space-between',
+    alignItems: 'flex-start',
   },
 }));
 
-const AvatarContainer = styled('div')(({ theme }) => ({
+const AvatarContainer = styled('div')(() => ({
   position: 'relative',
-  width: 47,
-  minWidth: 47,
-  height: 47,
-
-  [theme.breakpoints.up('desktop_1024')]: {
-    width: 39,
-    minWidth: 39,
-    height: 38,
-  },
+  minWidth: 39,
+  width: 39,
+  height: 38,
 }));
 
-const IconSkeleton = styled(Skeleton)(() => ({
-  boxShadow: '-1px 1px 3px 0px rgba(135, 135, 135, 0.25)',
+const IconSkeleton = styled(Skeleton)(({ theme }) => ({
   position: 'absolute',
-  bottom: 0,
-  right: 0,
+  bottom: 2,
+  right: 2,
+  boxShadow: theme.palette.isLight ? '2px 4px 7px 0px rgba(107, 122, 150, 0.25)' : '0px 1px 4px 0px #141921',
 }));
 
 const MobileNameContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: 12.75,
+  gap: 4,
   width: '100%',
 }));
 
@@ -199,35 +198,11 @@ const NameContainer = styled('div')(() => ({
 }));
 
 const ViewButton = styled('div')(({ theme }) => ({
-  width: 32,
-  minWidth: 32,
-  height: 32,
   display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  borderRadius: 6,
-  boxShadow:
-    theme.palette.mode === 'light'
-      ? '0px 1px 3px 0px rgba(190, 190, 190, 0.25), 0px 5px 10px 0px rgba(219, 227, 237, 0.40)'
-      : '0px 2px 3px 0px #040C27',
-
-  [theme.breakpoints.up('tablet_768')]: {
-    boxShadow: 'none',
-    width: 48,
-    height: 63,
-    background: theme.palette.mode === 'light' ? '#F9FAFF' : '#262b41',
-  },
+  alignSelf: 'flex-start',
 
   [theme.breakpoints.up('desktop_1024')]: {
-    width: 82,
-    minWidth: 82,
-    height: 34,
-    borderRadius: 22,
-    boxShadow:
-      theme.palette.mode === 'light'
-        ? '0px 1px 3px rgba(190, 190, 190, 0.25), 0px 5px 10px rgba(219, 227, 237, 0.40)'
-        : '0px 2px 3px 0px #040C27',
-    background: theme.palette.mode === 'light' ? '#FFF' : '#10191F',
+    alignSelf: 'center',
   },
 }));
 
@@ -235,96 +210,96 @@ const ValuesContainer = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   width: '100%',
-  padding: '0 32px 4.75px',
+  padding: '0 24px',
 }));
 
 const ValueSet = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: 11.37,
+  gap: 4,
 
   [theme.breakpoints.up('tablet_768')]: {
-    gap: 23.75,
-    paddingBottom: 11,
-    width: 130,
+    gap: 12,
   },
 }));
 
 const FooterContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
+  alignItems: 'center',
   width: 'calc(100% + 32px)',
-  borderRadius: 6,
-  background: theme.palette.mode === 'light' ? '#F5F6FB' : '#25273D',
-  margin: '-8px -16px 0',
-  padding: '10px 16px',
+  padding: '4px 16px',
+  borderTop: `1px solid ${theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.slate[500]}`,
 
   [theme.breakpoints.up('tablet_768')]: {
     width: 'calc(100% + 24px)',
-    padding: '6px 10px 6.75px',
-    margin: '-8px -8px 0 -16px',
+    marginLeft: -8,
+    padding: '4px 10px 4px 10px',
   },
 }));
 
 const ContributorContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: 12.75,
-  width: 250,
+  gap: 4,
 }));
 
-const ContributorInfo = styled('div')(({ theme }) => ({
+const ContributorInfo = styled('div')(() => ({
   display: 'flex',
   alignItems: 'center',
-  gap: 8,
-
-  [theme.breakpoints.up('desktop_1024')]: {
-    width: 300,
-  },
+  gap: 4,
 }));
 
 const StatusContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: 18.75,
-  paddingBottom: 6,
+  gap: 12,
 
   [theme.breakpoints.up('desktop_1024')]: {
-    width: 120,
-    paddingBottom: 0,
+    paddingRight: 16,
   },
-
-  [theme.breakpoints.up('desktop_1194')]: {
-    width: 150,
-    paddingLeft: 14,
-  },
-
   [theme.breakpoints.up('desktop_1280')]: {
-    paddingLeft: 0,
+    paddingRight: 50,
   },
-
   [theme.breakpoints.up('desktop_1440')]: {
-    paddingLeft: 8,
+    paddingRight: 77,
   },
 }));
 
 const ReportingMonthContainer = styled('div')(({ theme }) => ({
-  width: 120,
-
-  [theme.breakpoints.up('desktop_1280')]: {
-    marginLeft: -16,
-  },
+  paddingLeft: 12,
 
   [theme.breakpoints.up('desktop_1440')]: {
-    marginLeft: -36,
-    marginRight: 16,
+    paddingLeft: 0,
+    paddingRight: 30,
   },
 }));
 
-const ValueContainer = styled('div')(() => ({
-  width: 130,
+const ValueContainer = styled('div')(({ theme }) => ({
+  paddingLeft: 4,
+
+  [theme.breakpoints.up('desktop_1280')]: {
+    paddingLeft: 6,
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    paddingLeft: 0,
+    paddingRight: 16,
+  },
 }));
 
-const LastUpdateContainer = styled('div')(() => ({
-  width: 160,
+const LastUpdateContainer = styled('div')(({ theme }) => ({
+  paddingRight: 14,
+
+  [theme.breakpoints.up('desktop_1280')]: {
+    paddingRight: 16,
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    paddingRight: 2,
+  },
+}));
+
+const Divider = styled('div')(({ theme }) => ({
+  width: '100%',
+  borderBottom: `1px solid ${theme.palette.isLight ? '#D4D9E1' : '#405361'}`,
+  opacity: 0.5,
 }));

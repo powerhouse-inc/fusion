@@ -65,9 +65,8 @@ const Values = styled('div')({
 const ItemSkeleton = styled(Skeleton)<{ width: number; height: number }>(({ theme, height, width }) => ({
   height,
   width,
-  borderRadius: 15,
-  backgroundColor: theme.palette.mode === 'light' ? '#D1DEE6' : '#31424E',
-  [theme.breakpoints.up('tablet_768')]: {},
+  borderRadius: 6,
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.charcoal[800],
 }));
 
 const RowValues = styled('div')({
@@ -81,6 +80,7 @@ const ItemValueCell = styled('div')(({ theme }) => ({
   alignItems: 'center',
   gap: 4,
   width: 70.5,
+
   [theme.breakpoints.up('desktop_1280')]: {
     width: 90,
   },
@@ -101,9 +101,12 @@ const Mobile = styled('div')<{ isLast?: boolean }>(({ theme, isLast = false }) =
       position: 'absolute',
       height: 48,
       right: -6,
-      borderRight: `1px solid ${theme.palette.mode === 'light' ? '#D1DEE6' : 'rgb(84, 105, 120, 0.30)'}`,
+      borderRight: `1px solid ${
+        theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.charcoal[800]
+      }`,
     },
   }),
+
   [theme.breakpoints.up('tablet_768')]: {
     display: 'none',
   },
@@ -111,6 +114,7 @@ const Mobile = styled('div')<{ isLast?: boolean }>(({ theme, isLast = false }) =
 
 const Table = styled('div')<{ isLast?: boolean }>(({ theme, isLast = false }) => ({
   display: 'none',
+
   [theme.breakpoints.between('tablet_768', 'desktop_1024')]: {
     gap: 14,
     display: 'flex',
@@ -124,7 +128,9 @@ const Table = styled('div')<{ isLast?: boolean }>(({ theme, isLast = false }) =>
         position: 'absolute',
         height: 60,
         right: -14,
-        borderRight: `1px solid ${theme.palette.mode === 'light' ? '#D1DEE6' : 'rgb(84, 105, 120, 0.30)'}`,
+        borderRight: `1px solid ${
+          theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.charcoal[800]
+        }`,
       },
     }),
   },
@@ -145,7 +151,9 @@ const Desk1024 = styled('div')<{ isLast?: boolean }>(({ theme, isLast = false })
         position: 'absolute',
         height: 60,
         right: -8,
-        borderRight: `1px solid ${theme.palette.mode === 'light' ? '#D1DEE6' : 'rgb(84, 105, 120, 0.30)'}`,
+        borderRight: `1px solid ${
+          theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.charcoal[800]
+        }`,
       },
     }),
   },
@@ -166,7 +174,9 @@ const Desk1028 = styled('div')<{ isLast?: boolean }>(({ theme, isLast = false })
         position: 'absolute',
         height: 60,
         right: -8,
-        borderRight: `1px solid ${theme.palette.mode === 'light' ? '#D1DEE6' : 'rgb(84, 105, 120, 0.30)'}`,
+        borderRight: `1px solid ${
+          theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.charcoal[800]
+        }`,
       },
     }),
   },

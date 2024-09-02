@@ -67,7 +67,7 @@ const Metrics = styled('div')(({ theme }) => ({
     height: 48,
     bottom: 10,
     borderRight: `1px solid ${
-      theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.charcoal[800]
+      theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.charcoal[800]
     }`,
   },
 
