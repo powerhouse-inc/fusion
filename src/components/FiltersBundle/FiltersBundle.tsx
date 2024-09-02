@@ -15,6 +15,7 @@ const FiltersBundle: FC<FiltersBundleOptions> = ({
   snapPoints,
   initialSnap = 0,
   asPopover = ['tablet_768'],
+  heightForScroll = false,
 }) => {
   const { orderedFilters, resolution, triggerRef, areFiltersOpen, handleToggleOpenFilters, showPopover } =
     useFiltersBundle({
@@ -52,6 +53,7 @@ const FiltersBundle: FC<FiltersBundleOptions> = ({
           searchFilter={searchFilter}
           resetFilters={resetFilters}
           anchorEl={triggerRef}
+          heightForScroll={heightForScroll}
         />
       </>
     );

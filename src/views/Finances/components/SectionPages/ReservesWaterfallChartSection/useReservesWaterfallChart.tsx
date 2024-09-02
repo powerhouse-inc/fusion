@@ -157,7 +157,6 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
   // if the default filters are selected then the "Reset filters" button should be disabled
   const areDefaultFiltersSelected = activeElements.length === selectAll.length && selectedGranularity === 'monthly';
 
-  // TODO: Implement the canReset and onReset
   const canReset = selectedGranularity !== 'monthly' || activeElements.length !== selectAll.length;
   const onReset = () => {
     handleResetFilter();
@@ -195,10 +194,6 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
         <BudgetItem label={option?.label ?? ''} image={option?.extra?.url ?? ''} isActive={isActive} />
       ),
       customOptionsRenderAll: (isActive: boolean) => <CustomAllCategories label="All Categories" isActive={isActive} />,
-      containerStyles: {
-        maxHeight: isMobile ? '100%' : 200,
-        overflowY: 'auto',
-      },
       ...(!isMobile &&
         !isTable && {
           itemOptionStyles: {

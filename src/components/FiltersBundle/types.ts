@@ -49,11 +49,6 @@ export interface SelectFilter extends GenericFilter {
     width?: CSSProperties['width'];
     menuWidth?: number; // value in px
   };
-  // Style for container of options
-  containerStyles?: {
-    maxHeight?: number | string | undefined;
-    overflowY?: CSSProperties['overflowY'];
-  };
   // Height of the items default should be 32px for container of options
   itemOptionStyles?: {
     height?: CSSProperties['height'];
@@ -99,4 +94,5 @@ export interface FiltersBundleOptions {
   snapPoints?: number[];
   initialSnap?: number; // this is the index of the previous array
   asPopover?: (keyof typeof breakpoints | 'desktop')[];
+  heightForScroll?: boolean; // Add height in desk for scroll when behavior as popover
 }
