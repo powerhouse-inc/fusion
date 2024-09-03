@@ -605,9 +605,14 @@ export const useBreakdownTable = (year: string, budgets: Budget[], allBudgets: B
 
   // handlers to change the period and metrics or reset those values to the default ones
   const handleSelectChangeMetrics = (value: string[]) => {
-    setActiveMetrics(value);
-    updateUrl(periodFilter, value);
+    if (value.length === 0) return; // we need at least one metric selected
+
+    // get the latest max amount of active metrics
+    const allowedMetrics = value.slice(value.length - maxAmountOfActiveMetrics);
+    setActiveMetrics(allowedMetrics);
+    updateUrl(periodFilter, allowedMetrics);
   };
+
   const handleResetMetrics = () => {
     if (isMobile) {
       setActiveMetrics(METRIC_FILTER_OPTIONS.slice(0, maxAmountOfActiveMetrics));
