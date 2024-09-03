@@ -259,19 +259,16 @@ const SectionContainer = styled('div')(({ theme }) => ({
   marginTop: 16,
 
   [theme.breakpoints.up('tablet_768')]: {
-    maxWidth: 385,
+    maxWidth: 'calc(100% - 287px)',
   },
-
   [theme.breakpoints.up('desktop_1024')]: {
-    maxWidth: 526,
+    maxWidth: 'calc(100% - 386px)',
   },
-
   [theme.breakpoints.up('desktop_1280')]: {
-    maxWidth: 536,
+    maxWidth: 765,
   },
-
   [theme.breakpoints.up('desktop_1440')]: {
-    maxWidth: 592,
+    maxWidth: 840,
   },
 }));
 
@@ -294,13 +291,11 @@ const LinesContainer = styled('div')(({ theme }) => ({
       height: 251,
     },
   },
-
   [theme.breakpoints.up('desktop_1024')]: {
     '& > svg': {
       height: 253,
     },
   },
-
   [theme.breakpoints.up('desktop_1280')]: {
     maxWidth: 'calc(100% - 75px)',
   },
@@ -355,11 +350,9 @@ const XAxisContainer = styled('div')(({ theme }) => ({
     marginTop: 12,
     marginLeft: 64,
   },
-
   [theme.breakpoints.up('desktop_1024')]: {
     marginLeft: 56,
   },
-
   [theme.breakpoints.up('desktop_1280')]: {
     marginLeft: 63.5,
   },
@@ -373,7 +366,6 @@ const XAxisLabel = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('tablet_768')]: {
     width: 26,
   },
-
   [theme.breakpoints.up('desktop_1024')]: {
     width: 38,
   },
@@ -429,11 +421,12 @@ const LabelsContainer = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('desktop_1024')]: {
     marginTop: 62,
   },
-
   [theme.breakpoints.up('desktop_1280')]: {
-    position: 'static',
-    flexDirection: 'row',
-    marginTop: 32,
+    left: 846,
+    marginTop: 60,
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    left: 942,
   },
 }));
 
