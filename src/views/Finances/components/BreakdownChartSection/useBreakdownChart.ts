@@ -197,7 +197,7 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
   // Show the toggle and scroll in the legend of the chart
   const showScrollAndToggle = isMobile ? series.length > 6 : series.length > 8;
 
-  const showLegendValue = !(levelNumber > 1);
+  const showLegendValue = !(levelNumber > 2);
   return {
     isLoading,
     selectedMetric,
