@@ -6,7 +6,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { formatterWaterfallChart, getChartAxisLabelByGranularity } from '../../utils/utils';
 import LegendItemWaterfall from '../LegendItemChart/LegendItemWaterfall';
 import LineYearBorderBottomChart from '../LineYearBorderBottomChart/LineYearBorderBottomChart';
-import type { LegendItemsWaterfall, LineWaterfall, WaterfallChartSeriesData } from '../../utils/types';
+import type { LegendItemsWaterfall, WaterfallChartSeriesData } from '../../utils/types';
 import type { Theme } from '@mui/material';
 import type { AnalyticGranularity } from '@ses/core/models/interfaces/analytic';
 import type { EChartsOption } from 'echarts-for-react';
@@ -15,7 +15,7 @@ interface Props {
   legends: LegendItemsWaterfall[];
   year: string;
   selectedGranularity: AnalyticGranularity;
-  series: (WaterfallChartSeriesData | LineWaterfall)[];
+  series: WaterfallChartSeriesData[];
 }
 
 const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, series }) => {
