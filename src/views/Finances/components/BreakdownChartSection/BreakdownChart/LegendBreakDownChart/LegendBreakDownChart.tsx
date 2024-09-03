@@ -75,7 +75,6 @@ const LegendBreakDownChart: FC<Props> = ({
       <SimpleContainer>
         <SimpleContainerSeries showLessGap={series.length === 7}>
           {series.map((element) => {
-            console.log(element.data);
             const value = element.data.reduce((prev, current) => prev + (current.value ?? 0), 0);
             return (
               <LegendItemBreakDownChart

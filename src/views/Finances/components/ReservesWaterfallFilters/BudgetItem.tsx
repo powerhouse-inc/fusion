@@ -12,7 +12,7 @@ interface Props {
 const BudgetItem: React.FC<Props> = ({ image, label, isActive }) => (
   <Container>
     <ImageContainer>
-      <Image src={image ?? ''} alt="Budget Icon" fill={true} unoptimized />
+      <Image src={image || '/assets/img/default-icon-cards-budget.svg'} alt="Budget Icon" unoptimized fill />
     </ImageContainer>
     <Title isActive={isActive}>{label}</Title>
   </Container>
