@@ -1,6 +1,6 @@
 import { UMBRAL_CHART_WATERFALL } from '@ses/core/utils/const';
 import { twoSignificantDigitsHumanization } from '@ses/core/utils/humanization';
-import type { LineWaterfall, MetricValues, WaterfallChartSeriesData } from '@/views/Finances/utils/types';
+import type { MetricValues, WaterfallChartSeriesData } from '@/views/Finances/utils/types';
 import { removePatternAfterSlash } from '../BreakdownTable/utils';
 import type { Analytic, AnalyticGranularity } from '@ses/core/models/interfaces/analytic';
 import type { Budget } from '@ses/core/models/interfaces/budget';
@@ -41,7 +41,7 @@ export const builderWaterfallSeries = (
   isTable: boolean,
   isDesk1024: boolean,
   isLight: boolean
-): (WaterfallChartSeriesData | LineWaterfall)[] => {
+): WaterfallChartSeriesData[] => {
   const { inFlow, outFlow, auxiliaryArray } = getArraysWaterfall(data);
 
   // Add the same value at the end to simulate the end of array can be Increase or Decrease
@@ -227,7 +227,7 @@ export const builderWaterfallSeries = (
       type: 'bar',
     },
   ];
-  return series;
+  return series as WaterfallChartSeriesData[];
 };
 
 export const calculateAccumulatedArray = (data: number[]) => {
