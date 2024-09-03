@@ -36,6 +36,7 @@ const args = [
       },
     ],
     year: '2023',
+    isLoading: false,
     activeItems: [],
     handleSelectChangeItem: () => null,
     handleGranularityChange: () => null,
@@ -49,6 +50,7 @@ const args = [
     onReset: () => null,
   },
   {
+    isLoading: false,
     selectedGranularity: 'monthly',
     title: 'Reserves Chart',
     legends: [
@@ -79,6 +81,7 @@ const args = [
     onReset: () => null,
   },
   {
+    isLoading: false,
     selectedGranularity: 'monthly',
     title: 'MakerDAO Finances Reserves',
     legends: [
@@ -109,6 +112,7 @@ const args = [
     onReset: () => null,
   },
   {
+    isLoading: false,
     selectedGranularity: 'monthly',
     title: 'MakerDAO Finances Reserves',
     legends: [
@@ -164,8 +168,7 @@ LightModeMobile.parameters = {
   figma: {
     component: {
       375: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=28966:338004&mode=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16:13408&m=dev',
         options: {
           componentStyle: {
             width: 343,
@@ -189,8 +192,7 @@ LightModeTable.parameters = {
   figma: {
     component: {
       768: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?type=design&node-id=28966:331963&mode=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16:11340&m=dev',
         options: {
           componentStyle: {
             width: 704,
@@ -239,8 +241,7 @@ LightModeDesk.parameters = {
   figma: {
     component: {
       1280: {
-        component:
-          'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16-4540&t=ZAfNaMFDnhe4qiqB-4',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=16:4540&m=dev',
         options: {
           componentStyle: {
             width: 1200,
@@ -252,8 +253,7 @@ LightModeDesk.parameters = {
         },
       },
       1440: {
-        component:
-          'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=2226:57338&t=ZAfNaMFDnhe4qiqB-4',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=8942:102294&m=dev',
         options: {
           componentStyle: {
             width: 1312,
