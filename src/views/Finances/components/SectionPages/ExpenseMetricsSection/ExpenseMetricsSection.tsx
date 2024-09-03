@@ -1,4 +1,3 @@
-// All comments will be removed in future PRs
 import { styled } from '@mui/material';
 import type { Filter } from '@/components/FiltersBundle/types';
 import ExpenseMetrics from '@/views/Finances/components/ExpenseMetrics/ExpenseMetrics';
@@ -26,29 +25,14 @@ interface Props {
 const ExpenseMetricsSection: FC<Props> = ({ expenseMetrics }) => (
   <Container>
     <ExpenseMetrics {...expenseMetrics} />
-    <CurrencyBreakdown />
   </Container>
 );
 
 export default ExpenseMetricsSection;
 
-const Container = styled('div')(({ theme }) => ({
+const Container = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: 24,
   width: '100%',
   marginTop: 24,
-
-  [theme.breakpoints.up('desktop_1280')]: {
-    flexDirection: 'row',
-    gap: 32,
-    marginTop: 32,
-  },
-}));
-
-// temporary
-const CurrencyBreakdown = styled('div')(() => ({
-  display: 'flex',
-  flexDirection: 'column',
-  width: '100%',
 }));
