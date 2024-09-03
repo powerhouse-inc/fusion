@@ -330,14 +330,14 @@ const ChartContainer = styled('div')(({ theme }) => ({
     height: 286,
 
     '& > div:first-of-type': {
-      maxWidth: 385,
+      maxWidth: 'calc(100% - 287px)',
     },
   },
   [theme.breakpoints.up('desktop_1024')]: {
     height: 288,
 
     '& > div:first-of-type': {
-      maxWidth: 526,
+      maxWidth: 'calc(100% - 386px)',
     },
   },
   [theme.breakpoints.up('desktop_1280')]: {
