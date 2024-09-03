@@ -21,7 +21,7 @@ export const breakpointsOrder: (keyof typeof breakpoints)[] = [
 ];
 
 export default function useFiltersBundle({ filters, order, asPopover }: Props) {
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'), { defaultMatches: true });
   const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
   const isDesktop1024 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1024', 'desktop_1280'));
   const isDesktop1280 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1280', 'desktop_1440'));

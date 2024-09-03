@@ -648,7 +648,9 @@ export const useBreakdownTable = (year: string, budgets: Budget[], allBudgets: B
     JSON.stringify(METRIC_FILTER_OPTIONS.slice(0, maxAmountOfActiveMetrics).sort());
 
   const resetFilters: ResetFilter = {
-    canReset: metricsMatch && (isMobile ? selectedGranularity === 'semiAnnual' : selectedGranularity === 'quarterly'),
+    canReset: !(
+      metricsMatch && (isMobile ? selectedGranularity === 'semiAnnual' : selectedGranularity === 'quarterly')
+    ),
     onReset: handleResetMetrics,
   };
 
