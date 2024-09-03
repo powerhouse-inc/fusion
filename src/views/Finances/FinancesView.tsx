@@ -106,23 +106,24 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
             />
             <CardsNavigation cardsNavigationInformation={cardsNavigationInformation} />
           </ContainerSections>
-
-          <BreakdownChartSection
-            isLoading={breakdownChartSectionData.isLoading}
-            year={year}
-            selectedMetric={breakdownChartSectionData.selectedMetric}
-            selectedGranularity={breakdownChartSectionData.selectedGranularity}
-            series={breakdownChartSectionData.series}
-            handleToggleSeries={breakdownChartSectionData.handleToggleSeries}
-            refBreakDownChart={breakdownChartSectionData.refBreakDownChart}
-            showLegendValue={breakdownChartSectionData.showLegendValue}
-            isChecked={breakdownChartSectionData.isChecked}
-            handleChangeSwitch={breakdownChartSectionData.handleChangeSwitch}
-            canReset={breakdownChartSectionData.canReset}
-            filters={breakdownChartSectionData.filters}
-            onReset={breakdownChartSectionData.onReset}
-            showScrollAndToggle={breakdownChartSectionData.showScrollAndToggle}
-          />
+          <SectionBreakdownChartSection showSwiper={cardOverViewSectionData.showSwiper}>
+            <BreakdownChartSection
+              isLoading={breakdownChartSectionData.isLoading}
+              year={year}
+              selectedMetric={breakdownChartSectionData.selectedMetric}
+              selectedGranularity={breakdownChartSectionData.selectedGranularity}
+              series={breakdownChartSectionData.series}
+              handleToggleSeries={breakdownChartSectionData.handleToggleSeries}
+              refBreakDownChart={breakdownChartSectionData.refBreakDownChart}
+              showLegendValue={breakdownChartSectionData.showLegendValue}
+              isChecked={breakdownChartSectionData.isChecked}
+              handleChangeSwitch={breakdownChartSectionData.handleChangeSwitch}
+              canReset={breakdownChartSectionData.canReset}
+              filters={breakdownChartSectionData.filters}
+              onReset={breakdownChartSectionData.onReset}
+              showScrollAndToggle={breakdownChartSectionData.showScrollAndToggle}
+            />
+          </SectionBreakdownChartSection>
 
           <ExpenseMetricsSection
             expenseMetrics={{
@@ -140,20 +141,18 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
             }}
           />
 
-          <ContainerReservesWaterfallChart>
-            <ReservesWaterfallChartSection
-              title={`${levelNumber === 1 ? (isMobile ? 'MakerDAO F.' : 'MakerDAO Finances') : title} Reserves`}
-              legends={reserveChart.legendItems}
-              series={reserveChart.series}
-              selectedGranularity={reserveChart.selectedGranularity}
-              year={year}
-              isLoading={reserveChart.isLoading}
-              canReset={reserveChart.canReset}
-              onReset={reserveChart.onReset}
-              filters={reserveChart.filters}
-              startPoint={reserveChart.startPoint}
-            />
-          </ContainerReservesWaterfallChart>
+          <ReservesWaterfallChartSection
+            title={`${levelNumber === 1 ? (isMobile ? 'MakerDAO F.' : 'MakerDAO Finances') : title} Reserves`}
+            legends={reserveChart.legendItems}
+            series={reserveChart.series}
+            selectedGranularity={reserveChart.selectedGranularity}
+            year={year}
+            isLoading={reserveChart.isLoading}
+            canReset={reserveChart.canReset}
+            onReset={reserveChart.onReset}
+            filters={reserveChart.filters}
+            startPoint={reserveChart.startPoint}
+          />
         </Container>
       </BudgetMetricsModalProvider>
 
@@ -280,10 +279,9 @@ const ContainerLastReport = styled('div')(({ theme }) => ({
   },
 }));
 
-const ContainerReservesWaterfallChart = styled('div')(({ theme }) => ({
-  marginTop: 40,
-
-  [theme.breakpoints.up('tablet_768')]: {
-    marginTop: 64,
+const SectionBreakdownChartSection = styled('div')<{ showSwiper: boolean }>(({ theme, showSwiper }) => ({
+  marginTop: showSwiper ? 12 : 24,
+  [theme.breakpoints.up('desktop_1280')]: {
+    marginTop: showSwiper ? 20 : 32,
   },
 }));

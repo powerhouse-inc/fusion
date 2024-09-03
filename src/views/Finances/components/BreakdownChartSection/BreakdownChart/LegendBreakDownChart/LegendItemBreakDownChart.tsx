@@ -11,8 +11,9 @@ interface Props {
   onLegendItemLeave: (legendName: string) => void;
   handleToggleSeries: (series: string) => void;
   className?: string;
-  index: number;
+
   showLegendValue?: boolean;
+  value?: number;
 }
 
 const LegendItemBreakDownChart: FC<Props> = ({
@@ -20,9 +21,10 @@ const LegendItemBreakDownChart: FC<Props> = ({
   onLegendItemHover,
   onLegendItemLeave,
   handleToggleSeries,
-  index,
+
   className,
   showLegendValue = true,
+  value,
 }) => (
   <Container
     className={className}
@@ -37,8 +39,7 @@ const LegendItemBreakDownChart: FC<Props> = ({
       </SvgStyled>
     </SVGContainer>
     <Name>{removeBudgetWord(formatBudgetName(element.name))}</Name>
-
-    {showLegendValue && <Value>{replaceAllNumberLetOneBeforeDot(element?.data[index]?.value ?? 0, true)}</Value>}
+    {showLegendValue && <Value>{replaceAllNumberLetOneBeforeDot(value ?? 0, true)}</Value>}
   </Container>
 );
 

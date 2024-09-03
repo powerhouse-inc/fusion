@@ -82,10 +82,10 @@ const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, s
   const options: EChartsOption = useMemo(
     () => ({
       grid: {
-        top: isMobile ? 16 : isTablet ? 18 : isDesktop1024 ? 16 : isDesktop1280 ? 18 : isDesktop1440 ? 16 : 22,
-        left: isMobile ? 40 : isTablet ? 68 : isDesktop1024 ? 70 : isDesktop1280 ? 55 : isDesktop1440 ? 68 : 65,
-        right: isMobile ? 0 : isTablet ? 0 : isDesktop1024 ? 0 : isDesktop1280 ? 4 : 30,
-        height: isMobile ? 178 : isTablet ? 220 : isDesktop1024 ? 240 : isDesktop1280 ? 300 : isDesktop1440 ? 310 : 310,
+        top: isMobile ? 16 : isTablet ? 18 : isDesktop1024 ? 12 : isDesktop1280 ? 18 : isDesktop1440 ? 16 : 22,
+        left: isMobile ? 40 : isTablet ? 58 : isDesktop1024 ? 64 : isDesktop1280 ? 64 : isDesktop1440 ? 132 : 65,
+        right: isMobile ? 0 : isTablet ? 4 : isDesktop1024 ? 0 : isDesktop1280 ? 0 : 65,
+        height: isMobile ? 178 : isTablet ? 220 : isDesktop1024 ? 242 : isDesktop1280 ? 306 : isDesktop1440 ? 310 : 310,
       },
       xAxis: {
         type: 'category',
@@ -104,7 +104,7 @@ const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, s
           show: false,
         },
         axisLabel: {
-          margin: isMobile ? 14 : isTablet ? 14 : isDesktop1024 ? 24 : isDesktop1280 ? 24 : isDesktop1440 ? 26 : 24,
+          margin: isMobile ? 14 : isTablet ? 14 : isDesktop1024 ? 18 : isDesktop1280 ? 18 : isDesktop1440 ? 18 : 18,
           color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[300],
           align: 'center',
 
@@ -131,7 +131,7 @@ const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, s
           padding: isMobile
             ? [0, 0, 0, 2]
             : isTablet
-            ? [0, 14, 0, 0]
+            ? [0, 0, 0, 0]
             : isDesktop1024
             ? [0, 12, 0, 0]
             : isDesktop1280
@@ -269,7 +269,7 @@ const LegendContainer = styled('div')(({ theme }) => ({
     justifyContent: 'center',
     gap: 64,
     paddingLeft: 0,
-    marginTop: -12,
+    marginTop: -8,
   },
   [theme.breakpoints.up('desktop_1024')]: {
     marginBottom: 0,
@@ -282,7 +282,7 @@ const LegendContainer = styled('div')(({ theme }) => ({
   },
   [theme.breakpoints.up('desktop_1440')]: {
     gap: 64,
-    marginTop: -40,
+    marginTop: -38,
     marginLeft: 2,
   },
 }));
