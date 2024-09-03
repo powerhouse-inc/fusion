@@ -29,17 +29,20 @@ const LegendBreakDownChart: FC<Props> = ({
 }) => (
   <>
     <ContainerMobile isLessThanFifteen={showScrollAndToggle}>
-      {series.map((element, index) => (
-        <LegendItemBreakDownChart
-          index={index}
-          element={element}
-          key={element.name}
-          handleToggleSeries={() => handleToggleSeries(element.name)}
-          onLegendItemHover={() => onLegendItemHover(element.name)}
-          onLegendItemLeave={() => onLegendItemLeave(element.name)}
-          showLegendValue={showLegendValue}
-        />
-      ))}
+      {series.map((element) => {
+        const value = element.data.reduce((prev, current) => prev + (current.value ?? 0), 0);
+        return (
+          <LegendItemBreakDownChart
+            element={element}
+            key={element.name}
+            handleToggleSeries={() => handleToggleSeries(element.name)}
+            onLegendItemHover={() => onLegendItemHover(element.name)}
+            onLegendItemLeave={() => onLegendItemLeave(element.name)}
+            showLegendValue={showLegendValue}
+            value={value}
+          />
+        );
+      })}
     </ContainerMobile>
 
     {showScrollAndToggle ? (
@@ -50,17 +53,20 @@ const LegendBreakDownChart: FC<Props> = ({
         <ContainerScroll>
           <SimpleBarStyled>
             <ContainerSeries>
-              {series.map((element, index) => (
-                <LegendItemBreakDownChart
-                  index={index}
-                  element={element}
-                  key={element.name}
-                  handleToggleSeries={() => handleToggleSeries(element.name)}
-                  onLegendItemHover={() => onLegendItemHover(element.name)}
-                  onLegendItemLeave={() => onLegendItemLeave(element.name)}
-                  showLegendValue={showLegendValue}
-                />
-              ))}
+              {series.map((element) => {
+                const value = element.data.reduce((prev, current) => prev + (current.value ?? 0), 0);
+                return (
+                  <LegendItemBreakDownChart
+                    element={element}
+                    key={element.name}
+                    handleToggleSeries={() => handleToggleSeries(element.name)}
+                    onLegendItemHover={() => onLegendItemHover(element.name)}
+                    onLegendItemLeave={() => onLegendItemLeave(element.name)}
+                    showLegendValue={showLegendValue}
+                    value={value}
+                  />
+                );
+              })}
             </ContainerSeries>
           </SimpleBarStyled>
         </ContainerScroll>
@@ -68,17 +74,21 @@ const LegendBreakDownChart: FC<Props> = ({
     ) : (
       <SimpleContainer>
         <SimpleContainerSeries showLessGap={series.length === 7}>
-          {series.map((element, index) => (
-            <LegendItemBreakDownChart
-              index={index}
-              element={element}
-              key={element.name}
-              handleToggleSeries={() => handleToggleSeries(element.name)}
-              onLegendItemHover={() => onLegendItemHover(element.name)}
-              onLegendItemLeave={() => onLegendItemLeave(element.name)}
-              showLegendValue={showLegendValue}
-            />
-          ))}
+          {series.map((element) => {
+            console.log(element.data);
+            const value = element.data.reduce((prev, current) => prev + (current.value ?? 0), 0);
+            return (
+              <LegendItemBreakDownChart
+                element={element}
+                key={element.name}
+                handleToggleSeries={() => handleToggleSeries(element.name)}
+                onLegendItemHover={() => onLegendItemHover(element.name)}
+                onLegendItemLeave={() => onLegendItemLeave(element.name)}
+                showLegendValue={showLegendValue}
+                value={value}
+              />
+            );
+          })}
         </SimpleContainerSeries>
       </SimpleContainer>
     )}
