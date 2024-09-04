@@ -109,7 +109,7 @@ const MobileMilestoneCardsDivider = styled('div')(({ theme }) => ({
   width: 5,
   height: 24,
   borderRadius: '0px 0px 0px 0px',
-  backgroundColor: theme.palette.colors.slate[100],
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[200],
 }));
 
 const DescriptionContainer = styled('div')(({ theme }) => ({

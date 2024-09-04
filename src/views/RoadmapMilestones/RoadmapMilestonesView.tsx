@@ -2,7 +2,6 @@ import { styled } from '@mui/material';
 import { SEOHead } from '@ses/components/SEOHead/SEOHead';
 import { siteRoutes } from '@ses/config/routes';
 import { toAbsoluteURL } from '@ses/core/utils/urls';
-import React from 'react';
 import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
@@ -11,12 +10,13 @@ import PageHeader from './components/PageHeader/PageHeader';
 import DetailsSection from './components/sections/DetailsSection/DetailsSection';
 import OverviewSection from './components/sections/OverviewSection/OverviewSection';
 import useRoadmapMilestonesView from './useRoadmapMilestonesView';
+import type { FC } from 'react';
 
 interface RoadmapMilestonesViewProps {
   roadmap: Roadmap;
 }
 
-const RoadmapMilestonesView: React.FC<RoadmapMilestonesViewProps> = ({ roadmap }) => {
+const RoadmapMilestonesView: FC<RoadmapMilestonesViewProps> = ({ roadmap }) => {
   const { isMinimalist, titles } = useRoadmapMilestonesView();
 
   return (
@@ -44,8 +44,7 @@ const RoadmapMilestonesView: React.FC<RoadmapMilestonesViewProps> = ({ roadmap }
         ]}
       />
       <ContainerWithMargin>
-        <PageHeader title={roadmap.title} subtitle={roadmap.description} />
-
+        <PageHeader title={roadmap.title} />
         <SectionsContainer>
           <OverviewSection title={titles.overview} milestones={roadmap.milestones} />
           <DetailsSection title={titles.details} minimal={isMinimalist} milestones={roadmap.milestones} />
@@ -57,16 +56,12 @@ const RoadmapMilestonesView: React.FC<RoadmapMilestonesViewProps> = ({ roadmap }
 
 export default RoadmapMilestonesView;
 
-const SectionsContainer = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 32,
-
-  [theme.breakpoints.up('tablet_768')]: {
-    gap: 48,
-  },
+const ContainerWithMargin = styled(Container)(() => ({
+  marginTop: 64,
 }));
 
-const ContainerWithMargin = styled(Container)({
-  marginTop: 64,
-});
+const SectionsContainer = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 40,
+}));

@@ -1,14 +1,14 @@
 import { styled } from '@mui/material';
-import React from 'react';
 import SESTooltip from '@/components/SESTooltip/SESTooltip';
 import Information from '@/components/icons/information';
+import type { FC } from 'react';
 
 interface SectionTitleProps {
   title: string;
   tooltip?: string;
 }
 
-const SectionTitle: React.FC<SectionTitleProps> = ({ title, tooltip }) => (
+const SectionTitle: FC<SectionTitleProps> = ({ title, tooltip }) => (
   <Wrapper>
     <Title>{title}</Title>
     {!!tooltip && (
@@ -23,35 +23,33 @@ const SectionTitle: React.FC<SectionTitleProps> = ({ title, tooltip }) => (
 
 export default SectionTitle;
 
-const Wrapper = styled('div')(({ theme }) => ({
+const Wrapper = styled('div')(() => ({
   display: 'flex',
   alignItems: 'center',
-  gap: 16,
-
-  [theme.breakpoints.up('tablet_768')]: {
-    gap: 8,
-    alignItems: 'flex-end',
-  },
+  gap: 8,
 }));
 
 const Title = styled('h2')(({ theme }) => ({
   margin: 0,
-  color: theme.palette.isLight ? '#231536' : '#D2D4EF',
-  fontSize: 16,
   fontWeight: 700,
-  lineHeight: 'normal',
+  fontSize: 16,
+  lineHeight: '24px',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
 
   [theme.breakpoints.up('tablet_768')]: {
-    fontSize: 24,
-    fontWeight: 600,
-    letterSpacing: 0.4,
+    fontSize: 18,
+    lineHeight: '22px',
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    fontSize: 20,
+    lineHeight: '24px',
   },
 }));
 
 const InfoWrapper = styled('div')({
   display: 'flex',
-  alignItems: 'center',
   justifyContent: 'center',
+  alignItems: 'center',
   width: 24,
   height: 24,
   cursor: 'pointer',
