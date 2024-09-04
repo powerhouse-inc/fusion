@@ -1,17 +1,40 @@
 import { styled } from '@mui/material';
 import lightTheme from '@ses/styles/theme/themes';
 import React from 'react';
-import ProjectFilters from '../ProjectFilters/ProjectFilters';
-import type { ProjectFiltersProps } from '../ProjectFilters/ProjectFilters';
+import FiltersBundle from '@/components/FiltersBundle/FiltersBundle';
+import type { FiltersBundleOptions } from '@/components/FiltersBundle/types';
 
-const PageSubheader: React.FC<ProjectFiltersProps> = (props) => {
-  const { isMobile, isFilterCollapsedOnMobile } = props;
+interface Props {
+  isMobile: boolean;
+  isFilterCollapsedOnMobile: boolean;
+  searchText: string;
+  searchFilters: (value: string) => void;
+  canReset: boolean;
+  onReset: () => void;
+}
+
+const PageSubheader: React.FC<FiltersBundleOptions & Props> = (props) => {
+  const { isMobile, isFilterCollapsedOnMobile, filters, searchText, searchFilters, canReset, onReset } = props;
 
   return (
     <Header>
       {((isMobile && isFilterCollapsedOnMobile) || !isMobile) && <Title>Projects</Title>}
 
-      <ProjectFilters {...props} />
+      <FiltersBundle
+        searchFilter={{
+          value: searchText,
+
+          onChange: searchFilters,
+          widthStyles: {
+            width: 290,
+          },
+        }}
+        resetFilters={{
+          canReset,
+          onReset,
+        }}
+        filters={filters}
+      />
     </Header>
   );
 };
