@@ -1,6 +1,6 @@
 import { styled } from '@mui/material';
+import Information from 'public/assets/svg/info_outlined.svg';
 import SESTooltip from '@/components/SESTooltip/SESTooltip';
-import Information from '@/components/icons/information';
 import type { FC } from 'react';
 
 interface SectionTitleProps {
@@ -46,11 +46,24 @@ const Title = styled('h2')(({ theme }) => ({
   },
 }));
 
-const InfoWrapper = styled('div')({
+const InfoWrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   width: 24,
   height: 24,
   cursor: 'pointer',
-});
+
+  '& > svg': {
+    width: 16,
+    height: 16,
+  },
+  '& > svg > path': {
+    fill: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[200],
+  },
+  '&:hover': {
+    '& > svg > path': {
+      fill: theme.palette.isLight ? theme.palette.colors.slate[200] : theme.palette.colors.slate[100],
+    },
+  },
+}));
