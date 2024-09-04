@@ -70,3 +70,7 @@ export const isPercentage = (progress: Progress): progress is Percentage =>
 
 export const isStoryPoints = (progress: Progress): progress is StoryPoints =>
   (progress as StoryPoints).total !== undefined;
+
+export interface ElementWithStatus {
+  status: Maybe<DeliverableSetStatus>;
+}

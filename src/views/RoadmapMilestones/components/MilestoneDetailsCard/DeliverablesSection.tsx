@@ -1,12 +1,12 @@
 import { styled } from '@mui/system';
 import { SearchInput } from '@ses/components/SearchInput/SearchInput';
-import DeliverableCard from '@ses/containers/ActorProjects/components/DeliverableCard/DeliverableCard';
-import DeliverableViewModeToggle from '@ses/containers/ActorProjects/components/DeliverableViewModeToggle/DeliverableViewModeToggle';
-import { splitInRows } from '@ses/containers/ActorProjects/components/ProjectCard/ProjectCard';
-import ViewAllButton from '@ses/containers/ActorProjects/components/ViewAllButton/ViewAllButton';
 import { useState } from 'react';
 import type { MDeliverable } from '@/core/models/interfaces/deliverables';
-import type { DeliverableViewMode } from '@ses/containers/ActorProjects/components/ProjectCard/ProjectCard';
+import DeliverableCard from '@/views/ActorProjects/components/DeliverableCard/DeliverableCard';
+import DeliverableViewModeToggle from '@/views/ActorProjects/components/DeliverableViewModeToggle/DeliverableViewModeToggle';
+import { splitInRows } from '@/views/ActorProjects/components/ProjectCard/ProjectCard';
+import type { DeliverableViewMode } from '@/views/ActorProjects/components/ProjectCard/ProjectCard';
+import ViewAllButton from '@/views/ActorProjects/components/ViewAllButton/ViewAllButton';
 
 interface DeliverablesSectionProps {
   minimal?: boolean;

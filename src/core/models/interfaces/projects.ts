@@ -74,3 +74,9 @@ export const isProject = (project: Project | SupportedProjects): project is Proj
 
 export const isSupportedProjects = (project: Project | SupportedProjects): project is SupportedProjects =>
   project.__typename === 'SupportedProjects';
+
+export interface ProjectStatusChipProps {
+  status: ProjectStatus;
+  customLabel?: string;
+  isSmall?: boolean;
+}
