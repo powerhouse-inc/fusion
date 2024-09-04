@@ -1,45 +1,38 @@
-import styled from '@emotion/styled';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
-import lightTheme from '@ses/styles/theme/themes';
+import { styled } from '@mui/material';
 import React from 'react';
 import TableEmptyState from '@/components/TableEmptyState/TableEmptyState';
 import ProjectCard from '../ProjectCard/ProjectCard';
 import type { Project, SupportedProjects } from '@ses/core/models/interfaces/projects';
-import type { WithIsLight } from '@ses/core/utils/typesHelpers';
 
 interface ProjectListProps {
   projects: (Project | SupportedProjects)[];
   isSupportedProjects?: boolean;
 }
 
-const ProjectList: React.FC<ProjectListProps> = ({ projects, isSupportedProjects = false }) => {
-  const { isLight } = useThemeContext();
+const ProjectList: React.FC<ProjectListProps> = ({ projects, isSupportedProjects = false }) => (
+  <List>
+    {projects.map((project) => (
+      <ProjectCard key={project.id} project={project} />
+    ))}
 
-  return (
-    <List>
-      {projects.map((project) => (
-        <ProjectCard key={project.id} project={project} />
+    {projects.length === 0 &&
+      (isSupportedProjects ? (
+        <NoResults>No results found</NoResults>
+      ) : (
+        <TableEmptyState description="There are no Projects available with this combination of filters." />
       ))}
-
-      {projects.length === 0 &&
-        (isSupportedProjects ? (
-          <NoResults isLight={isLight}>No results found</NoResults>
-        ) : (
-          <TableEmptyState description="There are no Projects available with this combination of filters." />
-        ))}
-    </List>
-  );
-};
+  </List>
+);
 
 export default ProjectList;
 
-const List = styled.div({
+const List = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   gap: 32,
 });
 
-const NoResults = styled.div<WithIsLight>({
+const NoResults = styled('div')(({ theme }) => ({
   color: '#546978',
   fontSize: 18,
   fontWeight: 500,
@@ -47,7 +40,7 @@ const NoResults = styled.div<WithIsLight>({
   fontStyle: 'italic',
   margin: '32px 0',
 
-  [lightTheme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     fontSize: 20,
   },
-});
+}));
