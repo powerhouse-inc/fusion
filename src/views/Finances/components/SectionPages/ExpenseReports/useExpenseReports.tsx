@@ -124,11 +124,11 @@ export const useExpenseReports = (budgetPath: string) => {
               ResourceType.SpecialPurposeFund,
             ].includes(budgetStatement.ownerType as ResourceType) &&
             budgetStatement.status === BudgetStatus.Draft &&
-            budgetStatement.budgetStatementWallet?.length === 0;
-          // !budgetStatement.actualExpenses &&
-          // !budgetStatement.forecastExpenses &&
-          // !budgetStatement.paymentsOnChain &&
-          // !budgetStatement.netProtocolOutflow;
+            budgetStatement.budgetStatementWallet?.length === 0 &&
+            !budgetStatement.actualExpenses &&
+            !budgetStatement.forecastExpenses &&
+            !budgetStatement.paymentsOnChain &&
+            !budgetStatement.netProtocolOutflow;
 
           if (shouldPotentiallyOverrideStatus) {
             // if the snapshot data is not empty then we need to override the status to auto generated
