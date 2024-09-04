@@ -31,8 +31,6 @@ interface ElementWithTotal {
 }
 
 const MilestoneCard: FC<MilestoneCardProps> = ({ slug, milestoneData }) => {
-  // const { statusLabel } = useMilestoneCard(milestoneData.scope?.status);
-
   const progress = progressPercentage(milestoneData.scope?.progress);
 
   const coordinators = milestoneData.coordinators?.slice(0, 2);
