@@ -133,10 +133,12 @@ const DelegateExpenseTrendItem: FC<Props> = ({ budget, selectedMetric, now = Dat
           <TotalNumber>{usLocalizedNumber(value)} DAI</TotalNumber>
         </TotalActualsTable>
         <ContainerStatusTable>
-          <StatusTable>
-            <LabelStatus>Status</LabelStatus>
-            <ExpenseReportStatusIndicatorTable budgetStatus={budget.status} showCTA={false} />
-          </StatusTable>
+          {budget.status && (
+            <StatusTable>
+              <LabelStatus>Status</LabelStatus>
+              <ExpenseReportStatusIndicatorTable budgetStatus={budget.status} showCTA={false} />
+            </StatusTable>
+          )}
           <ContainerArrow>
             <InternalLinkButton href={link || ''} buttonType="primary" />
           </ContainerArrow>
