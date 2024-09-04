@@ -1,7 +1,7 @@
-import { fetchRecognizedDelegatesBudgetStatements } from '@ses/containers/RecognizedDelegatesReports/RecognizedDelegatesReportAPI';
-import RecognizedDelegatesReportContainer from '@ses/containers/RecognizedDelegatesReports/RecognizedDelegatesReportContainer';
 import { TeamContext } from '@ses/core/context/TeamContext';
 import React, { useEffect, useState } from 'react';
+import RecognizedDelegatesBudgetStatementView from '@/views/RecognizedDelegatesBudgetStatement/RecognizedDelegatesBudgetStatementView';
+import { fetchRecognizedDelegatesBudgetStatements } from '@/views/RecognizedDelegatesBudgetStatement/api/recognizedDelegatesReportAPI';
 import type { DelegatesDto } from '@ses/core/models/dto/delegatesDTO';
 import type { Team } from '@ses/core/models/interfaces/team';
 import type { NextPage } from 'next';
@@ -24,7 +24,7 @@ const RecognizedDelegatesReport: NextPage<RecognizedDelegatesReportProps> = ({ d
         setCurrentTeam: setCurrentDelegatesReport as unknown as (cu: Team) => void,
       }}
     >
-      <RecognizedDelegatesReportContainer delegates={currentDelegatesReport} />
+      <RecognizedDelegatesBudgetStatementView delegates={currentDelegatesReport} />
     </TeamContext.Provider>
   );
 };

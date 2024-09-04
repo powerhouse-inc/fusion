@@ -1,18 +1,18 @@
 import { styled } from '@mui/material';
 import { CustomLink } from '@ses/components/CustomLink/CustomLink';
-import DelegateSummary from '@ses/components/DelegateSummary/DelegateSummary';
 import { SEOHead } from '@ses/components/SEOHead/SEOHead';
 import { siteRoutes } from '@ses/config/routes';
 import { CommentActivityContext } from '@ses/core/context/CommentActivityContext';
-import { useHeaderSummary } from '@ses/core/hooks/useHeaderSummary';
 import { ResourceType } from '@ses/core/models/interfaces/types';
 import { toAbsoluteURL } from '@ses/core/utils/urls';
-import React, { useRef } from 'react';
+import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import AuditorCommentsContainer from '@/components/BudgetStatement/BudgetStatementAuditorComments/AuditorCommentsContainer/AuditorCommentsContainer';
 import BudgetStatementPager from '@/components/BudgetStatement/BudgetStatementPager/BudgetStatementPager';
+import PageContainer from '@/components/Container/PageContainer';
 import Tabs from '@/components/Tabs/Tabs';
-import DelegatesActuals from './DelegatesActuals/DelegatesActuals';
-import DelegatesForecast from './DelegatesForecast/DelegatesForecast';
+import TeamHeader from '@/components/TeamHeader/TeamHeader';
+import DelegatesActuals from './components/DelegatesActuals/DelegatesActuals';
+import DelegatesForecast from './components/DelegatesForecast/DelegatesForecast';
 import useRecognizedDelegatesReport, { DELEGATES_REPORT_IDS_ENUM } from './useRecognizedDelegatesReport';
 import type { DelegatesDto } from '@ses/core/models/dto/delegatesDTO';
 
@@ -20,10 +20,8 @@ type RecognizedDelegatesProps = {
   delegates: DelegatesDto;
 };
 
-const RecognizedDelegatesReportContainer: React.FC<RecognizedDelegatesProps> = ({ delegates }) => {
+const RecognizedDelegatesBudgetStatementView: React.FC<RecognizedDelegatesProps> = ({ delegates }) => {
   const {
-    isLight,
-    links,
     itemsBreadcrumb,
     isMobile,
     lastUpdateForBudgetStatement,
@@ -40,13 +38,11 @@ const RecognizedDelegatesReportContainer: React.FC<RecognizedDelegatesProps> = (
     comments,
     selectedTab,
     onTabChange,
-    code,
+    delegateTeam,
   } = useRecognizedDelegatesReport(delegates);
-  const ref = useRef<HTMLDivElement>(null);
-  const { height, showHeader } = useHeaderSummary(ref, code);
 
   return (
-    <Container isLight={isLight}>
+    <PageContainer>
       <SEOHead
         title={'MakerDAO Recognized Delegates Expense Reports | Finances'}
         description={
@@ -60,8 +56,11 @@ const RecognizedDelegatesReportContainer: React.FC<RecognizedDelegatesProps> = (
         twitterImage={toAbsoluteURL('/assets/img/social-1200x630.png')}
         canonicalURL={siteRoutes.recognizedDelegateReport}
       />
-      <DelegateSummary links={links} items={itemsBreadcrumb} ref={ref} showHeader={showHeader} />
-      <ContainerInside marginTop={height}>
+
+      <Breadcrumb items={itemsBreadcrumb} />
+      <TeamHeader team={delegateTeam} withDescription={false} />
+
+      <ContainerInside>
         <BudgetStatementPager
           currentMonth={currentMonth}
           handleNext={handleNextMonth}
@@ -124,21 +123,13 @@ const RecognizedDelegatesReportContainer: React.FC<RecognizedDelegatesProps> = (
           </Description>
         </ContainerAdditionalNotes>
       </ContainerInside>
-    </Container>
+    </PageContainer>
   );
 };
 
-export default RecognizedDelegatesReportContainer;
+export default RecognizedDelegatesBudgetStatementView;
 
-const Container = styled('div')<{ isLight: boolean }>(({ theme }) => ({
-  paddingTop: 64,
-  width: '100%',
-  backgroundColor: theme.palette.isLight ? '#FFFFFF' : '#000000',
-  backgroundAttachment: 'fixed',
-  backgroundSize: 'cover',
-}));
-
-const ContainerInside = styled('div')<{ marginTop: number }>(({ marginTop, theme }) => ({
+const ContainerInside = styled('div')(({ theme }) => ({
   display: 'block',
   textAlign: 'left',
   width: '100%',
@@ -146,16 +137,9 @@ const ContainerInside = styled('div')<{ marginTop: number }>(({ marginTop, theme
   marginBottom: 0,
   marginLeft: 'auto',
   marginRight: 'auto',
-  marginTop: 22 + marginTop,
+  marginTop: 24,
   paddingRight: '64px',
   paddingLeft: '64px',
-  [theme.breakpoints.up('tablet_768')]: {
-    marginTop: 55 + marginTop,
-  },
-
-  [theme.breakpoints.up('desktop_1024')]: {
-    marginTop: 65 + marginTop,
-  },
 
   [theme.breakpoints.up('desktop_1920')]: {
     maxWidth: '1312px',
@@ -166,7 +150,6 @@ const ContainerInside = styled('div')<{ marginTop: number }>(({ marginTop, theme
   [theme.breakpoints.between('desktop_1280', 'desktop_1440')]: {
     paddingRight: '48px',
     paddingLeft: '48px',
-    marginTop: 45 + marginTop,
   },
 
   [theme.breakpoints.between('tablet_768', 'desktop_1280')]: {

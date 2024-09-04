@@ -3,8 +3,6 @@ import { siteRoutes } from '@ses/config/routes';
 import { getLastUpdateForBudgetStatement } from '@ses/core/businessLogic/coreUnits';
 import { useAuthContext } from '@ses/core/context/AuthContext';
 import { useCookiesContextTracking } from '@ses/core/context/CookiesContext';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
-import { LinkTypeEnum } from '@ses/core/enums/linkTypeEnum';
 import useBudgetStatementComments from '@ses/core/hooks/useBudgetStatementComments';
 import useBudgetStatementPager from '@ses/core/hooks/useBudgetStatementPager';
 import { BudgetStatus } from '@ses/core/models/dto/coreUnitDTO';
@@ -12,10 +10,11 @@ import { budgetStatementCommentsCollectionId } from '@ses/core/utils/collections
 import { LastVisitHandler } from '@ses/core/utils/lastVisitHandler';
 import lightTheme from '@ses/styles/theme/themes';
 import { DateTime } from 'luxon';
-import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import CommentsTab from '../../../components/Tabs/CommentsTab/CommentsTab';
-import type { TableItems } from '../../../views/CoreUnitBudgetStatement/CoreUnitBudgetStatementView';
+import type { Team } from '@/core/models/interfaces/team';
+import { ResourceType } from '@/core/models/interfaces/types';
+import CommentsTab from '../../components/Tabs/CommentsTab/CommentsTab';
+import type { TableItems } from '../CoreUnitBudgetStatement/CoreUnitBudgetStatementView';
 import type { DelegatesDto } from '@ses/core/models/dto/delegatesDTO';
 
 export enum DELEGATES_REPORT_IDS_ENUM {
@@ -24,40 +23,18 @@ export enum DELEGATES_REPORT_IDS_ENUM {
   COMMENTS = 'comments',
 }
 
-const links = [
-  {
-    linkType: LinkTypeEnum.WWW,
-    href: 'https://vote.makerdao.com/delegates',
-  },
-  {
-    linkType: LinkTypeEnum.Forum,
-    href: 'https://forum.makerdao.com/c/governance/delegates/43',
-  },
-  {
-    linkType: LinkTypeEnum.Discord,
-    href: 'https://discord.com/invite/uZxdmZcS',
-  },
-  {
-    linkType: LinkTypeEnum.Youtube,
-    href: 'https://www.youtube.com/@MakerDAO/videos',
-  },
-];
-
 const itemsBreadcrumb = [
   {
     label: 'Contributors',
-    url: siteRoutes.contributors,
+    href: siteRoutes.contributors,
   },
   {
     label: 'Recognized Delegates',
-    url: siteRoutes.recognizedDelegate,
+    href: siteRoutes.recognizedDelegate,
   },
 ];
 
 const useRecognizedDelegatesReport = (delegates: DelegatesDto) => {
-  const { isLight } = useThemeContext();
-  const router = useRouter();
-  const code = router.query.code as string;
   const [selectedTab, setSelectedTab] = useState<DELEGATES_REPORT_IDS_ENUM>(DELEGATES_REPORT_IDS_ENUM.ACTUALS);
   const [lastVisitHandler, setLastVisitHandler] = useState<LastVisitHandler>();
   const { permissionManager } = useAuthContext();
@@ -150,9 +127,26 @@ const useRecognizedDelegatesReport = (delegates: DelegatesDto) => {
     [isTimestampTrackingAccepted, lastVisitHandler, updateHasNewComments]
   );
 
+  const delegateTeam = useMemo(
+    () =>
+      ({
+        shortCode: 'DEL',
+        name: 'Recognized Delegates',
+        type: ResourceType.Delegates,
+        image: '/assets/img/mk-logo.png',
+        socialMediaChannels: [
+          {
+            website: 'https://vote.makerdao.com/delegates',
+            forumTag: 'https://forum.makerdao.com/c/governance/delegates/43',
+            discord: 'https://discord.com/invite/uZxdmZcS',
+            youtube: 'https://www.youtube.com/@MakerDAO/videos',
+          },
+        ],
+      } as Team),
+    []
+  );
+
   return {
-    isLight,
-    links,
     itemsBreadcrumb,
     isMobile,
     tabItems,
@@ -169,7 +163,7 @@ const useRecognizedDelegatesReport = (delegates: DelegatesDto) => {
     comments,
     selectedTab,
     onTabChange,
-    code,
+    delegateTeam,
   };
 };
 
