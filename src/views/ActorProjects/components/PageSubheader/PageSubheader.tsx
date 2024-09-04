@@ -34,6 +34,7 @@ const PageSubheader: React.FC<FiltersBundleOptions & Props> = (props) => {
           onReset,
         }}
         filters={filters}
+        snapPoints={[330, 250, 0]}
       />
     </Header>
   );
@@ -46,7 +47,7 @@ const Header = styled('div')({
   flexDirection: 'row',
   alignItems: 'center',
   flexWrap: 'wrap',
-  gap: 24,
+  justifyContent: 'space-between',
   marginBottom: 24,
   [lightTheme.breakpoints.up('tablet_768')]: {
     flexDirection: 'row',
