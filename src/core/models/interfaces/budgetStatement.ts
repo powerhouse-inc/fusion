@@ -30,7 +30,7 @@ export interface BudgetStatement {
   };
   ownerType: string;
   month: string;
-  status: BudgetStatus;
+  status?: BudgetStatus;
   ownerCode: string;
   mkrProgramLength: number;
   publicationUrl: string;

@@ -128,6 +128,10 @@ export const getExpenseReportsQuery = ({
         forecastExpenses
         paymentsOnChain
         netProtocolOutflow
+        budgetStatementWallet {
+          id
+          address
+        }
       }
     }
   `,
