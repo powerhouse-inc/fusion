@@ -77,16 +77,6 @@ const BudgetStatementView: React.FC<BudgetStatementViewProps> = ({ snapshotLimit
 
 export default BudgetStatementView;
 
-// const Container = styled('div')(({ theme }) => ({
-//   paddingTop: 64,
-//   width: '100%',
-//   backgroundColor: theme.palette.mode === 'light' ? '#FFFFFF' : '#000000',
-//   backgroundImage:
-//     theme.palette.mode === 'light' ? 'url(/assets/img/bg-page.png)' : 'url(/assets/img/bg-page-dark.png)',
-//   backgroundAttachment: 'fixed',
-//   backgroundSize: 'cover',
-// }));
-
 const ContainerInside = styled('div')(({ theme }) => ({
   display: 'block',
   textAlign: 'left',
