@@ -1,11 +1,10 @@
-import { useHeaderSummary } from '@ses/core/hooks/useHeaderSummary';
 import { DateTime } from 'luxon';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { siteRoutes } from '@/config/routes';
-import { LinkTypeEnum } from '@/core/enums/linkTypeEnum';
 import type { SnapshotLimitPeriods } from '@/core/hooks/useBudgetStatementPager';
 import { useUrlAnchor } from '@/core/hooks/useUrlAnchor';
+import { ResourceType } from '@/core/models/interfaces/types';
 import { AllowedOwnerType } from './types';
 import { allowedOwnerTypeToResourceType } from './utils';
 
@@ -18,9 +17,6 @@ const useBudgetStatementView = (snapshotLimitPeriods: SnapshotLimitPeriods | und
   const anchor = useUrlAnchor();
 
   const ownerType = useMemo(() => allowedOwnerTypeToResourceType(ownerTypeQuery), [ownerTypeQuery]);
-
-  const ref = useRef<HTMLDivElement>(null);
-  const { height, showHeader } = useHeaderSummary(ref, 'code');
 
   useEffect(() => {
     // initialize the currentMonth from the url if it is present due a refresh or direct access
@@ -61,95 +57,96 @@ const useBudgetStatementView = (snapshotLimitPeriods: SnapshotLimitPeriods | und
     [anchor, router]
   );
 
-  const { code, name, seo, breadcrumbItems, links } = useMemo(() => {
+  const { teamInfo, breadcrumbItems } = useMemo(() => {
     // map the AllowedOwnerType to required data to show in the UI
     switch (ownerTypeQuery) {
       case AllowedOwnerType.KEEPERS:
         return {
-          code: 'KEEPERS',
-          name: 'Keepers',
-          seo: {
-            title: 'MakerDAO Teams | Keepers',
-            description:
+          teamInfo: {
+            type: ResourceType.Keepers,
+            code: 'KEEPERS',
+            name: 'Keepers',
+            sentenceDescription:
               'MakerDAO Ecosystem Actors Keepers page provides a comprehensive overview of Keepers on-chain activity with monthly account snapshot.',
+            socialMediaChannels: [
+              {
+                forumTag: 'https://forum.makerdao.com/t/poll-notice-amend-keeper-networks/20757',
+              },
+            ],
+            image: '/assets/img/mk-logo.png',
           },
           breadcrumbItems: [
             {
               label: 'Finances',
-              url: siteRoutes.finances(),
+              href: siteRoutes.finances(),
             },
             {
               label: 'Scope Framework Budget',
-              url: siteRoutes.finances('scopes'),
+              href: siteRoutes.finances('scopes'),
             },
             {
               label: 'Protocol Scope',
-              url: siteRoutes.finances('scopes/PRO'),
+              href: siteRoutes.finances('scopes/PRO'),
             },
             {
               label: 'Keepers',
-              url: siteRoutes.budgetStatements(ownerTypeQuery),
-            },
-          ],
-          links: [
-            {
-              href: 'https://forum.makerdao.com/t/poll-notice-amend-keeper-networks/20757',
-              linkType: LinkTypeEnum.Forum,
+              href: siteRoutes.budgetStatements(ownerTypeQuery),
             },
           ],
         };
       case AllowedOwnerType.SPFS:
         return {
-          code: 'SFPs',
-          name: 'Special Purpose Funds',
-          seo: {
-            title: 'MakerDAO Teams | Special Purpose Funds',
-            description:
+          teamInfo: {
+            type: ResourceType.SpecialPurposeFund,
+            code: 'SFPs',
+            name: 'Special Purpose Funds',
+            sentenceDescription:
               'MakerDAO Ecosystem Actors Special Purpose Funds page provides a comprehensive overview of Special Purpose Funds on-chain activity with monthly account snapshot.',
+            socialMediaChannels: [{}],
+            image: '/assets/img/mk-logo.png',
           },
           breadcrumbItems: [
             {
               label: 'Finances',
-              url: siteRoutes.finances(),
+              href: siteRoutes.finances(),
             },
             {
               label: 'MakerDAO Legacy Budget',
-              url: siteRoutes.finances('legacy'),
+              href: siteRoutes.finances('legacy'),
             },
             {
               label: 'Special Purpose Funds',
-              url: siteRoutes.budgetStatements(ownerTypeQuery),
+              href: siteRoutes.budgetStatements(ownerTypeQuery),
             },
           ],
-          links: [],
         };
       case AllowedOwnerType.ALIGNED_DELEGATES:
         return {
-          code: 'DEL',
-          name: 'Aligned Delegates',
-          seo: {
-            title: 'MakerDAO Teams | Aligned Delegates',
-            description:
+          teamInfo: {
+            type: ResourceType.AlignedDelegates,
+            code: 'DEL',
+            name: 'Aligned Delegates',
+            sentenceDescription:
               'MakerDAO Ecosystem Actors Aligned Delegates page provides a comprehensive overview of Aligned Delegates financial activity through monthly budget statements.',
+            socialMediaChannels: [
+              {
+                forumTag: 'https://forum.makerdao.com/t/april-2024-aligned-delegate-compensation/24272',
+              },
+            ],
+            image: '/assets/img/mk-logo.png',
           },
           breadcrumbItems: [
             {
               label: 'Finances',
-              url: siteRoutes.finances(),
+              href: siteRoutes.finances(),
             },
             {
               label: 'Atlas Immutable Budget',
-              url: siteRoutes.finances('immutable'),
+              href: siteRoutes.finances('immutable'),
             },
             {
               label: 'Aligned Delegates',
-              url: siteRoutes.budgetStatements(ownerTypeQuery),
-            },
-          ],
-          links: [
-            {
-              href: 'https://forum.makerdao.com/t/april-2024-aligned-delegate-compensation/24272',
-              linkType: LinkTypeEnum.Forum,
+              href: siteRoutes.budgetStatements(ownerTypeQuery),
             },
           ],
         };
@@ -192,14 +189,8 @@ const useBudgetStatementView = (snapshotLimitPeriods: SnapshotLimitPeriods | und
   return {
     ownerTypeQuery,
     ownerType,
-    ref,
-    height,
-    showHeader,
-    code,
-    name,
-    seo,
+    teamInfo,
     breadcrumbItems,
-    links,
     snapshotCreated,
     setSnapshotCreated,
     currentMonth,

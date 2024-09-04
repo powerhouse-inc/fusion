@@ -3,10 +3,13 @@ import { SEOHead } from '@ses/components/SEOHead/SEOHead';
 import { siteRoutes } from '@ses/config/routes';
 import { toAbsoluteURL } from '@ses/core/utils/urls';
 import AccountsSnapshotTabContainer from '@/components/AccountsSnapshot/AccountsSnapshotTabContainer';
+import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import BudgetStatementPager from '@/components/BudgetStatement/BudgetStatementPager/BudgetStatementPager';
+import PageContainer from '@/components/Container/PageContainer';
+import TeamHeader from '@/components/TeamHeader/TeamHeader';
 import type { SnapshotLimitPeriods } from '@/core/hooks/useBudgetStatementPager';
+import type { Team } from '@/core/models/interfaces/team';
 import type { ResourceType } from '@/core/models/interfaces/types';
-import BudgetStatementSummary from './components/BudgetStatementSummary/BudgetStatementSummary';
 import useBudgetStatementView from './useBudgetStatementView';
 
 interface BudgetStatementViewProps {
@@ -17,14 +20,8 @@ const BudgetStatementView: React.FC<BudgetStatementViewProps> = ({ snapshotLimit
   const {
     ownerTypeQuery,
     ownerType,
-    height,
-    ref,
-    showHeader,
-    code,
-    name,
-    seo,
+    teamInfo,
     breadcrumbItems,
-    links,
     snapshotCreated,
     setSnapshotCreated,
     currentMonth,
@@ -35,10 +32,10 @@ const BudgetStatementView: React.FC<BudgetStatementViewProps> = ({ snapshotLimit
   } = useBudgetStatementView(snapshotLimitPeriods);
 
   return (
-    <Container>
+    <PageContainer>
       <SEOHead
-        title={seo.title}
-        description={seo.description}
+        title={`MakerDAO Teams | ${teamInfo.name}`}
+        description={teamInfo.sentenceDescription}
         image={{
           src: toAbsoluteURL('/assets/img/social-385x200.png'),
           width: 385,
@@ -48,16 +45,10 @@ const BudgetStatementView: React.FC<BudgetStatementViewProps> = ({ snapshotLimit
         canonicalURL={siteRoutes.budgetStatements(ownerTypeQuery)}
       />
 
-      <BudgetStatementSummary
-        ref={ref}
-        showHeader={showHeader}
-        code={code}
-        name={name}
-        links={links}
-        breadcrumbItems={breadcrumbItems}
-      />
+      <Breadcrumb items={breadcrumbItems} />
+      <TeamHeader team={teamInfo as unknown as Team} withDescription={false} />
 
-      <ContainerInside marginTop={height}>
+      <ContainerInside>
         <BudgetStatementPager
           currentMonth={currentMonth}
           handleNext={handleNextMonth}
@@ -70,33 +61,33 @@ const BudgetStatementView: React.FC<BudgetStatementViewProps> = ({ snapshotLimit
 
         <Wrapper>
           <AccountsSnapshotTabContainer
-            snapshotOwner={name}
+            snapshotOwner={teamInfo.name}
             currentMonth={currentMonth}
             ownerId={null}
-            longCode={code}
-            shortCode={code}
+            longCode={teamInfo.code}
+            shortCode={teamInfo.code}
             resource={ownerType as unknown as ResourceType}
             setSnapshotCreated={setSnapshotCreated}
           />
         </Wrapper>
       </ContainerInside>
-    </Container>
+    </PageContainer>
   );
 };
 
 export default BudgetStatementView;
 
-const Container = styled('div')(({ theme }) => ({
-  paddingTop: 64,
-  width: '100%',
-  backgroundColor: theme.palette.mode === 'light' ? '#FFFFFF' : '#000000',
-  backgroundImage:
-    theme.palette.mode === 'light' ? 'url(/assets/img/bg-page.png)' : 'url(/assets/img/bg-page-dark.png)',
-  backgroundAttachment: 'fixed',
-  backgroundSize: 'cover',
-}));
+// const Container = styled('div')(({ theme }) => ({
+//   paddingTop: 64,
+//   width: '100%',
+//   backgroundColor: theme.palette.mode === 'light' ? '#FFFFFF' : '#000000',
+//   backgroundImage:
+//     theme.palette.mode === 'light' ? 'url(/assets/img/bg-page.png)' : 'url(/assets/img/bg-page-dark.png)',
+//   backgroundAttachment: 'fixed',
+//   backgroundSize: 'cover',
+// }));
 
-const ContainerInside = styled('div')<{ marginTop: number }>(({ theme, marginTop }) => ({
+const ContainerInside = styled('div')(({ theme }) => ({
   display: 'block',
   textAlign: 'left',
   width: '100%',
@@ -104,17 +95,9 @@ const ContainerInside = styled('div')<{ marginTop: number }>(({ theme, marginTop
   marginBottom: 0,
   marginLeft: 'auto',
   marginRight: 'auto',
-  marginTop: 22 + marginTop,
+  marginTop: 24,
   paddingRight: '64px',
   paddingLeft: '64px',
-
-  [theme.breakpoints.up('tablet_768')]: {
-    marginTop: 61 + marginTop,
-  },
-
-  [theme.breakpoints.up('desktop_1024')]: {
-    marginTop: 61 + marginTop,
-  },
 
   [theme.breakpoints.up('desktop_1920')]: {
     maxWidth: '1312px',
