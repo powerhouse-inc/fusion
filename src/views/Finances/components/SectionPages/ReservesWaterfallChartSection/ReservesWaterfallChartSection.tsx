@@ -3,7 +3,7 @@ import React from 'react';
 import Card from '@/components/Card/Card';
 import FiltersBundle from '@/components/FiltersBundle/FiltersBundle';
 import type { Filter } from '@/components/FiltersBundle/types';
-import type { LegendItemsWaterfall, LineWaterfall, WaterfallChartSeriesData } from '@/views/Finances/utils/types';
+import type { LegendItemsWaterfall, WaterfallChartSeriesData } from '@/views/Finances/utils/types';
 import FinancesTitle from '../../FinancesTitle/FinancesTitle';
 import WaterfallChart from '../../WaterfallChart/WaterfallChart';
 import WaterfallSkeleton from '../../WaterfallChart/WaterfallSkeleton';
@@ -14,7 +14,7 @@ interface Props {
   legends: LegendItemsWaterfall[];
   year: string;
   selectedGranularity: AnalyticGranularity;
-  series: (WaterfallChartSeriesData | LineWaterfall)[];
+  series: WaterfallChartSeriesData[];
   isLoading: boolean;
   filters: Filter[];
   canReset: boolean;

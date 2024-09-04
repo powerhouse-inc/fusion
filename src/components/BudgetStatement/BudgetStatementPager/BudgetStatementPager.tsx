@@ -1,8 +1,8 @@
 import { styled } from '@mui/material';
 import React, { forwardRef } from 'react';
 import PagerArrows from '@/components/PagerArrows/PagerArrows';
+import type { BudgetStatus } from '@/core/models/interfaces/types';
 import ExpenseReportStatusIndicator from '@/views/CoreUnitBudgetStatement/components/ExpenseReportStatusIndicator/ExpenseReportStatusIndicator';
-import type { BudgetStatus } from '@ses/core/models/dto/coreUnitDTO';
 import type { DateTime } from 'luxon';
 
 interface BudgetStatementPagerProps {
