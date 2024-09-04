@@ -213,7 +213,7 @@ const filters: Filter[] = [
   },
 ];
 const meta: Meta<typeof PageSubheader> = {
-  title: 'Components/Actor/ProjectsPageSubheader',
+  title: 'Fusion/Views/Projects',
   component: PageSubheader,
   parameters: {
     chromatic: {

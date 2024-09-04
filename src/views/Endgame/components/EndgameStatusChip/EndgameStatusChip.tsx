@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import Chip from '@mui/material/Chip';
-import { getChipColors } from '@ses/containers/ActorProjects/utils/colors';
 import { useThemeContext } from '@ses/core/context/ThemeContext';
 import { ProjectStatus } from '@ses/core/models/interfaces/projects';
 import React, { useMemo } from 'react';
+import { getChipColors } from '@/views/ActorProjects/utils/colors';
 
 interface ProjectStatusChipProps {
   status: ProjectStatus;
