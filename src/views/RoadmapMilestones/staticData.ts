@@ -7,8 +7,31 @@ export const exampleOwner: OwnerRef = {
   id: 'owner-001',
   name: 'John Doe',
   code: 'JD123',
-  imageUrl: 'https://example.com/john-doe.jpg',
+  imageUrl: '',
 };
+export const exampleOwners: OwnerRef[] = [
+  {
+    ref: 'ref-001',
+    id: 'owner-001',
+    name: 'Prometheus',
+    code: 'JD123',
+    imageUrl: '',
+  },
+  {
+    ref: 'ref-001',
+    id: 'owner-001',
+    name: 'meraki',
+    code: 'JD123',
+    imageUrl: '',
+  },
+  {
+    ref: 'ref-001',
+    id: 'owner-001',
+    name: 'meraki',
+    code: 'JD123',
+    imageUrl: '',
+  },
+];
 
 export const exampleProgress: Progress = {
   __typename: 'Percentage',
@@ -36,7 +59,7 @@ export const exampleDeliverable: MDeliverable = {
 
 export const exampleDeliverableSet: DeliverableSet = {
   deliverables: [exampleDeliverable], // List of deliverables
-  status: ProgressStatus.IN_PROGRESS, // Status of the set
+  status: ProgressStatus.FINISHED, // Status of the set
   progress: {
     __typename: 'Percentage',
     value: 0.75,
@@ -47,14 +70,14 @@ export const exampleDeliverableSet: DeliverableSet = {
 
 export const exampleMilestone: Milestone = {
   id: 'milestone-001',
-  sequenceCode: 'MS1',
+  sequenceCode: 'M1',
   code: 'BASE',
-  title: 'Milestone 1',
+  title: 'Exploration Base',
   abstract: 'Abstract of milestone 1',
   description: 'Detailed description of milestone 1',
   targetDate: '2023-Q4',
   scope: exampleDeliverableSet, // Matches the `DeliverableSet` interface
-  coordinators: [exampleOwner], // List of coordinators
+  coordinators: exampleOwners, // List of coordinators
   contributors: [exampleOwner], // List of contributors
 };
 

@@ -182,6 +182,7 @@ const dictionary = [
   'Sky’s',
   'rebranded',
   'usds',
+  'meraki'
 ];
 
 module.exports = dictionary;
