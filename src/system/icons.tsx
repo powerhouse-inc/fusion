@@ -30,6 +30,7 @@ import FusionArrowUp from 'public/assets/svg/fusion_arrow_up.svg';
 import GithubIcon from 'public/assets/svg/github.svg';
 import GlobeWWW from 'public/assets/svg/globe_www.svg';
 import InfoOutlined from 'public/assets/svg/info_outlined.svg';
+import Link from 'public/assets/svg/link.svg';
 import Linkedin from 'public/assets/svg/linkedin.svg';
 import Login from 'public/assets/svg/login.svg';
 import MakerdaoIcon from 'public/assets/svg/makerdao.svg';
@@ -269,5 +270,9 @@ export const iconsPowerHose = [
   {
     Icon: Sort,
     title: 'sort',
+  },
+  {
+    Icon: Link,
+    title: 'link',
   },
 ];
