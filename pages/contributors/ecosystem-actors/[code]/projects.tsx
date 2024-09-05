@@ -1,10 +1,10 @@
 import { CURRENT_ENVIRONMENT } from '@ses/config/endpoints';
-import ActorProjectsContainer from '@ses/containers/ActorProjects/ActorProjectsContainer';
-import { fetchProjects } from '@ses/containers/ActorProjects/api/query';
 import { ResourceType } from '@ses/core/models/interfaces/types';
 import { featureFlags } from 'feature-flags/feature-flags';
 import React from 'react';
 import type { IncrementedDeliverable } from '@/core/models/interfaces/deliverables';
+import ActorProjectsContainer from '@/views/ActorProjects/ActorProjectsContainer';
+import { fetchProjects } from '@/views/ActorProjects/api/query';
 import { fetchActorAbout } from '@/views/EcosystemActorAbout/api/queries';
 import { fetchActors } from '@/views/EcosystemActorsIndex/api/queries';
 import { getScopeOfWorkState } from '@/views/RoadmapMilestones/api/queries';

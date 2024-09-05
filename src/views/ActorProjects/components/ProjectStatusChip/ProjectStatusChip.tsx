@@ -4,12 +4,7 @@ import { useThemeContext } from '@ses/core/context/ThemeContext';
 import { ProjectStatus } from '@ses/core/models/interfaces/projects';
 import React, { useMemo } from 'react';
 import { getChipColors } from '../../utils/colors';
-
-interface ProjectStatusChipProps {
-  status: ProjectStatus;
-  customLabel?: string;
-  isSmall?: boolean;
-}
+import type { ProjectStatusChipProps } from '@ses/core/models/interfaces/projects';
 
 const ProjectStatusChip: React.FC<ProjectStatusChipProps> = ({ status, customLabel, isSmall = false }) => {
   const { isLight } = useThemeContext();

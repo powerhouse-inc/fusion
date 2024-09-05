@@ -7,14 +7,12 @@ import Card from '@/components/Card/Card';
 import InternalLinkButton from '@/components/InternalLinkButton/InternalLinkButton';
 
 import SESTooltip from '@/components/SESTooltip/SESTooltip';
+import StatusProgressChip from '@/components/StatusProgressChip/StatusProgressChip';
 import { siteRoutes } from '@/config/routes';
-import type { Maybe } from '@/core/models/interfaces/generics';
+
 import type { Milestone } from '@/core/models/interfaces/roadmaps';
-import { DeliverableSetStatus } from '@/core/models/interfaces/roadmaps';
 import { usLocalizedNumber } from '@/core/utils/humanization';
 import { progressPercentage } from '@/views/RoadmapMilestones/utils';
-
-import useMilestoneCard from './useMilestoneCard';
 
 import type { Theme } from '@mui/material';
 import type { FC } from 'react';
@@ -28,17 +26,11 @@ interface ElementWithProgress {
   progress: number;
 }
 
-interface ElementWithStatus {
-  status: Maybe<DeliverableSetStatus>;
-}
-
 interface ElementWithTotal {
   total?: number;
 }
 
 const MilestoneCard: FC<MilestoneCardProps> = ({ slug, milestoneData }) => {
-  const { statusLabel } = useMilestoneCard(milestoneData.scope?.status);
-
   const progress = progressPercentage(milestoneData.scope?.progress);
 
   const coordinators = milestoneData.coordinators?.slice(0, 2);
@@ -71,9 +63,7 @@ const MilestoneCard: FC<MilestoneCardProps> = ({ slug, milestoneData }) => {
           <ProgressTitleContainer>
             <ProgressTitle>Progress</ProgressTitle>
           </ProgressTitleContainer>
-          <StatusLabelContainer status={milestoneData.scope?.status}>
-            <StatusLabel status={milestoneData.scope?.status}>{statusLabel}</StatusLabel>
-          </StatusLabelContainer>
+          <StatusProgressChip status={milestoneData.scope?.status} />
         </ProgressTitleWrapper>
         <ProgressBarContainer>
           <ProgressBar progress={progress} />
@@ -310,48 +300,6 @@ const ProgressLabel = styled('span', {
 
   ...(progress !== 1 && {
     color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.charcoal[600],
-  }),
-}));
-
-const StatusLabelContainer = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'status',
-})<ElementWithStatus>(({ theme, status }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '1px 16px',
-  borderRadius: 6,
-
-  ...(status === DeliverableSetStatus.FINISHED && {
-    backgroundColor: theme.palette.isLight ? theme.palette.colors.green[100] : 'rgba(52, 168, 83, 0.40)',
-  }),
-
-  ...(status === DeliverableSetStatus.IN_PROGRESS && {
-    backgroundColor: theme.palette.isLight ? theme.palette.colors.blue[100] : 'rgba(0, 132, 255, 0.40)',
-  }),
-
-  ...((status === DeliverableSetStatus.DRAFT || status === DeliverableSetStatus.TODO) && {
-    backgroundColor: theme.palette.isLight ? theme.palette.colors.orange[100] : 'rgba(255, 138, 0, 0.40)',
-  }),
-}));
-
-const StatusLabel = styled('span', {
-  shouldForwardProp: (prop) => prop !== 'status',
-})<ElementWithStatus>(({ theme, status }) => ({
-  fontWeight: 600,
-  fontSize: 14,
-  lineHeight: '22px',
-
-  ...(status === DeliverableSetStatus.FINISHED && {
-    color: theme.palette.isLight ? theme.palette.colors.green[800] : theme.palette.colors.green[50],
-  }),
-
-  ...(status === DeliverableSetStatus.IN_PROGRESS && {
-    color: theme.palette.isLight ? theme.palette.colors.blue[800] : theme.palette.colors.blue[50],
-  }),
-
-  ...((status === DeliverableSetStatus.DRAFT || status === DeliverableSetStatus.TODO) && {
-    color: theme.palette.isLight ? theme.palette.colors.orange[800] : theme.palette.colors.orange[100],
   }),
 }));
 

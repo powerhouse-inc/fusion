@@ -8,15 +8,20 @@ import BudgetStatementPager from '@/components/BudgetStatement/BudgetStatementPa
 import PageContainer from '@/components/Container/PageContainer';
 import TeamHeader from '@/components/TeamHeader/TeamHeader';
 import type { SnapshotLimitPeriods } from '@/core/hooks/useBudgetStatementPager';
+import type { BudgetStatement } from '@/core/models/interfaces/budgetStatement';
 import type { Team } from '@/core/models/interfaces/team';
 import type { ResourceType } from '@/core/models/interfaces/types';
 import useBudgetStatementView from './useBudgetStatementView';
 
 interface BudgetStatementViewProps {
   snapshotLimitPeriods: SnapshotLimitPeriods | undefined;
+  compactedBudgetStatements: BudgetStatement[];
 }
 
-const BudgetStatementView: React.FC<BudgetStatementViewProps> = ({ snapshotLimitPeriods }) => {
+const BudgetStatementView: React.FC<BudgetStatementViewProps> = ({
+  snapshotLimitPeriods,
+  compactedBudgetStatements,
+}) => {
   const {
     ownerTypeQuery,
     ownerType,
@@ -29,7 +34,8 @@ const BudgetStatementView: React.FC<BudgetStatementViewProps> = ({ snapshotLimit
     hasPreviousMonth,
     handleNextMonth,
     handlePreviousMonth,
-  } = useBudgetStatementView(snapshotLimitPeriods);
+    currentBudgetStatus,
+  } = useBudgetStatementView(snapshotLimitPeriods, compactedBudgetStatements);
 
   return (
     <PageContainer>
@@ -57,6 +63,7 @@ const BudgetStatementView: React.FC<BudgetStatementViewProps> = ({ snapshotLimit
           hasPrevious={hasPreviousMonth()}
           showExpenseReportStatusCTA={false}
           lastUpdate={snapshotCreated}
+          budgetStatus={currentBudgetStatus}
         />
 
         <Wrapper>

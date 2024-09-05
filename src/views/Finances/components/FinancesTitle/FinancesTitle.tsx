@@ -1,10 +1,10 @@
 import { styled } from '@mui/material';
 import lightTheme from '@ses/styles/theme/themes';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import ArrowLink from 'public/assets/svg/external_link.svg';
 import Information from 'public/assets/svg/info_outlined.svg';
+import LinkIcon from 'public/assets/svg/link.svg';
 import React, { useMemo } from 'react';
+import CopyIcon from '@/components/CopyIcon/CopyIcon';
 import SESTooltip from '@/components/SESTooltip/SESTooltip';
 
 interface SectionTitleProps {
@@ -55,8 +55,15 @@ const FinancesTitle: React.FC<SectionTitleProps> = ({ title, tooltip, hash, year
             </IconWrapper>
           </SESTooltip>
         </Tooltip>
-        <CopyWrapper href={href} target="_blank">
-          <ArrowLink />
+        <CopyWrapper>
+          <CopyIcon
+            defaultTooltip="Copy link"
+            tooltipPlacement="bottom-start"
+            text={href}
+            width={22}
+            height={22}
+            icon={<LinkIcon width={18} height={18} />}
+          />
         </CopyWrapper>
       </Container>
       {year && <Date>{`Jan - Dec ${year}`}</Date>}
@@ -112,6 +119,7 @@ const IconWrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  cursor: 'pointer',
   width: 24,
   height: 24,
 
@@ -122,32 +130,38 @@ const IconWrapper = styled('div')(({ theme }) => ({
   '& path': {
     fill: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[200],
   },
-  cursor: 'pointer',
-  [lightTheme.breakpoints.up('tablet_768')]: {
-    alignItems: 'center',
-  },
   ':hover': {
     '& path': {
       fill: theme.palette.isLight ? theme.palette.colors.slate[200] : theme.palette.colors.slate[100],
     },
   },
+
+  [lightTheme.breakpoints.up('tablet_768')]: {
+    alignItems: 'center',
+  },
 }));
 
-const CopyWrapper = styled(Link)(({ theme }) => ({
+const CopyWrapper = styled('div')(({ theme }) => ({
   display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: 24,
-  height: 24,
-  color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[200],
-  '& svg': {
-    width: 20,
-    height: 20,
-    marginBottom: 2,
-  },
+  justifyContent: 'flex-end',
+  width: 22,
+  height: 22,
   cursor: 'pointer',
+
+  '& path': {
+    fill: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[200],
+  },
+
   ':hover': {
-    color: theme.palette.isLight ? theme.palette.colors.slate[200] : theme.palette.colors.slate[100],
+    '& path': {
+      fill: theme.palette.isLight ? theme.palette.colors.slate[200] : theme.palette.colors.slate[100],
+    },
+  },
+
+  [lightTheme.breakpoints.up('tablet_768')]: {
+    marginBottom: -5,
+    marginLeft: 2,
+    alignItems: 'baseline',
   },
 }));
 

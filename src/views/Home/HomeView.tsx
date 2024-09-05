@@ -7,10 +7,10 @@ import type { Roadmap } from '@/core/models/interfaces/roadmaps';
 import type { Team } from '@/core/models/interfaces/team';
 import ContributorsSection from './components/Contributors/ContributorsSection';
 import FinancesSection from './components/FinancesSection/FinancesSection';
-import { SectionTitle } from './components/FinancesSectionTitle/FinancesSectionTitle';
 import GovernanceSection from './components/GovernanceSection/GovernanceSection';
 import HeaderCard from './components/HeaderCard/HeaderCard';
 import HomeButton from './components/HomeButton/HomeButton';
+import HomeSectionTitle from './components/HomeSectionTitle/HomeSectionTitle';
 import RoadmapSection from './components/RoadmapSection/RoadmapSection';
 import { headerCardData, sectionsData } from './staticData';
 import type { FormattedFinancesData } from './api/finances';
@@ -51,13 +51,13 @@ const HomeView: FC<HomeViewProps> = ({
         <GovernanceSection governanceProposals={governanceProposals} hatAddress={hatAddress} />
       </Section>
       <Section id={headerCardData.buttonTexts[2].toLowerCase()}>
-        <SectionTitle>{sectionsData.titles[2]}</SectionTitle>
+        <HomeSectionTitle hash={headerCardData.buttonTexts[2].toLowerCase()}>{sectionsData.titles[2]}</HomeSectionTitle>
         <ContainerMargin>
           <ContributorsSection teams={teams} />
         </ContainerMargin>
       </Section>
       <Section id={headerCardData.buttonTexts[3].toLowerCase()}>
-        <SectionTitle>{sectionsData.titles[3]}</SectionTitle>
+        <HomeSectionTitle hash={headerCardData.buttonTexts[3].toLowerCase()}>{sectionsData.titles[3]}</HomeSectionTitle>
         <RoadmapSection roadmaps={roadmaps} />
       </Section>
     </Container>

@@ -88,91 +88,95 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   return (
     <Card id={project.code}>
       <MainContent>
-        <ProjectHeader>
-          <NameContainer>
-            <TitleContainer>
-              <ProjectCode>{project.code}</ProjectCode> <ProjectTitle>{project.title}</ProjectTitle>
-            </TitleContainer>
-            <BudgetTypeBadge budgetType={project.budgetType} />
-          </NameContainer>
+        <ContainerImageProjectHeader>
+          <ImageContainer isBigger={showDeliverablesBelow}>
+            <Image
+              src={project.imgUrl ?? '/assets/img/project_placeholder.png'}
+              alt={project.title}
+              layout="fill"
+              unoptimized
+            />
+          </ImageContainer>
 
-          <ParticipantsContainer>
-            <ProjectOwnerChip owner={isProject(project) ? project.owner : project.projectOwner} />
-            {supporters.length > 0 && <SupportedTeamsAvatarGroup supporters={supporters} />}
-          </ParticipantsContainer>
-        </ProjectHeader>
+          <Row showDeliverablesBelow={showDeliverablesBelow}>
+            <ProjectHeader>
+              <NameContainer>
+                <TitleContainer>
+                  <ProjectCode>{project.code}</ProjectCode> <ProjectTitle>{project.title}</ProjectTitle>
+                </TitleContainer>
+                <BudgetTypeBadge budgetType={project.budgetType} />
+              </NameContainer>
 
-        <Row showDeliverablesBelow={showDeliverablesBelow}>
-          <LeftColumn showDeliverablesBelow={showDeliverablesBelow}>
-            {isUpDesktop1280 && !showDeliverablesBelow && statusSection}
-            <ImageContainer isBigger={showDeliverablesBelow}>
-              <Image
-                src={project.imgUrl ?? '/assets/img/project_placeholder.png'}
-                alt={project.title}
-                layout="fill"
-                unoptimized
-              />
-            </ImageContainer>
-            <DataContainer showDeliverablesBelow={showDeliverablesBelow}>
-              {(!isUpDesktop1280 || showDeliverablesBelow) && statusSection}
               <Description>{project.abstract}</Description>
-              {isSupportedProjects(project) && (
-                <ViewEcosystem
-                  href={siteRoutes.ecosystemActorAbout(project.projectOwner.code ?? '')}
-                  buttonType={ButtonType.Default}
-                  label="View Ecosystem Actor"
-                />
-              )}
-            </DataContainer>
-          </LeftColumn>
-          <RightColumn>
-            <DeliverableTitleContainer>
-              <DeliverablesTitle>{showAllDeliverables ? 'All' : 'Highlighted'} Deliverables</DeliverablesTitle>
-              <DeliverableViewModeToggle
-                deliverableViewMode={deliverableViewMode}
-                onChangeDeliverableViewMode={handleChangeDeliverableViewMode}
-              />
-            </DeliverableTitleContainer>
 
-            <GrayBackground showBackground={showGrayBackground}>
-              <DeliverablesContainer showDeliverablesBelow={showDeliverablesBelow}>
-                {deliverablesRows.map((row) =>
-                  row.map((deliverable) => (
-                    <DeliverableCard
-                      key={deliverable.id}
-                      deliverable={
-                        isProject(project)
-                          ? deliverable
-                          : {
-                              ...deliverable,
-                              // supported projects doesn't have key results field in the deliverables
-                              keyResults:
-                                project.supportedKeyResults?.filter(
-                                  (keyResult) => keyResult.parentIdRef === deliverable.id
-                                ) ?? [],
-                            }
-                      }
-                      viewMode={deliverableViewMode}
-                      maxKeyResultsOnRow={
-                        // supported projects doesn't have key results in the deliverables
-                        isProject(project) ? row.map((d) => d.keyResults.length).reduce((a, b) => Math.max(a, b), 0) : 0
-                      }
-                    />
-                  ))
+              <DataContainer showDeliverablesBelow={showDeliverablesBelow}>
+                {(!isUpDesktop1280 || showDeliverablesBelow) && statusSection}
+
+                {isSupportedProjects(project) && (
+                  <ViewEcosystem
+                    href={siteRoutes.ecosystemActorAbout(project.projectOwner.code ?? '')}
+                    buttonType={ButtonType.Default}
+                    label="View Ecosystem Actor"
+                  />
                 )}
-              </DeliverablesContainer>
-              {(isUpDesktop1280
-                ? deliverableViewMode === 'compacted'
-                  ? allDeliverables.length > 4
-                  : allDeliverables.length > 6
-                : allDeliverables.length > 4) && (
-                <ViewAllButton viewAll={showAllDeliverables} onClick={() => setShowAllDeliverables((prev) => !prev)}>
-                  View {showAllDeliverables ? 'less' : 'all'} Deliverables
-                </ViewAllButton>
+              </DataContainer>
+              <ParticipantsContainer>
+                <ProjectOwnerChip owner={isProject(project) ? project.owner : project.projectOwner} />
+                {supporters.length > 0 && <SupportedTeamsAvatarGroup supporters={supporters} />}
+              </ParticipantsContainer>
+            </ProjectHeader>
+            <LeftColumn showDeliverablesBelow={showDeliverablesBelow}>
+              {isUpDesktop1280 && !showDeliverablesBelow && statusSection}
+            </LeftColumn>
+          </Row>
+        </ContainerImageProjectHeader>
+        <RightColumn>
+          <DeliverableTitleContainer>
+            <DeliverablesTitle>{showAllDeliverables ? 'All' : 'Highlighted'} Deliverables</DeliverablesTitle>
+            <DeliverableViewModeToggle
+              deliverableViewMode={deliverableViewMode}
+              onChangeDeliverableViewMode={handleChangeDeliverableViewMode}
+            />
+          </DeliverableTitleContainer>
+
+          <GrayBackground showBackground={showGrayBackground}>
+            <DeliverablesContainer showDeliverablesBelow={showDeliverablesBelow}>
+              {deliverablesRows.map((row) =>
+                row.map((deliverable) => (
+                  <DeliverableCard
+                    key={deliverable.id}
+                    deliverable={
+                      isProject(project)
+                        ? deliverable
+                        : {
+                            ...deliverable,
+                            // supported projects doesn't have key results field in the deliverables
+                            keyResults:
+                              project.supportedKeyResults?.filter(
+                                (keyResult) => keyResult.parentIdRef === deliverable.id
+                              ) ?? [],
+                          }
+                    }
+                    viewMode={deliverableViewMode}
+                    maxKeyResultsOnRow={
+                      // supported projects doesn't have key results in the deliverables
+                      isProject(project) ? row.map((d) => d.keyResults.length).reduce((a, b) => Math.max(a, b), 0) : 0
+                    }
+                  />
+                ))
               )}
-            </GrayBackground>
-          </RightColumn>
-        </Row>
+            </DeliverablesContainer>
+            {(isUpDesktop1280
+              ? deliverableViewMode === 'compacted'
+                ? allDeliverables.length > 4
+                : allDeliverables.length > 6
+              : allDeliverables.length > 4) && (
+              <ViewAllButton viewAll={showAllDeliverables} onClick={() => setShowAllDeliverables((prev) => !prev)}>
+                View {showAllDeliverables ? 'less' : 'all'} Deliverables
+              </ViewAllButton>
+            )}
+          </GrayBackground>
+        </RightColumn>
       </MainContent>
     </Card>
   );
@@ -180,37 +184,40 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
 export default ProjectCard;
 
-const Card = styled('article')(({ theme }) => ({
-  background: theme.palette.isLight ? '#fff' : '#10191F',
+const Card = styled('article')(() => ({
   borderRadius: 6,
-  border: `1px solid ${theme.palette.isLight ? '#e6e6e6' : '#10191F'}`,
-  boxShadow: theme.palette.isLight
-    ? '0px 1px 3px 0px rgba(190, 190, 190, 0.25), 0px 20px 40px 0px rgba(219, 227, 237, 0.40)'
-    : ' 0px 1px 3px 0px rgba(30, 23, 23, 0.25), 0px 20px 40px -40px rgba(7, 22, 40, 0.40)',
+
   scrollMarginTop: 150,
 }));
 
-const MainContent = styled('div')(({ theme }) => ({
-  padding: '15px 15px 23px 15px',
+const MainContent = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 16,
+}));
 
-  [theme.breakpoints.up('desktop_1024')]: {
-    padding: '15px 23px 23px 23px',
+const ContainerImageProjectHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+
+  [theme.breakpoints.up('tablet_768')]: {
+    flexDirection: 'row',
+    gap: 24,
   },
-
-  [theme.breakpoints.up('desktop_1440')]: {
-    padding: '15px 31px 31px 31px',
+  [theme.breakpoints.up('desktop_1280')]: {
+    gap: 32,
   },
 }));
 
 const ProjectHeader = styled('div')(({ theme }) => ({
   display: 'flex',
+  width: '100%',
   flexDirection: 'column',
-  gap: 7,
+  gap: 8,
 
   [theme.breakpoints.up('tablet_768')]: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
-    alignItems: 'center',
     alignSelf: 'stretch',
   },
 }));
@@ -222,54 +229,42 @@ const NameContainer = styled('div')(({ theme }) => ({
   alignSelf: 'stretch',
 
   [theme.breakpoints.up('tablet_768')]: {
-    justifyContent: 'normal',
-    alignItems: 'center',
-    gap: 8,
+    justifyContent: 'space-between',
   },
 }));
 
 const TitleContainer = styled('div')(({ theme }) => ({
-  lineHeight: '17px',
-
+  gap: 4,
+  display: 'flex',
   [theme.breakpoints.up('tablet_768')]: {
     gap: 8,
   },
 }));
 
 const ProjectCode = styled('span')(({ theme }) => ({
-  color: '#9FAFB9',
+  color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[200],
   fontSize: 14,
-  fontWeight: 700,
-  lineHeight: 'normal',
+  fontWeight: 600,
+  lineHeight: '22px',
   textTransform: 'uppercase',
 
   [theme.breakpoints.up('tablet_768')]: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 600,
-    letterSpacing: 0.4,
-  },
-
-  [theme.breakpoints.up('desktop_1024')]: {
-    fontSize: 24,
+    lineHeight: '24px',
   },
 }));
 
 const ProjectTitle = styled('span')(({ theme }) => ({
-  color: theme.palette.isLight ? '#25273D' : '#D2D4EF',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   fontSize: 14,
-  fontWeight: 500,
-  lineHeight: '18px',
+  fontWeight: 600,
+  lineHeight: '22px',
 
   [theme.breakpoints.up('tablet_768')]: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 600,
-    letterSpacing: 0.4,
-    lineHeight: 'normal',
-    marginLeft: 3,
-  },
-
-  [theme.breakpoints.up('desktop_1024')]: {
-    fontSize: 24,
+    lineHeight: '24px',
   },
 }));
 
@@ -277,19 +272,28 @@ const ParticipantsContainer = styled('div')({
   display: 'flex',
   alignItems: 'center',
   gap: 8,
+  height: 66,
 });
 
 const Row = styled('div')<{ showDeliverablesBelow: boolean }>(({ theme, showDeliverablesBelow }) => ({
   display: 'flex',
   flexDirection: 'column',
+  borderRadius: 12,
   marginTop: 16,
+  padding: 8,
+  backgroundColor: theme.palette.isLight ? '#FFF' : theme.palette.colors.charcoal[900],
   gap: 24,
+  width: '100%',
 
+  [theme.breakpoints.up('tablet_768')]: {
+    flex: 1,
+    marginTop: 0,
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
+    padding: '8px 16px 16px',
+  },
   [theme.breakpoints.up('desktop_1280')]: {
-    marginTop: 32,
-
     ...(!showDeliverablesBelow && {
-      flexDirection: 'row',
       gap: 32,
     }),
   },
@@ -349,28 +353,34 @@ const ImageContainer = styled('div')<{ isBigger: boolean }>(({ theme, isBigger }
   position: 'relative',
   width: '100%',
   height: 175,
+  display: 'flex',
+
   borderRadius: 6,
   overflow: 'hidden',
-
   '& img': {
     objectFit: 'cover',
   },
 
   [theme.breakpoints.up('tablet_768')]: {
-    height: 256,
-    minHeight: 256,
+    height: 374,
+    minWidth: 340,
+    minHeight: 374,
     flex: 1,
   },
-
+  [theme.breakpoints.up('desktop_1024')]: {
+    minWidth: 468,
+    height: 320,
+    minHeight: 320,
+  },
   ...(isBigger && {
     [theme.breakpoints.up('desktop_1280')]: {
-      height: 320,
-      minHeight: 320,
+      minWidth: 584,
     },
   }),
 
   [theme.breakpoints.up('desktop_1440')]: {
-    maxWidth: 578,
+    maxWidth: 640,
+    minWidth: 640,
   },
 }));
 
@@ -379,7 +389,7 @@ const DataContainer = styled('div')<{ showDeliverablesBelow: boolean }>(({ theme
   flexDirection: 'column',
   gap: 16,
   marginTop: 16,
-
+  height: 64,
   [theme.breakpoints.up('tablet_768')]: {
     alignSelf: 'stretch',
     justifyContent: 'center',
@@ -425,6 +435,7 @@ const Description = styled('p')(({ theme }) => ({
   color: theme.palette.isLight ? '#231536' : '#D2D4EF',
   fontSize: 14,
   lineHeight: 'normal',
+  height: 'fit-content',
 
   [theme.breakpoints.up('tablet_768')]: {
     fontSize: 16,
