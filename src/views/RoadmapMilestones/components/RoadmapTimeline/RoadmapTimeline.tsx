@@ -1,8 +1,8 @@
-import { styled, useMediaQuery } from '@mui/material';
+import { styled } from '@mui/material';
 import type { Milestone } from '@/core/models/interfaces/roadmaps';
 import { progressPercentage } from '../../utils';
 import MilestoneCard from '../MilestoneCard/MilestoneCard';
-import type { Theme } from '@mui/material';
+import Timeline from './Timeline/Timeline';
 import type { FC } from 'react';
 
 interface RoadmapTimelineProps {
@@ -10,41 +10,37 @@ interface RoadmapTimelineProps {
 }
 
 const RoadmapTimeline: FC<RoadmapTimelineProps> = ({ milestones }) => {
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
-
   const up = milestones.length <= 4 ? milestones : milestones.filter((_, i) => i % 2 === 0);
   const down = milestones.filter((_, i) => i % 2 !== 0);
 
   const shouldAddPadding = milestones.length % 2 === 0 && milestones.length > 4;
 
   return (
-    <div>
-      {isMobile ? (
-        <MobileTimeline>
-          {milestones.map((milestone) => (
-            <MilestoneCard key={milestone.id} milestone={milestone} />
+    <>
+      <MobileTimeline>
+        {milestones.map((milestone) => (
+          <MilestoneCard key={milestone.id} milestone={milestone} />
+        ))}
+      </MobileTimeline>
+      <Timeline milestones={milestones} />
+      <DesktopTimeline>
+        <Up shouldAddPadding={shouldAddPadding}>
+          {up.map((milestone) => (
+            <CardWrapper key={milestone.id} isStarted={progressPercentage(milestone.scope.progress) !== 0}>
+              <MilestoneCard milestone={milestone} />
+            </CardWrapper>
           ))}
-        </MobileTimeline>
-      ) : (
-        <DesktopTimeline>
-          <Up shouldAddPadding={shouldAddPadding}>
-            {up.map((milestone) => (
+        </Up>
+        <Down shouldAddPadding={shouldAddPadding}>
+          {milestones.length > 4 &&
+            down.map((milestone) => (
               <CardWrapper key={milestone.id} isStarted={progressPercentage(milestone.scope.progress) !== 0}>
                 <MilestoneCard milestone={milestone} />
               </CardWrapper>
             ))}
-          </Up>
-          <Down shouldAddPadding={shouldAddPadding}>
-            {milestones.length > 4 &&
-              down.map((milestone) => (
-                <CardWrapper key={milestone.id} isStarted={progressPercentage(milestone.scope.progress) !== 0}>
-                  <MilestoneCard milestone={milestone} />
-                </CardWrapper>
-              ))}
-          </Down>
-        </DesktopTimeline>
-      )}
-    </div>
+        </Down>
+      </DesktopTimeline>
+    </>
   );
 };
 
@@ -67,24 +63,31 @@ const MobileTimeline = styled('div')(({ theme }) => ({
     height: '100%',
     backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[200],
   },
+
+  [theme.breakpoints.up('tablet_768')]: {
+    display: 'none',
+  },
 }));
 
-const DesktopTimeline = styled('div')({
-  display: 'flex',
-  flexDirection: 'column',
-});
+const DesktopTimeline = styled('div')(({ theme }) => ({
+  display: 'none',
+
+  [theme.breakpoints.up('desktop_1024')]: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+}));
 
 const Up = styled('div')<{ shouldAddPadding: boolean }>(({ theme, shouldAddPadding }) => ({
   display: 'flex',
-  justifyContent: 'center',
-  gap: 24,
-  borderBottom: `2.5px solid ${
-    theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.gray[900]
-  }`,
+  gap: 40,
   ...(shouldAddPadding && { paddingRight: 'calc(12.5% - 12px)' }),
 
   [theme.breakpoints.up('desktop_1280')]: {
-    gap: 56,
+    gap: 73,
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    gap: 103,
   },
 
   '& > div': {
@@ -102,13 +105,14 @@ const Up = styled('div')<{ shouldAddPadding: boolean }>(({ theme, shouldAddPaddi
 
 const Down = styled('div')<{ shouldAddPadding: boolean }>(({ theme, shouldAddPadding }) => ({
   display: 'flex',
-  justifyContent: 'center',
-  gap: 24,
-  borderTop: `2.5px solid ${theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.gray[900]}`,
+  gap: 40,
   ...(shouldAddPadding && { paddingLeft: 'calc(12.5% - 12px)' }),
 
   [theme.breakpoints.up('desktop_1280')]: {
-    gap: 56,
+    gap: 73,
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    gap: 103,
   },
 
   '& > div': {

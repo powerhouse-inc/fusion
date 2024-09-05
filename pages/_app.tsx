@@ -88,7 +88,7 @@ MyApp.getInitialProps = async ({ ctx }: { ctx: NextPageContext }) => {
     allowsThemeTracking: false,
     allowsTimestampTracking: false,
     allowsAnalyticsTracking: false,
-    themeModeCookie: 'light',
+    themeModeCookie: 'dark',
   };
 
   if (ctx.req?.headers.cookie) {
@@ -98,11 +98,11 @@ MyApp.getInitialProps = async ({ ctx }: { ctx: NextPageContext }) => {
       allowsThemeTracking: Boolean(cookiesParsed?.themeTracking),
       allowsTimestampTracking: Boolean(cookiesParsed?.timestampTracking),
       allowsAnalyticsTracking: Boolean(cookiesParsed?.analyticsTracking),
-      themeModeCookie: cookiesParsed?.themeModeCookie || 'light',
+      themeModeCookie: cookiesParsed?.themeModeCookie || 'dark',
     };
   }
 
-  const isLight = cookiesObject?.allowsThemeTracking ? cookiesObject.themeModeCookie === 'light' : true;
+  const isLight = cookiesObject?.allowsThemeTracking ? cookiesObject.themeModeCookie === 'light' : false;
   return {
     isLight,
     cookiesObject,

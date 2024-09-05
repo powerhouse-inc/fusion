@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import ClipBoard from '../../stories/components/svg/ClipBoard';
 import SESTooltip from '../SESTooltip/SESTooltip';
+import type { TooltipProps } from '@mui/material';
 
 interface CopyIconProps {
   text: string;
@@ -12,6 +13,7 @@ interface CopyIconProps {
   width?: number;
   height?: number;
   icon?: React.ReactNode;
+  tooltipPlacement?: TooltipProps['placement'];
 }
 
 const CopyIcon: React.FC<CopyIconProps> = ({
@@ -22,6 +24,7 @@ const CopyIcon: React.FC<CopyIconProps> = ({
   defaultTooltip = 'Copy',
   defaultCopyTooltip = 'Copied!',
   icon,
+  tooltipPlacement = 'top',
 }) => {
   const [tooltipText, setTooltipText] = useState<string>(defaultTooltip);
 
@@ -31,7 +34,7 @@ const CopyIcon: React.FC<CopyIconProps> = ({
 
   return (
     <IconContainer className={className}>
-      <SESTooltip content={tooltipText} onClose={handleOnClose} placement="top" className="custom-tooltip">
+      <SESTooltip content={tooltipText} onClose={handleOnClose} placement={tooltipPlacement} className="custom-tooltip">
         <div>
           <CopyToClipboard text={text} onCopy={() => setTooltipText(defaultCopyTooltip)}>
             {icon || <ClipBoard width={width} height={height} onClick={(e: React.MouseEvent) => e.stopPropagation()} />}

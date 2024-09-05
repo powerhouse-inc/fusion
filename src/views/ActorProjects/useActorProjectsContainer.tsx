@@ -135,7 +135,6 @@ const useActorProjectsContainer = (projectsData: ProjectsAndSupportedProjects, a
     pager,
     canReset,
     filters,
-    // handleResetFilters,
   };
 };
 
