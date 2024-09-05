@@ -2,14 +2,14 @@ import { BudgetStatementBuilder } from '@ses/core/businessLogic/builders/budgetS
 import { RecognizedDelegatesBuilder } from '@ses/core/businessLogic/builders/delegatesBuilder';
 import { withoutSBPadding } from '@ses/core/utils/storybook/decorators';
 import { createThemeModeVariants } from '@ses/core/utils/storybook/factories';
-import AppLayout from '../AppLayout/AppLayout';
-import RecognizedDelegatesReportContainer from './RecognizedDelegatesReportContainer';
+import AppLayout from '../../stories/containers/AppLayout/AppLayout';
+import RecognizedDelegatesBudgetStatementView from './RecognizedDelegatesBudgetStatementView';
 import type { Meta } from '@storybook/react';
 import type { FigmaParams } from 'sb-figma-comparator';
 
-const meta: Meta<typeof RecognizedDelegatesReportContainer> = {
-  title: 'Pages/Recognized Delegates Report',
-  component: RecognizedDelegatesReportContainer,
+const meta: Meta<typeof RecognizedDelegatesBudgetStatementView> = {
+  title: 'Fusion/Pages/Recognized Delegates Budget Statement',
+  component: RecognizedDelegatesBudgetStatementView,
   decorators: [withoutSBPadding],
   parameters: {
     chromatic: {
@@ -32,7 +32,7 @@ const variantsArgs = [
 const [[LightMode, DarkMode]] = createThemeModeVariants(
   (props) => (
     <AppLayout>
-      <RecognizedDelegatesReportContainer {...props} />
+      <RecognizedDelegatesBudgetStatementView {...props} />
     </AppLayout>
   ),
   variantsArgs
