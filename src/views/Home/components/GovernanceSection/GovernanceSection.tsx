@@ -1,7 +1,7 @@
 import { styled } from '@mui/material';
 import type { ExtendedExecutiveProposal } from '@/core/models/interfaces/makervote';
-import { sectionsData } from '../../staticData';
-import { SectionTitle } from '../FinancesSectionTitle/FinancesSectionTitle';
+import { headerCardData, sectionsData } from '../../staticData';
+import HomeSectionTitle from '../HomeSectionTitle/HomeSectionTitle';
 import ForumOverview from './ForumOverview/ForumOverview';
 import Proposals from './Proposals/Proposals';
 
@@ -12,7 +12,7 @@ interface GovernanceSectionProps {
 
 const GovernanceSection: React.FC<GovernanceSectionProps> = ({ governanceProposals, hatAddress }) => (
   <SectionContainer>
-    <SectionTitle>{sectionsData.titles[1]}</SectionTitle>
+    <HomeSectionTitle hash={headerCardData.buttonTexts[1].toLowerCase()}>{sectionsData.titles[1]}</HomeSectionTitle>
 
     <Proposals governanceProposals={governanceProposals} hatAddress={hatAddress} />
     <ForumOverview />
