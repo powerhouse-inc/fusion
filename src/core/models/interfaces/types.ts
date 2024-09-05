@@ -45,3 +45,10 @@ export enum ActorCategory {
   ActiveEcosystemActor = 'ActiveEcosystemActor',
   ScopeFacilitator = 'ScopeFacilitator',
 }
+
+export enum ProgressStatus {
+  DRAFT = 'DRAFT',
+  TODO = 'TODO',
+  IN_PROGRESS = 'IN_PROGRESS',
+  FINISHED = 'FINISHED',
+}

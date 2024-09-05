@@ -1,5 +1,6 @@
 import type { MDeliverable } from './deliverables';
 import type { Maybe } from './generics';
+import type { ProgressStatus } from './types';
 
 export interface StoryPoints {
   __typename: 'StoryPoints';
@@ -31,7 +32,7 @@ export enum DeliverableSetStatus {
 
 export interface DeliverableSet {
   deliverables: MDeliverable[];
-  status: Maybe<DeliverableSetStatus>;
+  status: ProgressStatus;
   progress: Maybe<Progress>;
   totalDeliverables: Maybe<number>;
   deliverablesCompleted: Maybe<number>;
