@@ -29,8 +29,8 @@ const MilestoneCard: FC<MilestoneCardProps> = ({ milestone }) => {
           </Quarter>
         </QuarterBox>
       </Header>
-      <TitleContainer className="title-container">
-        <Title>{milestone.title}</Title>
+      <TitleContainer>
+        <Title className="overview-milestone-title">{milestone.title}</Title>
         <Description>{milestone.abstract}</Description>
       </TitleContainer>
       <Progress>
