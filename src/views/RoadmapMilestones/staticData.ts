@@ -73,8 +73,10 @@ export const exampleMilestone: Milestone = {
   sequenceCode: 'M1',
   code: 'BASE',
   title: 'Exploration Base',
-  abstract: 'Abstract of milestone 1',
-  description: 'Detailed description of milestone 1',
+  abstract:
+    'A first deployment that integrates the different deliverables. Focus is on exploration of open design questions (removing uncertainty).',
+  description:
+    'Feature exploration and open design questions, smart contracts project, chatbot, UI intergration, marcomms project.\nMilestone 1, set for August 1, marks the initial phase of Exploration Base. Projects include Smart Contracts, focused on establishing foundations and addressing design questions. The Chatbot Project aims to enhance the conversational UX with low hanging fruit execution, prioritizing clarity and correctness. Overall, this milestone lays the groundwork, explores design possibilities, and strives to improve the user experience in the MakerDAO ecosystem.',
   targetDate: '2023-Q4',
   scope: exampleDeliverableSet, // Matches the `DeliverableSet` interface
   coordinators: exampleOwners, // List of coordinators

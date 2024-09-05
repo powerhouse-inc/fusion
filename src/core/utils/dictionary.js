@@ -182,7 +182,11 @@ const dictionary = [
   'Sky’s',
   'rebranded',
   'usds',
-  'meraki'
+  'meraki',
+  'chatbot',
+  'intergration',
+  'marcomms',
+  'Chatbot'
 ];
 
 module.exports = dictionary;
