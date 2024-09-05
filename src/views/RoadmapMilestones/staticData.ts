@@ -1,103 +1,76 @@
-/* eslint-disable spellcheck/spell-checker */
-// disabled spell-checker because of the use of abbreviations, technical terms and names
+import { DeliverableStatus, type MDeliverable } from '@/core/models/interfaces/deliverables';
+import type { DeliverableSet, Milestone, OwnerRef, Progress, Roadmap } from '@/core/models/interfaces/roadmaps';
+import { ProgressStatus } from '@/core/models/interfaces/types';
 
-import { DeliverableStatus } from '@/core/models/interfaces/deliverables';
-import type { Milestone, Roadmap } from '@/core/models/interfaces/roadmaps';
-import { DeliverableSetStatus } from '@/core/models/interfaces/roadmaps';
+export const exampleOwner: OwnerRef = {
+  ref: 'ref-001',
+  id: 'owner-001',
+  name: 'John Doe',
+  code: 'JD123',
+  imageUrl: 'https://example.com/john-doe.jpg',
+};
 
-const coordinators = [
-  {
-    ref: '',
-    id: '',
-    imageUrl: '',
-    name: 'Prometheus',
-    code: '',
-  },
-  {
-    ref: '',
-    id: '',
-    imageUrl: '',
-    name: 'meraki',
-    code: '',
-  },
-  {
-    ref: '',
-    id: '',
-    imageUrl: '',
-    name: 'callme_T',
-    code: '',
-  },
-];
-const contributors = [
-  {
-    ref: 'team',
-    id: 'powerhouse',
-    imageUrl: 'https://makerdao-ses.github.io/ecosystem-dashboard/ecosystem-actors/POWERHOUSE/POWERHOUSE_logo.png',
-    name: 'Powerhouse Inc.',
-    code: 'PH',
-  },
-];
+export const exampleProgress: Progress = {
+  __typename: 'Percentage',
+  value: 0.75, // Example of progress based on percentage
+};
 
-export const CommonDefaultMilestone = {
-  id: 'M1',
-  sequenceCode: 'M1',
-  code: 'BASE',
-  title: 'Exploration Base',
-  abstract:
-    'A first deployment that integrates the different deliverables. Focus is on exploration of open design questions (removing uncertainty).',
-  description:
-    'Feature exploration and open design questions, smart contracts project, chatbot, UI intergration, marcomms project.\nMilestone 1, set for August 1, marks the initial phase of Exploration Base. Projects include Smart Contracts, focused on establishing foundations and addressing design questions. The Chatbot Project aims to enhance the conversational UX with low hanging fruit execution, prioritizing clarity and correctness. Overall, this milestone lays the groundwork, explores design possibilities, and strives to improve the user experience in the MakerDAO ecosystem.',
-  targetDate: '2023-Q4',
-  coordinators,
-  contributors,
-  scope: {
-    deliverables: [
-      {
-        id: '1',
-        code: '1',
-        title: 'First technical integration of RWA Portfolio (Connect & Switchboard)',
-        description:
-          'Technical integration demo showcasing for the first time the RWA Portfolio Editor in Connect and the data synchronization with Switchboard.\n* Deliverable with multiple lines description.',
-        owner: contributors[0],
-        status: DeliverableStatus.DELIVERED,
-        workProgress: {
-          __typename: 'Percentage',
-          value: 1,
-        },
-        budgetAnchor: {
-          project: {
-            code: 'RWA',
-            title: 'RWA Portfolio',
-          },
-          workUnitBudget: 1000,
-          deliverableBudget: 1000,
-        },
-        keyResults: [],
-      },
-    ],
-    status: DeliverableSetStatus.FINISHED,
-    progress: {
-      __typename: 'Percentage',
-      value: 0.75,
+export const exampleDeliverable: MDeliverable = {
+  id: 'deliverable-001',
+  code: 'DEL-001',
+  title: 'Deliverable 1',
+  description: 'This is the description of the first deliverable.',
+  owner: exampleOwner,
+  workProgress: exampleProgress,
+  budgetAnchor: {
+    project: {
+      code: 'PRJ-001',
+      title: 'Project 1',
     },
-    totalDeliverables: 3,
-    deliverablesCompleted: 3,
+    workUnitBudget: 1000,
+    deliverableBudget: 1000,
   },
-} as Milestone;
+  keyResults: [], // Assuming keyResults is an empty array by default
+  status: DeliverableStatus.DRAFT,
+};
+
+export const exampleDeliverableSet: DeliverableSet = {
+  deliverables: [exampleDeliverable], // List of deliverables
+  status: ProgressStatus.IN_PROGRESS, // Status of the set
+  progress: {
+    __typename: 'Percentage',
+    value: 0.75,
+  }, // Could be either Percentage or StoryPoints
+  totalDeliverables: 1, // Total number of deliverables
+  deliverablesCompleted: 0, // Number of completed deliverables
+};
+
+export const exampleMilestone: Milestone = {
+  id: 'milestone-001',
+  sequenceCode: 'MS1',
+  code: 'BASE',
+  title: 'Milestone 1',
+  abstract: 'Abstract of milestone 1',
+  description: 'Detailed description of milestone 1',
+  targetDate: '2023-Q4',
+  scope: exampleDeliverableSet, // Matches the `DeliverableSet` interface
+  coordinators: [exampleOwner], // List of coordinators
+  contributors: [exampleOwner], // List of contributors
+};
 
 export const DefaultRoadmap: Roadmap = {
   id: 'default',
   slug: 'default',
   title: 'Phase 1 Progress',
-  description: 'Unleashing Potential: MakerDAO’s result-driven road map for unlocking tangible results.',
+  description: 'Unleashing Potential: MakerDAO’s result-driven roadmap for unlocking tangible results.',
   milestones: [
-    { ...CommonDefaultMilestone },
-    { ...CommonDefaultMilestone },
-    { ...CommonDefaultMilestone },
-    { ...CommonDefaultMilestone },
-    { ...CommonDefaultMilestone },
-    { ...CommonDefaultMilestone },
-    { ...CommonDefaultMilestone },
-    { ...CommonDefaultMilestone },
+    { ...exampleMilestone },
+    { ...exampleMilestone },
+    { ...exampleMilestone },
+    { ...exampleMilestone },
+    { ...exampleMilestone },
+    { ...exampleMilestone },
+    { ...exampleMilestone },
+    { ...exampleMilestone },
   ],
 };

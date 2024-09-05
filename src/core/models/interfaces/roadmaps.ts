@@ -46,9 +46,7 @@ export interface Milestone {
   abstract: string;
   description: string;
   targetDate: string;
-
   scope: DeliverableSet;
-
   coordinators: OwnerRef[];
   contributors: OwnerRef[];
 }

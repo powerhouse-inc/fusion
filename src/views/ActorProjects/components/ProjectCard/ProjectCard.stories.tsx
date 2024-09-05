@@ -1,13 +1,14 @@
 import { DeliverableBuilder } from '@ses/core/businessLogic/builders/actors/deliverableBuilder';
 import { ProjectBuilder } from '@ses/core/businessLogic/builders/actors/projectBuilder';
-import { OwnerType, ProjectStatus } from '@ses/core/models/interfaces/projects';
+import { OwnerType } from '@ses/core/models/interfaces/projects';
 import { createThemeModeVariants } from '@ses/core/utils/storybook/factories';
 import { DeliverableStatus } from '@/core/models/interfaces/deliverables';
+import { ProgressStatus } from '@/core/models/interfaces/types';
 import ProjectCard from './ProjectCard';
 import type { Meta } from '@storybook/react';
 
 const meta: Meta<typeof ProjectCard> = {
-  title: 'Components/Actor/Project Card',
+  title: 'Fusion/Components/Actor/Project Card',
   component: ProjectCard,
   parameters: {
     chromatic: {
@@ -34,7 +35,7 @@ const variantsArgs = [
       .withAbstract(
         "Protocol Expense Accounting aims to provide a comprehensive, detailed, and up-to-date view of the Maker Protocol's operational expenses. This information can help Maker Protocol stakeholders, including MKR holders and contributors, understand how MakerDAO spends funds."
       )
-      .withStatus(ProjectStatus.INPROGRESS)
+      .withStatus(ProgressStatus.IN_PROGRESS)
       .withProgress(0.5)
       .addDeliverable(
         new DeliverableBuilder()

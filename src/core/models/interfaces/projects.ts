@@ -1,4 +1,5 @@
 import type { Deliverable, KeyResult } from './deliverables';
+import type { ProgressStatus } from './types';
 
 export enum BudgetType {
   CONTINGENCY = 'CONTINGENCY',
@@ -51,7 +52,7 @@ export interface Project {
   code: string;
   title: string;
   abstract?: string;
-  status: ProjectStatus;
+  status: ProgressStatus;
   progress?: Percentage;
   imgUrl?: string;
   budgetType: BudgetType;
