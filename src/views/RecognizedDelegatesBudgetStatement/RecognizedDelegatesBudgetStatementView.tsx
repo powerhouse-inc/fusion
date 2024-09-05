@@ -11,6 +11,7 @@ import BudgetStatementPager from '@/components/BudgetStatement/BudgetStatementPa
 import PageContainer from '@/components/Container/PageContainer';
 import Tabs from '@/components/Tabs/Tabs';
 import TeamHeader from '@/components/TeamHeader/TeamHeader';
+import type { Snapshots } from '@/core/models/dto/snapshotAccountDTO';
 import DelegatesActuals from './components/DelegatesActuals/DelegatesActuals';
 import DelegatesForecast from './components/DelegatesForecast/DelegatesForecast';
 import useRecognizedDelegatesReport, { DELEGATES_REPORT_IDS_ENUM } from './useRecognizedDelegatesReport';
@@ -18,9 +19,10 @@ import type { DelegatesDto } from '@ses/core/models/dto/delegatesDTO';
 
 type RecognizedDelegatesProps = {
   delegates: DelegatesDto;
+  snapshots: Snapshots[];
 };
 
-const RecognizedDelegatesBudgetStatementView: React.FC<RecognizedDelegatesProps> = ({ delegates }) => {
+const RecognizedDelegatesBudgetStatementView: React.FC<RecognizedDelegatesProps> = ({ delegates, snapshots }) => {
   const {
     itemsBreadcrumb,
     isMobile,
@@ -39,7 +41,8 @@ const RecognizedDelegatesBudgetStatementView: React.FC<RecognizedDelegatesProps>
     selectedTab,
     onTabChange,
     delegateTeam,
-  } = useRecognizedDelegatesReport(delegates);
+    currentStatus,
+  } = useRecognizedDelegatesReport(delegates, snapshots);
 
   return (
     <PageContainer>
@@ -67,7 +70,7 @@ const RecognizedDelegatesBudgetStatementView: React.FC<RecognizedDelegatesProps>
           handlePrevious={handlePreviousMonth}
           hasNext={hasNextMonth()}
           hasPrevious={hasPreviousMonth()}
-          budgetStatus={currentBudgetStatement?.status}
+          budgetStatus={currentStatus}
           showExpenseReportStatusCTA={showExpenseReportStatusCTA}
           lastUpdate={lastUpdateForBudgetStatement}
         />
