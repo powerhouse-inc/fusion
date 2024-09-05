@@ -7,11 +7,12 @@ import { CoreUnitsBuilder } from '@ses/core/businessLogic/builders/coreUnitsBuil
 import { CuMipBuilder } from '@ses/core/businessLogic/builders/cuMIPBuilder';
 import { UserBuilder } from '@ses/core/businessLogic/builders/userBuilder';
 import { CuCategoryEnum } from '@ses/core/enums/cuCategoryEnum';
-import { TeamStatus } from '@/core/models/interfaces/types';
+import { ResourceType, TeamStatus } from '@/core/models/interfaces/types';
 import type { SocialMediaChannels } from '@ses/core/models/interfaces/socialMedia';
 
 export const SESCoreUnitMocked = new CoreUnitsBuilder()
   .withId('1')
+  .withType(ResourceType.CoreUnit)
   .withCode('SES-001')
   .withStatus(TeamStatus.Accepted)
   .withShortCode('SES')

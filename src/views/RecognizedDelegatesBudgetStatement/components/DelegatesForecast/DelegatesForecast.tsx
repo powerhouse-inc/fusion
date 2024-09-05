@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-
 import { useThemeContext } from '@ses/core/context/ThemeContext';
 import { ResourceType } from '@ses/core/models/interfaces/types';
 import lightTheme from '@ses/styles/theme/themes';

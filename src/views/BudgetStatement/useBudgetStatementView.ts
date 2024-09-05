@@ -69,6 +69,7 @@ const useBudgetStatementView = (
           teamInfo: {
             type: ResourceType.Keepers,
             code: 'KEEPERS',
+            shortCode: 'KEEPERS',
             name: 'Keepers',
             sentenceDescription:
               'MakerDAO Ecosystem Actors Keepers page provides a comprehensive overview of Keepers on-chain activity with monthly account snapshot.',
@@ -103,6 +104,7 @@ const useBudgetStatementView = (
           teamInfo: {
             type: ResourceType.SpecialPurposeFund,
             code: 'SFPs',
+            shortCode: 'SPFs',
             name: 'Special Purpose Funds',
             sentenceDescription:
               'MakerDAO Ecosystem Actors Special Purpose Funds page provides a comprehensive overview of Special Purpose Funds on-chain activity with monthly account snapshot.',
@@ -129,6 +131,7 @@ const useBudgetStatementView = (
           teamInfo: {
             type: ResourceType.AlignedDelegates,
             code: 'DEL',
+            shortCode: 'DEL',
             name: 'Aligned Delegates',
             sentenceDescription:
               'MakerDAO Ecosystem Actors Aligned Delegates page provides a comprehensive overview of Aligned Delegates financial activity through monthly budget statements.',
