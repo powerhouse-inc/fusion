@@ -1,13 +1,11 @@
 import { useMediaQuery } from '@mui/material';
 import { useHeaderSummary } from '@ses/core/hooks/useHeaderSummary';
-import { ProjectStatus } from '@ses/core/models/interfaces/projects';
 import { useRouter } from 'next/router';
 import { useMemo, useRef, useState } from 'react';
 import type { Filter, SelectOption } from '@/components/FiltersBundle/types';
 import { StatusChip } from '@/components/StatusChip/StatusChip';
-import type { DeliverableSetStatus } from '@/core/models/interfaces/roadmaps';
 import type { Team } from '@/core/models/interfaces/team';
-import type { TeamStatus } from '@/core/models/interfaces/types';
+import { ProgressStatus, type TeamStatus } from '@/core/models/interfaces/types';
 import { useBreadcrumbTeamPager } from '@/views/EcosystemActorAbout/hooks';
 import CustomItemAll from '@/views/EcosystemActorsIndex/components/ActorCustomItem/CustomItemAll';
 import ProjectStatusChipFilter from './components/ProjectFilters/ProjectStatusChipFilter';
@@ -26,24 +24,24 @@ const useActorProjectsContainer = (projectsData: ProjectsAndSupportedProjects, a
   const handleToggleFilterOnMobile = () => setIsFilterCollapsedOnMobile((prev) => !prev);
   const statuses = [
     {
-      value: ProjectStatus.TODO,
+      value: ProgressStatus.TODO,
       label: 'To Do',
       extra: {
-        count: `${projectsData.projects.filter((project) => project.status === ProjectStatus.TODO).length}`,
+        count: `${projectsData.projects.filter((project) => project.status === ProgressStatus.TODO).length}`,
       },
     },
     {
-      value: ProjectStatus.INPROGRESS,
+      value: ProgressStatus.IN_PROGRESS,
       label: 'In Progress',
       extra: {
-        count: `${projectsData.projects.filter((project) => project.status === ProjectStatus.INPROGRESS).length}`,
+        count: `${projectsData.projects.filter((project) => project.status === ProgressStatus.IN_PROGRESS).length}`,
       },
     },
     {
-      value: ProjectStatus.FINISHED,
+      value: ProgressStatus.FINISHED,
       label: 'Delivered',
       extra: {
-        count: `${projectsData.projects.filter((project) => project.status === ProjectStatus.FINISHED).length}`,
+        count: `${projectsData.projects.filter((project) => project.status === ProgressStatus.FINISHED).length}`,
       },
     },
   ] as SelectOption[];
@@ -97,7 +95,7 @@ const useActorProjectsContainer = (projectsData: ProjectsAndSupportedProjects, a
 
       customOptionsRender: (option: SelectOption, isActive: boolean) => (
         <ProjectStatusChipFilter
-          status={option.value as DeliverableSetStatus}
+          status={option.value as ProgressStatus}
           count={option.extra?.count}
           isActive={isActive}
         />

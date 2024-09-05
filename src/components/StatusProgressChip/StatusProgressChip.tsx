@@ -1,15 +1,15 @@
 import { styled } from '@mui/material';
 import React from 'react';
-import type { Maybe } from '@/core/models/interfaces/generics';
-import { DeliverableSetStatus } from '@/core/models/interfaces/roadmaps';
+
+import { ProgressStatus } from '@/core/models/interfaces/types';
 import useMilestoneCard from '@/views/Home/components/MilestoneCard/useMilestoneCard';
 import type { FC } from 'react';
 interface ElementWithStatus {
-  status: Maybe<DeliverableSetStatus>;
+  status: ProgressStatus;
 }
 
 interface Props {
-  status: Maybe<DeliverableSetStatus>;
+  status: ProgressStatus;
 }
 const StatusProgressChip: FC<Props> = ({ status }) => {
   const { statusLabel } = useMilestoneCard(status);
@@ -31,15 +31,15 @@ const StatusLabelContainer = styled('div', {
   padding: '1px 16px',
   borderRadius: 6,
 
-  ...(status === DeliverableSetStatus.FINISHED && {
+  ...(status === ProgressStatus.FINISHED && {
     backgroundColor: theme.palette.isLight ? theme.palette.colors.green[100] : 'rgba(52, 168, 83, 0.40)',
   }),
 
-  ...(status === DeliverableSetStatus.IN_PROGRESS && {
+  ...(status === ProgressStatus.IN_PROGRESS && {
     backgroundColor: theme.palette.isLight ? theme.palette.colors.blue[100] : 'rgba(0, 132, 255, 0.40)',
   }),
 
-  ...((status === DeliverableSetStatus.DRAFT || status === DeliverableSetStatus.TODO) && {
+  ...((status === ProgressStatus.DRAFT || status === ProgressStatus.TODO) && {
     backgroundColor: theme.palette.isLight ? theme.palette.colors.orange[100] : 'rgba(255, 138, 0, 0.40)',
   }),
 }));
@@ -51,15 +51,15 @@ const StatusLabel = styled('span', {
   fontSize: 14,
   lineHeight: '22px',
 
-  ...(status === DeliverableSetStatus.FINISHED && {
+  ...(status === ProgressStatus.FINISHED && {
     color: theme.palette.isLight ? theme.palette.colors.green[800] : theme.palette.colors.green[50],
   }),
 
-  ...(status === DeliverableSetStatus.IN_PROGRESS && {
+  ...(status === ProgressStatus.IN_PROGRESS && {
     color: theme.palette.isLight ? theme.palette.colors.blue[800] : theme.palette.colors.blue[50],
   }),
 
-  ...((status === DeliverableSetStatus.DRAFT || status === DeliverableSetStatus.TODO) && {
+  ...((status === ProgressStatus.DRAFT || status === ProgressStatus.TODO) && {
     color: theme.palette.isLight ? theme.palette.colors.orange[800] : theme.palette.colors.orange[100],
   }),
 }));

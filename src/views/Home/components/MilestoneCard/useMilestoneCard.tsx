@@ -1,18 +1,16 @@
 import { useMemo } from 'react';
+import { ProgressStatus } from '@/core/models/interfaces/types';
 
-import type { Maybe } from '@/core/models/interfaces/generics';
-import { DeliverableSetStatus } from '@/core/models/interfaces/roadmaps';
-
-const useMilestoneCard = (status: Maybe<DeliverableSetStatus>) => {
+const useMilestoneCard = (status: ProgressStatus) => {
   const statusLabel = useMemo(() => {
     switch (status) {
-      case DeliverableSetStatus.FINISHED:
+      case ProgressStatus.FINISHED:
         return 'Delivered';
-      case DeliverableSetStatus.IN_PROGRESS:
+      case ProgressStatus.IN_PROGRESS:
         return 'In Progress';
-      case DeliverableSetStatus.DRAFT:
+      case ProgressStatus.DRAFT:
         return 'Draft';
-      case DeliverableSetStatus.TODO:
+      case ProgressStatus.TODO:
         return 'To do';
       default:
         return '';
