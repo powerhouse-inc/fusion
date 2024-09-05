@@ -11,14 +11,12 @@ import {
 import Image from 'next/image';
 import React, { useCallback, useMemo, useState } from 'react';
 import ProgressWithStatus from '@/components/ProgressWithStatus/ProgressWithStatus';
-
 import type { OwnerRef } from '@/core/models/interfaces/roadmaps';
 import type { ProgressStatus } from '@/core/models/interfaces/types';
 import BudgetTypeBadge from '../BudgetTypeBadge/BudgetTypeBadge';
 import DeliverableCard from '../DeliverableCard/DeliverableCard';
 import DeliverableViewModeToggle from '../DeliverableViewModeToggle/DeliverableViewModeToggle';
-import ProjectOwnerChip from '../ProjectOwnerChip/ProjectOwnerChip';
-import SupportedTeamsAvatarGroup from '../SupportedTeamsAvatarGroup/SupportedTeamsAvatarGroup';
+import ProjectParticipants from '../ProjectParticipants/ProjectParticipants';
 import ViewAllButton from '../ViewAllButton/ViewAllButton';
 import type { Theme } from '@mui/material';
 
@@ -98,18 +96,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                 </TitleContainer>
                 <BudgetTypeBadge budgetType={project.budgetType} />
               </NameContainer>
-              {/* TODO://WIP: Move this to a dedicated css component */}
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  height: '100%',
-                }}
-              >
-                <div>
+              <ContainerStatusRoleDescription>
+                <ContainerDescription>
                   <Description>{project.abstract}</Description>
-                </div>
+                </ContainerDescription>
                 <ContainerStatusRole>
                   <ProgressWithStatus
                     progress={project.progress?.value ?? 0}
@@ -123,13 +113,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                       label="View Ecosystem Actor"
                     />
                   )}
-
-                  <ParticipantsContainer>
-                    <ProjectOwnerChip owner={isProject(project) ? project.owner : project.projectOwner} />
-                    {supporters.length > 0 && <SupportedTeamsAvatarGroup supporters={supporters} />}
-                  </ParticipantsContainer>
+                  <ProjectParticipants project={project} supporters={supporters} isShowName={isUpDesktop1280} />
                 </ContainerStatusRole>
-              </div>
+              </ContainerStatusRoleDescription>
             </ProjectHeader>
           </Row>
         </ContainerImageProjectHeader>
@@ -271,11 +257,11 @@ const ProjectTitle = styled('span')(({ theme }) => ({
   },
 }));
 
-const ParticipantsContainer = styled('div')({
+const ContainerStatusRoleDescription = styled('div')({
   display: 'flex',
-  alignItems: 'center',
-  gap: 8,
-  height: 66,
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  height: '100%',
 });
 
 const Row = styled('div')<{ showDeliverablesBelow: boolean }>(({ theme, showDeliverablesBelow }) => ({
@@ -506,3 +492,5 @@ const ContainerStatusRole = styled('div')(() => ({
   flexDirection: 'column',
   gap: 8,
 }));
+
+const ContainerDescription = styled('div')(() => ({}));

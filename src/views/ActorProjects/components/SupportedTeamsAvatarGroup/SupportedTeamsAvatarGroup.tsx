@@ -1,37 +1,31 @@
-import styled from '@emotion/styled';
+import { styled } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
 import React from 'react';
+import SESTooltip from '@/components/SESTooltip/SESTooltip';
 import type { OwnerRef } from '@/core/models/interfaces/roadmaps';
-import SESTooltipLegacy from '@/stories/components/SESTooltipLegacy/SESTooltipLegacy';
 import OwnerTooltipContent from '../OwnerTooltipContent/OwnerTooltipContent';
-import type { WithIsLight } from '@ses/core/utils/typesHelpers';
 
 interface SupportedTeamsAvatarGroupProps {
   supporters: OwnerRef[];
 }
 
-const SupportedTeamsAvatarGroup: React.FC<SupportedTeamsAvatarGroupProps> = ({ supporters }) => {
-  const { isLight } = useThemeContext();
-
-  return (
-    <SESTooltipLegacy content={<OwnerTooltipContent title="Supporters" items={supporters} />}>
-      <StyledAvatarGroup total={supporters.length} isLight={isLight}>
-        {supporters.map((supporter) => (
-          <StyledAvatar key={supporter.id} alt={supporter.name} src={supporter.imageUrl} />
-        ))}
-      </StyledAvatarGroup>
-    </SESTooltipLegacy>
-  );
-};
+const SupportedTeamsAvatarGroup: React.FC<SupportedTeamsAvatarGroupProps> = ({ supporters }) => (
+  <SESTooltip content={<OwnerTooltipContent title="Supporters" items={supporters} />}>
+    <StyledAvatarGroup total={supporters.length}>
+      {supporters.map((supporter) => (
+        <StyledAvatar key={supporter.id} alt={supporter.name} src={supporter.imageUrl} />
+      ))}
+    </StyledAvatarGroup>
+  </SESTooltip>
+);
 
 export default SupportedTeamsAvatarGroup;
 
-const StyledAvatarGroup = styled(AvatarGroup)<WithIsLight>(({ isLight }) => ({
+const StyledAvatarGroup = styled(AvatarGroup)(({ theme }) => ({
   display: 'flex',
-  border: `1px solid ${isLight ? '#D4D9E1' : '#343442'}`,
-  background: isLight ? '#fff' : '#10191F',
+  border: `1px solid ${theme.palette.isLight ? '#D4D9E1' : '#343442'}`,
+  background: theme.palette.isLight ? '#fff' : '#10191F',
   padding: 3,
   borderRadius: 20,
   cursor: 'pointer',
