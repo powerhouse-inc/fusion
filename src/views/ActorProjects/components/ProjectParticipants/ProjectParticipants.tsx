@@ -15,7 +15,7 @@ interface Props {
 
 const ProjectParticipants: FC<Props> = ({ project, supporters, isShowName }) => (
   <CoordinatorsContainer>
-    <CoordinatorsTitle>Coordinators</CoordinatorsTitle>
+    <CoordinatorsTitle>Contributor(s)</CoordinatorsTitle>
     <Participants>
       <ProjectOwner owner={isProject(project) ? project.owner : project.projectOwner} />
       {supporters.length > 0 && <ProjectSupported supporters={supporters} isShowName={isShowName} />}

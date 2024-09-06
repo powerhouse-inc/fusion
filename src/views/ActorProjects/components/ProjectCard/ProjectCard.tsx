@@ -270,7 +270,12 @@ const Row = styled('div')<{ showDeliverablesBelow: boolean }>(({ theme, showDeli
   borderRadius: 12,
   marginTop: 16,
   padding: 8,
+
   backgroundColor: theme.palette.isLight ? '#FFF' : theme.palette.colors.charcoal[900],
+
+  border: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[300] : theme.palette.colors.charcoal[800]}`,
+  boxShadow: `${theme.palette.isLight ? theme.fusionShadows.modules : 'none'}`,
+
   gap: 24,
   width: '100%',
   minHeight: 374,
@@ -358,11 +363,6 @@ const Description = styled('p')(({ theme }) => ({
   fontWeight: 400,
   lineHeight: '22px',
   height: 'fit-content',
-
-  [theme.breakpoints.up('tablet_768')]: {
-    fontSize: 16,
-    lineHeight: '22px',
-  },
 }));
 
 const DeliverableTitleContainer = styled('div')(() => ({
