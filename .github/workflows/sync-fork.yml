@@ -1,0 +1,94 @@
+name: Sync fork with upstream
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch/es to sync'
+        required: true
+        type: choice
+        options:
+          - 'all'
+          - 'sky-production'
+          - 'sky-staging'
+  schedule:
+    - cron: '*/30 * * * *'
+
+env:
+  UPSTREAM_REPO: 'powerhouse-inc/fusion'
+
+jobs:
+  sync_fork:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout everything
+        id: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ssh-key: ${{ secrets.SYNC_FORK_SSH_PRIVATE_KEY }}
+
+      - name: Configure git
+        id: configure_git
+        run: |
+          echo "${{ secrets.SYNC_FORK_SSH_PRIVATE_KEY }}" > ~/sync-fork-key.pem
+          chmod 600 ~/sync-fork-key.pem
+          git config --global user.email "${{ secrets.SYNC_FORK_USER_EMAIL }}"
+          git config --global user.name "${{ vars.SYNC_FORK_USER_NAME }}"
+          git config core.sshCommand "ssh -i ~/sync-fork-key.pem -F /dev/null"
+
+      - name: Add upstream
+        id: add_upstream
+        run: |
+          git remote add upstream https://github.com/${{ env.UPSTREAM_REPO }}.git
+
+      - name: Sync fork
+        id: sync
+        shell: bash
+        env:
+          BRANCHES: ${{ ( github.event_name == 'schedule' || github.event.inputs.branch == 'all' ) && 'sky-production sky-staging' || github.event.inputs.branch }}
+        run: |
+          for BRANCH in $BRANCHES; do
+            git checkout $BRANCH
+            git fetch upstream $BRANCH
+            git checkout upstream/$BRANCH
+            UPSTREAM_SHA_SHORT=$(git rev-parse --short HEAD)
+            git checkout $BRANCH
+            # Check if the latest commit from the upstream is already in the forked repo
+            if [ -z "$(git log | grep $UPSTREAM_SHA_SHORT)" ]; then
+              git merge -X theirs upstream/$BRANCH --no-edit
+              git push origin $BRANCH
+              echo "Branch $BRANCH synced"
+            else
+              echo "Branch $BRANCH is already up to date"
+            fi
+            echo "Done with $BRANCH"
+          done
+
+      - name: Send an alert to PagerDuty
+        id: alert
+        if: failure()
+        run: |
+          echo "Sending an alert to PagerDuty..."
+          curl -X POST https://events.pagerduty.com/v2/enqueue \
+            -H 'Content-Type: application/json' \
+            -d '{
+              "routing_key": "${{ secrets.SYNC_FORK_PD_ROUTING_KEY }}",
+              "event_action": "trigger",
+              "dedup_key": "${{ github.repository }}",
+              "dedup_key": "${{ github.repository }}",
+              "payload": {
+                "summary": "Sync fork failed for ${{ github.repository }}",
+                "timestamp": "'$(date -u +"%Y-%m-%dT%H:%M:%S")'",
+                "source": "GitHub Actions",
+                "component": "Endgame",
+                "severity": "error",
+                "custom_details": {
+                  "repository": "${{ github.repository }}",
+                  "workflow": "${{ github.workflow }}",
+                  "link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                }
+              }
+            }'
