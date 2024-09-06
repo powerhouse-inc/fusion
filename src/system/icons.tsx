@@ -10,6 +10,10 @@ import BarChartLine from 'public/assets/svg/bar_chart_line.svg';
 import BlueLines from 'public/assets/svg/blue_lines.svg';
 import Circle from 'public/assets/svg/circle.svg';
 import CircleInfo from 'public/assets/svg/circle_info.svg';
+import CircleOutlined from 'public/assets/svg/circle_outlined.svg';
+import CircleOutlinedDark from 'public/assets/svg/circle_outlined_dark.svg';
+import CircleOutlinedFilled from 'public/assets/svg/circle_outlined_filled.svg';
+import CircleOutlinedFilledDark from 'public/assets/svg/circle_outlined_filled_dark.svg';
 import Clock from 'public/assets/svg/clock.svg';
 import Close from 'public/assets/svg/close.svg';
 import Comments from 'public/assets/svg/comments.svg';
@@ -274,5 +278,21 @@ export const iconsPowerHose = [
   {
     Icon: Link,
     title: 'link',
+  },
+  {
+    Icon: CircleOutlined,
+    title: 'circle_outlined',
+  },
+  {
+    Icon: CircleOutlinedDark,
+    title: 'circle_outlined_dark',
+  },
+  {
+    Icon: CircleOutlinedFilled,
+    title: 'circle_outlined_filled',
+  },
+  {
+    Icon: CircleOutlinedFilledDark,
+    title: 'circle_outlined_filled_dark',
   },
 ];

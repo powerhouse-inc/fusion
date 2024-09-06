@@ -3,6 +3,7 @@ import type { Milestone } from '@/core/models/interfaces/roadmaps';
 import { progressPercentage } from '../../utils';
 import MilestoneCard from '../MilestoneCard/MilestoneCard';
 import Timeline from './Timeline/Timeline';
+import useRoadmapTimeline from './useRoadmapTimeline';
 import type { FC } from 'react';
 
 interface RoadmapTimelineProps {
@@ -10,10 +11,9 @@ interface RoadmapTimelineProps {
 }
 
 const RoadmapTimeline: FC<RoadmapTimelineProps> = ({ milestones }) => {
-  const up = milestones.length <= 4 ? milestones : milestones.filter((_, i) => i % 2 === 0);
+  const up = milestones.length < 4 ? milestones : milestones.filter((_, i) => i % 2 === 0);
   const down = milestones.filter((_, i) => i % 2 !== 0);
-
-  const shouldAddPadding = milestones.length % 2 === 0 && milestones.length > 4;
+  useRoadmapTimeline();
 
   return (
     <>
@@ -24,21 +24,32 @@ const RoadmapTimeline: FC<RoadmapTimelineProps> = ({ milestones }) => {
       </MobileTimeline>
       <Timeline milestones={milestones} />
       <DesktopTimeline>
-        <Up shouldAddPadding={shouldAddPadding}>
+        <Up totalMilestones={milestones.length}>
           {up.map((milestone) => (
-            <CardWrapper key={milestone.id} isStarted={progressPercentage(milestone.scope.progress) !== 0}>
+            <CardWrapper
+              key={milestone.id}
+              className="overview-up-card-wrapper"
+              isStarted={progressPercentage(milestone.scope.progress) !== 0}
+              isLast={milestone === milestones[milestones.length - 1]}
+            >
               <MilestoneCard milestone={milestone} />
             </CardWrapper>
           ))}
         </Up>
-        <Down shouldAddPadding={shouldAddPadding}>
-          {milestones.length > 4 &&
-            down.map((milestone) => (
-              <CardWrapper key={milestone.id} isStarted={progressPercentage(milestone.scope.progress) !== 0}>
+        {milestones.length > 3 && (
+          <Down totalMilestones={milestones.length}>
+            {down.map((milestone) => (
+              <CardWrapper
+                key={milestone.id}
+                className="overview-down-card-wrapper"
+                isStarted={progressPercentage(milestone.scope.progress) !== 0}
+                isLast={milestone === milestones[milestones.length - 1]}
+              >
                 <MilestoneCard milestone={milestone} />
               </CardWrapper>
             ))}
-        </Down>
+          </Down>
+        )}
       </DesktopTimeline>
     </>
   );
@@ -53,7 +64,7 @@ const MobileTimeline = styled('div')(({ theme }) => ({
   position: 'relative',
   zIndex: 1,
 
-  '&:before': {
+  '&::before': {
     zIndex: -1,
     content: '""',
     position: 'absolute',
@@ -75,89 +86,135 @@ const DesktopTimeline = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'flex',
     flexDirection: 'column',
+    width: 'fit-content',
+    margin: '0px auto',
   },
 }));
 
-const Up = styled('div')<{ shouldAddPadding: boolean }>(({ theme, shouldAddPadding }) => ({
+const Up = styled('div')<{ totalMilestones: number }>(({ theme, totalMilestones }) => ({
   display: 'flex',
   gap: 40,
-  ...(shouldAddPadding && { paddingRight: 'calc(12.5% - 12px)' }),
+  ...(totalMilestones > 3 && { paddingRight: 130 }),
 
   [theme.breakpoints.up('desktop_1280')]: {
     gap: 73,
+    ...(totalMilestones > 3 && { paddingRight: 180 }),
   },
   [theme.breakpoints.up('desktop_1440')]: {
     gap: 103,
+    ...(totalMilestones > 3 && { paddingRight: 195 }),
   },
 
   '& > div': {
-    paddingBottom: 32,
+    paddingBottom: 24,
 
-    '&:before': {
-      bottom: 0,
+    '&::before': {
+      bottom: -1,
+
+      ...(totalMilestones < 4 && {
+        width: 'calc(100% + 8px)',
+      }),
+      ...(totalMilestones === 4 && {
+        width: 'calc(25% + 24px)',
+      }),
+      ...(totalMilestones > 4 && {
+        width: 98,
+      }),
+
+      [theme.breakpoints.up('desktop_1280')]: {
+        width: totalMilestones < 4 ? 'calc(100% + 39px)' : 'calc(25% + 71px)',
+      },
+      [theme.breakpoints.up('desktop_1440')]: {
+        width: totalMilestones < 4 ? 'calc(100% + 69px)' : 'calc(25% + 87px)',
+      },
     },
 
-    '&:after': {
+    '&::after': {
       bottom: -8,
     },
   },
 }));
 
-const Down = styled('div')<{ shouldAddPadding: boolean }>(({ theme, shouldAddPadding }) => ({
+const Down = styled('div')<{ totalMilestones: number }>(({ theme, totalMilestones }) => ({
   display: 'flex',
   gap: 40,
-  ...(shouldAddPadding && { paddingLeft: 'calc(12.5% - 12px)' }),
+  ...(totalMilestones > 3 && { paddingLeft: 130 }),
 
   [theme.breakpoints.up('desktop_1280')]: {
     gap: 73,
+    ...(totalMilestones > 3 && { paddingLeft: 180 }),
   },
   [theme.breakpoints.up('desktop_1440')]: {
     gap: 103,
+    ...(totalMilestones > 3 && { paddingLeft: 195 }),
   },
 
   '& > div': {
-    paddingTop: 32,
+    paddingTop: 24,
 
-    '&:before': {
+    '&::before': {
       // line
-      top: -0,
+      top: 0,
+      width: totalMilestones === 4 ? 'calc(50% + 22px)' : 'calc(50% + 2px)',
+
+      [theme.breakpoints.up('desktop_1280')]: {
+        width: totalMilestones === 4 ? 'calc(50% + 14px)' : 'calc(50% + 4px)',
+      },
+      [theme.breakpoints.up('desktop_1440')]: {
+        width: 'calc(50% + 27px)',
+      },
     },
 
-    '&:after': {
+    '&::after': {
       // circle
       top: -8,
     },
   },
 }));
 
-const CardWrapper = styled('div')<{ isStarted: boolean }>(({ theme, isStarted }) => ({
+const CardWrapper = styled('div')<{ isStarted: boolean; isLast: boolean }>(({ theme, isStarted, isLast }) => ({
   position: 'relative',
-  width: 'calc(25% - 12px)',
+  width: '100%',
 
-  [theme.breakpoints.between('desktop_1024', 'desktop_1280')]: {
-    width: 'calc(24.35% - 12px)',
-  },
-
-  '&:before': {
+  '&::before': {
     // line
     zIndex: 0,
     content: '""',
     position: 'absolute',
-    left: 'calc(50% - 1px)',
-    width: 2,
-    height: 32,
-    background: theme.palette.colors.sky[1000],
+    display: 'inline-block',
+    left: 'calc(50% + 16px)',
+    height: 1,
+    backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[200],
   },
 
-  '&:after': {
+  ...(isLast && {
+    '&::before': {
+      content: 'none',
+    },
+  }),
+
+  '&::after': {
     // circle
     content: '""',
     position: 'absolute',
-    left: 'calc(50% - 6px)',
-    width: 12,
-    height: 12,
-    borderRadius: '50%',
-    border: `2px solid ${theme.palette.colors.sky[1000]}`,
-    background: isStarted ? theme.palette.colors.sky[1000] : theme.palette.isLight ? '#fff' : '#10191F',
+    display: 'inline-block',
+    left: 'calc(50% - 8px)',
+    width: 16,
+    height: 16,
+    backgroundImage: isStarted
+      ? theme.palette.isLight
+        ? 'url(/assets/svg/circle_outlined_filled.svg)'
+        : 'url(/assets/svg/circle_outlined_filled_dark.svg)'
+      : theme.palette.isLight
+      ? 'url(/assets/svg/circle_outlined.svg)'
+      : 'url(/assets/svg/circle_outlined_dark.svg)',
+    backgroundSize: 'cover',
+  },
+
+  [theme.breakpoints.up('desktop_1024')]: {
+    maxWidth: 291.333,
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    maxWidth: 303.667,
   },
 }));
