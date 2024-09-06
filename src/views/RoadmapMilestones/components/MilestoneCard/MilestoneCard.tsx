@@ -1,8 +1,7 @@
 import { styled } from '@mui/material';
-import { CustomButton } from '@ses/components/CustomButton/CustomButton';
-import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import Card from '@/components/Card/Card';
+import InternalLinkButton from '@/components/InternalLinkButton/InternalLinkButton';
 import type { Milestone } from '@/core/models/interfaces/roadmaps';
 import { usLocalizedNumber } from '@/core/utils/humanization';
 import { formatDateStringToQuarter, progressPercentage } from '../../utils';
@@ -13,8 +12,6 @@ interface MilestoneCardProps {
 }
 
 const MilestoneCard: FC<MilestoneCardProps> = ({ milestone }) => {
-  const router = useRouter();
-  const handleView = () => router.replace(`#${milestone.code}`);
   // percentage in value from 0 to 1
   const percentage = useMemo(() => progressPercentage(milestone.scope.progress), [milestone.scope.progress]);
 
@@ -32,8 +29,8 @@ const MilestoneCard: FC<MilestoneCardProps> = ({ milestone }) => {
           </Quarter>
         </QuarterBox>
       </Header>
-      <TitleContainer className="title-container">
-        <Title>{milestone.title}</Title>
+      <TitleContainer>
+        <Title className="overview-milestone-title">{milestone.title}</Title>
         <Description>{milestone.abstract}</Description>
       </TitleContainer>
       <Progress>
@@ -47,7 +44,9 @@ const MilestoneCard: FC<MilestoneCardProps> = ({ milestone }) => {
           <ProgressLabel progress={percentage}>{usLocalizedNumber(percentage * 100, 0)}%</ProgressLabel>
         </ProgressBarContainer>
       </Progress>
-      <ViewButton label="View" onClick={handleView} />
+      <ViewContainer>
+        <InternalLinkButton href={`#${milestone.code}`} buttonType="primary" label="View" />
+      </ViewContainer>
     </Container>
   );
 };
@@ -206,20 +205,14 @@ const ProgressLabel = styled('span')<{ progress: number }>(({ theme, progress })
   }),
 }));
 
-const ViewButton = styled(CustomButton)(({ theme }) => ({
-  width: '100%',
-  padding: '8px 23px',
-  borderColor: theme.palette.isLight ? '#D4D9E1' : '#405361',
-
-  '&:hover': {
-    borderColor: `${theme.palette.colors.sky[1000]}!important`,
-  },
-
-  [theme.breakpoints.up('tablet_768')]: {
-    padding: '2px 23px',
-  },
-
-  [theme.breakpoints.up('desktop_1024')]: {
-    padding: '7px 23px',
+const ViewContainer = styled('div')(() => ({
+  margin: '4px 8px 0px',
+  '& > a': {
+    width: '100%',
+    justifyContent: 'center',
+    padding: '4px 16px',
+    '&:hover': {
+      padding: '4px 16px',
+    },
   },
 }));
