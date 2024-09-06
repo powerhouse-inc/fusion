@@ -11,7 +11,6 @@ interface RoadmapTimelineProps {
 }
 
 const RoadmapTimeline: FC<RoadmapTimelineProps> = ({ milestones }) => {
-  milestones = [milestones[0]]; // here
   const up = milestones.length < 4 ? milestones : milestones.filter((_, i) => i % 2 === 0);
   const down = milestones.filter((_, i) => i % 2 !== 0);
   useRoadmapTimeline();
