@@ -1,7 +1,8 @@
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useThemeContext } from '@ses/core/context/ThemeContext';
 import lightTheme from '@ses/styles/theme/themes';
-import { useMemo, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import type { Filter } from '@/components/FiltersBundle/types';
 import { getBudgetsAnalytics } from '../../utils/utils';
@@ -15,64 +16,128 @@ import type {
 import type { Budget } from '@ses/core/models/interfaces/budget';
 import type { EChartsOption } from 'echarts-for-react';
 
+const DEFAULT_METRIC: AnalyticMetric = 'Budget';
+const DEFAULT_GRANULARITY: AnalyticGranularity = 'monthly';
+
 const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, allBudgets: Budget[]) => {
+  const router = useRouter();
   const { isLight } = useThemeContext();
-  const [isChecked, setIsChecked] = useState(true);
-  // series to be "hidden" in the chart
-  const [inactiveSeries, setInactiveSeries] = useState<string[]>([]);
-  const levelNumber = codePath.split('/').length;
-  const [selectedMetric, setSelectedMetric] = useState<AnalyticMetric>('Budget');
-  const [selectedGranularity, setSelectedGranularity] = useState<AnalyticGranularity>('monthly');
-  const refBreakDownChart = useRef<EChartsOption | null>(null);
   const isMobile = useMediaQuery(lightTheme.breakpoints.down('tablet_768'));
   const isTablet = useMediaQuery(lightTheme.breakpoints.between('tablet_768', 'desktop_1024'));
   const isDesktop1024 = useMediaQuery(lightTheme.breakpoints.between('desktop_1024', 'desktop_1280'));
   const isDesktop1280 = useMediaQuery(lightTheme.breakpoints.up('desktop_1280'));
+
+  const metricItems: SelectItem<AnalyticMetric>[] = useMemo(
+    () => [
+      {
+        label: 'Budget',
+        value: 'Budget',
+      },
+      {
+        label: 'Forecast',
+        value: 'Forecast',
+      },
+      {
+        label: 'Net Protocol Outflow',
+        value: 'ProtocolNetOutflow',
+        labelWhenSelected: isMobile ? 'Prtcol Outfl' : 'Protocol Outflow',
+      },
+      {
+        label: 'Net Expenses On-Chain',
+        value: 'PaymentsOnChain',
+        labelWhenSelected: 'Net On-Chain',
+      },
+      {
+        label: 'Actuals',
+        value: 'Actuals',
+      },
+    ],
+    [isMobile]
+  );
+
+  const granularityItems: SelectItem<AnalyticGranularity>[] = useMemo(
+    () => [
+      {
+        label: 'Monthly',
+        value: 'monthly',
+      },
+      {
+        label: 'Quarterly',
+        value: 'quarterly',
+      },
+      {
+        label: 'Annually',
+        value: 'annual',
+      },
+    ],
+    []
+  );
+
+  const [isChecked, setIsChecked] = useState(true);
+  // series to be "hidden" in the chart
+  const [inactiveSeries, setInactiveSeries] = useState<string[]>([]);
+  const levelNumber = codePath.split('/').length;
+
+  const [selectedMetric, setSelectedMetric] = useState<AnalyticMetric>(DEFAULT_METRIC);
+  const [selectedGranularity, setSelectedGranularity] = useState<AnalyticGranularity>(DEFAULT_GRANULARITY);
+
+  // update filters from url params
+  const [appliedUrlFilters, setAppliedUrlFilters] = useState<boolean>(false);
+  useEffect(() => {
+    if (appliedUrlFilters) return;
+    setAppliedUrlFilters(true); // prevent from applying the filters twice when the component is re-rendered
+    if (router.asPath.includes('#breakdown-chart')) {
+      const metricInURL = router.query.metric;
+      const granularityInURL = router.query.period;
+
+      // update metric if it is valid
+      if (
+        typeof metricInURL === 'string' &&
+        metricItems.map((item) => item.value).includes(metricInURL as AnalyticMetric)
+      ) {
+        setSelectedMetric(metricInURL as AnalyticMetric);
+      }
+
+      // update granularity if it is valid
+      if (
+        typeof granularityInURL === 'string' &&
+        granularityItems.map((item) => item.value).includes(granularityInURL as AnalyticGranularity)
+      ) {
+        setSelectedGranularity(granularityInURL as AnalyticGranularity);
+      }
+    }
+  }, [appliedUrlFilters, granularityItems, metricItems, router]);
+
+  const refBreakDownChart = useRef<EChartsOption | null>(null);
   const barWidth = getBarWidth(isMobile, isTablet, isDesktop1024, isDesktop1280, selectedGranularity);
 
-  const metricItems: SelectItem<AnalyticMetric>[] = [
-    {
-      label: 'Budget',
-      value: 'Budget',
+  const updateUrl = useCallback(
+    (metric: AnalyticMetric, granularity: AnalyticGranularity) => {
+      router
+        .replace(
+          {
+            query: {
+              path: router.query.path,
+              year,
+              metric,
+              period: granularity,
+            },
+            hash: 'breakdown-chart',
+          },
+          undefined,
+          {
+            shallow: true,
+          }
+        )
+        .catch((error) => {
+          if (!error.cancelled) {
+            throw error;
+          }
+        });
     },
-    {
-      label: 'Forecast',
-      value: 'Forecast',
-    },
-    {
-      label: 'Net Protocol Outflow',
-      value: 'ProtocolNetOutflow',
-      labelWhenSelected: isMobile ? 'Prtcol Outfl' : 'Protocol Outflow',
-    },
-    {
-      label: 'Net Expenses On-Chain',
-      value: 'PaymentsOnChain',
-      labelWhenSelected: 'Net On-Chain',
-    },
-    {
-      label: 'Actuals',
-      value: 'Actuals',
-    },
-  ];
+    [router, year]
+  );
 
-  const granularityItems = [
-    {
-      label: 'Monthly',
-      value: 'monthly',
-    },
-    {
-      label: 'Quarterly',
-      value: 'quarterly',
-    },
-    {
-      label: 'Annually',
-      value: 'annual',
-    },
-  ];
-
-  const handleMetricChange = (value: AnalyticMetric) => {
-    setSelectedMetric(value);
-  };
   const handleChangeSwitch = () => {
     if (!isChecked && inactiveSeries.length > 0) {
       setInactiveSeries([]);
@@ -81,16 +146,8 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
     }
     setIsChecked(!isChecked);
   };
-  const handleGranularityChange = (value: AnalyticGranularity) => {
-    setSelectedGranularity(value);
-  };
-  const barBorderRadius = isMobile ? 2 : 4;
 
-  const isDisabled = selectedMetric === 'Budget' && selectedGranularity === 'monthly';
-  const handleResetFilterBreakDownChart = () => {
-    setSelectedMetric('Budget');
-    setSelectedGranularity('monthly');
-  };
+  const barBorderRadius = isMobile ? 2 : 4;
 
   const { data: budgetsAnalytics, isLoading } = useSWRImmutable(
     [selectedGranularity, year, codePath, codePath.split('/').length + 1, budgets],
@@ -162,6 +219,7 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
       selected: selectedMetric,
       multiple: false,
       onChange: (value: string | number | (string | number)[]) => {
+        updateUrl(value as AnalyticMetric, selectedGranularity);
         setSelectedMetric(value as AnalyticMetric);
       },
       options: metricItems,
@@ -178,6 +236,7 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
       selected: selectedGranularity,
       multiple: false,
       onChange: (value: string | number | (string | number)[]) => {
+        updateUrl(selectedMetric, value as AnalyticGranularity);
         setSelectedGranularity(value as AnalyticGranularity);
       },
       options: granularityItems,
@@ -189,10 +248,11 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
     },
   ];
 
-  const canReset = selectedGranularity !== 'monthly' || selectedMetric !== 'Budget';
+  const canReset = selectedGranularity !== DEFAULT_GRANULARITY || selectedMetric !== DEFAULT_METRIC;
   const onReset = () => {
-    setSelectedMetric('Budget');
-    setSelectedGranularity('monthly');
+    setSelectedMetric(DEFAULT_METRIC);
+    setSelectedGranularity(DEFAULT_GRANULARITY);
+    updateUrl(DEFAULT_METRIC, DEFAULT_GRANULARITY);
   };
   // Show the toggle and scroll in the legend of the chart
   const showScrollAndToggle = isMobile ? series.length > 6 : series.length > 8;
@@ -202,16 +262,8 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
     isLoading,
     selectedMetric,
     selectedGranularity,
-    handleMetricChange,
-    handleGranularityChange,
-    isDisabled,
-    handleResetFilterBreakDownChart,
     handleToggleSeries,
     series,
-    isMobile,
-    isTablet,
-    isDesktop1024,
-    isLight,
     refBreakDownChart,
     isChecked,
     handleChangeSwitch,
