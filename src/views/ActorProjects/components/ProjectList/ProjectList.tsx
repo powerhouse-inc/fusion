@@ -17,7 +17,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, isSupportedProjects
 
     {projects.length === 0 &&
       (isSupportedProjects ? (
-        <NoResults>No results found</NoResults>
+        <NoResults>No Result Found</NoResults>
       ) : (
         <TableEmptyState description="There are no Projects available with this combination of filters." />
       ))}
@@ -33,14 +33,14 @@ const List = styled('div')({
 });
 
 const NoResults = styled('div')(({ theme }) => ({
-  color: '#546978',
+  color: theme.palette.isLight ? theme.palette.colors.gray[500] : theme.palette.colors.gray[600],
   fontSize: 18,
-  fontWeight: 500,
+  fontWeight: 700,
   textAlign: 'center',
-  fontStyle: 'italic',
+  fontFamily: 'Inter, sans-serif',
   margin: '32px 0',
 
   [theme.breakpoints.up('tablet_768')]: {
-    fontSize: 20,
+    fontSize: 32,
   },
 }));
