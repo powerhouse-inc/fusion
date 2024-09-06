@@ -58,7 +58,7 @@ jobs:
             git checkout $BRANCH
             # Check if the latest commit from the upstream is already in the forked repo
             if [ -z "$(git log | grep $UPSTREAM_SHA_SHORT)" ]; then
-              git merge upstream/$BRANCH --no-edit
+              git merge -X theirs upstream/$BRANCH --no-edit
               git push origin $BRANCH
               echo "Branch $BRANCH synced"
             else
