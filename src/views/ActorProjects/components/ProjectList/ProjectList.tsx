@@ -2,6 +2,7 @@ import { styled } from '@mui/material';
 import React from 'react';
 import TableEmptyState from '@/components/TableEmptyState/TableEmptyState';
 import ProjectCard from '../ProjectCard/ProjectCard';
+
 import type { Project, SupportedProjects } from '@ses/core/models/interfaces/projects';
 
 interface ProjectListProps {
