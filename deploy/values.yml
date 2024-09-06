@@ -1,0 +1,92 @@
+replicaCount: ${REPLICA_COUNT}
+service:
+  enabled: true
+  name: ${APP_NAME}
+
+  port: ${PORT}
+  type: ClusterIP
+  containerPort: ${PORT}
+  tls:
+    enabled: true
+    issuerName: cloudflare
+
+image:
+  repository: ${ECR_REGISTRY}/${ECR_REPO_NAME}
+  tag: ${IMAGE_TAG}
+  pullPolicy: Always
+
+serviceAccount:
+  create: false
+
+ingress:
+  enabled: true
+  hosts:
+    - ${ENDPOINT}
+  annotations:
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+
+httpBasicAuth:
+  enabled: false
+
+# If enabled will create Traefik Middleware and apply to Ingress
+# to redirect http to https and www to non-www
+httpWwwRedirect:
+  enabled: false
+
+podAnnotations:
+  reloader.stakater.com/auto: "true"
+
+resources:
+  limits:
+    cpu: 750m
+    memory: 1.5Gi
+  requests:
+    cpu: 500m
+    memory: 768Mi
+
+env:
+  NEXT_PUBLIC_ENVIRONMENT:
+    type: kv
+    value: ${NEXT_PUBLIC_ENVIRONMENT}
+  ENABLE_SITEMAP:
+    type: kv
+    value: "true"
+  NEXT_PUBLIC_GRAPHQL_ENDPOINT:
+    type: parameterStore
+    name: next-public-graphql-endpoint
+    parameter_name: /eks/${CLUSTER_NAME}/${APP_NAME}/next-public-graphql-endpoint
+  NEXT_PUBLIC_BASE_URL:
+    type: parameterStore
+    name: next-public-base-url
+    parameter_name: /eks/${CLUSTER_NAME}/${APP_NAME}/next-public-base-url
+  NEXT_PUBLIC_GA_TRACKING_ID:
+    type: parameterStore
+    name: next-public-ga-tracking-id
+    parameter_name: /eks/${CLUSTER_NAME}/${APP_NAME}/next-public-ga-tracking-id
+  STORYBOOK_FIGMA_ACCESS_TOKEN:
+    type: parameterStore
+    name: storybook-figma-access-token
+    parameter_name: /eks/${CLUSTER_NAME}/${APP_NAME}/storybook-figma-access-token
+
+externalSecrets:
+  clusterSecretStoreName: ${CLUSTER_NAME}
+
+livenessProbe:
+  httpGet:
+    port: ${PORT}
+  initialDelaySeconds: 5
+  periodSeconds: 30
+  timeoutSeconds: 10
+readinessProbe:
+  httpGet:
+    port: ${PORT}
+  initialDelaySeconds: 5
+  periodSeconds: 30
+  timeoutSeconds: 10
+
+autoscaling:
+  enabled: true
+  minReplicas: ${AUTOSCALING_MIN_REPLICAS}
+  maxReplicas: ${AUTOSCALING_MAX_REPLICAS}
+  targetCPUUtilizationPercentage: 85
+  targetMemoryUtilizationPercentage: 85
