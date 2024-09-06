@@ -2,12 +2,11 @@ import { Box, styled } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import StatusProgressChip from '@/components/StatusProgressChip/StatusProgressChip';
-import type { Maybe } from '@/core/models/interfaces/generics';
-import type { DeliverableSetStatus, ElementWithStatus } from '@/core/models/interfaces/roadmaps';
+import type { ProgressStatus } from '@/core/models/interfaces/types';
 import type { FC } from 'react';
 
 interface Props {
-  status: ElementWithStatus['status'];
+  status: ProgressStatus;
   isActive: boolean;
   count?: string;
 }
@@ -15,7 +14,7 @@ interface Props {
 const ProjectStatusChipFilter: FC<Props> = ({ status, isActive, count = '0' }) => (
   <BoxStyle>
     <Title isActive={isActive}>{count}</Title>
-    <StatusProgressChip status={status as Maybe<DeliverableSetStatus>} />
+    <StatusProgressChip status={status} />
   </BoxStyle>
 );
 

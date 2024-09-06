@@ -1,5 +1,5 @@
 import { createThemeModeVariants } from '@ses/core/utils/storybook/factories';
-import { CommonDefaultMilestone } from '@/views/RoadmapMilestones/staticData';
+import { exampleMilestone } from '@/views/RoadmapMilestones/staticData';
 import MilestoneCard from './MilestoneCard';
 import type { Meta } from '@storybook/react';
 import type { FigmaParams } from 'sb-figma-comparator';
@@ -20,7 +20,7 @@ export default meta;
 const variantsArgs = [
   {
     slug: 'default',
-    milestoneData: { ...CommonDefaultMilestone },
+    milestoneData: { ...exampleMilestone },
   },
 ];
 

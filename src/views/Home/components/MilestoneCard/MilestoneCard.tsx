@@ -6,12 +6,11 @@ import AvatarPlaceholderIcon from 'public/assets/svg/avatar_placeholder.svg';
 import Card from '@/components/Card/Card';
 import InternalLinkButton from '@/components/InternalLinkButton/InternalLinkButton';
 
+import ProgressWithStatus from '@/components/ProgressWithStatus/ProgressWithStatus';
 import SESTooltip from '@/components/SESTooltip/SESTooltip';
-import StatusProgressChip from '@/components/StatusProgressChip/StatusProgressChip';
 import { siteRoutes } from '@/config/routes';
 
 import type { Milestone } from '@/core/models/interfaces/roadmaps';
-import { usLocalizedNumber } from '@/core/utils/humanization';
 import { progressPercentage } from '@/views/RoadmapMilestones/utils';
 
 import type { Theme } from '@mui/material';
@@ -20,10 +19,6 @@ import type { FC } from 'react';
 interface MilestoneCardProps {
   slug: string;
   milestoneData: Milestone;
-}
-
-interface ElementWithProgress {
-  progress: number;
 }
 
 interface ElementWithTotal {
@@ -50,6 +45,7 @@ const MilestoneCard: FC<MilestoneCardProps> = ({ slug, milestoneData }) => {
           <SequenceCode>{milestoneData.sequenceCode}</SequenceCode>
           <Code>{milestoneData.code}</Code>
         </CodesContainer>
+
         <StyledInternalLinkButton
           href={`${siteRoutes.roadmapMilestones(slug)}#${milestoneData.code}`}
           label="Details"
@@ -58,18 +54,10 @@ const MilestoneCard: FC<MilestoneCardProps> = ({ slug, milestoneData }) => {
       <TitleContainer className="title-container">
         <Title>{milestoneData.title}</Title>
       </TitleContainer>
-      <Progress>
-        <ProgressTitleWrapper>
-          <ProgressTitleContainer>
-            <ProgressTitle>Progress</ProgressTitle>
-          </ProgressTitleContainer>
-          <StatusProgressChip status={milestoneData.scope?.status} />
-        </ProgressTitleWrapper>
-        <ProgressBarContainer>
-          <ProgressBar progress={progress} />
-          <ProgressLabel progress={progress}>{usLocalizedNumber(progress * 100, 0)}%</ProgressLabel>
-        </ProgressBarContainer>
-      </Progress>
+      <ProgressContainer>
+        <ProgressWithStatus progress={progress} status={milestoneData.scope?.status} />
+      </ProgressContainer>
+
       <CoordinatorsContainer>
         <CoordinatorsTitle>Coordinators</CoordinatorsTitle>
         <Coordinators>
@@ -231,76 +219,9 @@ const Title = styled('h4')(({ theme }) => ({
   textOverflow: 'ellipsis',
 }));
 
-const Progress = styled('div')(({ theme }) => ({
+const ProgressContainer = styled('div')(() => ({
   display: 'flex',
-  flexDirection: 'column',
-  gap: 8,
   margin: '4px 8px 0px',
-  padding: 8,
-  border: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.charcoal[800]}`,
-  borderRadius: 12,
-  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.charcoal[900],
-}));
-
-const ProgressTitleWrapper = styled('div')(() => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-}));
-
-const ProgressTitleContainer = styled('div')(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: 2.67,
-}));
-
-const ProgressTitle = styled('h4')(({ theme }) => ({
-  margin: 0,
-  fontWeight: 500,
-  fontSize: 12,
-  lineHeight: '18px',
-  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[600],
-}));
-
-const ProgressBarContainer = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: 4,
-  backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.slate[600],
-}));
-
-const ProgressBar = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'progress',
-})<ElementWithProgress>(({ theme, progress }) => ({
-  width: `max(${progress * 100}%, ${progress === 0 ? 0 : 0.5}px)`,
-  height: 16,
-  borderRadius: `4px ${progress === 1 ? '4px 4px' : '0px 0px'} 4px`,
-
-  ...(progress === 1 && {
-    backgroundColor: theme.palette.isLight ? theme.palette.colors.green[700] : theme.palette.colors.green[900],
-  }),
-
-  ...(progress !== 1 && {
-    backgroundColor: theme.palette.isLight ? theme.palette.colors.blue[700] : theme.palette.colors.blue[900],
-  }),
-}));
-
-const ProgressLabel = styled('span', {
-  shouldForwardProp: (prop) => prop !== 'progress',
-})<ElementWithProgress>(({ theme, progress }) => ({
-  position: 'absolute',
-  top: 0,
-  right: 8,
-  fontWeight: 700,
-  fontSize: 12,
-  lineHeight: '16px',
-
-  ...(progress === 1 && {
-    color: theme.palette.colors.slate[50],
-  }),
-
-  ...(progress !== 1 && {
-    color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.charcoal[600],
-  }),
 }));
 
 const CoordinatorsContainer = styled('div')(({ theme }) => ({

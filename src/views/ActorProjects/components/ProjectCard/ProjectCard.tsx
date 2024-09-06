@@ -10,14 +10,13 @@ import {
 } from '@ses/core/models/interfaces/projects';
 import Image from 'next/image';
 import React, { useCallback, useMemo, useState } from 'react';
+import ProgressWithStatus from '@/components/ProgressWithStatus/ProgressWithStatus';
 import type { OwnerRef } from '@/core/models/interfaces/roadmaps';
+import type { ProgressStatus } from '@/core/models/interfaces/types';
 import BudgetTypeBadge from '../BudgetTypeBadge/BudgetTypeBadge';
 import DeliverableCard from '../DeliverableCard/DeliverableCard';
 import DeliverableViewModeToggle from '../DeliverableViewModeToggle/DeliverableViewModeToggle';
-import ProjectOwnerChip from '../ProjectOwnerChip/ProjectOwnerChip';
-import ProjectProgress from '../ProjectProgress/ProjectProgress';
-import ProjectStatusChip from '../ProjectStatusChip/ProjectStatusChip';
-import SupportedTeamsAvatarGroup from '../SupportedTeamsAvatarGroup/SupportedTeamsAvatarGroup';
+import ProjectParticipants from '../ProjectParticipants/ProjectParticipants';
 import ViewAllButton from '../ViewAllButton/ViewAllButton';
 import type { Theme } from '@mui/material';
 
@@ -70,15 +69,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     [allDeliverables, project]
   );
 
-  const statusSection = (
-    <StatusData showDeliverablesBelow={showDeliverablesBelow}>
-      <ProjectStatusChip status={project.status} />
-      <ProgressContainer>
-        <ProjectProgress percentage={project.progress?.value ?? 0} />
-      </ProgressContainer>
-    </StatusData>
-  );
-
   const deliverables = showAllDeliverables
     ? allDeliverables
     : allDeliverables.slice(0, deliverableViewMode === 'detailed' && isUpDesktop1280 ? 6 : 4);
@@ -106,28 +96,27 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                 </TitleContainer>
                 <BudgetTypeBadge budgetType={project.budgetType} />
               </NameContainer>
-
-              <Description>{project.abstract}</Description>
-
-              <DataContainer showDeliverablesBelow={showDeliverablesBelow}>
-                {(!isUpDesktop1280 || showDeliverablesBelow) && statusSection}
-
-                {isSupportedProjects(project) && (
-                  <ViewEcosystem
-                    href={siteRoutes.ecosystemActorAbout(project.projectOwner.code ?? '')}
-                    buttonType={ButtonType.Default}
-                    label="View Ecosystem Actor"
+              <ContainerStatusRoleDescription>
+                <ContainerDescription>
+                  <Description>{project.abstract}</Description>
+                </ContainerDescription>
+                <ContainerStatusRole>
+                  <ProgressWithStatus
+                    progress={project.progress?.value ?? 0}
+                    status={project.status as unknown as ProgressStatus}
                   />
-                )}
-              </DataContainer>
-              <ParticipantsContainer>
-                <ProjectOwnerChip owner={isProject(project) ? project.owner : project.projectOwner} />
-                {supporters.length > 0 && <SupportedTeamsAvatarGroup supporters={supporters} />}
-              </ParticipantsContainer>
+
+                  {isSupportedProjects(project) && (
+                    <ViewEcosystem
+                      href={siteRoutes.ecosystemActorAbout(project.projectOwner.code ?? '')}
+                      buttonType={ButtonType.Default}
+                      label="View Ecosystem Actor"
+                    />
+                  )}
+                  <ProjectParticipants project={project} supporters={supporters} isShowName={isUpDesktop1280} />
+                </ContainerStatusRole>
+              </ContainerStatusRoleDescription>
             </ProjectHeader>
-            <LeftColumn showDeliverablesBelow={showDeliverablesBelow}>
-              {isUpDesktop1280 && !showDeliverablesBelow && statusSection}
-            </LeftColumn>
           </Row>
         </ContainerImageProjectHeader>
         <RightColumn>
@@ -214,7 +203,7 @@ const ProjectHeader = styled('div')(({ theme }) => ({
   width: '100%',
   flexDirection: 'column',
   gap: 8,
-
+  height: '100%',
   [theme.breakpoints.up('tablet_768')]: {
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -268,11 +257,11 @@ const ProjectTitle = styled('span')(({ theme }) => ({
   },
 }));
 
-const ParticipantsContainer = styled('div')({
+const ContainerStatusRoleDescription = styled('div')({
   display: 'flex',
-  alignItems: 'center',
-  gap: 8,
-  height: 66,
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  height: '100%',
 });
 
 const Row = styled('div')<{ showDeliverablesBelow: boolean }>(({ theme, showDeliverablesBelow }) => ({
@@ -281,13 +270,22 @@ const Row = styled('div')<{ showDeliverablesBelow: boolean }>(({ theme, showDeli
   borderRadius: 12,
   marginTop: 16,
   padding: 8,
+
   backgroundColor: theme.palette.isLight ? '#FFF' : theme.palette.colors.charcoal[900],
+
+  border: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[300] : theme.palette.colors.charcoal[800]}`,
+  boxShadow: `${theme.palette.isLight ? theme.fusionShadows.modules : 'none'}`,
+
   gap: 24,
   width: '100%',
+  minHeight: 374,
+  height: 374,
 
   [theme.breakpoints.up('tablet_768')]: {
     flex: 1,
     marginTop: 0,
+    minHeight: 'revert',
+    height: 'revert',
   },
   [theme.breakpoints.up('desktop_1024')]: {
     padding: '8px 16px 16px',
@@ -305,39 +303,6 @@ const Row = styled('div')<{ showDeliverablesBelow: boolean }>(({ theme, showDeli
   }),
 }));
 
-const LeftColumn = styled('div')<{ showDeliverablesBelow: boolean }>(({ theme, showDeliverablesBelow }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  width: '100%',
-  maxWidth: '100%',
-
-  [theme.breakpoints.up('tablet_768')]: {
-    flexDirection: 'row',
-    gap: 16,
-  },
-
-  [theme.breakpoints.up('desktop_1024')]: {
-    gap: 24,
-  },
-
-  ...(showDeliverablesBelow
-    ? {
-        [theme.breakpoints.up('desktop_1440')]: {
-          gap: 64,
-        },
-      }
-    : {
-        [theme.breakpoints.up('desktop_1280')]: {
-          flexDirection: 'column',
-          flex: 0.632,
-        },
-
-        [theme.breakpoints.up('desktop_1440')]: {
-          flex: 0.639,
-        },
-      }),
-}));
-
 const RightColumn = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -352,7 +317,7 @@ const RightColumn = styled('div')(({ theme }) => ({
 const ImageContainer = styled('div')<{ isBigger: boolean }>(({ theme, isBigger }) => ({
   position: 'relative',
   width: '100%',
-  height: 175,
+  height: 200,
   display: 'flex',
 
   borderRadius: 6,
@@ -384,45 +349,6 @@ const ImageContainer = styled('div')<{ isBigger: boolean }>(({ theme, isBigger }
   },
 }));
 
-const DataContainer = styled('div')<{ showDeliverablesBelow: boolean }>(({ theme, showDeliverablesBelow }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 16,
-  marginTop: 16,
-  height: 64,
-  [theme.breakpoints.up('tablet_768')]: {
-    alignSelf: 'stretch',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    flex: 1,
-    marginTop: 0,
-  },
-
-  [theme.breakpoints.up('desktop_1280')]: {
-    justifyContent: showDeliverablesBelow ? 'center' : 'flex-start',
-  },
-}));
-
-const StatusData = styled('div')<{ showDeliverablesBelow: boolean }>(({ theme, showDeliverablesBelow }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: 16,
-  width: '100%',
-  justifyContent: 'space-between',
-
-  ...(showDeliverablesBelow && {
-    [theme.breakpoints.up('desktop_1280')]: {
-      justifyContent: 'normal',
-      gap: 64,
-    },
-  }),
-}));
-
-const ProgressContainer = styled('div')({
-  maxWidth: 256,
-  width: '100%',
-});
-
 const Description = styled('p')(({ theme }) => ({
   display: '-webkit-box',
   '-webkit-box-orient': 'vertical',
@@ -432,15 +358,11 @@ const Description = styled('p')(({ theme }) => ({
   textOverflow: 'ellipsis',
   alignSelf: 'stretch',
   margin: 0,
-  color: theme.palette.isLight ? '#231536' : '#D2D4EF',
+  color: theme.palette.isLight ? theme.palette.colors.gray[800] : theme.palette.colors.gray[600],
   fontSize: 14,
-  lineHeight: 'normal',
+  fontWeight: 400,
+  lineHeight: '22px',
   height: 'fit-content',
-
-  [theme.breakpoints.up('tablet_768')]: {
-    fontSize: 16,
-    lineHeight: '22px',
-  },
 }));
 
 const DeliverableTitleContainer = styled('div')(() => ({
@@ -564,3 +486,11 @@ const ViewEcosystem = styled(LinkButton)(({ theme }) => ({
     border: `1px solid ${theme.palette.isLight ? '#ECF1F3' : '#1E2C37'}}`,
   },
 }));
+
+const ContainerStatusRole = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 8,
+}));
+
+const ContainerDescription = styled('div')(() => ({}));

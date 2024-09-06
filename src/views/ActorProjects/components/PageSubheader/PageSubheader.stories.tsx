@@ -6,10 +6,10 @@ import { StatusChip } from '@/components/StatusChip/StatusChip';
 import { DeliverableBuilder } from '@/core/businessLogic/builders/actors/deliverableBuilder';
 import { ProjectBuilder } from '@/core/businessLogic/builders/actors/projectBuilder';
 import { DeliverableStatus } from '@/core/models/interfaces/deliverables';
-import { OwnerType, ProjectStatus } from '@/core/models/interfaces/projects';
-import type { DeliverableSetStatus } from '@/core/models/interfaces/roadmaps';
-import type { TeamStatus } from '@/core/models/interfaces/types';
+import { OwnerType } from '@/core/models/interfaces/projects';
+import { ProgressStatus, type TeamStatus } from '@/core/models/interfaces/types';
 import CustomItemAll from '@/views/EcosystemActorsIndex/components/ActorCustomItem/CustomItemAll';
+
 import ProjectStatusChipFilter from '../ProjectFilters/ProjectStatusChipFilter';
 import PageSubheader from './PageSubheader';
 import type { Meta } from '@storybook/react';
@@ -30,7 +30,7 @@ const projectsData = [
     .withAbstract(
       "Protocol Expense Accounting aims to provide a comprehensive, detailed, and up-to-date view of the Maker Protocol's operational expenses. This information can help Maker Protocol stakeholders, including MKR holders and contributors, understand how MakerDAO spends funds."
     )
-    .withStatus(ProjectStatus.INPROGRESS)
+    .withStatus(ProgressStatus.IN_PROGRESS)
     .withProgress(0.5)
     .addDeliverable(
       new DeliverableBuilder()
@@ -158,24 +158,24 @@ const projectsData = [
 
 const statuses = [
   {
-    value: ProjectStatus.TODO,
+    value: ProgressStatus.TODO,
     label: 'To Do',
     extra: {
-      count: `${projectsData.filter((project) => project.status === ProjectStatus.TODO).length}`,
+      count: `${projectsData.filter((project) => project.status === ProgressStatus.TODO).length}`,
     },
   },
   {
-    value: ProjectStatus.INPROGRESS,
+    value: ProgressStatus.IN_PROGRESS,
     label: 'In Progress',
     extra: {
-      count: `${projectsData.filter((project) => project.status === ProjectStatus.INPROGRESS).length}`,
+      count: `${projectsData.filter((project) => project.status === ProgressStatus.IN_PROGRESS).length}`,
     },
   },
   {
-    value: ProjectStatus.FINISHED,
+    value: ProgressStatus.FINISHED,
     label: 'Delivered',
     extra: {
-      count: `${projectsData.filter((project) => project.status === ProjectStatus.FINISHED).length}`,
+      count: `${projectsData.filter((project) => project.status === ProgressStatus.FINISHED).length}`,
     },
   },
 ] as SelectOption[];
@@ -192,7 +192,7 @@ const filters: Filter[] = [
 
     customOptionsRender: (option: SelectOption, isActive: boolean) => (
       <ProjectStatusChipFilter
-        status={option.value as DeliverableSetStatus}
+        status={option.value as ProgressStatus}
         count={option.extra?.count}
         isActive={isActive}
       />

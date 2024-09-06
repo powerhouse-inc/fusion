@@ -12,6 +12,7 @@ export const GETCoreUnits = gql`
       status
       image
       category
+      type
       cuMip {
         mipStatus
         mipUrl
