@@ -78,6 +78,7 @@ jobs:
               "routing_key": "${{ secrets.SYNC_FORK_PD_ROUTING_KEY }}",
               "event_action": "trigger",
               "dedup_key": "${{ github.repository }}",
+              "dedup_key": "${{ github.repository }}",
               "payload": {
                 "summary": "Sync fork failed for ${{ github.repository }}",
                 "timestamp": "'$(date -u +"%Y-%m-%dT%H:%M:%S")'",
