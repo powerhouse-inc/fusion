@@ -166,7 +166,7 @@ const Description = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
-  margin: 0,
+  marginTop: 8,
   fontSize: 14,
   fontWeight: 400,
   lineHeight: '22px',
@@ -176,8 +176,9 @@ const Description = styled('div')(({ theme }) => ({
     margin: 0,
   },
 
-  [theme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('desktop_1280')]: {
     fontSize: 16,
+    lineHeight: '24px',
   },
 }));
 
@@ -185,6 +186,6 @@ const KeyBox = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  paddingTop: 9,
+  paddingTop: 16,
   marginTop: 'auto',
 });

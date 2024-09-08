@@ -35,8 +35,8 @@ const KeyResults: React.FC<KeyResultsProps> = ({
 
   const componentHeight = useMemo(() => {
     let height: number | 'auto' = 'auto';
-    // padding top + padding bottom + title + gap
-    const NON_VARIABLE_HEIGHTS = 17 + 8 + 22 + 8;
+    // padding bottom + title + gap
+    const NON_VARIABLE_HEIGHTS = 8 + 22 + 8;
 
     // calculate the height of the key results based on which card
     // on the row has more items
@@ -84,7 +84,7 @@ const KeyResults: React.FC<KeyResultsProps> = ({
                     </KeyLink>
                   ) : (
                     <NoKeyLink>
-                      <span>{keyResult.title}</span> <Todo>TODO</Todo>
+                      <span>{keyResult.title}</span> <Todo>Todo</Todo>
                     </NoKeyLink>
                   )}
                 </ResultItem>
@@ -108,27 +108,27 @@ const ResultsContainer = styled('div')<{
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  paddingTop: 16,
+  marginTop: 16,
   gap: 8,
+  borderRadius: 12,
+  border: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.charcoal[800]}`,
+  background: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.charcoal[900],
+  overflow: 'hidden',
+  paddingBottom: 8,
 
   [theme.breakpoints.up('tablet_768')]: {
     // the height should be applicable from > 768 only!
     height,
   },
-
-  [theme.breakpoints.between('tablet_768', 'desktop_1280')]: {
-    paddingBottom: 8,
-  },
 }));
 
 const Title = styled('h4')(({ theme }) => ({
   margin: 0,
-  fontSize: 16,
+  fontSize: 12,
   fontWeight: 500,
   lineHeight: '18px',
-  color: theme.palette.isLight ? '#231536' : '#D2D4EF',
-  padding: '2px 8px',
-  background: theme.palette.isLight ? 'rgba(236, 239, 249, 0.50)' : 'rgba(35, 21, 54, 0.30)',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[600],
+  padding: '4px 8px 0px',
 }));
 
 const NoKeyContainer = styled('div')(({ theme }) => ({
@@ -159,8 +159,8 @@ const ResultItem = styled('li')(() => ({
 
 const NoKeyLink = styled('div')(({ theme }) => ({
   display: 'flex',
-  color: theme.palette.isLight ? '#666' : '#D2D4EF',
-  fontSize: 16,
+  color: theme.palette.isLight ? theme.palette.colors.gray[500] : theme.palette.colors.gray[600],
+  fontSize: 14,
   fontWeight: 500,
   lineHeight: '18px',
   paddingLeft: 22,
@@ -188,21 +188,22 @@ const NoKeyLink = styled('div')(({ theme }) => ({
     width: 6,
     height: 6,
     borderRadius: '50%',
-    background: theme.palette.isLight ? '#666' : '#D2D4EF',
+    background: theme.palette.colors.gray[500],
   },
 }));
 
 const Todo = styled('div')(({ theme }) => ({
   fontSize: 12,
-  fontWeight: 700,
-  background: theme.palette.isLight ? '#f7f7f7' : 'rgba(72, 82, 101, 0.40)',
-  color: theme.palette.isLight ? '#666' : '#FCFCFC',
-  padding: '2px 4px',
-  borderRadius: 4,
+  fontWeight: 500,
+  lineHeight: '18px',
+  background: theme.palette.isLight ? theme.palette.colors.slate[50] : 'rgba(72, 82, 101, 0.40)',
+  color: theme.palette.isLight ? theme.palette.colors.gray[500] : theme.palette.colors.gray[50],
+  padding: '0px 8px',
+  borderRadius: 6,
 }));
 
 const KeyLink = styled(ExternalLink)(({ theme }) => ({
-  fontSize: 16,
+  fontSize: 14,
   fontWeight: 500,
   lineHeight: '18px',
   paddingLeft: 22,
