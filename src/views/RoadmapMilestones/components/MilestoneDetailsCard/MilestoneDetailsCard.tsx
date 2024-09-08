@@ -44,9 +44,7 @@ const MilestoneDetailsCard: React.FC<MilestoneDetailsCardProps> = ({ milestone }
       <MilestoneContent>
         <CSSMediaQuery min="desktop_1024">{titleAndDescription}</CSSMediaQuery>
 
-        <DeliverablesContainer>
-          <DeliverablesSection deliverables={milestone.scope?.deliverables} />
-        </DeliverablesContainer>
+        <DeliverablesSection deliverables={milestone.scope?.deliverables} />
       </MilestoneContent>
     </Card>
   );
@@ -209,24 +207,21 @@ const Code = styled('div')(({ theme }) => ({
 }));
 
 const MilestoneContent = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  marginTop: 16,
+
   [theme.breakpoints.up('desktop_1024')]: {
-    paddingTop: 20,
-    maxWidth: 'calc(100% - 306px - 24px)',
+    marginTop: 20,
+    maxWidth: 'calc(100% - 304px - 24px)',
+    gap: 24,
   },
 
   [theme.breakpoints.up('desktop_1280')]: {
-    maxWidth: 'calc(100% - 383px - 48px)',
-  },
-}));
-
-const DeliverablesContainer = styled('div')(({ theme }) => ({
-  marginTop: 40,
-
-  [theme.breakpoints.up('tablet_768')]: {
-    marginTop: 56,
+    maxWidth: 'calc(100% - 379px - 32px)',
   },
 
-  [theme.breakpoints.up('desktop_1024')]: {
-    marginTop: 32,
+  [theme.breakpoints.up('desktop_1440')]: {
+    maxWidth: 'calc(100% - 416px - 32px)',
   },
 }));
