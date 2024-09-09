@@ -15,6 +15,7 @@ const FirstSectionPictureSkeleton = () => (
     <Circle variant="circular" animation={false} />
   </Container>
 );
+
 export default FirstSectionPictureSkeleton;
 
 const Container = styled(Card)(({ theme }) => ({
