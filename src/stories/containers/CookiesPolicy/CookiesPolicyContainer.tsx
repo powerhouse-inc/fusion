@@ -1,12 +1,11 @@
-import styled from '@emotion/styled';
-import React, { useCallback } from 'react';
-import lightTheme from '../../../../styles/theme/themes';
+import { styled } from '@mui/material';
+import { useCallback } from 'react';
+import Card from '@/components/Card/Card';
 import { useCookiesContextTracking } from '../../../core/context/CookiesContext';
-import { useThemeContext } from '../../../core/context/ThemeContext';
 import { CustomButton } from '../../components/CustomButton/CustomButton';
+import type { FC } from 'react';
 
-const CookiesPolicyContainer = () => {
-  const { isLight } = useThemeContext();
+const CookiesPolicyContainer: FC = () => {
   const { isShowBanner, setIsShowBanner } = useCookiesContextTracking();
 
   const handlePolicyBanner = useCallback(() => {
@@ -15,12 +14,12 @@ const CookiesPolicyContainer = () => {
   }, [isShowBanner, setIsShowBanner]);
 
   return (
-    <Container isLight={isLight}>
-      <ContainerData isLight={isLight}>
-        <Title isLight={isLight}>Cookies Policy</Title>
-        <Description isLight={isLight}>Use of Cookies and Similar Technologies</Description>
+    <Container>
+      <ContainerData>
+        <Title>Cookies Policy</Title>
+        <Description>Use of Cookies and Similar Technologies</Description>
         <div>
-          <ParagraphStyle isLight={isLight}>
+          <ParagraphStyle>
             The Site is using cookies. Cookies are small text files that are placed on your computer by websites that
             you visit. They are widely used in order to make websites work, or work more efficiently, as well as to
             provide information to the owners of the site. Cookies are typically stored on your computer´s hard
@@ -30,23 +29,21 @@ const CookiesPolicyContainer = () => {
             can improve the quality of your experience on the Site by recognizing and delivering more of the most
             desired features and information, as well as by resolving access difficulties.
           </ParagraphStyle>
-          <ParagraphStyle isLight={isLight}>
+          <ParagraphStyle>
             We use third party service providers, to assist us in better understanding the use of our Site. Our service
             providers will place cookies on the hard drive of your computer (or use similar technologies) and will
             receive information that we select that will educate us on such things as how visitors navigate around our
             Site. This information is aggregated to provide statistical data about our users browsing actions and
             patterns, and does not personally identify individuals. This information may include:
           </ParagraphStyle>
-          <ParagraphStyle isLight={isLight}>
-            Computer or mobile device information, Website usage information, such as:
-          </ParagraphStyle>
-          <ContainerUl isLight={isLight}>
-            <ListItem isLight={isLight}>Page views,</ListItem>
-            <ListItem isLight={isLight}>Button clicks,</ListItem>
-            <ListItem isLight={isLight}>Input form changes (without the values being entered),</ListItem>
-            <ListItem isLight={isLight}>Errors.</ListItem>
+          <ParagraphStyle>Computer or mobile device information, Website usage information, such as:</ParagraphStyle>
+          <ContainerUl>
+            <ListItem>Page views,</ListItem>
+            <ListItem>Button clicks,</ListItem>
+            <ListItem>Input form changes (without the values being entered),</ListItem>
+            <ListItem>Errors.</ListItem>
           </ContainerUl>
-          <ParagraphStyle isLight={isLight}>
+          <ParagraphStyle>
             Our service providers analyses this information and provides us with aggregate reports. The information and
             analysis provided by our service providers will be used to assist us in better understanding our visitors
             interests in our Site and how to better serve those interests. If you want to avoid using cookies
@@ -55,19 +52,7 @@ const CookiesPolicyContainer = () => {
             cookies constitutes an acceptance of our and third-party cookies.
           </ParagraphStyle>
           <ContainerButton>
-            <CustomButton
-              label="Configure my settings"
-              style={{
-                padding: '14.5px 40px',
-                width: 249,
-                height: 48,
-              }}
-              styleText={{
-                fontSize: '16px',
-                color: isLight ? '#31424E' : '#E2D8EE',
-              }}
-              onClick={handlePolicyBanner}
-            />
+            <CustomButtonStyled label="Configure my settings" allowsHover={false} onClick={handlePolicyBanner} />
           </ContainerButton>
         </div>
       </ContainerData>
@@ -75,109 +60,139 @@ const CookiesPolicyContainer = () => {
   );
 };
 
-const Container = styled.div<{ isLight?: boolean }>(({ isLight }) => ({
+export default CookiesPolicyContainer;
+
+const Container = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   paddingTop: '104px',
   width: '100%',
-  backgroundColor: isLight ? '#FFFFFF' : '#000000',
-  backgroundImage: isLight ? 'url(/assets/img/bg-page.png)' : 'url(/assets/img/bg-page-dark.png)',
-  backgroundAttachment: 'fixed',
-  backgroundSize: 'cover',
   paddingBottom: '128px',
 }));
 
-const ContainerData = styled.div<{ isLight?: boolean }>(({ isLight }) => ({
+const ContainerData = styled(Card)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  background: isLight ? '#FFFFFF' : '#10191F',
   marginTop: '40px',
-  boxShadow: isLight
-    ? '0px 20px 40px rgba(219, 227, 237, 0.4), 0px 1px 3px rgba(190, 190, 190, 0.25)'
-    : ' 10px 15px 20px 6px rgba(20, 0, 141, 0.1);',
-  borderRadius: '6px',
   maxWidth: '1312px',
   margin: '0 auto',
   padding: '32px',
-  [lightTheme.breakpoints.between('desktop_1280', 'desktop_1440')]: {
+
+  [theme.breakpoints.between('desktop_1280', 'desktop_1440')]: {
     maxWidth: '1184px',
   },
-  [lightTheme.breakpoints.between('desktop_1194', 'desktop_1280')]: {
+  [theme.breakpoints.between('desktop_1194', 'desktop_1280')]: {
     maxWidth: '1066px',
   },
-  [lightTheme.breakpoints.between('table_834', 'desktop_1194')]: {
+  [theme.breakpoints.between('table_834', 'desktop_1194')]: {
     maxWidth: '770px',
   },
-  [lightTheme.breakpoints.between('mobile_375', 'table_834')]: {
+  [theme.breakpoints.down('table_834')]: {
     maxWidth: '343px',
     padding: '32px 24px',
   },
 }));
 
-const Title = styled.div<{ isLight?: boolean }>(({ isLight }) => ({
+const Title = styled('div')(({ theme }) => ({
+  fontFamily: 'Inter, sans-serif',
+  textAlign: 'center',
+  fontStyle: 'normal',
+  fontWeight: 700,
+  fontSize: 18,
+  lineHeight: '21.6px',
+  alignItems: 'center',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
+  marginBottom: 16,
+
+  [theme.breakpoints.between('table_834', 'desktop_1194')]: {
+    fontSize: 20,
+    lineHeight: '24px',
+  },
+}));
+
+const Description = styled('div')(({ theme }) => ({
   fontFamily: 'Inter, sans-serif',
   fontStyle: 'normal',
   fontWeight: 600,
-  fontSize: '24px',
-  lineHeight: '29px',
-  alignItems: 'center',
-  letterSpacing: '0.4px',
-  color: isLight ? '#231536' : '#D2D4EF',
-  marginBottom: '24px',
-  textAlign: 'left',
-  [lightTheme.breakpoints.between('table_834', 'desktop_1194')]: {
-    textAlign: 'left',
-  },
-  [lightTheme.breakpoints.between('desktop_1194', 'desktop_1280')]: {
-    textAlign: 'left',
-  },
-}));
-
-const Description = styled.div<{ isLight?: boolean }>(({ isLight }) => ({
-  fontFamily: 'Inter, sans-serif',
-  fontStyle: 'normal',
-  fontWeight: 700,
   fontSize: '16px',
-  lineHeight: '19px',
-  color: isLight ? '#231536' : '#D2D4EF',
+  lineHeight: '24px',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
+
+  [theme.breakpoints.up('table_834')]: {
+    fontWeight: 700,
+    fontSize: 18,
+    lineHeight: '21.6px',
+  },
 }));
 
-const ContainerUl = styled.ul<{ isLight?: boolean }>(({ isLight }) => ({
-  '> li': {
+const ContainerUl = styled('ul')(({ theme }) => ({
+  '& > li': {
     marginBottom: '8px',
-    color: isLight ? '#231536' : '#D2D4EF',
+    color: theme.palette.isLight ? theme.palette.colors.gray[600] : theme.palette.colors.gray[50],
     '&:last-child': {
       marginBottom: '0px',
     },
   },
 }));
 
-const ContainerButton = styled.div({
+const ContainerButton = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
   marginTop: '64px',
-  [lightTheme.breakpoints.between('mobile_375', 'table_834')]: {
+
+  [theme.breakpoints.down('table_834')]: {
     marginTop: '40px',
   },
-});
-
-const ParagraphStyle = styled.p<{ isLight: boolean }>(({ isLight }) => ({
-  fontFamily: 'Inter, sans-serif',
-  fontStyle: 'normal',
-  fontWeight: 400,
-  fontSize: '16px',
-  lineHeight: '22px',
-  color: isLight ? '#231536' : '#D2D4EF',
 }));
 
-const ListItem = styled.li<{ isLight: boolean }>(({ isLight }) => ({
+const ParagraphStyle = styled('p')(({ theme }) => ({
   fontFamily: 'Inter, sans-serif',
   fontStyle: 'normal',
   fontWeight: 400,
-  fontSize: '16px',
+  fontSize: 14,
   lineHeight: '24px',
-  color: isLight ? '#231536' : '#D2D4EF',
+  color: theme.palette.isLight ? theme.palette.colors.gray[600] : theme.palette.colors.gray[50],
+
+  [theme.breakpoints.up('desktop_1194')]: {
+    fontSize: 16,
+  },
 }));
 
-export default CookiesPolicyContainer;
+const ListItem = styled('li')(({ theme }) => ({
+  fontFamily: 'Inter, sans-serif',
+  fontStyle: 'normal',
+  fontWeight: 600,
+  fontSize: 14,
+  lineHeight: '22px',
+  color: theme.palette.isLight ? theme.palette.colors.gray[600] : theme.palette.colors.gray[50],
+
+  [theme.breakpoints.up('desktop_1194')]: {
+    fontSize: 16,
+    lineHeight: '24px',
+  },
+}));
+
+const CustomButtonStyled = styled(CustomButton)(({ theme }) => ({
+  padding: '14.5px 40px',
+  width: 249,
+  height: 48,
+  backgroundColor: theme.palette.colors.sky[1000],
+  border: 'none',
+  '&:hover': {
+    backgroundColor: theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.sky[900],
+    '& > div': {
+      color: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.slate[50],
+    },
+  },
+  '&:active': {
+    backgroundColor: theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.sky[900],
+    '& > div': {
+      color: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.slate[50],
+    },
+  },
+  '& > div': {
+    fontSize: '16px',
+    color: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.slate[50],
+  },
+}));
