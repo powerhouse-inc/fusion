@@ -5,12 +5,12 @@ inputs:
     description: The name of the app (also used for the k8s namespace)
     required: true
     default: ''
-  AWS_ACCESS_KEY_ID:
-    description: The AWS access key ID for the account
+  ROLE_SESSION_NAME:
+    description: 'The name of the role session'
     required: true
     default: ''
-  AWS_SECRET_ACCESS_KEY:
-    description: The AWS secret access key for the account
+  ROLE_TO_ASSUME:
+    description: 'The IAM role to assume'
     required: true
     default: ''
   AWS_REGION:
@@ -98,9 +98,9 @@ runs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        aws-access-key-id: ${{ inputs.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ inputs.AWS_REGION }}
+        role-session-name: ${{ inputs.ROLE_SESSION_NAME }}
+        role-to-assume: ${{ inputs.ROLE_TO_ASSUME }}
 
     - name: Deploy to EKS with Helm
       id: deploy
