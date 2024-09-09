@@ -1,5 +1,6 @@
-import { BudgetType, ProjectStatus } from '@ses/core/models/interfaces/projects';
+import { BudgetType } from '@ses/core/models/interfaces/projects';
 import type { Deliverable } from '@/core/models/interfaces/deliverables';
+import { ProgressStatus } from '@/core/models/interfaces/types';
 import type { Owner, Project } from '@ses/core/models/interfaces/projects';
 
 export class ProjectBuilder {
@@ -13,7 +14,7 @@ export class ProjectBuilder {
       owner: {} as Owner,
       title: '',
       abstract: '',
-      status: ProjectStatus.TODO,
+      status: ProgressStatus.TODO,
       progress: {
         __typename: 'Percentage',
         value: 0,
@@ -49,7 +50,7 @@ export class ProjectBuilder {
     return this;
   }
 
-  withStatus(status: ProjectStatus): ProjectBuilder {
+  withStatus(status: ProgressStatus): ProjectBuilder {
     this._project.status = status;
     return this;
   }

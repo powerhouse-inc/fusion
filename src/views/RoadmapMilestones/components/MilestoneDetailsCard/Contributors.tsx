@@ -2,7 +2,7 @@ import { Avatar, styled, useMediaQuery } from '@mui/material';
 import Link from 'next/link';
 import { siteRoutes } from '@/config/routes';
 import type { OwnerRef } from '@/core/models/interfaces/roadmaps';
-import ProjectOwnerChip from '@/stories/containers/ActorProjects/components/ProjectOwnerChip/ProjectOwnerChip';
+import ProjectOwnerChip from '@/views/ActorProjects/components/ProjectOwnerChip/ProjectOwnerChip';
 import OwnerAvatarGroup from '../OwnerAvatarGroup/OwnerAvatarGroup';
 import type { Theme } from '@mui/material';
 

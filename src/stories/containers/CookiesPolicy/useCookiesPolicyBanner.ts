@@ -71,7 +71,7 @@ export const useCookiesPolicyBanner = ({ cookiesObject }: Props) => {
   );
 
   const setThemeModeCookie = useCallback(() => {
-    const newThemeMode = cookies.themeModeCookie ? cookies.themeModeCookie : 'light';
+    const newThemeMode = cookies.themeModeCookie ? cookies.themeModeCookie : 'dark';
     setCookie('themeModeCookie', newThemeMode, {
       expires: daysToExpire(),
       path: '/',

@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
 import BudgetStatementView from '@/views/BudgetStatement/BudgetStatementView';
+import { fetchCompactedBudgetStatements } from '@/views/BudgetStatement/api/budgetStatements';
 import type { AllowedOwnerType } from '@/views/BudgetStatement/types';
 import { allowedOwnerTypeToResourceType } from '@/views/BudgetStatement/utils';
 
@@ -8,6 +9,7 @@ import type { GetServerSideProps, GetServerSidePropsContext, InferGetServerSideP
 
 const BudgetStatementPage: NextPage = ({
   snapshotLimitPeriods,
+  compactedBudgetStatements,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => (
   <BudgetStatementView
     snapshotLimitPeriods={
@@ -19,6 +21,7 @@ const BudgetStatementPage: NextPage = ({
           }
         : undefined
     }
+    compactedBudgetStatements={compactedBudgetStatements}
   />
 );
 
@@ -33,7 +36,10 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
   }
 
   const resourceType = allowedOwnerTypeToResourceType(ownerType as AllowedOwnerType);
-  const snapshotLimitPeriods = await getLastSnapshotPeriod(null, resourceType);
+  const [snapshotLimitPeriods, compactedBudgetStatements] = await Promise.all([
+    getLastSnapshotPeriod(null, resourceType),
+    fetchCompactedBudgetStatements(resourceType), // get the budget statements to determine the budget statuses
+  ]);
 
   return {
     props: {
@@ -44,6 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
             latest: snapshotLimitPeriods.latest.toISO(),
           }
         : null,
+      compactedBudgetStatements,
     },
   };
 };

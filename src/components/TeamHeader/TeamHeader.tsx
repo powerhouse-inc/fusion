@@ -7,6 +7,7 @@ import SocialMediaLinksButton from '../ButtonLink/SocialMediaLinksButton';
 import CategoryChip from '../CategoryChip/CategoryChip';
 import CircleAvatar from '../CircleAvatar/CircleAvatar';
 import Container from '../Container/Container';
+import ExternalLinkButton from '../ExternalLinkButton/ExternalLinkButton';
 import RoleChip from '../RoleChip/RoleChip';
 import ScopeChip from '../ScopeChip/ScopeChip';
 import { StatusChip } from '../StatusChip/StatusChip';
@@ -22,21 +23,27 @@ interface TeamHeaderProps {
 const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className, withDescription = true }) => {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const chips =
-    team.type === ResourceType.EcosystemActor
-      ? team.scopes?.length > 0 && (
-          <ScopeList>
-            {team.scopes?.map((item, index) => (
-              <ScopeChip scope={item} key={index} size={isMobile ? 'small' : 'large'} />
-            ))}
-          </ScopeList>
-        )
-      : team.category?.length > 0 && (
-          <CategoryList>
-            {team.category?.map((category) => (
-              <CategoryChip category={category as TeamCategory} key={category} />
-            ))}
-          </CategoryList>
-        );
+    team.type === ResourceType.EcosystemActor ? (
+      team.scopes?.length > 0 && (
+        <ScopeList>
+          {team.scopes?.map((item, index) => (
+            <ScopeChip scope={item} key={index} size={isMobile ? 'small' : 'large'} />
+          ))}
+        </ScopeList>
+      )
+    ) : team.type === ResourceType.Delegates ? (
+      <ExternalLinkButton href="https://makerburn.com/#/expenses/core-units/DELEGATES">
+        Onchain Transactions
+      </ExternalLinkButton>
+    ) : (
+      team.category?.length > 0 && (
+        <CategoryList>
+          {team.category?.map((category) => (
+            <CategoryChip category={category as TeamCategory} key={category} />
+          ))}
+        </CategoryList>
+      )
+    );
 
   return (
     <MainContainer className={className}>
@@ -49,19 +56,21 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className, withDescriptio
                 <TeamName>
                   <Code>{team.shortCode}</Code> {team.name}
                 </TeamName>
-                <ChipsContainer>
-                  {team.type === ResourceType.EcosystemActor ? (
-                    <StatusChipStyled status={team.status as TeamStatus} />
-                  ) : (
-                    <StatusChipForCoreUnit status={team.status as TeamStatus} />
-                  )}
+                {[ResourceType.EcosystemActor, ResourceType.CoreUnit].includes(team.type) && (
+                  <ChipsContainer>
+                    {team.type === ResourceType.EcosystemActor ? (
+                      <StatusChipStyled status={team.status as TeamStatus} />
+                    ) : (
+                      <StatusChipForCoreUnit status={team.status as TeamStatus} />
+                    )}
 
-                  {team.type === ResourceType.EcosystemActor ? (
-                    <RoleChip status={(team.category?.[0] ?? '') as TeamRole} />
-                  ) : (
-                    <CoreUnitSubmissionLink team={team} />
-                  )}
-                </ChipsContainer>
+                    {team.type === ResourceType.EcosystemActor ? (
+                      <RoleChip status={(team.category?.[0] ?? '') as TeamRole} />
+                    ) : (
+                      <CoreUnitSubmissionLink team={team} />
+                    )}
+                  </ChipsContainer>
+                )}
                 {chips}
               </InfoContent>
             </TeamBasicInfo>

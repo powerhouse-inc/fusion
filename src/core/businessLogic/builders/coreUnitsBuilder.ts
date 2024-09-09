@@ -1,3 +1,4 @@
+import { ResourceType } from '@/core/models/interfaces/types';
 import type { CuCategoryEnum } from '../../enums/cuCategoryEnum';
 import type { ChangeTrackingEvent } from '@ses/core/models/interfaces/activity';
 import type { BudgetStatement } from '@ses/core/models/interfaces/budgetStatement';
@@ -13,6 +14,7 @@ export class CoreUnitsBuilder {
   constructor() {
     this._coreUnit = {
       name: '',
+      type: ResourceType.CoreUnit,
       status: '',
       code: '',
       shortCode: '',
@@ -35,6 +37,11 @@ export class CoreUnitsBuilder {
 
   withId(id: string): CoreUnitsBuilder {
     this._coreUnit.id = id;
+    return this;
+  }
+
+  withType(type: ResourceType): CoreUnitsBuilder {
+    this._coreUnit.type = type;
     return this;
   }
 
