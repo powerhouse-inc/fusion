@@ -653,7 +653,6 @@ export const useBreakdownTable = (year: string, budgets: Budget[], allBudgets: B
     ),
     onReset: handleResetMetrics,
   };
-
   const metricSelectId = useId();
   const granularitySelectId = useId();
   const filters: Filter[] = [
@@ -661,7 +660,13 @@ export const useBreakdownTable = (year: string, budgets: Budget[], allBudgets: B
       id: metricSelectId,
       type: 'select',
       options: METRIC_FILTER_OPTIONS.map((filter) => ({
-        label: filter,
+        label: isTable
+          ? filter === 'Net Protocol Outflow'
+            ? 'Prtcol Outfl'
+            : filter === 'Net Expenses On-Chain'
+            ? 'Net On-Chain'
+            : filter
+          : filter,
         value: filter,
       })),
       label: 'Metrics',
@@ -669,7 +674,7 @@ export const useBreakdownTable = (year: string, budgets: Budget[], allBudgets: B
       multiple: true,
       onChange: (value) => handleSelectChangeMetrics(value as string[]),
       widthStyles: {
-        width: 140,
+        width: 'fit-content',
         menuWidth: 220,
       },
     },
