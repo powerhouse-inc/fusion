@@ -16,8 +16,6 @@ on:
     branches:
       - sky-production
       - sky-staging
-      - development
-      - TECH-* # Allows deployments only to development
 
 permissions:
   id-token: write
@@ -68,12 +66,12 @@ jobs:
         id: build_image
         uses: ./.github/actions/build
         with:
-          NEXT_PUBLIC_GRAPHQL_ENDPOINT: ${{ secrets.NEXT_PUBLIC_GRAPHQL_ENDPOINT }}
-          ROLE_SESSION_NAME: ${{ env.ROLE_SESSION_NAME }}
-          ROLE_TO_ASSUME: ${{ secrets.GA_OIDC_EKS_ROLE_ARN }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY  }}
           ECR_REPO_NAME: ${{ env.ECR_REPO_NAME }}
+          NEXT_PUBLIC_GRAPHQL_ENDPOINT: ${{ secrets.NEXT_PUBLIC_GRAPHQL_ENDPOINT }}
+          ROLE_SESSION_NAME: ${{ env.ROLE_SESSION_NAME }}
+          ROLE_TO_ASSUME: ${{ secrets.GA_OIDC_EKS_ROLE_ARN }}
           SHA_TAG: ${{ needs.setup.outputs.short_sha }}
 
   deploy:
