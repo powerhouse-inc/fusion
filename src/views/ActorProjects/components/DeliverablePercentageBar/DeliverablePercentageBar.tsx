@@ -1,60 +1,63 @@
 import { styled } from '@mui/material';
 import React from 'react';
+import { usLocalizedNumber } from '@/core/utils/humanization';
+
+interface ElementWithProgress {
+  progress: number;
+}
 
 interface DeliverablePercentageBarProps {
   percentage: number;
 }
 
 const DeliverablePercentageBar: React.FC<DeliverablePercentageBarProps> = ({ percentage }) => (
-  <ProgressContainer>
-    <ProgressBar progress={percentage * 100} />
-    <Label>{percentage * 100}%</Label>
-  </ProgressContainer>
+  <ProgressBarContainer>
+    <ProgressBar progress={percentage} />
+    <ProgressLabel progress={percentage}>{usLocalizedNumber(percentage * 100, 0)}%</ProgressLabel>
+  </ProgressBarContainer>
 );
 
 export default DeliverablePercentageBar;
 
-const ProgressContainer = styled('div')({
-  display: 'flex',
-  alignItems: 'center',
-  gap: 8,
-  height: 16,
-  width: '100%',
-});
-
-const ProgressBar = styled('div')<{ progress: number }>(({ theme, progress }) => ({
+const ProgressBarContainer = styled('div')(({ theme }) => ({
   position: 'relative',
-  height: '100%',
+  borderRadius: 4,
   width: '100%',
-  borderRadius: 6,
-  overflow: 'hidden',
-  background: theme.palette.isLight ? '#ECF1F3' : '#10191F',
 
-  '&:before': {
-    content: '""',
-    display: 'block',
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    bottom: 0,
-    borderRadius: 6,
-    width: `${progress}%`,
-    background:
-      progress === 100
-        ? theme.palette.isLight
-          ? theme.palette.colors.green[700]
-          : theme.palette.colors.green[900]
-        : theme.palette.isLight
-        ? theme.palette.colors.blue[700]
-        : theme.palette.colors.blue[900],
-  },
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.slate[600],
 }));
 
-const Label = styled('div')(({ theme }) => ({
-  width: 44,
-  minWidth: 44,
-  fontSize: 14,
-  lineHeight: 'normal',
-  textAlign: 'right',
-  color: theme.palette.isLight ? '#231536' : '#D2D4EF',
+const ProgressBar = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'progress',
+})<ElementWithProgress>(({ theme, progress }) => ({
+  width: `max(${progress * 100}%, ${progress === 0 ? 0 : 0.5}px)`,
+  height: 16,
+  borderRadius: `4px ${progress === 1 ? '4px 4px' : '0px 0px'} 4px`,
+
+  ...(progress === 1 && {
+    backgroundColor: theme.palette.isLight ? theme.palette.colors.green[700] : theme.palette.colors.green[900],
+  }),
+
+  ...(progress !== 1 && {
+    backgroundColor: theme.palette.isLight ? theme.palette.colors.blue[700] : theme.palette.colors.blue[900],
+  }),
+}));
+
+const ProgressLabel = styled('span', {
+  shouldForwardProp: (prop) => prop !== 'progress',
+})<{ progress: number }>(({ theme, progress }) => ({
+  position: 'absolute',
+  top: 0,
+  right: 8,
+  fontWeight: 700,
+  fontSize: 12,
+  lineHeight: '16px',
+
+  ...(progress === 1 && {
+    color: theme.palette.colors.slate[50],
+  }),
+
+  ...(progress !== 1 && {
+    color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.charcoal[600],
+  }),
 }));

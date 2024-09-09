@@ -17,7 +17,7 @@ interface RoadmapMilestonesViewProps {
 }
 
 const RoadmapMilestonesView: FC<RoadmapMilestonesViewProps> = ({ roadmap }) => {
-  const { isMinimalist, titles } = useRoadmapMilestonesView();
+  const { titles } = useRoadmapMilestonesView();
 
   return (
     <PageContainer>
@@ -47,7 +47,7 @@ const RoadmapMilestonesView: FC<RoadmapMilestonesViewProps> = ({ roadmap }) => {
         <PageHeader title={roadmap.title} />
         <SectionsContainer>
           <OverviewSection title={titles.overview} milestones={roadmap.milestones} />
-          <DetailsSection title={titles.details} minimal={isMinimalist} milestones={roadmap.milestones} />
+          <DetailsSection title={titles.details} milestones={roadmap.milestones} />
         </SectionsContainer>
       </ContainerWithMargin>
     </PageContainer>
