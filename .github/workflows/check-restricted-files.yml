@@ -18,7 +18,7 @@ jobs:
       - name: List all changed files
         id: changed-files
         run: |
-          git diff --name-only origin/${{ vars.GITHUB }} > changed_files.txt  || echo "No differences found."
+          git diff --name-only origin/${{ vars.GIT_BRANCH }} > changed_files.txt  || echo "No differences found."
           cat changed_files.txt
 
       - name: Check for unauthorized file changes
