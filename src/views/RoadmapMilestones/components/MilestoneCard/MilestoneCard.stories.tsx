@@ -19,7 +19,10 @@ export default meta;
 
 const variantsArgs = [
   {
-    milestone: DefaultRoadmap.milestones[0],
+    milestone: {
+      ...DefaultRoadmap.milestones[0],
+      targetDate: "Q4'24",
+    },
   },
 ];
 

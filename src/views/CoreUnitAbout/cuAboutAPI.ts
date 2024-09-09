@@ -16,6 +16,7 @@ export const GET_CU_ABOUT_BY_CODE = gql`
       paragraphDescription
       paragraphImage
       budgetPath
+      type
       auditors {
         id
         username

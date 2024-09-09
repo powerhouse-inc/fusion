@@ -3,62 +3,22 @@ import request, { gql } from 'graphql-request';
 import type { BudgetStatement } from '@ses/core/models/interfaces/budgetStatement';
 import type { ResourceType } from '@ses/core/models/interfaces/types';
 
-const getBudgetStatementsQuery = (resource: ResourceType) => ({
+const getCompactedBudgetStatementsQuery = (resource: ResourceType) => ({
   query: gql`
-    query ($filter: BudgetStatementFilter) {
+    query BudgetStatements($filter: BudgetStatementFilter) {
       budgetStatements(filter: $filter) {
-        id
         month
         status
-        publicationUrl
-        activityFeed {
-          id
-          created_at
-          event
-          params
-          description
-        }
-        comments {
-          id
-          budgetStatementId
-          timestamp
-          comment
-          status
-          author {
-            id
-            username
-          }
-        }
-        budgetStatementFTEs {
-          month
-          ftes
-        }
-        auditReport {
-          reportUrl
-          timestamp
-          auditStatus
-        }
+        ownerType
         budgetStatementWallet {
-          name
-          address
-          currentBalance
           id
-          budgetStatementLineItem {
-            group
-            actual
-            forecast
-            budgetCategory
-            headcountExpense
-            comments
-            month
-            budgetCap
-            payment
-          }
-          budgetStatementTransferRequest {
-            requestAmount
-            walletBalance
-          }
+          address
         }
+        forecastExpenses
+        actualExpenses
+        paymentsOnChain
+        paymentsOffChain
+        netProtocolOutflow
       }
     }
   `,
@@ -69,20 +29,10 @@ const getBudgetStatementsQuery = (resource: ResourceType) => ({
   },
 });
 
-export const fetchBudgetStatements = async (resource: ResourceType): Promise<BudgetStatement[]> => {
-  const { query, filter } = getBudgetStatementsQuery(resource);
+export const fetchCompactedBudgetStatements = async (resource: ResourceType): Promise<BudgetStatement[]> => {
+  const { query, filter } = getCompactedBudgetStatementsQuery(resource);
 
   const response = await request<{ budgetStatements: BudgetStatement[] }>(GRAPHQL_ENDPOINT, query, filter);
-  //   const delegates = {
-  //     shortCode: 'DEL',
-  //     code: 'Delegates',
-  //     type: ResourceType.Delegates,
-  //     budgetStatements: response.budgetStatements,
-  //     activityFeed: response.budgetStatements.reduce((acc, budgetStatement) => ({
-  //       ...acc,
-  //       activityFeed: [...acc.activityFeed, ...budgetStatement.activityFeed],
-  //     })).activityFeed,
-  //   } as DelegatesDto;
 
   return response.budgetStatements ?? [];
 };

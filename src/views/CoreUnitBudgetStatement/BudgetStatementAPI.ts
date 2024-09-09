@@ -17,6 +17,7 @@ export const CORE_UNIT_REQUEST = (shortCode: string) => ({
         image
         legacyBudgetStatementUrl
         category
+        type
         socialMediaChannels {
           discord
           forumTag

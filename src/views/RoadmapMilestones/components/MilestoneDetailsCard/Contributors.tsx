@@ -1,77 +1,49 @@
-import { Avatar, styled, useMediaQuery } from '@mui/material';
+import { Avatar, styled } from '@mui/material';
 import Link from 'next/link';
 import { siteRoutes } from '@/config/routes';
 import type { OwnerRef } from '@/core/models/interfaces/roadmaps';
-import ProjectOwnerChip from '@/stories/containers/ActorProjects/components/ProjectOwnerChip/ProjectOwnerChip';
-import OwnerAvatarGroup from '../OwnerAvatarGroup/OwnerAvatarGroup';
-import type { Theme } from '@mui/material';
 
 interface ContributorsProps {
   contributors: OwnerRef[];
 }
 
-const Contributors: React.FC<ContributorsProps> = ({ contributors }) => {
-  const isMobileOrTablet = useMediaQuery((theme: Theme) => theme.breakpoints.down('desktop_1024'));
+const Contributors: React.FC<ContributorsProps> = ({ contributors }) => (
+  <ContributorsBox>
+    <Title>Contributor(s)</Title>
 
-  return (
-    <ContributorsBox>
-      <Title>Contributor(s)</Title>
-
-      {isMobileOrTablet ? (
-        contributors.length === 1 ? (
-          <ProjectOwnerChip tooltipText="Contributor" owner={contributors[0]} />
-        ) : (
-          <OwnerAvatarGroup tooltipTitle="Contributors" owners={contributors} />
-        )
-      ) : (
-        <ActorList>
-          {contributors.map((contributor) => (
-            <Actor key={contributor.id} href={siteRoutes.ecosystemActorAbout(contributor.code)}>
-              <ActorAvatar src={contributor.imageUrl} />
-              <ActorName>{contributor.name}</ActorName>
-            </Actor>
-          ))}
-        </ActorList>
-      )}
-    </ContributorsBox>
-  );
-};
+    <ActorList>
+      {contributors.map((contributor) => (
+        <Actor key={contributor.id} href={siteRoutes.ecosystemActorAbout(contributor.code)}>
+          <ActorAvatar src={contributor.imageUrl} />
+          <ActorName>{contributor.name}</ActorName>
+        </Actor>
+      ))}
+    </ActorList>
+  </ContributorsBox>
+);
 
 export default Contributors;
 
 const ContributorsBox = styled('div')(({ theme }) => ({
   display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  gap: 8,
-  padding: 15,
-  borderRadius: 6,
-  border: `1px solid ${theme.palette.isLight ? '#D4D9E1' : '#31424E'}`,
-
-  [theme.breakpoints.up('tablet_768')]: {
-    borderRadius: 16,
-    gap: 32,
-  },
+  flexDirection: 'column',
+  gap: 16,
+  padding: '7px 15px',
+  borderRadius: 12,
+  border: `1px solid ${
+    theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700]
+  }`,
 
   [theme.breakpoints.up('desktop_1024')]: {
-    flexDirection: 'column',
-    alignItems: 'normal',
-    justifyContent: 'normal',
-    padding: 0,
-    border: 'none',
-    gap: 24,
-    marginTop: -8,
+    padding: '7px 15px 15px',
   },
 }));
 
 const Title = styled('div')(({ theme }) => ({
   fontSize: 12,
-  fontWeight: 600,
-  lineHeight: 'normal',
-  letterSpacing: 1,
-  textTransform: 'uppercase',
-  color: theme.palette.mode === 'light' ? '#434358' : '#B6BCC2',
+  fontWeight: 500,
+  lineHeight: '18px',
+  color: theme.palette.isLight ? theme.palette.colors.gray[700] : theme.palette.colors.gray[600],
 }));
 
 const ActorList = styled('div')(() => ({
@@ -83,17 +55,18 @@ const ActorList = styled('div')(() => ({
 const Actor = styled(Link)({
   display: 'flex',
   alignItems: 'center',
-  gap: 16,
+  gap: 8,
 });
 
-const ActorAvatar = styled(Avatar)({
-  width: 32,
-  height: 32,
-  boxShadow: '2px 4px 7px 0px rgba(26, 171, 155, 0.25)',
-});
+const ActorAvatar = styled(Avatar)(({ theme }) => ({
+  width: 24,
+  height: 24,
+  boxShadow: theme.palette.isLight ? theme.fusionShadows.avatars : '1.167px 4.667px 17.85px 0px #141921',
+}));
 
 const ActorName = styled('div')(({ theme }) => ({
   fontSize: 14,
+  fontWeight: 700,
   lineHeight: 'normal',
-  color: theme.palette.mode === 'light' ? '#231536' : '#D2D4EF',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.slate[100],
 }));
