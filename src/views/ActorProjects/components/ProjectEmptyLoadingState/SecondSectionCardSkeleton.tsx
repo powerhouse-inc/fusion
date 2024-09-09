@@ -1,14 +1,14 @@
 import { styled } from '@mui/material';
-import Card from '@/components/Card/Card';
+import SkeletonEmptyCard from './SkeletonEmptyCard';
 
-const SecondSectionCardSkeleton = () => <Container>{null}</Container>;
+const SecondSectionCardSkeleton = () => (
+  <Container>
+    <SkeletonEmptyCard />
+  </Container>
+);
 
 export default SecondSectionCardSkeleton;
 
-const Container = styled(Card)(({ theme }) => ({
+const Container = styled('div')(() => ({
   width: '100%',
-  height: 200, // temporary
-  padding: 16,
-  border: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.charcoal[800]}`,
-  boxShadow: theme.fusionShadows.shortShadow,
 }));

@@ -4,7 +4,7 @@ import Card from '@/components/Card/Card';
 import KeyResultCard from './KeyResultCard';
 import RectangleSkeleton from './RectangleSkeleton';
 
-const LoadingEmptyCard = () => (
+const SkeletonEmptyCard = () => (
   <Container>
     <HeaderSkeleton alignItems="center" justifyContent="space-between">
       <SkeletonStyledMainRectangle variant="rectangular" />
@@ -24,14 +24,21 @@ const LoadingEmptyCard = () => (
     </Description>
 
     <LinkButtonSection>
-      <Skeleton variant="rectangular" width={260} height={20} sx={{ borderRadius: 6 }} />
+      <ContainerLine>
+        <LinkItem variant="rectangular" width={69} height={18} />
+        <LinkItem variant="rectangular" width={36} height={22} />
+        <VerticalLine />
+      </ContainerLine>
+
+      <LinkItem variant="rectangular" width={31} height={22} />
+      <LinkItemAbsolute />
     </LinkButtonSection>
 
     <KeyResultCard />
   </Container>
 );
 
-export default LoadingEmptyCard;
+export default SkeletonEmptyCard;
 
 const Container = styled(Card)(() => ({
   padding: 16,
@@ -69,11 +76,46 @@ const Description = styled('div')(() => ({
   gap: 10,
 }));
 
-const LinkButtonSection = styled('div')(() => ({
+const LinkButtonSection = styled('div')(({ theme }) => ({
   display: 'flex',
+  position: 'relative',
   flexDirection: 'row',
-  justifyContent: 'space-between',
   alignItems: 'center',
   marginBottom: 16,
   marginTop: 16,
+  borderRadius: 8,
+  background: theme.palette.isLight ? '#FFF' : theme.palette.colors.charcoal[900],
+  boxShadow: theme.palette.isLight ? theme.fusionShadows.graphShadow : theme.fusionShadows.darkMode,
+  height: 32,
+  padding: '4px 4px 4px 8px',
+}));
+
+const ContainerLine = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  gap: 8,
+}));
+
+const LinkItem = styled(Skeleton)(({ theme }) => ({
+  borderRadius: 6,
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.charcoal[800],
+}));
+const LinkItemAbsolute = styled(Skeleton)(({ theme }) => ({
+  width: 32,
+  height: 54,
+  position: 'absolute',
+  borderRadius: '0px 8px 8px 0px',
+  right: 0,
+  top: -12,
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.charcoal[800],
+}));
+
+const VerticalLine = styled('div')(({ theme }) => ({
+  display: 'flex',
+  borderTop: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.charcoal[800]}`,
+  marginTop: 4,
+  marginBottom: 4,
+  width: '22px',
+  transform: 'rotate(90deg)',
 }));
