@@ -1,88 +1,78 @@
-import { styled, useMediaQuery } from '@mui/material';
-import AvatarPlaceholder from '@ses/components/svg/avatar-placeholder';
+import { styled } from '@mui/material';
+import AvatarPlaceholder from 'public/assets/svg/avatar_placeholder.svg';
 import type { OwnerRef } from '@/core/models/interfaces/roadmaps';
-import OwnerAvatarGroup from '../OwnerAvatarGroup/OwnerAvatarGroup';
-import type { Theme } from '@mui/material';
 
 interface CoordinatorsProps {
   coordinators: OwnerRef[];
 }
 
-const Coordinators: React.FC<CoordinatorsProps> = ({ coordinators }) => {
-  const isMobileOrTablet = useMediaQuery((theme: Theme) => theme.breakpoints.down('desktop_1024'));
+const Coordinators: React.FC<CoordinatorsProps> = ({ coordinators }) => (
+  <CoordinatorsBox>
+    <Title>Coordinator(s)</Title>
 
-  return (
-    <CoordinatorsBox>
-      <Title>Coordinator(s)</Title>
-
-      {isMobileOrTablet ? (
-        <OwnerAvatarGroup tooltipTitle="Coordinators" owners={coordinators} />
-      ) : (
-        <CoordinatorsList>
-          {coordinators?.map((coordinator) => (
-            <Coordinator key={coordinator.id}>
-              <AvatarPlaceholder width={24} height={24} />
-              <CoordinatorName>{coordinator.name}</CoordinatorName>
-            </Coordinator>
-          ))}
-        </CoordinatorsList>
-      )}
-    </CoordinatorsBox>
-  );
-};
+    <CoordinatorsList>
+      {coordinators?.map((coordinator) => (
+        <Coordinator key={coordinator.id}>
+          <AvatarPlaceholder width={24} height={24} />
+          <CoordinatorName>{coordinator.name}</CoordinatorName>
+        </Coordinator>
+      ))}
+    </CoordinatorsList>
+  </CoordinatorsBox>
+);
 
 export default Coordinators;
 
 const CoordinatorsBox = styled('div')(({ theme }) => ({
   display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  gap: 8,
-  padding: 15,
-  borderRadius: 6,
-  border: `1px solid ${theme.palette.isLight ? '#D4D9E1' : '#31424E'}`,
-
-  [theme.breakpoints.up('tablet_768')]: {
-    borderRadius: 16,
-    gap: 32,
-  },
+  flexDirection: 'column',
+  gap: 16,
+  padding: '7px 15px',
+  borderRadius: 12,
+  border: `1px solid ${
+    theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700]
+  }`,
 
   [theme.breakpoints.up('desktop_1024')]: {
-    flexDirection: 'column',
-    alignItems: 'normal',
-    justifyContent: 'normal',
-    padding: 0,
-    border: 'none',
-    gap: 24,
+    padding: '7px 15px 15px',
   },
 }));
 
 const Title = styled('div')(({ theme }) => ({
   fontSize: 12,
-  fontWeight: 600,
-  lineHeight: 'normal',
-  letterSpacing: 1,
-  textTransform: 'uppercase',
-  color: theme.palette.mode === 'light' ? '#434358' : '#B6BCC2',
+  fontWeight: 500,
+  lineHeight: '18px',
+  color: theme.palette.isLight ? theme.palette.colors.gray[700] : theme.palette.colors.gray[600],
 }));
 
 const CoordinatorsList = styled('div')(() => ({
   display: 'flex',
-  flexDirection: 'column',
+  flexWrap: 'wrap',
   gap: 16,
 }));
 
-const Coordinator = styled('div')(() => ({
+const Coordinator = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: 8,
   alignSelf: 'stretch',
+
+  '& path': {
+    fill: theme.palette.isLight ? theme.palette.colors.charcoal[600] : theme.palette.colors.charcoal[500],
+  },
+  '& rect': {
+    fill: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700],
+  },
 }));
 
 const CoordinatorName = styled('div')(({ theme }) => ({
-  fontSize: 16,
-  fontWeight: 700,
-  lineHeight: 'normal',
-  color: theme.palette.mode === 'light' ? '#231536' : '#D2D4EF',
+  fontSize: 14,
+  fontWeight: 600,
+  lineHeight: '22px',
+  color: theme.palette.isLight ? theme.palette.colors.charcoal[600] : theme.palette.colors.slate[100],
+
+  [theme.breakpoints.up('desktop_1024')]: {
+    fontSize: 16,
+    lineHeight: '24px',
+  },
 }));

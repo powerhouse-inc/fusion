@@ -6,16 +6,15 @@ import type { FC } from 'react';
 
 interface DetailsSectionProps {
   title: string;
-  minimal?: boolean;
   milestones: Milestone[];
 }
 
-const DetailsSection: FC<DetailsSectionProps> = ({ title, minimal, milestones }) => (
+const DetailsSection: FC<DetailsSectionProps> = ({ title, milestones }) => (
   <Section>
     <SectionTitle title={title} />
     <MilestonesDetails>
       {milestones.map((milestone) => (
-        <MilestoneDetailsCard key={milestone.id} minimal={minimal} milestone={milestone} />
+        <MilestoneDetailsCard key={milestone.id} milestone={milestone} />
       ))}
     </MilestonesDetails>
   </Section>

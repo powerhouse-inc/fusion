@@ -1,25 +1,14 @@
-import { styled } from '@mui/system';
-import { SearchInput } from '@ses/components/SearchInput/SearchInput';
-import { useState } from 'react';
+import { styled } from '@mui/material';
 import type { MDeliverable } from '@/core/models/interfaces/deliverables';
 import DeliverableCard from '@/views/ActorProjects/components/DeliverableCard/DeliverableCard';
-import DeliverableViewModeToggle from '@/views/ActorProjects/components/DeliverableViewModeToggle/DeliverableViewModeToggle';
 import { splitInRows } from '@/views/ActorProjects/components/ProjectCard/ProjectCard';
-import type { DeliverableViewMode } from '@/views/ActorProjects/components/ProjectCard/ProjectCard';
-import ViewAllButton from '@/views/ActorProjects/components/ViewAllButton/ViewAllButton';
 
 interface DeliverablesSectionProps {
-  minimal?: boolean;
   deliverables: MDeliverable[];
 }
 
-const SEARCH_FEATURE_ENABLED = false;
-
-const DeliverablesSection: React.FC<DeliverablesSectionProps> = ({ minimal, deliverables }) => {
-  const [deliverableViewMode, setDeliverableViewMode] = useState<DeliverableViewMode>('compacted');
-  const [showAllDeliverables, setShowAllDeliverables] = useState<boolean>(true);
-
-  const deliverablesRows = splitInRows(showAllDeliverables ? deliverables : deliverables.slice(0, 6), 2);
+const DeliverablesSection: React.FC<DeliverablesSectionProps> = ({ deliverables }) => {
+  const deliverablesRows = splitInRows(deliverables, 2);
 
   return (
     <DeliverablesContainer>
@@ -28,49 +17,34 @@ const DeliverablesSection: React.FC<DeliverablesSectionProps> = ({ minimal, deli
           <Title>Deliverables</Title>
           <Count>{deliverables?.length}</Count>
         </TitleBox>
-
-        {!minimal && (
-          <DeliverableViewModeToggle
-            deliverableViewMode={deliverableViewMode}
-            onChangeDeliverableViewMode={(mode: DeliverableViewMode) => setDeliverableViewMode(mode)}
-          />
-        )}
       </Header>
 
-      {!minimal && SEARCH_FEATURE_ENABLED && (
-        <SearchContainer>
-          <CustomSearchInput placeholder="Search" legacyBreakpoints={false} />
-        </SearchContainer>
-      )}
+      <DeliverablesGrid>
+        {deliverables.length === 0 && <NoDeliverables>No Deliverable Available</NoDeliverables>}
 
-      <BackgroundContainer>
-        <DeliverablesGrid showDeliverablesBelow={false}>
-          {deliverables.length === 0 && <NoDeliverables>No Deliverable Available</NoDeliverables>}
-          {deliverablesRows.map((row) =>
-            row.map((deliverable) => (
-              <DeliverableCard
-                key={deliverable.id}
-                isProjectCard={false}
-                deliverable={deliverable}
-                viewMode={minimal ? 'detailed' : deliverableViewMode}
-                maxKeyResultsOnRow={row.map((d) => d.keyResults.length).reduce((a, b) => Math.max(a, b), 0)}
-              />
-            ))
-          )}
-        </DeliverablesGrid>
-        {!minimal && deliverables.length > 6 && (
-          <ViewAllButton viewAll={showAllDeliverables} onClick={() => setShowAllDeliverables((prev) => !prev)}>
-            View {showAllDeliverables ? 'less' : 'all'} Deliverables
-          </ViewAllButton>
+        {deliverablesRows.map((row) =>
+          row.map((deliverable) => (
+            <DeliverableCard
+              key={deliverable.id}
+              isProjectCard={false}
+              deliverable={deliverable}
+              viewMode={'detailed'}
+              maxKeyResultsOnRow={row.map((d) => d.keyResults.length).reduce((a, b) => Math.max(a, b), 0)}
+            />
+          ))
         )}
-      </BackgroundContainer>
+      </DeliverablesGrid>
     </DeliverablesContainer>
   );
 };
 
 export default DeliverablesSection;
 
-const DeliverablesContainer = styled('div')(() => ({}));
+const DeliverablesContainer = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 16,
+}));
 
 const Header = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -90,119 +64,33 @@ const Header = styled('div')(({ theme }) => ({
 const TitleBox = styled('div')(() => ({
   display: 'flex',
   alignItems: 'flex-start',
-  gap: 8,
+  gap: 14,
 }));
 
 const Title = styled('h3')(({ theme }) => ({
-  fontSize: 16,
+  fontSize: 18,
   fontWeight: 700,
-  lineHeight: 'normal',
-  color: theme.palette.mode === 'light' ? '#231536' : '#D2D4EF',
+  lineHeight: '120%',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   margin: 0,
 
-  [theme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('desktop_1280')]: {
     fontSize: 20,
-    fontWeight: 600,
-    letterSpacing: 0.4,
   },
 }));
 
 const Count = styled('div')(({ theme }) => ({
-  fontSize: 16,
+  fontSize: 18,
   fontWeight: 700,
-  lineHeight: 'normal',
-  color: theme.palette.mode === 'light' ? '#231536' : '#D2D4EF',
+  lineHeight: '120%',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
 
-  [theme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('desktop_1280')]: {
     fontSize: 20,
-    fontWeight: 700,
-    letterSpacing: 0.4,
   },
 }));
 
-// Disabled temporary the search
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const SearchContainer = styled('div')(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'flex-end',
-  marginTop: 24,
-
-  [theme.breakpoints.between('tablet_768', 'desktop_1024')]: {
-    marginTop: 32,
-  },
-
-  [theme.breakpoints.up('desktop_1024')]: {
-    paddingRight: 8,
-  },
-
-  [theme.breakpoints.up('desktop_1280')]: {
-    paddingRight: 16,
-  },
-}));
-
-// Disabled temporary the search
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const CustomSearchInput = styled(SearchInput)(({ theme }) => ({
-  [theme.breakpoints.down('tablet_768')]: {
-    width: '100%',
-
-    '& > div': {
-      width: '100%',
-    },
-  },
-
-  [theme.breakpoints.between('tablet_768', 'desktop_1024')]: {
-    width: 319,
-
-    '& input': {
-      height: 32,
-    },
-  },
-
-  [theme.breakpoints.between('desktop_1024', 'desktop_1280')]: {
-    width: 253,
-
-    '& input': {
-      height: 32,
-      width: 253,
-    },
-  },
-
-  [theme.breakpoints.up('desktop_1280')]: {
-    width: 320,
-  },
-}));
-
-const BackgroundContainer = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 16,
-  background:
-    theme.palette.mode === 'light'
-      ? 'linear-gradient(0deg, #F6F8F9 85.04%, rgba(246, 248, 249, 0.00) 121.04%)'
-      : 'linear-gradient(180deg, rgba(16, 30, 38, 0.60) 0%, #101E26 100%)',
-  margin: '8px -16px -24px',
-  padding: '8px 16px 24px',
-  borderRadius: 6,
-
-  [theme.breakpoints.up('tablet_768')]: {
-    margin: '8px -24px -24px',
-    padding: '8px 24px 24px',
-  },
-
-  [theme.breakpoints.up('desktop_1024')]: {
-    gap: 24,
-    margin: '8px 0 0 -8px',
-    padding: '8px 8px 16px',
-  },
-
-  [theme.breakpoints.up('desktop_1280')]: {
-    margin: '8px 0 0 -16px',
-    padding: '8px 16px 24px',
-  },
-}));
-
-const DeliverablesGrid = styled('div')<{ showDeliverablesBelow: boolean }>(({ theme, showDeliverablesBelow }) => ({
+const DeliverablesGrid = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 16,
@@ -210,42 +98,19 @@ const DeliverablesGrid = styled('div')<{ showDeliverablesBelow: boolean }>(({ th
   [theme.breakpoints.up('tablet_768')]: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-
-    '& > *': {
-      width: '100%',
-      maxWidth: 'calc(50% - 8px)',
-    },
-  },
-
-  ...(showDeliverablesBelow && {
-    [theme.breakpoints.up('desktop_1024')]: {
-      gap: 24,
-
-      '& > *': {
-        maxWidth: 'calc(50% - 12px)',
-      },
-    },
-
-    [theme.breakpoints.up('desktop_1280')]: {
-      gap: 16,
-
-      '& > *': {
-        maxWidth: 'calc(33% - 7px)',
-      },
-    },
-  }),
-
-  [theme.breakpoints.up('desktop_1440')]: {
     gap: 24,
 
     '& > *': {
-      ...(showDeliverablesBelow
-        ? {
-            maxWidth: 'calc(33% - 12px)',
-          }
-        : {
-            maxWidth: 'calc(50% - 12px)',
-          }),
+      width: '100%',
+      maxWidth: 'calc(50% - 12px)',
+    },
+  },
+
+  [theme.breakpoints.up('desktop_1280')]: {
+    gap: 32,
+
+    '& > *': {
+      maxWidth: 'calc(50% - 16px)',
     },
   },
 }));
@@ -256,7 +121,7 @@ const NoDeliverables = styled('div')(({ theme }) => ({
   textAlign: 'center',
   width: '100%',
   maxWidth: '100%',
-  color: theme.palette.mode === 'light' ? '#B6BCC2' : '#6E7A8A',
+  color: theme.palette.isLight ? '#B6BCC2' : '#6E7A8A',
   fontSize: 24,
   fontWeight: 600,
   lineHeight: 'normal',

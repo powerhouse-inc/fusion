@@ -103,13 +103,10 @@ const Card = styled('div')<{ fitContent: boolean }>(({ theme, fitContent }) => (
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'flex-start',
-  gap: 7,
-  borderRadius: 6,
-  background: theme.palette.isLight ? '#fff' : '#1E2C37',
-  border: `1px solid ${theme.palette.isLight ? '#D1DEE6' : '#31424E'}`,
-  boxShadow: theme.palette.isLight
-    ? '0px 3px 10px 0px rgba(88, 88, 88, 0.2)'
-    : '10px 15px 20px 6px rgba(20, 0, 141, 0.10)',
+  borderRadius: 12,
+  background: theme.palette.isLight ? '#fff' : theme.palette.colors.charcoal[900],
+  border: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.charcoal[800]}`,
+  boxShadow: theme.palette.isLight ? theme.fusionShadows.shortShadow : theme.fusionShadows.darkMode,
   padding: 15,
   height: fitContent ? 'fit-content' : 'auto',
 }));
@@ -137,10 +134,10 @@ const Title = styled('div')<{ viewMode: DeliverableViewMode }>(({ theme, viewMod
     textOverflow: 'ellipsis',
   }),
   alignSelf: 'stretch',
-  color: theme.palette.isLight ? '#25273D' : '#D2D4EF',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   fontSize: 16,
-  fontWeight: 700,
-  lineHeight: 'normal',
+  fontWeight: 600,
+  lineHeight: '24px',
 }));
 
 const DeliverableOwnerContainer = styled('div')({
@@ -148,38 +145,40 @@ const DeliverableOwnerContainer = styled('div')({
   alignItems: 'center',
 });
 
-const OwnerImage = styled(Avatar)({
-  width: 28,
-  height: 28,
-  borderRadius: 20,
-  border: '2px solid #fff',
-  boxShadow: '2px 4px 7px 0px rgba(26, 171, 155, 0.25)',
+const OwnerImage = styled(Avatar)(({ theme }) => ({
+  width: 26,
+  height: 26,
+  borderRadius: '50%',
+  border: `2px solid ${theme.palette.isLight ? '#fff' : theme.palette.colors.charcoal[300]}`,
+  boxShadow: theme.palette.isLight ? theme.fusionShadows.avatars : theme.fusionShadows.avatarDM,
   fontSize: 14,
   fontFamily: 'Inter, sans-serif',
-});
+}));
 
 const ProgressContainer = styled('div')({
   display: 'flex',
   alignItems: 'center',
   width: '100%',
-  gap: 16,
+  gap: 8,
 });
 
 const Description = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
-  margin: 0,
+  marginTop: 8,
   fontSize: 14,
+  fontWeight: 400,
   lineHeight: '22px',
-  color: theme.palette.isLight ? '#231536' : '#D2D4EF',
+  color: theme.palette.isLight ? theme.palette.colors.gray[800] : theme.palette.colors.slate[200],
 
   '& p': {
     margin: 0,
   },
 
-  [theme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('desktop_1280')]: {
     fontSize: 16,
+    lineHeight: '24px',
   },
 }));
 
@@ -187,6 +186,6 @@ const KeyBox = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  paddingTop: 9,
+  paddingTop: 16,
   marginTop: 'auto',
 });
