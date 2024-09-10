@@ -17,6 +17,7 @@ export const siteRoutes = {
   coreUnitActivityFeed: (shortCode: string) => `/contributors/core-units/${shortCode}/activity-feed`,
   globalActivityFeed: '/activity-feed',
   cookiesPolicy: '/cookies-policy',
+  termsOfUse: '/terms-of-use',
   recognizedDelegateReport: '/contributors/recognized-delegates/budget-statements',
   recognizedDelegate: '/contributors/recognized-delegates',
   endgame: '/endgame',
