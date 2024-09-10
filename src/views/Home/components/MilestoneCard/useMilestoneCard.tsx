@@ -5,7 +5,7 @@ const useMilestoneCard = (status: ProgressStatus) => {
   const statusLabel = useMemo(() => {
     switch (status) {
       case ProgressStatus.FINISHED:
-        return 'Delivered';
+        return 'Finished';
       case ProgressStatus.IN_PROGRESS:
         return 'In Progress';
       case ProgressStatus.DRAFT:
