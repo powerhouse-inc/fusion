@@ -53,7 +53,7 @@ const BreakdownChartSection: React.FC<BreakdownChartSectionProps> = ({
 
       <FilterContainer>
         <FiltersBundle
-          asPopover={['tablet_768', 'desktop']}
+          asPopover={[]}
           filters={filters}
           resetFilters={{
             canReset,
