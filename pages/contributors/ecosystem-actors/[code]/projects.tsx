@@ -3,7 +3,7 @@ import { ResourceType } from '@ses/core/models/interfaces/types';
 import { featureFlags } from 'feature-flags/feature-flags';
 import React from 'react';
 import type { IncrementedDeliverable } from '@/core/models/interfaces/deliverables';
-import ActorProjectsContainer from '@/views/ActorProjects/ActorProjectsContainer';
+import ActorProjectsView from '@/views/ActorProjects/ActorProjectsView';
 import { fetchProjects } from '@/views/ActorProjects/api/query';
 import { fetchActorAbout } from '@/views/EcosystemActorAbout/api/queries';
 import { fetchActors } from '@/views/EcosystemActorsIndex/api/queries';
@@ -15,7 +15,7 @@ const ProjectsPage: NextPage = ({
   actors,
   projectsData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => (
-  <ActorProjectsContainer actors={actors} actor={actor} projectsData={projectsData} />
+  <ActorProjectsView actors={actors} actor={actor} projectsData={projectsData} />
 );
 
 export default ProjectsPage;

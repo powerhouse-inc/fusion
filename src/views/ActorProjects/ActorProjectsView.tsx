@@ -12,17 +12,17 @@ import Information from '@/components/icons/information';
 import { ResourceType } from '@/core/models/interfaces/types';
 import PageSubheader from './components/PageSubheader/PageSubheader';
 import ProjectList from './components/ProjectList/ProjectList';
-import useActorProjectsContainer from './useActorProjectsContainer';
+import useActorProjectsView from './useActorProjectsView';
 import type { ProjectsAndSupportedProjects } from '@ses/core/models/interfaces/projects';
 import type { Team } from '@ses/core/models/interfaces/team';
 
-interface ActorProjectsContainerProps {
+interface ActorProjectsViewProps {
   actors: Team[];
   actor: Team;
   projectsData: ProjectsAndSupportedProjects;
 }
 
-const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, actors, projectsData }) => {
+const ActorProjectsView: React.FC<ActorProjectsViewProps> = ({ actor, actors, projectsData }) => {
   const {
     isMobile,
     isFilterCollapsedOnMobile,
@@ -35,7 +35,7 @@ const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, 
     handleResetFilters,
     handleSearchChange,
     projects,
-  } = useActorProjectsContainer(projectsData, actors, actor);
+  } = useActorProjectsView(projectsData, actors, actor);
 
   return (
     <PageWrapper>
@@ -101,7 +101,6 @@ const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, 
               }
             />
 
-            {/* TODO: instead of `projects.length` it should be `supportedProjects.length` once it is integrated with the API */}
             {filteredSupporterProjects.length > 0 ? (
               <>
                 <SupportedProjects>
@@ -137,7 +136,7 @@ const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, 
                     </IconContainer>
                   </SESTooltip>
                 </SupportedProjects>
-                <TexTNotFound>No Result Found</TexTNotFound>
+                <TextNotFound>No Result Found</TextNotFound>
               </div>
             )}
           </ContainerResponsive>
@@ -147,7 +146,7 @@ const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, 
   );
 };
 
-export default ActorProjectsContainer;
+export default ActorProjectsView;
 
 const PageWrapper = styled(PageContainer)(() => ({
   paddingTop: 0,
@@ -208,7 +207,7 @@ const IconContainer = styled('span')({
   alignItems: 'center',
 });
 
-const TexTNotFound = styled('p')(({ theme }) => ({
+const TextNotFound = styled('p')(({ theme }) => ({
   fontFamily: 'Inter, sans-serif',
 
   textAlign: 'center',
