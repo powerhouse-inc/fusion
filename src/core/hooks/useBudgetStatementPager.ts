@@ -51,11 +51,7 @@ const useBudgetStatementPager = (element: WithBudgetStatement, options?: BudgetS
 
   useEffect(() => {
     const snapshotLimit = options?.latestSnapshotPeriod?.latest?.startOf('month');
-    const limit = getLastMonthWithActualOrForecast(element.budgetStatements)
-      .plus({
-        month: 1,
-      })
-      .startOf('month');
+    const limit = getLastMonthWithActualOrForecast(element.budgetStatements).startOf('month');
     const actualMonth = DateTime.utc().startOf('month');
 
     const mostRecentMonth = snapshotLimit ? (snapshotLimit > limit ? snapshotLimit : limit) : limit;
