@@ -12,17 +12,17 @@ import Information from '@/components/icons/information';
 import { ResourceType } from '@/core/models/interfaces/types';
 import PageSubheader from './components/PageSubheader/PageSubheader';
 import ProjectList from './components/ProjectList/ProjectList';
-import useActorProjectsContainer from './useActorProjectsContainer';
+import useActorProjectsView from './useActorProjectsView';
 import type { ProjectsAndSupportedProjects } from '@ses/core/models/interfaces/projects';
 import type { Team } from '@ses/core/models/interfaces/team';
 
-interface ActorProjectsContainerProps {
+interface ActorProjectsViewProps {
   actors: Team[];
   actor: Team;
   projectsData: ProjectsAndSupportedProjects;
 }
 
-const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, actors, projectsData }) => {
+const ActorProjectsView: React.FC<ActorProjectsViewProps> = ({ actor, actors, projectsData }) => {
   const {
     isMobile,
     isFilterCollapsedOnMobile,
@@ -35,7 +35,7 @@ const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, 
     handleResetFilters,
     handleSearchChange,
     projects,
-  } = useActorProjectsContainer(projectsData, actors, actor);
+  } = useActorProjectsView(projectsData, actors, actor);
 
   return (
     <PageWrapper>
@@ -146,7 +146,7 @@ const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, 
   );
 };
 
-export default ActorProjectsContainer;
+export default ActorProjectsView;
 
 const PageWrapper = styled(PageContainer)(() => ({
   paddingTop: 0,
