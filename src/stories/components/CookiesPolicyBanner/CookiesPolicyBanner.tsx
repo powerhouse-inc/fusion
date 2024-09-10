@@ -71,11 +71,8 @@ const Container = styled('div')(({ theme }) => ({
   height: '458px',
   boxShadow: !theme.palette.isLight ? '0px -15px 35px 10px rgba(0, 27, 141, 0.15)' : 'none',
 
-  [theme.breakpoints.between('table_834', 'desktop_1194')]: {
+  [theme.breakpoints.between('tablet_768', 'desktop_1280')]: {
     padding: '40px 63px',
-  },
-  [theme.breakpoints.between('desktop_1194', 'desktop_1280')]: {
-    padding: '40px 243px',
   },
   [theme.breakpoints.between('desktop_1280', 'desktop_1440')]: {
     padding: '40px 286px',
@@ -86,7 +83,7 @@ const Container = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('desktop_1920')]: {
     padding: '40px 606px',
   },
-  [theme.breakpoints.up('table_834')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     height: '282px',
   },
 }));
@@ -97,7 +94,7 @@ const ContainerData = styled('div')(({ theme }) => ({
   maxWidth: '375px',
   margin: '0px auto',
 
-  [theme.breakpoints.up('table_834')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     maxWidth: '708px',
     margin: '0px auto',
   },
@@ -126,7 +123,7 @@ const ContainerCheckBox = styled('div')(({ theme }) => ({
   margin: '0 auto',
   marginTop: '32px',
 
-  [theme.breakpoints.up('table_834')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     marginTop: '24px',
   },
 }));
@@ -139,7 +136,7 @@ const ContainerButton = styled('div')(({ theme }) => ({
   marginTop: '32px',
   alignItems: 'center',
 
-  [theme.breakpoints.up('table_834')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     display: 'flex',
     flexDirection: 'row',
     margin: '0 auto',
@@ -173,7 +170,7 @@ const CustomButtonStyled = styled(CustomButton)(({ theme }) => ({
     color: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.slate[50],
   },
 
-  [theme.breakpoints.up('table_834')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     marginTop: '0px',
   },
 }));
@@ -190,7 +187,7 @@ const RejectAllCookiesButton = styled(CustomButton)(({ theme }) => ({
     color: theme.palette.isLight ? theme.palette.colors.gray[600] : theme.palette.colors.slate[100],
   },
 
-  [theme.breakpoints.up('table_834')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     marginRight: 24,
   },
 }));

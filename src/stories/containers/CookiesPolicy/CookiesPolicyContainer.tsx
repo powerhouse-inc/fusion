@@ -81,13 +81,10 @@ const ContainerData = styled(Card)(({ theme }) => ({
   [theme.breakpoints.between('desktop_1280', 'desktop_1440')]: {
     maxWidth: '1184px',
   },
-  [theme.breakpoints.between('desktop_1194', 'desktop_1280')]: {
-    maxWidth: '1066px',
-  },
-  [theme.breakpoints.between('table_834', 'desktop_1194')]: {
+  [theme.breakpoints.between('tablet_768', 'desktop_1280')]: {
     maxWidth: '770px',
   },
-  [theme.breakpoints.down('table_834')]: {
+  [theme.breakpoints.down('tablet_768')]: {
     maxWidth: '343px',
     padding: '32px 24px',
   },
@@ -104,7 +101,7 @@ const Title = styled('div')(({ theme }) => ({
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   marginBottom: 16,
 
-  [theme.breakpoints.between('table_834', 'desktop_1194')]: {
+  [theme.breakpoints.between('tablet_768', 'desktop_1280')]: {
     fontSize: 20,
     lineHeight: '24px',
   },
@@ -118,7 +115,7 @@ const Description = styled('div')(({ theme }) => ({
   lineHeight: '24px',
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
 
-  [theme.breakpoints.up('table_834')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     fontWeight: 700,
     fontSize: 18,
     lineHeight: '21.6px',
@@ -141,7 +138,7 @@ const ContainerButton = styled('div')(({ theme }) => ({
   justifyContent: 'center',
   marginTop: '64px',
 
-  [theme.breakpoints.down('table_834')]: {
+  [theme.breakpoints.down('tablet_768')]: {
     marginTop: '40px',
   },
 }));
@@ -154,7 +151,7 @@ const ParagraphStyle = styled('p')(({ theme }) => ({
   lineHeight: '24px',
   color: theme.palette.isLight ? theme.palette.colors.gray[600] : theme.palette.colors.gray[50],
 
-  [theme.breakpoints.up('desktop_1194')]: {
+  [theme.breakpoints.up('desktop_1280')]: {
     fontSize: 16,
   },
 }));
@@ -167,7 +164,7 @@ const ListItem = styled('li')(({ theme }) => ({
   lineHeight: '22px',
   color: theme.palette.isLight ? theme.palette.colors.gray[600] : theme.palette.colors.gray[50],
 
-  [theme.breakpoints.up('desktop_1194')]: {
+  [theme.breakpoints.up('desktop_1280')]: {
     fontSize: 16,
     lineHeight: '24px',
   },

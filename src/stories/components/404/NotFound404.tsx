@@ -14,7 +14,7 @@ import type { FC } from 'react';
 const NotFound404: FC = () => {
   const router = useRouter();
   const theme = useTheme();
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('table_834'));
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const handleOnclick = () => {
     router.push('/');
   };
@@ -68,7 +68,7 @@ const Wrapper = styled('div')(({ theme }) => ({
   marginTop: '132px',
   paddingBottom: '128px',
 
-  [theme.breakpoints.up('table_834')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     marginTop: '128px',
   },
 }));
@@ -92,14 +92,9 @@ const ImageContainer = styled('div')(({ theme }) => ({
   },
   borderRadius: '20px',
 
-  [theme.breakpoints.between('table_834', 'desktop_1194')]: {
+  [theme.breakpoints.between('tablet_768', 'desktop_1280')]: {
     paddingTop: '128px',
     maxWidth: '769px',
-    margin: '0 auto',
-  },
-  [theme.breakpoints.between('desktop_1194', 'desktop_1280')]: {
-    paddingTop: '58px',
-    maxWidth: '1130px',
     margin: '0 auto',
   },
   [theme.breakpoints.between('desktop_1280', 'desktop_1920')]: {
@@ -134,12 +129,12 @@ const LogoContainer = styled('div')(({ theme }) => ({
   marginLeft: '32px',
   marginRight: '32px',
 
-  [theme.breakpoints.between('table_834', 'desktop_1194')]: {
+  [theme.breakpoints.between('tablet_768', 'desktop_1280')]: {
     marginBottom: '160px',
     width: '580px',
     height: '340px',
   },
-  [theme.breakpoints.up('desktop_1194')]: {
+  [theme.breakpoints.up('desktop_1280')]: {
     marginBottom: '37.26px',
     width: '675px',
     height: '397.74px',
@@ -155,7 +150,7 @@ const ContainerText = styled('div')(({ theme }) => ({
   paddingLeft: '32px',
   maxWidth: '343px',
 
-  [theme.breakpoints.up('table_834')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     maxWidth: '100%',
   },
 }));
@@ -171,7 +166,7 @@ const TextUps = styled(Typography)(({ theme }) => ({
   textAlign: 'center',
   marginBottom: '24px',
 
-  [theme.breakpoints.up('table_834')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     fontWeight: 700,
     fontSize: '48px',
     lineHeight: '58px',
@@ -190,7 +185,7 @@ const TextDescription = styled(Typography)(({ theme }) => ({
   color: '#ADAFD4',
   marginBottom: '64px',
 
-  [theme.breakpoints.up('table_834')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     fontSize: '24px',
     lineHeight: '29px',
     marginBottom: '40px',
@@ -200,10 +195,10 @@ const TextDescription = styled(Typography)(({ theme }) => ({
 const ContainerButton = styled('div')(({ theme }) => ({
   paddingBottom: '83px',
 
-  [theme.breakpoints.between('table_834', 'desktop_1194')]: {
+  [theme.breakpoints.between('tablet_768', 'desktop_1280')]: {
     paddingBottom: '156px',
   },
-  [theme.breakpoints.up('desktop_1194')]: {
+  [theme.breakpoints.up('desktop_1280')]: {
     paddingBottom: '84px',
   },
 }));

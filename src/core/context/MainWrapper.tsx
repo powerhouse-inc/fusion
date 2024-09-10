@@ -69,7 +69,7 @@ const ContainerOverlay = styled('div')(({ theme }) => ({
   background: 'rgba(52, 52, 66, 0.1)',
   backdropFilter: theme.palette.isLight ? 'blur(2px)' : 'blur(4px)',
 
-  [theme.breakpoints.down('table_834')]: {
+  [theme.breakpoints.down('tablet_768')]: {
     height: 'calc(100vh - 458px)',
   },
 }));
