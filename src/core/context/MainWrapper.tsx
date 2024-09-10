@@ -1,16 +1,15 @@
-import styled from '@emotion/styled';
+import { styled } from '@mui/material';
 import CookiesPolicyBanner from '@ses/components/CookiesPolicyBanner/CookiesPolicyBanner';
 import { useLayoutEffect } from 'react';
-import lightTheme from '../../../styles/theme/themes';
 import { zIndexEnum } from '../enums/zIndexEnum';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { getPageWrapper } from '../utils/dom';
 import { useCookiesContextTracking } from './CookiesContext';
 import { useThemeContext } from './ThemeContext';
-import type { ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 
-const MainWrapper = ({ children }: { children: ReactNode }) => {
-  const { themeMode, isLight } = useThemeContext();
+const MainWrapper: FC<{ children: ReactNode }> = ({ children }) => {
+  const { themeMode } = useThemeContext();
   const { lockScroll, unlockScroll } = useScrollLock();
 
   const {
@@ -42,7 +41,7 @@ const MainWrapper = ({ children }: { children: ReactNode }) => {
   return (
     <>
       {children}
-      {isShowBanner && themeMode !== undefined && <ContainerOverlay isLight={isLight} />}
+      {isShowBanner && themeMode !== undefined && <ContainerOverlay />}
       {isShowBanner && themeMode !== undefined && (
         <PolicyBannerPosition>
           <CookiesPolicyBanner
@@ -61,24 +60,25 @@ const MainWrapper = ({ children }: { children: ReactNode }) => {
 
 export default MainWrapper;
 
-const ContainerOverlay = styled.div<{ isLight: boolean }>(({ isLight }) => ({
+const ContainerOverlay = styled('div')(({ theme }) => ({
   position: 'fixed',
   top: 0,
   width: '100%',
   zIndex: zIndexEnum.OVERLAY_MOBILE_TOOLTIP,
   height: 'calc(100vh - 282px)',
   background: 'rgba(52, 52, 66, 0.1)',
-  backdropFilter: isLight ? 'blur(2px)' : 'blur(4px)',
-  [lightTheme.breakpoints.between('mobile_375', 'table_834')]: {
+  backdropFilter: theme.palette.isLight ? 'blur(2px)' : 'blur(4px)',
+
+  [theme.breakpoints.down('tablet_768')]: {
     height: 'calc(100vh - 458px)',
   },
 }));
 
-const PolicyBannerPosition = styled.div({
+const PolicyBannerPosition = styled('div')(() => ({
   bottom: 0,
-  zIndex: 4,
+  zIndex: 10,
   width: '100%',
   position: 'fixed',
   borderRadius: '90px',
   transition: 'all 0.5s ease-in',
-});
+}));

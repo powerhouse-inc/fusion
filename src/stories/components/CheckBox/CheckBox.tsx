@@ -1,17 +1,17 @@
-import styled from '@emotion/styled';
+import { styled, useTheme } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
-import React from 'react';
 import CheckOnComponent from '../svg/check-on-new';
 import CheckboxOff from '../svg/checkbox-off';
+import type { FC } from 'react';
 
 interface Props {
   label: string;
   isChecked: boolean;
   setIsChecked: (isChecked: boolean) => void;
-  isLight: boolean;
 }
 
-const CheckBox = ({ label, isChecked, setIsChecked, isLight }: Props) => {
+const CheckBox: FC<Props> = ({ label, isChecked, setIsChecked }) => {
+  const theme = useTheme();
   const handleClick = () => {
     setIsChecked(isChecked);
   };
@@ -24,31 +24,41 @@ const CheckBox = ({ label, isChecked, setIsChecked, isLight }: Props) => {
         }}
       >
         {isChecked ? (
-          <CheckOnComponent fill="#1AAB9B" fillDark="#1AAB9B" width={12} height={12} />
+          <CheckOnComponent
+            fill={theme.palette.colors.sky[1000]}
+            fillDark={theme.palette.colors.sky[1000]}
+            width={12}
+            height={12}
+          />
         ) : (
-          <CheckboxOff fill="#1AAB9B" fillDark="#1AAB9B" width={12} height={12} />
+          <CheckboxOff
+            fill={theme.palette.colors.slate[200]}
+            fillDark={theme.palette.colors.slate[300]}
+            width={12}
+            height={12}
+          />
         )}
       </IconButton>
-      <StyleLabel isChecked={isChecked} isLight={isLight} onClick={handleClick}>
+      <StyleLabel isChecked={isChecked} onClick={handleClick}>
         {label}
       </StyleLabel>
     </Container>
   );
 };
 
-const Container = styled.div({
+const Container = styled('div')({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
 });
 
-const StyleLabel = styled.span<{ isChecked: boolean; isLight: boolean }>(({ isChecked, isLight }) => ({
+const StyleLabel = styled('span')<{ isChecked: boolean }>(({ isChecked, theme }) => ({
   fontFamily: 'Inter, sans-serif',
   fontStyle: ' normal',
   fontWeight: isChecked ? 600 : 500,
   fontSize: '14px',
-  lineHeight: isChecked ? '17px' : '18px',
-  color: isLight ? '#231536' : '#D2D4EF',
+  lineHeight: '22px',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   display: 'inline-block',
   marginLeft: '10px',
   cursor: 'pointer',

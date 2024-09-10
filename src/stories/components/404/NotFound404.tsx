@@ -1,36 +1,33 @@
-import styled from '@emotion/styled';
-import { Typography, useMediaQuery } from '@mui/material';
+import { Typography, styled, useMediaQuery, useTheme } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React from 'react';
 import Background404 from '../../../../public/assets/img/background-404.png';
 import Background404Dark from '../../../../public/assets/img/background-dark-404.png';
 import BackgroundMobile404 from '../../../../public/assets/img/background-mobile-404.png';
 import BackgroundMobile404Dark from '../../../../public/assets/img/background-mobile-dark-404.png';
 import Logo404 from '../../../../public/assets/img/logo-404.png';
 import Logo404Dark from '../../../../public/assets/img/logo-dark-404.png';
-import lightTheme from '../../../../styles/theme/themes';
-import { useThemeContext } from '../../../core/context/ThemeContext';
 import { CustomButton } from '../CustomButton/CustomButton';
+import type { Theme } from '@mui/material';
+import type { FC } from 'react';
 
-const NotFound404: React.FC = () => {
+const NotFound404: FC = () => {
   const router = useRouter();
-  const phoneLess = useMediaQuery(lightTheme.breakpoints.down('mobile_375'));
-  const isMobile = useMediaQuery(lightTheme.breakpoints.between('mobile_375', 'table_834'));
-  const { isLight } = useThemeContext();
+  const theme = useTheme();
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const handleOnclick = () => {
     router.push('/');
   };
   return (
     <Wrapper>
-      <ImageContainer isLight={isLight}>
+      <ImageContainer>
         <Image
           src={
-            isLight
-              ? phoneLess || isMobile
+            theme.palette.isLight
+              ? isMobile
                 ? BackgroundMobile404
                 : Background404
-              : phoneLess || isMobile
+              : isMobile
               ? BackgroundMobile404Dark
               : Background404Dark
           }
@@ -41,7 +38,7 @@ const NotFound404: React.FC = () => {
         <ContainerData>
           <LogoContainer>
             <Image
-              src={isLight ? Logo404 : Logo404Dark}
+              src={theme.palette.isLight ? Logo404 : Logo404Dark}
               alt=""
               layout="fill"
               style={{
@@ -51,33 +48,11 @@ const NotFound404: React.FC = () => {
             />
           </LogoContainer>
           <ContainerText>
-            <TextUps isLight={isLight}>Oops!</TextUps>
+            <TextUps>Oops!</TextUps>
             <TextDescription>The page you requested couldn't be found</TextDescription>
           </ContainerText>
           <ContainerButton>
-            <CustomButton
-              widthText="100%"
-              label="Go Back to Homepage"
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                gap: '8px',
-                width: '250px',
-                height: '48px',
-                background: isLight ? '#E7FCFA' : 'transparent',
-                border: '1px solid #1AAB9B',
-                borderRadius: '22px',
-                // eslint-disable-next-line @typescript-eslint/no-empty-function
-              }}
-              onClick={handleOnclick}
-              styleText={{
-                color: '#1AAB9B',
-                fontSize: '16px',
-                lineHeight: '24px',
-              }}
-            />
+            <StyledCustomButton label="Go Back to Homepage" allowsHover={false} onClick={handleOnclick} />
           </ContainerButton>
         </ContainerData>
       </ImageContainer>
@@ -87,17 +62,18 @@ const NotFound404: React.FC = () => {
 
 export default NotFound404;
 
-const Wrapper = styled.div({
+const Wrapper = styled('div')(({ theme }) => ({
   width: '100%',
   height: '100%',
   marginTop: '132px',
   paddingBottom: '128px',
-  [lightTheme.breakpoints.up('table_834')]: {
+
+  [theme.breakpoints.up('tablet_768')]: {
     marginTop: '128px',
   },
-});
+}));
 
-const ImageContainer = styled.div<{ isLight?: boolean }>(({ isLight }) => ({
+const ImageContainer = styled('div')(({ theme }) => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
@@ -109,29 +85,24 @@ const ImageContainer = styled.div<{ isLight?: boolean }>(({ isLight }) => ({
   margin: '0 auto',
   '& > span': {
     borderRadius: '6px',
-    background: isLight ? '#FFFFFF' : 'linear-gradient(180deg, #001020 0%, #000000 63.95%)',
-    boxShadow: isLight
+    background: theme.palette.isLight ? '#FFFFFF' : 'linear-gradient(180deg, #001020 0%, #000000 63.95%)',
+    boxShadow: theme.palette.isLight
       ? '0px 20px 40px rgba(219, 227, 237, 0.4), 0px 1px 3px rgba(190, 190, 190, 0.25)'
       : '10px 15px 20px 6px rgba(20, 0, 141, 0.1)',
   },
   borderRadius: '20px',
 
-  [lightTheme.breakpoints.between('table_834', 'desktop_1194')]: {
+  [theme.breakpoints.between('tablet_768', 'desktop_1280')]: {
     paddingTop: '128px',
     maxWidth: '769px',
     margin: '0 auto',
   },
-  [lightTheme.breakpoints.between('desktop_1194', 'desktop_1280')]: {
-    paddingTop: '58px',
-    maxWidth: '1130px',
-    margin: '0 auto',
-  },
-  [lightTheme.breakpoints.between('desktop_1280', 'desktop_1920')]: {
+  [theme.breakpoints.between('desktop_1280', 'desktop_1920')]: {
     paddingTop: '58px',
     maxWidth: '1184px',
     margin: '0 auto',
   },
-  [lightTheme.breakpoints.up('desktop_1920')]: {
+  [theme.breakpoints.up('desktop_1920')]: {
     paddingTop: '58px',
     maxWidth: '1412px',
     margin: '0 auto',
@@ -139,7 +110,7 @@ const ImageContainer = styled.div<{ isLight?: boolean }>(({ isLight }) => ({
   },
 }));
 
-const ContainerData = styled.div({
+const ContainerData = styled('div')(() => ({
   zIndex: 1,
   width: '100%',
   height: '100%',
@@ -147,9 +118,9 @@ const ContainerData = styled.div({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-});
+}));
 
-const LogoContainer = styled.div({
+const LogoContainer = styled('div')(({ theme }) => ({
   position: 'relative',
   display: 'block',
   width: '279px',
@@ -157,19 +128,20 @@ const LogoContainer = styled.div({
   marginBottom: '64px',
   marginLeft: '32px',
   marginRight: '32px',
-  [lightTheme.breakpoints.between('table_834', 'desktop_1194')]: {
+
+  [theme.breakpoints.between('tablet_768', 'desktop_1280')]: {
     marginBottom: '160px',
     width: '580px',
     height: '340px',
   },
-  [lightTheme.breakpoints.up('desktop_1194')]: {
+  [theme.breakpoints.up('desktop_1280')]: {
     marginBottom: '37.26px',
     width: '675px',
     height: '397.74px',
   },
-});
+}));
 
-const ContainerText = styled.div({
+const ContainerText = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -177,32 +149,32 @@ const ContainerText = styled.div({
   paddingRight: '32px',
   paddingLeft: '32px',
   maxWidth: '343px',
-  [lightTheme.breakpoints.up('table_834')]: {
+
+  [theme.breakpoints.up('tablet_768')]: {
     maxWidth: '100%',
   },
-});
+}));
 
-const TextUps = styled(Typography, { shouldForwardProp: (prop) => prop !== 'isLight' })<{ isLight?: boolean }>(
-  ({ isLight }) => ({
-    fontFamily: 'Inter, sans-serif',
-    fontStyle: 'normal',
+const TextUps = styled(Typography)(({ theme }) => ({
+  fontFamily: 'Inter, sans-serif',
+  fontStyle: 'normal',
+  fontWeight: 700,
+  fontSize: '36px',
+  lineHeight: '43px',
+  letterSpacing: '0.4px',
+  color: theme.palette.isLight ? '#787A9B' : '#D2D4EF',
+  textAlign: 'center',
+  marginBottom: '24px',
+
+  [theme.breakpoints.up('tablet_768')]: {
     fontWeight: 700,
-    fontSize: '36px',
-    lineHeight: '43px',
-    letterSpacing: '0.4px',
-    color: isLight ? '#787A9B' : '#D2D4EF',
-    textAlign: 'center',
-    marginBottom: '24px',
-    [lightTheme.breakpoints.up('table_834')]: {
-      fontWeight: 700,
-      fontSize: '48px',
-      lineHeight: '58px',
-      marginBottom: '32px',
-    },
-  })
-);
+    fontSize: '48px',
+    lineHeight: '58px',
+    marginBottom: '32px',
+  },
+}));
 
-const TextDescription = styled(Typography)({
+const TextDescription = styled(Typography)(({ theme }) => ({
   fontFamily: 'Inter,san-serif',
   fontStyle: 'normal',
   fontWeight: 500,
@@ -212,19 +184,47 @@ const TextDescription = styled(Typography)({
   letterSpacing: '0.4px',
   color: '#ADAFD4',
   marginBottom: '64px',
-  [lightTheme.breakpoints.up('table_834')]: {
+
+  [theme.breakpoints.up('tablet_768')]: {
     fontSize: '24px',
     lineHeight: '29px',
     marginBottom: '40px',
   },
-});
+}));
 
-const ContainerButton = styled.div({
+const ContainerButton = styled('div')(({ theme }) => ({
   paddingBottom: '83px',
-  [lightTheme.breakpoints.between('table_834', 'desktop_1194')]: {
+
+  [theme.breakpoints.between('tablet_768', 'desktop_1280')]: {
     paddingBottom: '156px',
   },
-  [lightTheme.breakpoints.up('desktop_1194')]: {
+  [theme.breakpoints.up('desktop_1280')]: {
     paddingBottom: '84px',
   },
-});
+}));
+
+const StyledCustomButton = styled(CustomButton)(({ theme }) => ({
+  padding: '4px 24px',
+  border: 'none',
+  borderRadius: 8,
+  backgroundColor: theme.palette.colors.sky[1000],
+  '&:hover': {
+    backgroundColor: theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.sky[900],
+    '& > div': {
+      color: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.slate[50],
+    },
+  },
+  '&:active': {
+    backgroundColor: theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.sky[900],
+    '& > div': {
+      color: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.slate[50],
+    },
+  },
+  '& > div': {
+    fontWeight: 600,
+    fontSize: 16,
+    lineHeight: '24px',
+    letterSpacing: -0.32,
+    color: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.slate[50],
+  },
+}));
