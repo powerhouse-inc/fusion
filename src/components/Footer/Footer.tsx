@@ -4,7 +4,7 @@ import FooterIcon from 'public/assets/svg/fusion.svg';
 import PowerhouseIcon from 'public/assets/svg/powerhouse.svg';
 import { siteRoutes } from '@/config/routes';
 import FooterContact from './FooterContact';
-import { linkCategory, contactMakerDAO, contactPowerhouse } from './data';
+import { linkCategory, contactMakerDAO } from './data';
 
 const Footer = () => (
   <FooterWrapper>
@@ -26,15 +26,18 @@ const Footer = () => (
       </FooterColumnLink>
       <ContactSection>
         <FooterContactSky {...contactMakerDAO} />
-        <FooterContact {...contactPowerhouse} />
       </ContactSection>
     </FooterContainer>
     <FooterBottom>
       <FooterIcon width="104" height="36" />
       <FooterBottomRight>
-        <FooterButtonLink>2024 Powerhouse</FooterButtonLink>
-        <CookiePolicy href={siteRoutes.cookiesPolicy}>Cookie Policy</CookiePolicy>
-        <PowerhouseIcon width={16} height={16} />
+        <StyledLink href={siteRoutes.cookiesPolicy}>Cookie Policy</StyledLink>
+        <StyledLink href={siteRoutes.termsOfUse}>Terms of Use</StyledLink>
+        <BuiltWith>
+          <FooterButtonLink>Built with</FooterButtonLink>
+          <PowerhouseIcon width={16} height={16} />
+          <FooterButtonLink>Powerhouse</FooterButtonLink>
+        </BuiltWith>
       </FooterBottomRight>
     </FooterBottom>
   </FooterWrapper>
@@ -43,14 +46,14 @@ const Footer = () => (
 const FooterWrapper = styled('footer')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  padding: '18px 16px 10px',
+  padding: '18px 16px 16px',
   backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : '#1B1E24',
   borderTop: `1px solid ${theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.gray[900]}`,
   [theme.breakpoints.up('tablet_768')]: {
-    padding: '26px 32px 10px',
+    padding: '26px 32px 16px',
   },
   [theme.breakpoints.up('desktop_1024')]: {
-    padding: '32px 32px 10px',
+    padding: '32px 32px 16px',
   },
   [theme.breakpoints.up('desktop_1920')]: {
     maxWidth: 1900,
@@ -136,10 +139,12 @@ const ContactSection = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('tablet_768')]: {
     gap: 32,
     flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   [theme.breakpoints.up('desktop_1024')]: {
     gap: 16,
     flexDirection: 'column',
+    justifyContent: 'flex-start',
   },
 }));
 
@@ -161,36 +166,51 @@ const FooterBottomRight = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
-  justifyContent: 'space-around',
-  gap: 20,
+  flexWrap: 'wrap',
+  columnGap: 24,
+  rowGap: 8,
   marginTop: 13,
   [theme.breakpoints.up('tablet_768')]: {
-    gap: 24,
     marginTop: 0,
   },
 }));
 
+const BuiltWith = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  '& > p:first-of-type': {
+    marginRight: 8,
+  },
+  '& > p:last-of-type': {
+    marginLeft: 4,
+  },
+}));
+
 const FooterButtonLink = styled('p')(({ theme }) => ({
+  margin: 0,
   color: theme.palette.colors.charcoal[300],
   fontSize: '12px',
   fontWeight: 500,
-  lineHeight: '22px',
+  lineHeight: '24px',
   textDecoration: 'none',
 }));
 
-const CookiePolicy = styled(Link)(({ theme }) => ({
+const StyledLink = styled(Link)(({ theme }) => ({
   color: theme.palette.colors.charcoal[300],
   fontSize: '12px',
   fontWeight: 500,
-  lineHeight: '22px',
+  lineHeight: '24px',
   textDecoration: 'none',
 }));
 
-const FooterContactSky = styled(FooterContact)({
+const FooterContactSky = styled(FooterContact)(({ theme }) => ({
   '& > svg:first-of-type': {
     width: 48,
     height: 48,
   },
-});
+  [theme.breakpoints.up('tablet_768')]: {
+    width: 'fit-content',
+  },
+}));
 
 export default Footer;

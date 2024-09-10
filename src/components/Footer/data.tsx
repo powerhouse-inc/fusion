@@ -24,24 +24,23 @@ const XStyled = styled(X)(({ theme }) => ({
 }));
 const linkCategory: LinkCategory[] = [
   {
-    name: 'Governance',
+    name: 'Sky Ecosystem',
     links: [
       {
-        label: 'Maker forum',
+        label: 'Forum',
         link: 'https://forum.makerdao.com/',
       },
       {
-        label: 'Voting portal',
+        label: 'Voting Portal',
         link: 'https://vote.makerdao.com/',
       },
       {
-        label: 'MIPs portal',
-        link: 'https://mips.makerdao.com/mips/lis',
+        label: 'MIPs Portal',
+        link: 'https://mips.makerdao.com/mips/list',
       },
       {
-        // eslint-disable-next-line spellcheck/spell-checker
-        label: 'Makerburn vnext',
-        link: 'https://makerburn.com/v2',
+        label: 'Sky Atlas',
+        link: 'https://sky-atlas.powerhouse.io/',
       },
     ],
   },
@@ -50,38 +49,42 @@ const linkCategory: LinkCategory[] = [
     links: [
       {
         label: 'Organization',
-        link: 'https://www.powerhouse.inc/',
+        link: 'https://sky.money/',
       },
       {
-        label: 'Technical Docs',
-        link: 'https://powerhouse-1.gitbook.io/powerhouse',
+        label: 'Sky Technical Documentation',
+        link: 'https://docs.sky.money/',
       },
       {
         label: 'Brand Assets',
-        link: 'https://www.notion.so/makerdao-ses/ed7c926d094f46aa82647583077c8205?v=d4a8854753214b3fa4a2446fb2c72045',
+        link: 'https://www.notion.so/ec871fa39f9d41bf9cc4446e7d1f6997?pvs=25',
       },
       {
         label: 'Github Repos',
-        link: 'https://github.com/powerhouse-inc',
+        link: 'https://github.com/makerdao',
       },
     ],
   },
   {
-    name: 'Sky Ecosystem Tooling',
+    name: 'Related Platforms',
     links: [
       {
+        label: 'Atlas Risk Dashboard',
+        link: 'https://info.sky.money/',
+      },
+      {
         label: 'Connect',
-        link: 'https://connect-test-env.vercel.app/',
+        link: 'https://connect.sky.money/',
         Icon: ConnectIcon,
       },
       {
         label: 'Switchboard',
-        link: 'https://powerhouse-nginx-router-5dcc24a23f9e.herokuapp.com/makerdao/switchboard',
+        link: 'https://switchboard.sky.money/',
         Icon: SwitchboardIcon,
       },
       {
         label: 'Fusion',
-        link: 'https://fusion.fog.money',
+        link: 'https://fusion.sky.money/',
         Icon: FusionIcon,
       },
     ],
@@ -91,12 +94,12 @@ const linkCategory: LinkCategory[] = [
 const iconsMakerDAO: TypeIconFooter[] = [
   {
     Icon: DiscordIcon,
-    href: 'https://discord.com/invite/SK9K9VHQBD',
+    href: 'https://discord.gg/skyecosystem',
     title: 'discord',
   },
   {
     Icon: XStyled,
-    href: 'https://x.com/MakerDAO',
+    href: 'https://x.com/SkyEcosystem',
     title: 'twitter',
   },
   {
@@ -106,7 +109,7 @@ const iconsMakerDAO: TypeIconFooter[] = [
   },
   {
     Icon: YoutubeIcon,
-    href: 'https://www.youtube.com/MakerDAO',
+    href: 'https://www.youtube.com/@skyecosystem',
     title: 'youtube',
   },
   {
