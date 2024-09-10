@@ -13,6 +13,7 @@ const query = gql`
             path
           }
           value
+          sum
           metric
         }
       }
@@ -61,21 +62,21 @@ const pathRegexMap: Record<BudgetKey, RegExp> = {
   immutable: /^atlas\/immutable.*$/g,
 };
 
+const emptyData: Record<BudgetKey, number[]> = {
+  legacyOthers: [] as number[],
+  legacyCoreUnits: [] as number[],
+  governanceScope: [] as number[],
+  stability: [] as number[],
+  support: [] as number[],
+  protocol: [] as number[],
+  accessibility: [] as number[],
+  immutable: [] as number[],
+};
+
 export const getFinancesData = async (): Promise<FormattedFinancesData> => {
   const analyticsResponse = await request<{
     analytics: Analytic;
   }>(GRAPHQL_ENDPOINT, query, filter);
-
-  const emptyData: Record<BudgetKey, number[]> = {
-    legacyOthers: [] as number[],
-    legacyCoreUnits: [] as number[],
-    governanceScope: [] as number[],
-    stability: [] as number[],
-    support: [] as number[],
-    protocol: [] as number[],
-    accessibility: [] as number[],
-    immutable: [] as number[],
-  };
 
   const data: Record<MetricKeyExtended, typeof emptyData> = {
     Actuals: clone(emptyData),
@@ -97,9 +98,11 @@ export const getFinancesData = async (): Promise<FormattedFinancesData> => {
           const index = (year - 2021) * 4 + quarter - 1;
 
           if (!data[metric][key as BudgetKey][index]) {
-            data[metric][key as BudgetKey][index] = row.value;
+            data[metric][key as BudgetKey][index] =
+              (metric === 'PaymentsOffChainIncluded' || metric === 'ProtocolNetOutflow' ? row.sum : row.value) ?? 0;
           } else {
-            data[metric][key as BudgetKey][index] += row.value;
+            data[metric][key as BudgetKey][index] +=
+              (metric === 'PaymentsOffChainIncluded' || metric === 'ProtocolNetOutflow' ? row.sum : row.value) ?? 0;
           }
         }
       });
@@ -111,7 +114,7 @@ export const getFinancesData = async (): Promise<FormattedFinancesData> => {
   data.OperationalReserves = clone(data.ProtocolNetOutflow);
   Object.keys(data.OperationalReserves).forEach((key) => {
     data.OperationalReserves[key as BudgetKey] = data.ProtocolNetOutflow[key as BudgetKey].map(
-      (value, index) => value - data.PaymentsOffChainIncluded[key as BudgetKey][index]
+      (value, index) => Math.abs(value ?? 0) - Math.abs(data.PaymentsOffChainIncluded[key as BudgetKey][index] ?? 0)
     );
   });
 
