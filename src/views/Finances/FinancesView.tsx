@@ -42,19 +42,12 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
     reserveChart,
     code,
     isMobile,
+    seo,
   } = useFinancesView(budgets, allBudgets, initialYear);
+
   return (
     <PageContainer>
-      <SEOHead
-        title="Sky Fusion - Sky Ecosystem Finances"
-        description={
-          levelNumber === 1
-            ? "Learn about Sky Ecosystem's Finances through aggregated views: budget utilization, expenses, operational reserves, and breakdown charts."
-            : `Learn about ${
-                title.toLowerCase().endsWith('budget') ? `${title}'s` : `${title} Budget's`
-              } Finances through aggregated views: from budget utilization, Expenses, operational reserves, and breakdown charts.`
-        }
-      />
+      <SEOHead title={seo.title} description={seo.description} />
 
       <BudgetMetricsModalProvider>
         <BreadcrumbYearNavigation

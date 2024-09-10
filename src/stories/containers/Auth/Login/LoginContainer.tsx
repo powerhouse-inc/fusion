@@ -1,6 +1,5 @@
 import { styled } from '@mui/material';
 import { SEOHead } from '@ses/components/SEOHead/SEOHead';
-import { toAbsoluteURL } from '@ses/core/utils/urls';
 import lightTheme from '@ses/styles/theme/themes';
 import React from 'react';
 import LoginForm from './LoginForm/LoginForm';
@@ -12,14 +11,8 @@ const LoginContainer: React.FC = () => {
   return (
     <Wrapper>
       <SEOHead
-        title="MakerDAO Ecosystem Performance Dashboard | Login Page"
-        description="Login Page for Core Unit administrators and auditors provides easy access to MakerDAO Ecosystem Performance Dashboard to manage expense reports"
-        image={{
-          src: toAbsoluteURL('/assets/img/social-385x200.png'),
-          width: 385,
-          height: 200,
-        }}
-        twitterImage={toAbsoluteURL('/assets/img/social-1200x630.png')}
+        title="Sky Fusion - Log In"
+        description="Sky Fusion Dashboard offers key data insights into the Sky Ecosystem's finances, governance, contributors, and roadmaps."
       />
       <Container>
         <LoginForm

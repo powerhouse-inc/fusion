@@ -26,6 +26,7 @@ const BudgetStatementView: React.FC<BudgetStatementViewProps> = ({
     ownerTypeQuery,
     ownerType,
     teamInfo,
+    seo,
     breadcrumbItems,
     snapshotCreated,
     setSnapshotCreated,
@@ -40,8 +41,8 @@ const BudgetStatementView: React.FC<BudgetStatementViewProps> = ({
   return (
     <PageContainer>
       <SEOHead
-        title={`MakerDAO Teams | ${teamInfo.name}`}
-        description={teamInfo.sentenceDescription}
+        title={seo.title}
+        description={seo.description}
         image={{
           src: toAbsoluteURL('/assets/img/social-385x200.png'),
           width: 385,
