@@ -101,7 +101,6 @@ const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, 
               }
             />
 
-            {/* TODO: instead of `projects.length` it should be `supportedProjects.length` once it is integrated with the API */}
             {filteredSupporterProjects.length > 0 ? (
               <>
                 <SupportedProjects>
@@ -137,7 +136,7 @@ const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, 
                     </IconContainer>
                   </SESTooltip>
                 </SupportedProjects>
-                <TexTNotFound>No Result Found</TexTNotFound>
+                <TextNotFound>No Result Found</TextNotFound>
               </div>
             )}
           </ContainerResponsive>
@@ -208,7 +207,7 @@ const IconContainer = styled('span')({
   alignItems: 'center',
 });
 
-const TexTNotFound = styled('p')(({ theme }) => ({
+const TextNotFound = styled('p')(({ theme }) => ({
   fontFamily: 'Inter, sans-serif',
 
   textAlign: 'center',
