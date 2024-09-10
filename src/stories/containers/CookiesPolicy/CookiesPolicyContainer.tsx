@@ -62,12 +62,22 @@ const CookiesPolicyContainer: FC = () => {
 
 export default CookiesPolicyContainer;
 
-const Container = styled('div')(() => ({
+const Container = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  paddingTop: '104px',
   width: '100%',
-  paddingBottom: '128px',
+  paddingTop: 88,
+  paddingBottom: 64,
+
+  [theme.breakpoints.up('tablet_768')]: {
+    paddingTop: 122,
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    paddingBottom: 16,
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    paddingBottom: 41,
+  },
 }));
 
 const ContainerData = styled(Card)(({ theme }) => ({
