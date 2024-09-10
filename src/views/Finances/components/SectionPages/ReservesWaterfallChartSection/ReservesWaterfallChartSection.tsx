@@ -55,8 +55,8 @@ const ReservesWaterfallChartSection: React.FC<Props> = ({
       />
       <FilterContainer>
         <FiltersBundle
+          asPopover={[]}
           heightForScroll
-          asPopover={['tablet_768', 'desktop']}
           filters={filters}
           resetFilters={{
             canReset,
