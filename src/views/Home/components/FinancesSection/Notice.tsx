@@ -8,7 +8,7 @@ const Notice: React.FC = () => (
       <USDSCircle />
       <DAICircle />
     </CoinWrapper>
-    <Text>*All values are converted to DAI/USDS</Text>
+    <Text>All values are aggregated DAI/USDS numbers</Text>
   </NoticeContainer>
 );
 
