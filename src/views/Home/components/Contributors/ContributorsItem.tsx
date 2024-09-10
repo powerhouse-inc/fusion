@@ -260,7 +260,7 @@ const ScopesDesk = styled('div')(({ theme }) => ({
   display: 'none',
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'flex',
-    minWidth: 90,
+    minWidth: 80,
   },
 }));
 const RoleDesk = styled('div')(({ theme }) => ({
