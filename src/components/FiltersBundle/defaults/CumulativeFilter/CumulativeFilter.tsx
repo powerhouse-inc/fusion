@@ -1,4 +1,4 @@
-import { ClickAwayListener, Grow, Paper, Popper, styled } from '@mui/material';
+import { ClickAwayListener, Grow, Paper, Popper, styled, useMediaQuery } from '@mui/material';
 import CheckOnComponent from '@ses/components/svg/check-on-new';
 import CheckboxOff from '@ses/components/svg/checkbox-off';
 import { SelectChevronDown } from '@ses/components/svg/select-chevron-down';
@@ -6,6 +6,7 @@ import { useThemeContext } from '@ses/core/context/ThemeContext';
 import { useState, useRef } from 'react';
 import CumulativeSelectItem from './CumulativeSelectItem';
 import type { CumulativeFilter } from '../../types';
+import type { Theme } from '@mui/material';
 
 interface CumulativeFilterProps {
   filter: CumulativeFilter;
@@ -14,6 +15,7 @@ interface CumulativeFilterProps {
 const CumulativeFilterComponent: React.FC<CumulativeFilterProps> = ({ filter }) => {
   const { isLight } = useThemeContext();
   const [open, setOpen] = useState<boolean>(false);
+  const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
   const anchorRef = useRef(null);
 
   const handleOpenMenu = () => {
@@ -21,11 +23,14 @@ const CumulativeFilterComponent: React.FC<CumulativeFilterProps> = ({ filter }) 
       setOpen((prev) => !prev);
     }
   };
-  // TODO: Add this change as improvement
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const getButtonText = () => {
     if (!filter.isCumulative) return 'Cumulative';
-    return filter.cumulativeType === 'relative' ? 'Relative Cumulative' : 'Absolute Cumulative';
+    if (isTablet) {
+      return filter.cumulativeType === 'relative' ? 'Relative ' : 'Absolute';
+    } else {
+      return filter.cumulativeType === 'relative' ? 'Relative Cumulative' : 'Absolute Cumulative';
+    }
   };
   return (
     <Container>
@@ -37,7 +42,7 @@ const CumulativeFilterComponent: React.FC<CumulativeFilterProps> = ({ filter }) 
             <CheckboxOff fill="#25273D" fillDark="#D2D4EF" width={12} height={12} />
           )}
         </CheckBtn>
-        Cumulative{' '}
+        {getButtonText()}
         <MenuBtn isActive={filter.isCumulative} onClick={handleOpenMenu} ref={anchorRef}>
           <StyledSelectChevronDown
             isOpen={open}
