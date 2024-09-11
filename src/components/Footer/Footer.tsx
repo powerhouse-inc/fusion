@@ -32,7 +32,10 @@ const Footer = () => (
       <FooterIcon width="104" height="36" />
       <FooterBottomRight>
         <StyledLink href={siteRoutes.cookiesPolicy}>Cookie Policy</StyledLink>
-        <StyledLink href={siteRoutes.termsOfUse}>Terms of Use</StyledLink>
+        <StyledLink href={siteRoutes.disclaimer}>Disclaimer</StyledLink>
+        <StyledLink href={'https://docs.sky.money/legal-terms'} target="_blank">
+          Terms of Use
+        </StyledLink>
         <BuiltWith>
           <FooterButtonLink>Built with</FooterButtonLink>
           <PowerhouseIcon width={16} height={16} />
@@ -47,7 +50,7 @@ const FooterWrapper = styled('footer')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   padding: '18px 16px 16px',
-  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : '#1B1E24',
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.background.dm,
   borderTop: `1px solid ${theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.gray[900]}`,
   [theme.breakpoints.up('tablet_768')]: {
     padding: '26px 32px 16px',
@@ -57,7 +60,6 @@ const FooterWrapper = styled('footer')(({ theme }) => ({
   },
   [theme.breakpoints.up('desktop_1920')]: {
     maxWidth: 1900,
-    backgroundColor: 'revert',
     margin: '0 auto',
     borderTop: 'none',
   },
