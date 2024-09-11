@@ -1,11 +1,8 @@
-import styled from '@emotion/styled';
+import { styled } from '@mui/material';
 import { LinkButton } from '@ses/components/LinkButton/LinkButton';
 import { SEOHead } from '@ses/components/SEOHead/SEOHead';
 import { siteRoutes } from '@ses/config/routes';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
 import { ButtonType } from '@ses/core/enums/buttonTypeEnum';
-import lightTheme from '@ses/styles/theme/themes';
-import React from 'react';
 import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
 import DelegateExpenseBreakdown from './DelegateExpenseBreakdown/DelegateExpenseBreakdown';
@@ -14,7 +11,7 @@ import TotalAndKeyStatsComponent from './TotalAndKeyStatsComponent/TotalAndkeySt
 import { useRecognizedDelegates } from './useRecognizedDelegates';
 import type { RecognizedDelegatesDto } from '@ses/core/models/dto/delegatesDTO';
 import type { Analytic } from '@ses/core/models/interfaces/analytic';
-import type { WithIsLight } from '@ses/core/utils/typesHelpers';
+import type { FC } from 'react';
 
 interface Props {
   delegates: RecognizedDelegatesDto[];
@@ -23,13 +20,12 @@ interface Props {
   totalAnalytics: Analytic;
 }
 
-const RecognizedDelegatesContainer: React.FC<Props> = ({
+const RecognizedDelegatesContainer: FC<Props> = ({
   delegates,
   totalMakerDAOExpenses,
   monthlyAnalytics,
   totalAnalytics,
 }) => {
-  const { isLight } = useThemeContext();
   const {
     totalDAI,
     mediaAnnual,
@@ -49,13 +45,13 @@ const RecognizedDelegatesContainer: React.FC<Props> = ({
   } = useRecognizedDelegates(delegates, totalMakerDAOExpenses, monthlyAnalytics, totalAnalytics);
 
   return (
-    <ExtendedPageContainer isLight={isLight}>
+    <ExtendedPageContainer>
       <SEOHead
         title="Sky Fusion - Recognized Delegates Legacy Ecosystem Contributors"
         description="Learn about Recognized Delegates as legacy contributors: their key information, activity, expenditures, and more."
       />
       <Container>
-        <Title isLight={isLight}>Recognized Delegates</Title>
+        <Title>Recognized Delegates</Title>
         <TotalAndKeyStatsComponent
           totalDAI={totalDAI}
           start={startDate}
@@ -98,59 +94,72 @@ const RecognizedDelegatesContainer: React.FC<Props> = ({
 
 export default RecognizedDelegatesContainer;
 
-const Title = styled.h1<WithIsLight>(({ isLight }) => ({
+const Title = styled('h1')(({ theme }) => ({
   fontFamily: 'Inter,san-serif',
   fontStyle: 'normal',
   fontWeight: 600,
   fontSize: '20px',
   lineHeight: '24px',
   letterSpacing: '0.4px',
-  color: isLight ? '#231536' : '#D2D4EF',
+  color: theme.palette.isLight ? '#231536' : '#D2D4EF',
   marginTop: 32,
   marginBottom: 16,
-  [lightTheme.breakpoints.up('table_834')]: {
+  [theme.breakpoints.up('table_834')]: {
     fontSize: 24,
     lineHeight: '29px',
     letterSpacing: '0.4px',
     marginTop: 24,
   },
-  [lightTheme.breakpoints.up('desktop_1194')]: {
+  [theme.breakpoints.up('desktop_1194')]: {
     marginTop: 24,
   },
 }));
 
-const ExtendedPageContainer = styled(PageContainer)<WithIsLight>(({ isLight }) => ({
-  background: isLight ? '#FFFFFF' : '#000000',
-  backgroundImage: isLight ? '#FFFFFF' : 'linear-gradient(180deg, #001020 0%, #000000 63.95%)',
+const ExtendedPageContainer = styled(PageContainer)(({ theme }) => ({
+  background: theme.palette.isLight ? '#FFFFFF' : '#000000',
+  backgroundImage: theme.palette.isLight ? '#FFFFFF' : 'linear-gradient(180deg, #001020 0%, #000000 63.95%)',
 }));
 
-const ContainerTrend = styled.div({
+const ContainerTrend = styled('div')(({ theme }) => ({
   marginTop: 40,
   marginBottom: 32,
   height: 378,
-  [lightTheme.breakpoints.up('table_834')]: {
+  [theme.breakpoints.up('table_834')]: {
     width: 690,
     margin: '38px auto 24px',
   },
-});
+}));
 
-const ContainerBreakdown = styled.div({
+const ContainerBreakdown = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 24,
-});
+}));
 
-const ContainerButton = styled.div({
+const ContainerButton = styled('div')(({ theme }) => ({
   margin: '46px auto 64px',
   width: 300,
   height: 48,
-  [lightTheme.breakpoints.up('desktop_1194')]: {
+  [theme.breakpoints.up('desktop_1194')]: {
     margin: '48px auto 64px',
   },
-});
+}));
 
-const Button = styled(LinkButton)({
+const Button = styled(LinkButton)(({ theme }) => ({
   width: '100%',
+  backgroundColor: theme.palette.colors.sky[1000],
+  border: 'none',
+  '&:hover': {
+    backgroundColor: `${
+      theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.sky[900]
+    } !important`,
+    '& > div': {
+      color: `${theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.slate[50]} !important`,
+    },
+  },
+  '&:active > div': {
+    color: `${theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.slate[50]} !important`,
+  },
 
   '& > div': {
     fontWeight: 500,
@@ -158,5 +167,9 @@ const Button = styled(LinkButton)({
     width: '100%',
     fontSize: 16,
     lineHeight: '19px',
+    color: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.slate[50],
+    '&:hover': {
+      backgroundColor: 'transparent !important',
+    },
   },
-});
+}));
