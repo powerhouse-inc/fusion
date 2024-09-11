@@ -1,4 +1,4 @@
-replicaCount: ${REPLICA_COUNT}
+replicaCount: 1
 service:
   enabled: true
   name: ${APP_NAME}
