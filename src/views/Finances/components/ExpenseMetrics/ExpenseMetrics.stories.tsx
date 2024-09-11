@@ -4,7 +4,7 @@ import ExpenseMetrics from './ExpenseMetrics';
 import type { Meta } from '@storybook/react';
 
 const meta: Meta<typeof ExpenseMetrics> = {
-  title: 'Fusion/Views/Finances/ExpenseMetrics',
+  title: 'Fusion/Views/Finances/Section/ExpenseMetrics',
   component: ExpenseMetrics,
 
   parameters: {
