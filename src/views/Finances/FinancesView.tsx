@@ -118,34 +118,37 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
             />
           </SectionBreakdownChartSection>
 
-          <ExpenseMetricsSection
-            expenseMetrics={{
-              title: levelNumber === 1 ? 'Sky Expense Metrics' : 'Expense Metrics',
-              selectedGranularity: expensesMetrics.selectedGranularity,
-              isCumulative: expensesMetrics.isCumulative,
-              cumulativeType: expensesMetrics.cumulativeType,
-              series: expensesMetrics.series,
-              handleToggleSeries: expensesMetrics.handleToggleSeries,
-              isLoading: expensesMetrics.isLoading,
-              year,
-              filters: expensesMetrics.filters,
-              canReset: expensesMetrics.canReset,
-              onReset: expensesMetrics.onReset,
-            }}
-          />
-
-          <ReservesWaterfallChartSection
-            title={`${levelNumber === 1 ? (isMobile ? 'MakerDAO F.' : 'MakerDAO Finances') : title} Reserves`}
-            legends={reserveChart.legendItems}
-            series={reserveChart.series}
-            selectedGranularity={reserveChart.selectedGranularity}
-            year={year}
-            isLoading={reserveChart.isLoading}
-            canReset={reserveChart.canReset}
-            onReset={reserveChart.onReset}
-            filters={reserveChart.filters}
-            startPoint={reserveChart.startPoint}
-          />
+          <ContainerSpace>
+            <ExpenseMetricsSection
+              expenseMetrics={{
+                title: levelNumber === 1 ? 'Sky Expense Metrics' : 'Expense Metrics',
+                selectedGranularity: expensesMetrics.selectedGranularity,
+                isCumulative: expensesMetrics.isCumulative,
+                cumulativeType: expensesMetrics.cumulativeType,
+                series: expensesMetrics.series,
+                handleToggleSeries: expensesMetrics.handleToggleSeries,
+                isLoading: expensesMetrics.isLoading,
+                year,
+                filters: expensesMetrics.filters,
+                canReset: expensesMetrics.canReset,
+                onReset: expensesMetrics.onReset,
+              }}
+            />
+          </ContainerSpace>
+          <ContainerSpace>
+            <ReservesWaterfallChartSection
+              title={`${levelNumber === 1 ? (isMobile ? 'MakerDAO F.' : 'MakerDAO Finances') : title} Reserves`}
+              legends={reserveChart.legendItems}
+              series={reserveChart.series}
+              selectedGranularity={reserveChart.selectedGranularity}
+              year={year}
+              isLoading={reserveChart.isLoading}
+              canReset={reserveChart.canReset}
+              onReset={reserveChart.onReset}
+              filters={reserveChart.filters}
+              startPoint={reserveChart.startPoint}
+            />
+          </ContainerSpace>
         </Container>
       </BudgetMetricsModalProvider>
 
@@ -164,7 +167,7 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
       </ConditionalWrapper>
 
       <Container>
-        <ContainerLastReport>
+        <ContainerSpace>
           <ExpenseReports
             year={year}
             selectedMetric={expenseReportSection.selectedMetric}
@@ -182,7 +185,7 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
             canReset={expenseReportSection.canReset}
             onReset={expenseReportSection.onReset}
           />
-        </ContainerLastReport>
+        </ContainerSpace>
       </Container>
     </PageContainer>
   );
@@ -264,17 +267,16 @@ const ContainerSections = styled('div')(({ theme }) => ({
   },
 }));
 
-const ContainerLastReport = styled('div')(({ theme }) => ({
-  marginTop: 24,
-
-  [theme.breakpoints.up('desktop_1280')]: {
-    marginTop: 32,
-  },
-}));
-
 const SectionBreakdownChartSection = styled('div')<{ showSwiper: boolean }>(({ theme, showSwiper }) => ({
   marginTop: showSwiper ? 12 : 24,
   [theme.breakpoints.up('desktop_1280')]: {
     marginTop: showSwiper ? 20 : 32,
+  },
+}));
+
+const ContainerSpace = styled('div')(({ theme }) => ({
+  marginTop: 24,
+  [theme.breakpoints.up('desktop_1280')]: {
+    marginTop: 32,
   },
 }));
