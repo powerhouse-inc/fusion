@@ -15,7 +15,7 @@ const PageContainer: React.FC<PageBackgroundProps> = ({ children, className, has
 export default PageContainer;
 
 const PageBackground = styled('div')<{ hasImageBackground: boolean }>(({ theme, hasImageBackground }) => ({
-  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : '#1B1E24',
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.background.dm,
   paddingTop: 64, // set below the header height
   paddingBottom: 64,
   width: '100%',

@@ -3,9 +3,7 @@ import DiscordIcon from 'public/assets/svg/discord.svg';
 import GithubIcon from 'public/assets/svg/github.svg';
 import ConnectIcon from 'public/assets/svg/makerdao_connect.svg';
 import FusionIcon from 'public/assets/svg/makerdao_fusion.svg';
-import SwitchboardIcon from 'public/assets/svg/makerdao_switchboard.svg';
 import PowerhouseIcon from 'public/assets/svg/powerhouse.svg';
-import RedditIcon from 'public/assets/svg/reddit.svg';
 import SkyIcon from 'public/assets/svg/sky-footer.svg';
 import X from 'public/assets/svg/x.svg';
 import YoutubeIcon from 'public/assets/svg/youtube.svg';
@@ -78,11 +76,6 @@ const linkCategory: LinkCategory[] = [
         Icon: ConnectIcon,
       },
       {
-        label: 'Switchboard',
-        link: 'https://switchboard.sky.money/',
-        Icon: SwitchboardIcon,
-      },
-      {
         label: 'Fusion',
         link: 'https://fusion.sky.money/',
         Icon: FusionIcon,
@@ -101,11 +94,6 @@ const iconsMakerDAO: TypeIconFooter[] = [
     Icon: XStyled,
     href: 'https://x.com/SkyEcosystem',
     title: 'twitter',
-  },
-  {
-    Icon: RedditIcon,
-    href: 'https://www.reddit.com/r/MakerDAO/',
-    title: 'reddit',
   },
   {
     Icon: YoutubeIcon,
