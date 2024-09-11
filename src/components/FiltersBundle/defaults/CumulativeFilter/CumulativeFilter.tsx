@@ -150,14 +150,12 @@ const MenuBtn = styled('div')<{ isActive: boolean }>(({ isActive, theme }) => ({
 const CustomPaper = styled(Paper)(({ theme }) => ({
   width: 282,
 
-  // bgcolor: theme.palette.isLight ? '#ffffff' : theme.palette.colors.charcoal[900],
-  // backgroundColor: theme.palette.isLight ? '#ffffff' : theme.palette.colors.charcoal[900],
+  bgcolor: theme.palette.isLight ? '#ffffff' : theme.palette.colors.charcoal[900],
+  backgroundColor: theme.palette.isLight ? '#ffffff' : theme.palette.colors.charcoal[900],
   borderRadius: 6,
   overflow: 'hidden',
-  // boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
-  marginTop: 9,
-  bgcolor: theme.palette.isLight ? '#ffffff' : theme.palette.colors.charcoal[900],
   boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+  marginTop: 9,
 }));
 
 const Divider = styled('div')(() => ({
