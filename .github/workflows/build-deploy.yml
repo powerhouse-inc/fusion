@@ -1,0 +1,113 @@
+name: Build and deploy the app
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: false
+
+on:
+  workflow_dispatch:
+    inputs:
+      skip_build:
+        description: 'Skip build?'
+        required: false
+        type: boolean
+        default: false
+  push:
+    branches:
+      - sky-production
+      - sky-staging
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  HELM_VALUES: deploy/values.yml
+  SKIP_BUILD: ${{ ( contains(github.event.head_commit.message, '[skip build]') || github.event.inputs.skip_build == 'true' ) && 'true' || 'false' }}
+
+jobs:
+  setup:
+    name: Setup workflow
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref == 'refs/heads/sky-production' && 'prod' || ( github.ref == 'refs/heads/sky-staging' && 'staging' || 'development' ) }}
+    outputs:
+      short_sha: ${{ steps.set_outputs.outputs.short_sha }}
+      skip_build: '${{ steps.set_outputs.outputs.skip_build }}'
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Set outputs
+        id: set_outputs
+        shell: bash
+        run: |
+          echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "skip_build=${{ env.SKIP_BUILD }}" >> $GITHUB_OUTPUT
+
+  build:
+    name: Build image
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref == 'refs/heads/sky-production' && 'prod' || ( github.ref == 'refs/heads/sky-staging' && 'staging' || 'development' ) }}
+    needs:
+      - setup
+    if: always() && !cancelled() && !failure() && needs.setup.outputs.skip_build == 'false'
+    env:
+      ECR_REPO_NAME: ${{ vars.APP_NAME }}-${{ vars.ENV }}
+      ROLE_SESSION_NAME: ${{ vars.APP_NAME }}-${{ vars.ENV }}-build
+
+    steps:
+      - name: Checkout all files
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Build, tag, and push image to ECR
+        id: build_image
+        uses: ./.github/actions/build
+        with:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY  }}
+          ECR_REPO_NAME: ${{ env.ECR_REPO_NAME }}
+          NEXT_PUBLIC_GRAPHQL_ENDPOINT: ${{ secrets.NEXT_PUBLIC_GRAPHQL_ENDPOINT }}
+          ROLE_SESSION_NAME: ${{ env.ROLE_SESSION_NAME }}
+          ROLE_TO_ASSUME: ${{ secrets.GA_OIDC_EKS_ROLE_ARN }}
+          SHA_TAG: ${{ needs.setup.outputs.short_sha }}
+
+  deploy:
+    name: Deploy image
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref == 'refs/heads/sky-production' && 'prod' || ( github.ref == 'refs/heads/sky-staging' && 'staging' || 'development' ) }}
+    needs:
+      - setup
+      - build
+    if: always() && !cancelled() && !failure() && !contains(github.event.head_commit.message , '[skip deploy]')
+    env:
+      ECR_REPO_NAME: ${{ vars.APP_NAME }}-${{ vars.ENV }}
+      ROLE_SESSION_NAME: ${{ vars.APP_NAME }}-${{ vars.ENV }}-deploy
+
+
+    steps:
+      - name: Checkout actions
+        id: checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            .github
+
+      - name: Deploy image to EKS
+        id: deploy_image
+        uses: ./.github/actions/deploy
+        with:
+          APP_NAME: ${{ vars.APP_NAME }}
+          AUTOSCALING_MAX_REPLICAS: 4
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          CLUSTER_NAME: ${{ vars.CLUSTER_NAME  }}
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY  }}
+          ECR_REPO_NAME: ${{ env.ECR_REPO_NAME }}
+          ENDPOINT: ${{ vars.APP_NAME }}.${{ secrets.DOMAIN_NAME }}
+          HELM_VALUES: ${{ env.HELM_VALUES }}
+          IMAGE_TAG: ${{ ( contains(github.event.head_commit.message, '[skip build]') || github.event.inputs.skip_build ) && 'latest' || needs.setup.outputs.short_sha }} # If the build was skipped, use the `latest` image
+          ROLE_SESSION_NAME: ${{ env.ROLE_SESSION_NAME }}
+          ROLE_TO_ASSUME: ${{ secrets.GA_OIDC_EKS_ROLE_ARN }}

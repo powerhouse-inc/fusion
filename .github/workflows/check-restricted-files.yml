@@ -1,0 +1,54 @@
+name: Check Restricted Files
+
+on:
+  pull_request:
+    paths:
+      - '**/*'
+
+jobs:
+  check_restricted_files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Fetch all branches
+        run: git fetch --all
+
+      - name: List all changed files
+        id: changed-files
+        run: |
+          git diff --name-only origin/${{ vars.GIT_BRANCH }} > changed_files.txt  || echo "No differences found."
+          cat changed_files.txt
+
+      - name: Check for unauthorized file changes
+        run: |
+          ALLOWED_FILES=(
+            "build-deploy.yml"
+            "check-restricted-files.yml"
+            "sync-fork.yml"
+            "action.yml"
+            "values.yml"
+            ".gitattributes"
+          )
+
+          unauthorized_files=""
+
+          # Loop through each changed file
+          while IFS= read -r file; do
+            # Extract the file name from the path
+            filename=$(basename "$file")
+
+            # Check if the filename is in the allowed files list
+            if ! printf "%s\n" "${ALLOWED_FILES[@]}" | grep -qx "$filename"; then
+              unauthorized_files+="$file"$'\n'
+            fi
+          done < changed_files.txt
+
+          if [[ -n "$unauthorized_files" ]]; then
+            echo "Unauthorized file changes detected:"
+            echo "$unauthorized_files"
+            exit 1
+          else
+            echo "All changed files are authorized."
+          fi
