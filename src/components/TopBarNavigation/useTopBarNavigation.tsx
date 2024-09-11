@@ -8,7 +8,9 @@ import { CONNECT } from '@/core/utils/const';
 import type { SelectItem } from '@/stories/components/SingleItemSelect/SingleItemSelect';
 import type { MenuType, RouteOnHeader } from './types';
 import type { Theme } from '@mui/material';
+
 const menuItems = {} as Record<RouteOnHeader, MenuType>;
+
 export const useTopBarNavigation = () => {
   const isSelectShow = useMediaQuery((theme: Theme) => theme.breakpoints.down('desktop_1024'));
   const { clearCredentials, permissionManager } = useAuthContext();
