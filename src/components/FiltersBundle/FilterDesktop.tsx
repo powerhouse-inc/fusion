@@ -1,6 +1,7 @@
 import { Button, Divider, styled } from '@mui/material';
 import CustomSelect from '@/components/CustomSelect/CustomSelect';
 import type { CustomSelectProps } from '@/components/CustomSelect/type';
+import CumulativeFilterComponent from '@/components/FiltersBundle/defaults/CumulativeFilter/CumulativeFilter';
 import Search from '@/components/Search/Search';
 import type { SearchFilter, Filter, ResetFilter } from './types';
 
@@ -60,6 +61,9 @@ const FilterDesktop: React.FC<FilterDesktopProps> = ({ filters, searchFilter, re
               </label>
             </div>
           );
+        }
+        case 'cumulative': {
+          return <CumulativeFilterComponent filter={filter} />;
         }
         default: {
           throw new Error('Unknown filter type');
