@@ -4,7 +4,6 @@ import { SEOHead } from '@ses/components/SEOHead/SEOHead';
 import { siteRoutes } from '@ses/config/routes';
 import { CommentActivityContext } from '@ses/core/context/CommentActivityContext';
 import { ResourceType } from '@ses/core/models/interfaces/types';
-import { toAbsoluteURL } from '@ses/core/utils/urls';
 import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import AuditorCommentsContainer from '@/components/BudgetStatement/BudgetStatementAuditorComments/AuditorCommentsContainer/AuditorCommentsContainer';
 import BudgetStatementPager from '@/components/BudgetStatement/BudgetStatementPager/BudgetStatementPager';
@@ -47,16 +46,8 @@ const RecognizedDelegatesBudgetStatementView: React.FC<RecognizedDelegatesProps>
   return (
     <PageContainer>
       <SEOHead
-        title={'MakerDAO Recognized Delegates Expense Reports | Finances'}
-        description={
-          'MakerDAO Recognized Delegates Expenses Reports provides a transparent overview of recognized delegates expenses, compensations, and benefits'
-        }
-        image={{
-          src: toAbsoluteURL('/assets/img/social-385x200.png'),
-          width: 385,
-          height: 200,
-        }}
-        twitterImage={toAbsoluteURL('/assets/img/social-1200x630.png')}
+        title="Sky Fusion - Recognized Delegates Budget Statements"
+        description="Learn about Recognized Delegates' Budget Statements: total funding overview from reported expenses for the recognized delegates that have received compensation."
         canonicalURL={siteRoutes.recognizedDelegateReport}
       />
 

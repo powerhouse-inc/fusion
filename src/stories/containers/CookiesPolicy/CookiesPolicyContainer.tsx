@@ -1,6 +1,7 @@
 import { styled } from '@mui/material';
 import { useCallback } from 'react';
 import Card from '@/components/Card/Card';
+import { SEOHead } from '@/stories/components/SEOHead/SEOHead';
 import { useCookiesContextTracking } from '../../../core/context/CookiesContext';
 import { CustomButton } from '../../components/CustomButton/CustomButton';
 import type { FC } from 'react';
@@ -15,6 +16,11 @@ const CookiesPolicyContainer: FC = () => {
 
   return (
     <Container>
+      <SEOHead
+        title="Sky Fusion - Cookies Policy"
+        description="Sky Fusion Dashboard offers key data insights into the Sky Ecosystem's finances, governance, contributors, and roadmaps."
+      />
+
       <ContainerData>
         <Title>Cookies Policy</Title>
         <Description>Use of Cookies and Similar Technologies</Description>

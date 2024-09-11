@@ -24,6 +24,11 @@ import type { Theme } from '@mui/material';
 import type { BreakdownBudgetAnalytic } from '@ses/core/models/interfaces/analytic';
 import type { Budget } from '@ses/core/models/interfaces/budget';
 
+interface SEOData {
+  title: string;
+  description: string;
+}
+
 export const useFinancesView = (budgets: Budget[], allBudgets: Budget[], initialYear: string) => {
   const theme = useTheme();
   const isLight = theme.palette.isLight;
@@ -138,6 +143,40 @@ export const useFinancesView = (budgets: Budget[], allBudgets: Budget[], initial
   // All the logic required by the Expense Reports
   const expenseTrendFinances = useExpenseReports(codePath);
 
+  const seo: SEOData = useMemo(() => {
+    // 1st level or deeper level
+    let seoTitle = `Sky Fusion - ${levelNumber === 1 ? 'Sky Ecosystem' : title} Finances`;
+    let description = `Learn about ${
+      levelNumber === 1 ? 'Sky Ecosystem' : title
+    }'s Finances through aggregated views: budget utilization, expenses, operational reserves, and breakdown charts.`;
+
+    if (codePath.startsWith('atlas/legacy/core-units/')) {
+      // it is a core unit
+      seoTitle = `Sky Fusion - ${title} Finances`;
+      description = `Learn about ${title}'s Finances through aggregated views: from budget utilization, and reserves, to financial breakdown.`;
+    } else if (codePath === 'atlas/immutable/aligned-delegates') {
+      // it is an aligned delegates
+      seoTitle = 'Sky Fusion - Aligned Delegates Finances';
+      description =
+        "Learn about Aligned Delegates's Finances through aggregated views: from budget utilization, expenses, operational reserves, and breakdown charts.";
+    } else if (codePath === 'atlas/scopes/PRO/KPRS') {
+      // it is a keeper
+      seoTitle = 'Sky Fusion - Keepers Finances';
+      description =
+        "Learn about Keeper's Finances through aggregated views: from budget utilization, expenses, operational reserves, and breakdown charts.";
+    } else if (codePath === 'atlas/legacy/spfs') {
+      // it is a spfs
+      seoTitle = 'Sky Fusion - Special Purpose Funds Finances';
+      description =
+        "Learn about Special Purpose Funds's Finances through aggregated views: from budget utilization, expenses, operational reserves, and breakdown charts.";
+    }
+
+    return {
+      title: seoTitle,
+      description,
+    };
+  }, [codePath, levelNumber, title]);
+
   return {
     year,
     levelNumber,
@@ -156,5 +195,6 @@ export const useFinancesView = (budgets: Budget[], allBudgets: Budget[], initial
     reserveChart,
     code,
     isMobile,
+    seo,
   };
 };

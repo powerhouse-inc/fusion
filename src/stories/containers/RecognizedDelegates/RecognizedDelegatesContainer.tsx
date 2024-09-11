@@ -4,15 +4,12 @@ import { SEOHead } from '@ses/components/SEOHead/SEOHead';
 import { siteRoutes } from '@ses/config/routes';
 import { useThemeContext } from '@ses/core/context/ThemeContext';
 import { ButtonType } from '@ses/core/enums/buttonTypeEnum';
-import { toAbsoluteURL } from '@ses/core/utils/urls';
 import lightTheme from '@ses/styles/theme/themes';
 import React from 'react';
 import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
-
 import DelegateExpenseBreakdown from './DelegateExpenseBreakdown/DelegateExpenseBreakdown';
 import DelegateExpenseTrend from './DelegateExpenseTrend';
-
 import TotalAndKeyStatsComponent from './TotalAndKeyStatsComponent/TotalAndkeyStatusComponent';
 import { useRecognizedDelegates } from './useRecognizedDelegates';
 import type { RecognizedDelegatesDto } from '@ses/core/models/dto/delegatesDTO';
@@ -54,14 +51,8 @@ const RecognizedDelegatesContainer: React.FC<Props> = ({
   return (
     <ExtendedPageContainer isLight={isLight}>
       <SEOHead
-        title="MakerDAO Recognized Delegates Aggregated Views | Finances"
-        description="MakerDAO Recognized Delegates Aggregated Views provides a granular, detailed and transparent breakdown of recognized delegates expenses and compensations trends"
-        image={{
-          src: toAbsoluteURL('/assets/img/social-385x200.png'),
-          width: 385,
-          height: 200,
-        }}
-        twitterImage={toAbsoluteURL('/assets/img/social-1200x630.png')}
+        title="Sky Fusion - Recognized Delegates Legacy Ecosystem Contributors"
+        description="Learn about Recognized Delegates as legacy contributors: their key information, activity, expenditures, and more."
       />
       <Container>
         <Title isLight={isLight}>Recognized Delegates</Title>

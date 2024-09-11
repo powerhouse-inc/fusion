@@ -1,7 +1,6 @@
 import { styled } from '@mui/material';
 import { SEOHead } from '@ses/components/SEOHead/SEOHead';
 import { siteRoutes } from '@ses/config/routes';
-import { toAbsoluteURL } from '@ses/core/utils/urls';
 import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
@@ -22,14 +21,8 @@ const RoadmapMilestonesView: FC<RoadmapMilestonesViewProps> = ({ roadmap }) => {
   return (
     <PageContainer>
       <SEOHead
-        title="Powerhouse Roadmap 2024"
-        description="Powerhouse Ecosystem Actor team roadmap for the year 2024."
-        image={{
-          src: toAbsoluteURL('/assets/img/social-385x200.png'),
-          width: 385,
-          height: 200,
-        }}
-        twitterImage={toAbsoluteURL('/assets/img/social-1200x630.png')}
+        title="Sky Fusion - Powerhouse Roadmap 2024 Roadmap"
+        description="Learn about Powerhouse Roadmap 2024 Roadmap work: scope, milestones, deliverables, targets, resources, and key results."
       />
       <Breadcrumb
         items={[
