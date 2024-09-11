@@ -61,11 +61,16 @@ const useBudgetStatementView = (
     [anchor, router]
   );
 
-  const { teamInfo, breadcrumbItems } = useMemo(() => {
+  const { teamInfo, breadcrumbItems, seo } = useMemo(() => {
     // map the AllowedOwnerType to required data to show in the UI
     switch (ownerTypeQuery) {
       case AllowedOwnerType.KEEPERS:
         return {
+          seo: {
+            title: "Sky Fusion - Keepers' Budget Statements",
+            description:
+              "Learn about Keepers' Budget Statements: their funding overview, reserves, and reported expenses comparison.",
+          },
           teamInfo: {
             type: ResourceType.Keepers,
             code: 'KEEPERS',
@@ -101,6 +106,11 @@ const useBudgetStatementView = (
         };
       case AllowedOwnerType.SPFS:
         return {
+          seo: {
+            title: "Sky Fusion - SPFs' Budget Statements",
+            description:
+              "Learn about Special Purpose Funds' Budget Statements: their funding overview, reserves, and reported expenses comparison.",
+          },
           teamInfo: {
             type: ResourceType.SpecialPurposeFund,
             code: 'SFPs',
@@ -128,6 +138,11 @@ const useBudgetStatementView = (
         };
       case AllowedOwnerType.ALIGNED_DELEGATES:
         return {
+          seo: {
+            title: "Sky Fusion - Aligned Delegates' Budget Statements",
+            description:
+              "Learn about Aligned Delegates' Budget Statements: their funding overview, reserves, and reported expenses comparison.",
+          },
           teamInfo: {
             type: ResourceType.AlignedDelegates,
             code: 'DEL',
@@ -219,6 +234,7 @@ const useBudgetStatementView = (
     ownerTypeQuery,
     ownerType,
     teamInfo,
+    seo,
     breadcrumbItems,
     snapshotCreated,
     setSnapshotCreated,

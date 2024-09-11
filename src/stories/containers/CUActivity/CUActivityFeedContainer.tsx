@@ -22,8 +22,8 @@ const CUActivityFeedContainer: React.FC<CUActivityContainerProps> = ({ coreUnit,
   return (
     <Wrapper>
       <SEOHead
-        title={`${coreUnit.name} Core Unit | Activity Feed`}
-        description={`Learn about the ${coreUnit.name} Core Unit's activity: updates to Core Unit Expense Reports, FTEs, and more.`}
+        title={`Sky Fusion - ${coreUnit.name} Activity Feed`}
+        description={`Learn about ${coreUnit.name}'s Activity Feed: including previous modifications that the Core Unit has made to their Expense Reports, FTEs, and more.`}
         canonicalURL={siteRoutes.coreUnitActivityFeed(coreUnit.shortCode)}
       />
       <CoreUnitSummary

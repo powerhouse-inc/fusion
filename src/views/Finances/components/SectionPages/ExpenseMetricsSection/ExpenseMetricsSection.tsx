@@ -1,4 +1,3 @@
-import { styled } from '@mui/material';
 import type { Filter } from '@/components/FiltersBundle/types';
 import ExpenseMetrics from '@/views/Finances/components/ExpenseMetrics/ExpenseMetrics';
 import type { CumulativeType } from '@/views/Finances/components/ExpenseMetrics/useExpenseMetrics';
@@ -22,17 +21,6 @@ interface Props {
   };
 }
 
-const ExpenseMetricsSection: FC<Props> = ({ expenseMetrics }) => (
-  <Container>
-    <ExpenseMetrics {...expenseMetrics} />
-  </Container>
-);
+const ExpenseMetricsSection: FC<Props> = ({ expenseMetrics }) => <ExpenseMetrics {...expenseMetrics} />;
 
 export default ExpenseMetricsSection;
-
-const Container = styled('div')(() => ({
-  display: 'flex',
-  flexDirection: 'column',
-  width: '100%',
-  marginTop: 24,
-}));

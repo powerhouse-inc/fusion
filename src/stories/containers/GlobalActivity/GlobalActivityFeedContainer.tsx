@@ -3,7 +3,6 @@ import { siteRoutes } from '@ses/config/routes';
 import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
 import { useThemeContext } from '../../../core/context/ThemeContext';
-import { toAbsoluteURL } from '../../../core/utils/urls';
 import ActivityTable from '../../components/CUActivityTable/ActivityTable';
 import CoreUnitSelectItem from '../../components/CoreUnitSelectItem/CoreUnitSelectItem';
 import { CustomMultiSelect } from '../../components/CustomMultiSelect/CustomMultiSelect';
@@ -44,14 +43,8 @@ const GlobalActivityFeedContainer: React.FC<Props> = ({ teams, activityFeed }) =
   return (
     <Wrapper>
       <SEOHead
-        title="MakerDAO Core Units | Activity Feed"
-        description="Learn about the activity of MakerDAO Core Units: updates to Core Unit Expense Reports, FTEs, and more."
-        image={{
-          src: toAbsoluteURL('/assets/img/social-385x200.png'),
-          width: 385,
-          height: 200,
-        }}
-        twitterImage={toAbsoluteURL('/assets/img/social-1200x630.png')}
+        title="Sky Fusion - Activity Feed"
+        description="Sky Fusion Dashboard offers key data insights into the Sky Ecosystem's finances, governance, contributors, and roadmaps."
         canonicalURL={siteRoutes.globalActivityFeed}
       />
       <PageWrapper hasImageBackground={true}>

@@ -4,7 +4,7 @@ import ExpenseMetrics from './ExpenseMetrics';
 import type { Meta } from '@storybook/react';
 
 const meta: Meta<typeof ExpenseMetrics> = {
-  title: 'Fusion/Views/Finances/ExpenseMetrics',
+  title: 'Fusion/Views/Finances/Section/ExpenseMetrics',
   component: ExpenseMetrics,
 
   parameters: {
@@ -25,6 +25,45 @@ const chartData = {
   protocolNetOutflow: [123434, 123434, 123434, 123434, 100000, 250000, 900000, 1250000, 0, 1400000, 1400000, 1500000],
 };
 
+const granularityItems = [
+  {
+    label: 'Monthly',
+    value: 'monthly',
+  },
+  {
+    label: 'Quarterly',
+    value: 'quarterly',
+  },
+  {
+    label: 'Annually',
+    value: 'annual',
+  },
+];
+const getFiltersConfig = () => [
+  {
+    type: 'select',
+    id: 'Granularity',
+    label: 'Granularity',
+    selected: 'monthly',
+    multiple: false,
+    onChange: () => null,
+    options: granularityItems,
+    withAll: false,
+    widthStyles: {
+      width: 'fit-content',
+      menuWidth: 350,
+    },
+  },
+  {
+    type: 'cumulative',
+    id: 'cumulative',
+    label: 'Cumulative',
+    cumulativeType: 'relative',
+    isCumulative: false,
+    handleChangeCumulativeType: () => null,
+    handleToggleCumulative: () => null,
+  },
+];
 const args = [
   {
     title: 'Sky Expense Metrics',
@@ -33,6 +72,15 @@ const args = [
     selectedGranularity: 'monthly',
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     handleGranularityChange: (value: string) => null,
+
+    isCumulative: false,
+    cumulativeType: 'relative',
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    handleToggleSeries: (series: string) => null,
+
+    filters: getFiltersConfig(),
+    canReset: false,
+    onReset: () => null,
   },
   {
     title: 'Sky Expense Metrics',
@@ -41,6 +89,14 @@ const args = [
     selectedGranularity: 'monthly',
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     handleGranularityChange: (value: string) => null,
+    isCumulative: false,
+    cumulativeType: 'relative',
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    handleToggleSeries: (series: string) => null,
+
+    filters: getFiltersConfig(),
+    canReset: false,
+    onReset: () => null,
   },
 ];
 
