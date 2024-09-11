@@ -33,6 +33,7 @@ export const useExpenseMetrics = (year: string) => {
   };
   const handleToggleCumulative = () => {
     setIsCumulative((prev) => !prev);
+    setCumulativeType('relative');
   };
 
   const isLoading = !analytics && !error;
