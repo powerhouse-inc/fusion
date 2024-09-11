@@ -33,7 +33,7 @@ const ExpenseMetricsFinances: FC<Props> = ({
   handleToggleSeries,
   year,
   isLoading,
-  filters,
+  filters = [],
   canReset,
   onReset,
 }) => (
