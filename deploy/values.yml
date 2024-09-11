@@ -90,3 +90,13 @@ autoscaling:
   maxReplicas: ${AUTOSCALING_MAX_REPLICAS}
   targetCPUUtilizationPercentage: 85
   targetMemoryUtilizationPercentage: 85
+  scaleUp:
+    stabilizationWindowSeconds: 30
+    policyType: Pods
+    value: ${AUTOSCALING_MAX_REPLICAS}
+    periodSeconds: 15
+  scaleDown:
+    stabilizationWindowSeconds: 300
+    policyType: Pods
+    value: 1
+    periodSeconds: 30
