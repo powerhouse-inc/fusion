@@ -112,5 +112,5 @@ runs:
         timeout: 3m0s
         name: ${{ inputs.APP_NAME }}
         chart-repository: https://techops-services.github.io/helm-charts
-        version: 0.0.33
+        version: 0.0.35
         atomic: true
