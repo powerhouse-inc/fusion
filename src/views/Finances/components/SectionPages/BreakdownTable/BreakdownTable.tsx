@@ -87,10 +87,10 @@ const MainContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flex: 1,
   flexDirection: 'column',
-  marginTop: 40,
+  marginTop: 24,
 
   [theme.breakpoints.up('desktop_1280')]: {
-    marginTop: 64,
+    marginTop: 32,
   },
 }));
 

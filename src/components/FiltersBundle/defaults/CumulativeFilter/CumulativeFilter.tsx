@@ -23,7 +23,7 @@ const CumulativeFilterComponent: React.FC<CumulativeFilterProps> = ({ filter }) 
   };
 
   return (
-    <>
+    <Container>
       <SelectBtn>
         <CheckBtn onClick={filter.handleToggleCumulative}>
           {filter.isCumulative ? (
@@ -41,13 +41,29 @@ const CumulativeFilterComponent: React.FC<CumulativeFilterProps> = ({ filter }) 
         </MenuBtn>
       </SelectBtn>
 
-      <Popper
+      {filter.isCumulative && (
+        <MobileItems>
+          <CumulativeSelectItem
+            onClick={() => filter.handleChangeCumulativeType('relative')}
+            type="relative"
+            selected={filter.cumulativeType === 'relative'}
+          />
+          <Divider />
+          <CumulativeSelectItem
+            onClick={() => filter.handleChangeCumulativeType('absolute')}
+            type="absolute"
+            selected={filter.cumulativeType === 'absolute'}
+          />
+        </MobileItems>
+      )}
+
+      <DesktopPopper
         open={open}
         anchorEl={anchorRef.current}
-        style={{ zIndex: 1 }}
         placement="bottom-end"
         transition
         disablePortal
+        style={{ zIndex: 1 }}
       >
         {({ TransitionProps, placement }) => (
           <Grow
@@ -76,8 +92,8 @@ const CumulativeFilterComponent: React.FC<CumulativeFilterProps> = ({ filter }) 
             </CustomPaper>
           </Grow>
         )}
-      </Popper>
-    </>
+      </DesktopPopper>
+    </Container>
   );
 };
 
@@ -123,9 +139,9 @@ const MenuBtn = styled('div')<{ isActive: boolean }>(({ isActive, theme }) => ({
 
 const CustomPaper = styled(Paper)(({ theme }) => ({
   width: 282,
+
   bgcolor: theme.palette.isLight ? '#ffffff' : theme.palette.colors.charcoal[900],
   backgroundColor: theme.palette.isLight ? '#ffffff' : theme.palette.colors.charcoal[900],
-
   borderRadius: 6,
   overflow: 'hidden',
   boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
@@ -140,4 +156,23 @@ const Divider = styled('div')(() => ({
 
 const StyledSelectChevronDown = styled(SelectChevronDown)<{ isOpen: boolean }>(({ isOpen }) => ({
   transform: isOpen ? 'scaleY(-1)' : 'scaleY(1)',
+}));
+
+const Container = styled('div')({
+  position: 'relative',
+});
+
+const MobileItems = styled('div')(({ theme }) => ({
+  display: 'none',
+  [theme.breakpoints.down('tablet_768')]: {
+    display: 'block',
+    marginTop: 8,
+  },
+}));
+
+const DesktopPopper = styled(Popper)(({ theme }) => ({
+  display: 'none',
+  [theme.breakpoints.up('tablet_768')]: {
+    display: 'block',
+  },
 }));
