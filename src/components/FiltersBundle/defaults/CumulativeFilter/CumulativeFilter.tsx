@@ -21,7 +21,12 @@ const CumulativeFilterComponent: React.FC<CumulativeFilterProps> = ({ filter }) 
       setOpen((prev) => !prev);
     }
   };
-
+  // TODO: Add this change as improvement
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const getButtonText = () => {
+    if (!filter.isCumulative) return 'Cumulative';
+    return filter.cumulativeType === 'relative' ? 'Relative Cumulative' : 'Absolute Cumulative';
+  };
   return (
     <Container>
       <SelectBtn>

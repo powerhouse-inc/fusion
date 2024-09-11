@@ -947,6 +947,23 @@ export const getKeyMetric = (metric: string) => {
   return metric;
 };
 
+// TODO: remove this after refactoring breakdown chart
+export const getKeyMetricBreakDownChart = (metric: string): AnalyticMetric => {
+  switch (metric) {
+    case 'Net Expenses On-Chain':
+      return 'PaymentsOnChain';
+    case 'Net Protocol Outflow':
+      return 'ProtocolNetOutflow';
+    case 'Budget':
+      return 'Budget';
+    case 'Forecast':
+      return 'Forecast';
+    case 'Actuals':
+      return 'Actuals';
+    default:
+      return 'Budget';
+  }
+};
 export const hasSubLevels = (codePath: string, budgets: Budget[]) => {
   const normalizedCodePath = codePath.endsWith('/') ? codePath : `${codePath}/`;
   return budgets?.some((item) => {

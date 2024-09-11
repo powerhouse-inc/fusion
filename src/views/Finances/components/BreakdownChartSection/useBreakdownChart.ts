@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import type { Filter } from '@/components/FiltersBundle/types';
-import { getBudgetsAnalytics } from '../../utils/utils';
+import { getBudgetsAnalytics, getKeyMetricBreakDownChart } from '../../utils/utils';
 import { getBarWidth, parseAnalyticsToSeriesBreakDownChart, setBorderRadiusForSeries } from './utils';
 import type { SelectItem } from '@ses/components/SingleItemSelect/SingleItemSelect';
 import type {
@@ -18,7 +18,7 @@ import type { EChartsOption } from 'echarts-for-react';
 
 const DEFAULT_METRIC: AnalyticMetric = 'Budget';
 const DEFAULT_GRANULARITY: AnalyticGranularity = 'monthly';
-
+const METRIC_FILTER_OPTIONS = ['Budget', 'Forecast', 'Net Protocol Outflow', 'Net Expenses On-Chain', 'Actuals'];
 const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, allBudgets: Budget[]) => {
   const router = useRouter();
   const { isLight } = useThemeContext();
@@ -40,7 +40,7 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
       {
         label: 'Net Protocol Outflow',
         value: 'ProtocolNetOutflow',
-        labelWhenSelected: isMobile ? 'Prtcol Outfl' : 'Protocol Outflow',
+        labelWhenSelected: isMobile || isTablet ? 'Prtcol Outfl' : 'Protocol Outflow',
       },
       {
         label: 'Net Expenses On-Chain',
@@ -52,7 +52,7 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
         value: 'Actuals',
       },
     ],
-    [isMobile]
+    [isMobile, isTablet]
   );
 
   const granularityItems: SelectItem<AnalyticGranularity>[] = useMemo(
@@ -167,7 +167,7 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
       budgets,
       isLight,
       barWidth,
-      selectedMetric,
+      getKeyMetricBreakDownChart(selectedMetric),
       allBudgets
     );
 
@@ -222,11 +222,21 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
         updateUrl(value as AnalyticMetric, selectedGranularity);
         setSelectedMetric(value as AnalyticMetric);
       },
-      options: metricItems,
+
+      options: METRIC_FILTER_OPTIONS.map((filter) => ({
+        label: isTablet
+          ? filter === 'Net Protocol Outflow'
+            ? 'Prtcol Outfl'
+            : filter === 'Net Expenses On-Chain'
+            ? 'Net On-Chain'
+            : filter
+          : filter,
+        value: filter,
+      })),
       withAll: false,
       widthStyles: {
         width: 'fit-content',
-        menuWidth: 350,
+        menuWidth: 220,
       },
     },
     {
@@ -243,7 +253,7 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
       withAll: false,
       widthStyles: {
         width: 'fit-content',
-        menuWidth: 350,
+        menuWidth: 220,
       },
     },
   ];

@@ -40,6 +40,8 @@ const ExpenseReportsFilters: FC<ExpenseReportsFiltersProps> = ({
   onReset,
 }) => {
   const isSmallDesk = useMediaQuery((theme: Theme) => theme.breakpoints.down('desktop_1024'));
+  const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
+
   const metricItems = useMemo(
     () => [
       {
@@ -47,11 +49,11 @@ const ExpenseReportsFilters: FC<ExpenseReportsFiltersProps> = ({
         value: 'Forecast',
       },
       {
-        label: 'Protocol Outflow',
+        label: isTablet ? 'Prtcol Outfl' : 'Net Protocol Outflow',
         value: 'ProtocolNetOutflow',
       },
       {
-        label: 'Net On-Chain',
+        label: isTablet ? 'Net On-Chain' : 'Net Expenses On-Chain',
         value: 'PaymentsOnChain',
       },
       {
@@ -59,7 +61,7 @@ const ExpenseReportsFilters: FC<ExpenseReportsFiltersProps> = ({
         value: 'Actuals',
       },
     ],
-    []
+    [isTablet]
   );
   const statusOptions = statusesItems.map((status) => ({
     label: status.label,
@@ -76,7 +78,6 @@ const ExpenseReportsFilters: FC<ExpenseReportsFiltersProps> = ({
       widthStyles: {
         width: 'fit-content',
         menuWidth: 220,
-        maxWidth: isSmallDesk ? 130 : 184,
       },
     },
     {
@@ -93,7 +94,6 @@ const ExpenseReportsFilters: FC<ExpenseReportsFiltersProps> = ({
       widthStyles: {
         width: 'fit-content',
         menuWidth: 220,
-        maxWidth: 130,
       },
       withAll: true,
       customOptionsRenderAll: () => <AllStatusText>All Status</AllStatusText>,
