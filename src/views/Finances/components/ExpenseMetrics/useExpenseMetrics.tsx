@@ -152,6 +152,18 @@ export const useExpenseMetrics = (year: string) => {
       value: 'annual',
     },
   ];
+  const cumulativeItems = [
+    {
+      label: 'Relative Cumulative',
+      description: 'Aggregated expense metrics relative to the start of the year.',
+      value: 'relative',
+    },
+    {
+      label: 'Absolute Cumulative',
+      description: 'A continuous aggregation of expenses over the entire dataset.',
+      value: 'absolute',
+    },
+  ];
 
   const filters: Filter[] = [
     {
@@ -175,6 +187,12 @@ export const useExpenseMetrics = (year: string) => {
       isCumulative,
       handleChangeCumulativeType,
       handleToggleCumulative,
+      selected: isCumulative,
+      options: cumulativeItems,
+      onChange: () => {
+        setIsCumulative((prev) => !prev);
+        setCumulativeType('relative');
+      },
     },
   ];
 

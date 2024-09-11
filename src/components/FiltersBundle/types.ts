@@ -83,10 +83,14 @@ export interface CheckboxFilter extends GenericFilter {
 
 export interface CumulativeFilter extends GenericFilter {
   type: 'cumulative';
+  selected: boolean;
+  options?: RadioOption[];
   cumulativeType: 'absolute' | 'relative';
   isCumulative: boolean;
+  onChange: () => void;
   handleChangeCumulativeType: (value: 'absolute' | 'relative') => void;
   handleToggleCumulative: () => void;
+  customOptionsRender?: (option: RadioOption, isActive: boolean, theme?: Theme) => ReactNode;
 }
 
 // all available filters

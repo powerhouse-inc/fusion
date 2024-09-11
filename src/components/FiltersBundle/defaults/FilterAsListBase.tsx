@@ -1,11 +1,11 @@
 import { styled } from '@mui/material';
-import type { CheckboxFilter } from '../types';
+import type { CheckboxFilter, CumulativeFilter } from '../types';
 import type { ReactElement } from 'react';
 
 interface FilterAsListBaseProps extends React.PropsWithChildren {
   label: string;
   element?: ReactElement;
-  filter?: CheckboxFilter;
+  filter?: CheckboxFilter | CumulativeFilter;
 }
 
 const FilterAsListBase: React.FC<FilterAsListBaseProps> = ({ label, element, filter, children }) => (
