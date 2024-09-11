@@ -33,7 +33,7 @@ const ExpenseMetricsFinances: FC<Props> = ({
   handleToggleSeries,
   year,
   isLoading,
-  filters,
+  filters = [],
   canReset,
   onReset,
 }) => (
@@ -64,15 +64,16 @@ const ExpenseMetricsFinances: FC<Props> = ({
           </TooltipContent>
         }
       />
+
       <FilterContainer>
         <FiltersBundle
-          asPopover={['tablet_768', 'desktop']}
+          asPopover={[]}
           filters={filters}
           resetFilters={{
             canReset,
             onReset,
           }}
-          snapPoints={[450, 390, 180, 0]}
+          snapPoints={[300, 240, 180, 0]}
         />
       </FilterContainer>
     </Header>
@@ -128,6 +129,7 @@ const FilterContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'flex-end',
   marginBottom: 22,
+  gap: 16,
 
   [theme.breakpoints.up('tablet_768')]: {
     marginBottom: 20,

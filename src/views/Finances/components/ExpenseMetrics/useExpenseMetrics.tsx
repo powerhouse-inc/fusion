@@ -28,6 +28,14 @@ export const useExpenseMetrics = (year: string) => {
     fetchAnalytics(selectedGranularity, year, codePath, levelOfDetail)
   );
 
+  const handleChangeCumulativeType = (value: CumulativeType) => {
+    setCumulativeType(value);
+  };
+  const handleToggleCumulative = () => {
+    setIsCumulative((prev) => !prev);
+    setCumulativeType('relative');
+  };
+
   const isLoading = !analytics && !error;
 
   const data = useMemo(() => {
@@ -145,19 +153,6 @@ export const useExpenseMetrics = (year: string) => {
     },
   ];
 
-  const cumulativeItems = [
-    {
-      label: 'Relative Cumulative',
-      description: 'Aggregated expense metrics relative to the start of the year.',
-      value: 'relative',
-    },
-    {
-      label: 'Absolute Cumulative',
-      description: 'A continuous aggregation of expenses over the entire dataset.',
-      value: 'absolute',
-    },
-  ];
-
   const filters: Filter[] = [
     {
       type: 'select',
@@ -168,20 +163,18 @@ export const useExpenseMetrics = (year: string) => {
       onChange: (value: string | number | (string | number)[]) => {
         setSelectedGranularity(value as AnalyticGranularity);
       },
+      widthStyles: {
+        width: 'fit-content',
+      },
     },
     {
-      type: 'checkbox',
+      type: 'cumulative',
       id: 'cumulative',
       label: 'Cumulative',
-      selected: isCumulative,
-      onChange: () => {
-        setIsCumulative((prev) => !prev);
-      },
-      options: cumulativeItems,
-      onOptionChange: (value: string | number) => {
-        setCumulativeType(value as CumulativeType);
-      },
-      selectedOptionValue: cumulativeType,
+      cumulativeType,
+      isCumulative,
+      handleChangeCumulativeType,
+      handleToggleCumulative,
     },
   ];
 
@@ -203,5 +196,7 @@ export const useExpenseMetrics = (year: string) => {
     filters,
     canReset,
     onReset,
+    handleChangeCumulativeType,
+    handleToggleCumulative,
   };
 };

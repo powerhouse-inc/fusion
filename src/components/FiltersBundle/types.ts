@@ -2,7 +2,7 @@ import type { Theme } from '@mui/material';
 import type { breakpoints } from '@ses/styles/theme/themes';
 import type { CSSProperties, MutableRefObject, ReactElement, ReactNode } from 'react';
 
-export type FilterType = 'select' | 'radio' | 'checkbox'; // filter type identifier
+export type FilterType = 'select' | 'radio' | 'checkbox' | 'cumulative'; // filter type identifier
 
 export interface GenericFilter {
   id: string;
@@ -81,8 +81,16 @@ export interface CheckboxFilter extends GenericFilter {
   selectedOptionValue?: string | number;
 }
 
+export interface CumulativeFilter extends GenericFilter {
+  type: 'cumulative';
+  cumulativeType: 'absolute' | 'relative';
+  isCumulative: boolean;
+  handleChangeCumulativeType: (value: 'absolute' | 'relative') => void;
+  handleToggleCumulative: () => void;
+}
+
 // all available filters
-export type Filter = SelectFilter | RadioFilter | CheckboxFilter; // add possible filter types here
+export type Filter = SelectFilter | RadioFilter | CheckboxFilter | CumulativeFilter; // add possible filter types here
 
 export type RenderTriggerFn = (onClick: () => void, ref: MutableRefObject<HTMLDivElement | null>) => ReactElement;
 

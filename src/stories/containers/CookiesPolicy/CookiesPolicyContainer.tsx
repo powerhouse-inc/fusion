@@ -84,6 +84,11 @@ const Container = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('desktop_1440')]: {
     paddingBottom: 41,
   },
+  [theme.breakpoints.up('desktop_1920')]: {
+    borderBottom: `1px solid ${
+      theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.gray[900]
+    }`,
+  },
 }));
 
 const ContainerData = styled(Card)(({ theme }) => ({

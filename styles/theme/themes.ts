@@ -61,7 +61,7 @@ export const lightTheme = responsiveFontSizes(
         main: '#1AAB9B',
       },
       background: {
-        default: '#FFFFFF',
+        default: colorPalette.gray[50],
       },
     },
     typography: {
@@ -97,7 +97,7 @@ export const darkTheme = responsiveFontSizes(
         main: '#211634',
       },
       background: {
-        default: '#000000',
+        default: colorPalette.background.dm,
       },
     },
     typography: {

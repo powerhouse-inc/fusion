@@ -2,10 +2,10 @@ import { styled } from '@mui/material';
 import Card from '@/components/Card/Card';
 import type { FC } from 'react';
 
-const TermsOfUseView: FC = () => (
+const DisclaimerView: FC = () => (
   <Container>
     <ContainerData>
-      <Title>Terms of Use</Title>
+      <Title>Disclaimer</Title>
       <Description>Use of Cookies and Similar Technologies</Description>
       <div>
         <ParagraphStyle>
@@ -45,7 +45,7 @@ const TermsOfUseView: FC = () => (
   </Container>
 );
 
-export default TermsOfUseView;
+export default DisclaimerView;
 
 const Container = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -62,6 +62,11 @@ const Container = styled('div')(({ theme }) => ({
   },
   [theme.breakpoints.up('desktop_1440')]: {
     paddingBottom: 41,
+  },
+  [theme.breakpoints.up('desktop_1920')]: {
+    borderBottom: `1px solid ${
+      theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.gray[900]
+    }`,
   },
 }));
 
