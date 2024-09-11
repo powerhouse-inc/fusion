@@ -6,23 +6,23 @@ import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import TeamBreadcrumbContent from '@/components/Breadcrumb/CustomContents/TeamBreadcrumbContent';
 import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
+import SESTooltip from '@/components/SESTooltip/SESTooltip';
 import TeamHeader from '@/components/TeamHeader/TeamHeader';
 import Information from '@/components/icons/information';
 import { ResourceType } from '@/core/models/interfaces/types';
-import SESTooltipLegacy from '@/stories/components/SESTooltipLegacy/SESTooltipLegacy';
 import PageSubheader from './components/PageSubheader/PageSubheader';
 import ProjectList from './components/ProjectList/ProjectList';
-import useActorProjectsContainer from './useActorProjectsContainer';
+import useActorProjectsView from './useActorProjectsView';
 import type { ProjectsAndSupportedProjects } from '@ses/core/models/interfaces/projects';
 import type { Team } from '@ses/core/models/interfaces/team';
 
-interface ActorProjectsContainerProps {
+interface ActorProjectsViewProps {
   actors: Team[];
   actor: Team;
   projectsData: ProjectsAndSupportedProjects;
 }
 
-const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, actors, projectsData }) => {
+const ActorProjectsView: React.FC<ActorProjectsViewProps> = ({ actor, actors, projectsData }) => {
   const {
     isMobile,
     isFilterCollapsedOnMobile,
@@ -34,7 +34,8 @@ const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, 
     searchQuery,
     handleResetFilters,
     handleSearchChange,
-  } = useActorProjectsContainer(projectsData, actors, actor);
+    projects,
+  } = useActorProjectsView(projectsData, actors, actor);
 
   return (
     <PageWrapper>
@@ -91,14 +92,20 @@ const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, 
               isFilterCollapsedOnMobile={isFilterCollapsedOnMobile}
             />
 
-            <ProjectList projects={filteredProjects} />
+            <ProjectList
+              projects={filteredProjects}
+              text={
+                projects.length > 0 && filteredProjects.length === 0
+                  ? 'No Result Found'
+                  : "This Contributor doesn't have any Projects yet."
+              }
+            />
 
-            {/* TODO: instead of `projects.length` it should be `supportedProjects.length` once it is integrated with the API */}
-            {(filteredProjects.length > 0 || filteredSupporterProjects.length > 0) && (
+            {filteredSupporterProjects.length > 0 ? (
               <>
                 <SupportedProjects>
                   <span>Projects supported by {actor.name}</span>
-                  <SESTooltipLegacy
+                  <SESTooltip
                     content="Contributory Projects: This highlights the ecosystem actor's role as a contributor rather than the primary owner."
                     enterTouchDelay={0}
                     leaveTouchDelay={15000}
@@ -108,11 +115,29 @@ const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, 
                     <IconContainer>
                       <Information />
                     </IconContainer>
-                  </SESTooltipLegacy>
+                  </SESTooltip>
                 </SupportedProjects>
 
                 <ProjectList projects={filteredSupporterProjects} isSupportedProjects />
               </>
+            ) : (
+              <div>
+                <SupportedProjects>
+                  <span>Projects supported by {actor.name}</span>
+                  <SESTooltip
+                    content="Contributory Projects: This highlights the ecosystem actor's role as a contributor rather than the primary owner."
+                    enterTouchDelay={0}
+                    leaveTouchDelay={15000}
+                    placement="bottom-start"
+                    fallbackPlacements={['bottom-end']}
+                  >
+                    <IconContainer>
+                      <Information />
+                    </IconContainer>
+                  </SESTooltip>
+                </SupportedProjects>
+                <TextNotFound>No Result Found</TextNotFound>
+              </div>
             )}
           </ContainerResponsive>
         </ContainerAllData>
@@ -121,7 +146,7 @@ const ActorProjectsContainer: React.FC<ActorProjectsContainerProps> = ({ actor, 
   );
 };
 
-export default ActorProjectsContainer;
+export default ActorProjectsView;
 
 const PageWrapper = styled(PageContainer)(() => ({
   paddingTop: 0,
@@ -181,3 +206,23 @@ const IconContainer = styled('span')({
   justifyContent: 'center',
   alignItems: 'center',
 });
+
+const TextNotFound = styled('p')(({ theme }) => ({
+  fontFamily: 'Inter, sans-serif',
+
+  textAlign: 'center',
+  color: theme.palette.isLight ? theme.palette.colors.gray[500] : theme.palette.colors.gray[600],
+
+  fontWeight: 700,
+  fontSize: 20,
+  lineHeight: '24px',
+
+  [theme.breakpoints.up('tablet_768')]: {
+    fontSize: 24,
+    lineHeight: '28.8px',
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
+    fontSize: 32,
+    lineHeight: '38.4px',
+  },
+}));

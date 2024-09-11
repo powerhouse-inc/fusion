@@ -12,7 +12,7 @@ import ProjectStatusChipFilter from './components/ProjectFilters/ProjectStatusCh
 import type { Theme } from '@mui/material';
 import type { ProjectsAndSupportedProjects } from '@ses/core/models/interfaces/projects';
 
-const useActorProjectsContainer = (projectsData: ProjectsAndSupportedProjects, actors: Team[], actor: Team) => {
+const useActorProjectsView = (projectsData: ProjectsAndSupportedProjects, actors: Team[], actor: Team) => {
   const pager = useBreadcrumbTeamPager(actor, actors);
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
@@ -133,7 +133,8 @@ const useActorProjectsContainer = (projectsData: ProjectsAndSupportedProjects, a
     pager,
     canReset,
     filters,
+    projects: projectsData.projects,
   };
 };
 
-export default useActorProjectsContainer;
+export default useActorProjectsView;

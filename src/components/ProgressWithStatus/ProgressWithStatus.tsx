@@ -17,7 +17,7 @@ interface Props {
 const ProgressWithStatus: FC<Props> = ({ progress, status }) => (
   <Progress>
     <ProgressTitleWrapper>
-      <ProgressTitle>Progress</ProgressTitle>
+      <ProgressTitle>Status</ProgressTitle>
       <StatusProgressChip status={status} />
     </ProgressTitleWrapper>
     <ProgressBarContainer>
@@ -32,7 +32,6 @@ export default ProgressWithStatus;
 const ProgressBarContainer = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: 4,
-
   backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.slate[600],
 }));
 

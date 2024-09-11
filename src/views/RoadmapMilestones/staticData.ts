@@ -95,7 +95,5 @@ export const DefaultRoadmap: Roadmap = {
     { ...exampleMilestone },
     { ...exampleMilestone },
     { ...exampleMilestone },
-    { ...exampleMilestone },
-    { ...exampleMilestone },
   ],
 };

@@ -32,7 +32,7 @@ const variantsArgs = [
         name: 'Phoenix Lab',
         code: 'PHOENIX',
       })
-      .withImgUrl('https://picsum.photos/450/260')
+      .withImgUrl('https://picsum.photos/id/7/450/260')
       .withAbstract(
         "Protocol Expense Accounting aims to provide a comprehensive, detailed, and up-to-date view of the Maker Protocol's operational expenses. This information can help Maker Protocol stakeholders, including MKR holders and contributors, understand how MakerDAO spends funds."
       )

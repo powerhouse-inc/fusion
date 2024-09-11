@@ -2,8 +2,8 @@ import { styled } from '@mui/material';
 import { useMemo } from 'react';
 import Card from '@/components/Card/Card';
 import InternalLinkButton from '@/components/InternalLinkButton/InternalLinkButton';
+import ProgressWithStatus from '@/components/ProgressWithStatus/ProgressWithStatus';
 import type { Milestone } from '@/core/models/interfaces/roadmaps';
-import { usLocalizedNumber } from '@/core/utils/humanization';
 import { formatDateStringToQuarter, progressPercentage } from '../../utils';
 import type { FC } from 'react';
 
@@ -13,7 +13,7 @@ interface MilestoneCardProps {
 
 const MilestoneCard: FC<MilestoneCardProps> = ({ milestone }) => {
   // percentage in value from 0 to 1
-  const percentage = useMemo(() => progressPercentage(milestone.scope.progress), [milestone.scope.progress]);
+  const percentage = useMemo(() => progressPercentage(milestone.scope?.progress), [milestone.scope?.progress]);
 
   return (
     <Container>
@@ -34,15 +34,7 @@ const MilestoneCard: FC<MilestoneCardProps> = ({ milestone }) => {
         <Description>{milestone.abstract}</Description>
       </TitleContainer>
       <Progress>
-        <ProgressTitleWrapper>
-          <ProgressTitleContainer>
-            <ProgressTitle>Progress</ProgressTitle>
-          </ProgressTitleContainer>
-        </ProgressTitleWrapper>
-        <ProgressBarContainer>
-          <ProgressBar progress={percentage} />
-          <ProgressLabel progress={percentage}>{usLocalizedNumber(percentage * 100, 0)}%</ProgressLabel>
-        </ProgressBarContainer>
+        <ProgressWithStatus progress={percentage} status={milestone.scope?.status} />
       </Progress>
       <ViewContainer>
         <InternalLinkButton href={`#${milestone.code}`} buttonType="primary" label="View" />
@@ -137,72 +129,9 @@ const Description = styled('div')(({ theme }) => ({
   color: theme.palette.isLight ? theme.palette.colors.gray[800] : theme.palette.colors.gray[500],
 }));
 
-const Progress = styled('div')(({ theme }) => ({
+const Progress = styled('div')(() => ({
   display: 'flex',
-  flexDirection: 'column',
-  gap: 8,
   margin: '4px 8px 0px',
-  padding: '8px 8px 6px',
-  border: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.charcoal[800]}`,
-  borderRadius: 12,
-  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.charcoal[900],
-}));
-
-const ProgressTitleWrapper = styled('div')(() => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-}));
-
-const ProgressTitleContainer = styled('div')(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: 2.67,
-}));
-
-const ProgressTitle = styled('h4')(({ theme }) => ({
-  margin: 0,
-  fontWeight: 500,
-  fontSize: 12,
-  lineHeight: '18px',
-  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[600],
-}));
-
-const ProgressBarContainer = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: 4,
-  backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.slate[600],
-}));
-
-const ProgressBar = styled('div')<{ progress: number }>(({ theme, progress }) => ({
-  width: `max(${progress * 100}%, ${progress === 0 ? 0 : 0.5}px)`,
-  height: 16,
-  borderRadius: `4px ${progress === 1 ? '4px 4px' : '0px 0px'} 4px`,
-
-  ...(progress === 1 && {
-    backgroundColor: theme.palette.isLight ? theme.palette.colors.green[700] : theme.palette.colors.green[900],
-  }),
-
-  ...(progress !== 1 && {
-    backgroundColor: theme.palette.isLight ? theme.palette.colors.blue[700] : theme.palette.colors.blue[900],
-  }),
-}));
-
-const ProgressLabel = styled('span')<{ progress: number }>(({ theme, progress }) => ({
-  position: 'absolute',
-  top: 0,
-  right: 8,
-  fontWeight: 700,
-  fontSize: 12,
-  lineHeight: '16px',
-
-  ...(progress === 1 && {
-    color: theme.palette.colors.slate[50],
-  }),
-
-  ...(progress !== 1 && {
-    color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.charcoal[600],
-  }),
 }));
 
 const ViewContainer = styled('div')(() => ({

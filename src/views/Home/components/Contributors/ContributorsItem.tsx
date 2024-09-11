@@ -113,7 +113,20 @@ const ContributorsItem: FC<Props> = ({ contributor, className, hasDefaultColors 
         ) : textDefault ? (
           <>
             <ScopesDesk>
-              {contributor?.scopes?.length > 1 ? (
+              {contributor.type === ResourceType.CoreUnit ? (
+                // New code for Core Unit categories
+                <ContainerCategories>
+                  {contributor?.category?.length > 2 ? (
+                    <GroupScopesContributors items={contributor.category as TeamCategory[]} />
+                  ) : contributor?.category?.length === 0 || contributor.category === null ? (
+                    <PlaceHolderEcosystemActor />
+                  ) : (
+                    contributor?.category?.map((item, index) => (
+                      <CategoryChip category={item as TeamCategory} key={index} />
+                    ))
+                  )}
+                </ContainerCategories>
+              ) : contributor?.scopes?.length > 1 ? (
                 <GroupScopesContributors items={contributor.scopes} />
               ) : contributor?.scopes?.length === 0 || contributor.scopes === null ? (
                 <PlaceHolderEcosystemActor />
@@ -247,6 +260,7 @@ const ScopesDesk = styled('div')(({ theme }) => ({
   display: 'none',
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'flex',
+    minWidth: 80,
   },
 }));
 const RoleDesk = styled('div')(({ theme }) => ({
@@ -259,7 +273,12 @@ const RoleDesk = styled('div')(({ theme }) => ({
   },
 }));
 
-const DateUpdated = styled('div')({});
+const DateUpdated = styled('div')(({ theme }) => ({
+  [theme.breakpoints.up('desktop_1024')]: {
+    display: 'flex',
+    minWidth: 120,
+  },
+}));
 const ArrowContainerDesk = styled('div')(({ theme }) => ({
   display: 'none',
   [theme.breakpoints.up('desktop_1024')]: {

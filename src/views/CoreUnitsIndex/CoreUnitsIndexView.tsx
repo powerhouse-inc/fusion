@@ -30,7 +30,7 @@ const CoreUnitsIndexView: React.FC<Props> = ({ coreUnits }) => {
   return (
     <PageContainer>
       <SEOHead
-        title="Sky Fusion - Legacy Ecosystem"
+        title="Sky Fusion - Core Units Legacy Ecosystem Contributors"
         description="Learn about Core Units as legacy contributor teams: their key information, activity, expenditures, FTE numbers, and more."
         canonicalURL={siteRoutes.coreUnitsOverview}
       />

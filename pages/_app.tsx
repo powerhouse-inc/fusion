@@ -68,7 +68,10 @@ function MyApp(props: MyAppProps) {
         <CookiesProviderTracking cookiesObject={cookiesObject}>
           <AuthContextProvider>
             <ThemeProvider isLightApp={isLight}>
-              <SEOHead title="MakerDAO - Dashboard" description="" />
+              <SEOHead
+                title="Sky Fusion Dashboard"
+                description="Sky Fusion Dashboard offers key data insights into the Sky Ecosystem's finances, governance, contributors, and roadmaps. "
+              />
               <FeatureFlagsProvider enabledFeatures={featureFlags[CURRENT_ENVIRONMENT]}>
                 <AppLayout>
                   <Component {...pageProps} />

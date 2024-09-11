@@ -1,11 +1,8 @@
-import styled from '@emotion/styled';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
-import React from 'react';
-import lightTheme from '../../../../styles/theme/themes';
-
+import { styled } from '@mui/material';
 import { ButtonType } from '../../../core/enums/buttonTypeEnum';
 import CheckBox from '../CheckBox/CheckBox';
 import { CustomButton } from '../CustomButton/CustomButton';
+import type { FC } from 'react';
 
 interface Props {
   functionalCheckbox: boolean;
@@ -16,40 +13,36 @@ interface Props {
   handleRejectCookies: () => void;
 }
 
-const CookiesPolicyBanner = ({
+const CookiesPolicyBanner: FC<Props> = ({
   functionalCheckbox,
   analyticsCheckbox,
   setFunctionalCheckbox,
   setAnalyticsCheckbox,
   handleAcceptCookies,
   handleRejectCookies,
-}: Props) => {
-  const { isLight } = useThemeContext();
+}) => {
   const handleCheckbox = (key: (val: boolean) => void) => (val: boolean) => {
     key(!val);
   };
   return (
-    <Container isLight={isLight}>
+    <Container>
       <ContainerData>
-        <StyleParagraph isLight={isLight}>
+        <StyleParagraph>
           This website uses cookies for analytic purposes only. Cookies are anonymous and do not link to user data. We
           collect information to improve the user experience and validate UI changes. You can still use the page without
           cookies. For more information, please read our <br />
           <LinkCookiesPolicy href="/cookies-policy">cookies policy.</LinkCookiesPolicy>
         </StyleParagraph>
-
         <ContainerCheckBox>
           <CheckBox
             label="Functional cookies"
             isChecked={functionalCheckbox}
             setIsChecked={handleCheckbox(setFunctionalCheckbox)}
-            isLight={isLight}
           />
           <CheckBox
             label="Analytics cookies"
             isChecked={analyticsCheckbox}
             setIsChecked={handleCheckbox(setAnalyticsCheckbox)}
-            isLight={isLight}
           />
         </ContainerCheckBox>
         <ContainerButton>
@@ -57,11 +50,13 @@ const CookiesPolicyBanner = ({
             label="Reject all cookies"
             buttonType={ButtonType.Secondary}
             onClick={handleRejectCookies}
+            allowsHover={false}
           />
-          <CustomButtonStyle
+          <CustomButtonStyled
             label="Accept configured cookies"
             buttonType={ButtonType.Primary}
             onClick={handleAcceptCookies}
+            allowsHover={false}
           />
         </ContainerButton>
       </ContainerData>
@@ -69,119 +64,142 @@ const CookiesPolicyBanner = ({
   );
 };
 
-const Container = styled.div<{ isLight: boolean }>(({ isLight }) => ({
-  background: isLight ? '#FFFFFF' : '#10191F',
+const Container = styled('div')(({ theme }) => ({
+  background: theme.palette.isLight ? '#FFFFFF' : '#10191F',
   borderRadius: '6px',
   padding: '40px 24px',
   height: '458px',
-  boxShadow: !isLight ? '0px -15px 35px 10px rgba(0, 27, 141, 0.15)' : 'none',
-  [lightTheme.breakpoints.between('table_834', 'desktop_1194')]: {
+  boxShadow: !theme.palette.isLight ? '0px -15px 35px 10px rgba(0, 27, 141, 0.15)' : 'none',
+
+  [theme.breakpoints.between('tablet_768', 'desktop_1280')]: {
     padding: '40px 63px',
   },
-  [lightTheme.breakpoints.between('desktop_1194', 'desktop_1280')]: {
-    padding: '40px 243px',
-  },
-  [lightTheme.breakpoints.between('desktop_1280', 'desktop_1440')]: {
+  [theme.breakpoints.between('desktop_1280', 'desktop_1440')]: {
     padding: '40px 286px',
   },
-  [lightTheme.breakpoints.between('desktop_1440', 'desktop_1920')]: {
+  [theme.breakpoints.between('desktop_1440', 'desktop_1920')]: {
     padding: '40px 366px',
   },
-  [lightTheme.breakpoints.up('desktop_1920')]: {
+  [theme.breakpoints.up('desktop_1920')]: {
     padding: '40px 606px',
   },
-  [lightTheme.breakpoints.up('table_834')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     height: '282px',
   },
 }));
 
-const ContainerData = styled.div({
+const ContainerData = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   maxWidth: '375px',
   margin: '0px auto',
-  [lightTheme.breakpoints.up('table_834')]: {
+
+  [theme.breakpoints.up('tablet_768')]: {
     maxWidth: '708px',
     margin: '0px auto',
   },
-});
+}));
 
-const LinkCookiesPolicy = styled.a({
+const LinkCookiesPolicy = styled('a')(({ theme }) => ({
   fontFamily: 'Inter, sans-serif',
   fontStyle: 'normal',
-  fontWeight: 500,
-  fontSize: '16px',
-  lineHeight: '19px',
-  color: '#447AFB',
+  fontWeight: 600,
+  fontSize: 14,
+  lineHeight: '22px',
+  color: theme.palette.colors.sky[1000],
   marginLeft: '2px',
   textAlign: 'center',
-});
 
-const ContainerCheckBox = styled.div({
+  [theme.breakpoints.up('desktop_1024')]: {
+    fontSize: 16,
+    lineHeight: '24px',
+  },
+}));
+
+const ContainerCheckBox = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   gap: '34px',
   margin: '0 auto',
   marginTop: '32px',
-  [lightTheme.breakpoints.up('table_834')]: {
+
+  [theme.breakpoints.up('tablet_768')]: {
     marginTop: '24px',
   },
-});
+}));
 
-const ContainerButton = styled.div({
+const ContainerButton = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   paddingLeft: '22px',
   paddingRight: '22px',
   marginTop: '32px',
   alignItems: 'center',
-  [lightTheme.breakpoints.up('table_834')]: {
+
+  [theme.breakpoints.up('tablet_768')]: {
     display: 'flex',
     flexDirection: 'row',
     margin: '0 auto',
     marginTop: '24px',
     height: '48px',
   },
-});
+}));
 
-const CustomButtonStyle = styled(CustomButton)({
+const CustomButtonStyled = styled(CustomButton)(({ theme }) => ({
   padding: '14.5px 40px',
   marginTop: '24px',
   width: 285,
   height: 48,
-
+  backgroundColor: theme.palette.colors.sky[1000],
+  border: 'none',
+  '&:hover': {
+    backgroundColor: theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.sky[900],
+    '& > div': {
+      color: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.slate[50],
+    },
+  },
+  '&:active': {
+    backgroundColor: theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.sky[900],
+    '& > div': {
+      color: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.slate[50],
+    },
+  },
   '& > div': {
     fontSize: '16px',
     lineHeight: '19px',
+    color: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.slate[50],
   },
-  [lightTheme.breakpoints.up('table_834')]: {
+
+  [theme.breakpoints.up('tablet_768')]: {
     marginTop: '0px',
   },
-});
+}));
 
-const RejectAllCookiesButton = styled(CustomButton)({
+const RejectAllCookiesButton = styled(CustomButton)(({ theme }) => ({
   width: 285,
   height: 48,
   padding: '14.5px 76px',
-
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.slate[500],
+  border: 'none',
   '& > div': {
     fontSize: '16px',
     lineHeight: '19px',
+    color: theme.palette.isLight ? theme.palette.colors.gray[600] : theme.palette.colors.slate[100],
   },
 
-  [lightTheme.breakpoints.up('table_834')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     marginRight: 24,
   },
-});
+}));
 
-const StyleParagraph = styled.p<{ isLight: boolean }>(({ isLight }) => ({
+const StyleParagraph = styled('p')(({ theme }) => ({
   fontFamily: 'Inter, sans-serif',
   fontStyle: 'normal',
   fontWeight: 400,
   fontSize: '16px',
   lineHeight: '22px',
   textAlign: 'center',
-  color: isLight ? '#000000' : '#D2D4EF',
+  color: theme.palette.isLight ? theme.palette.colors.gray[500] : theme.palette.colors.gray[600],
   marginBottom: '0px',
   marginTop: '0px',
 }));

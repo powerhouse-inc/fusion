@@ -486,6 +486,7 @@ const StatusTable = styled('div')(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     gap: 10,
+    width: 99,
     '& > div:nth-last-of-type(1)': {
       marginLeft: 0,
     },

@@ -1,6 +1,6 @@
 import type { AllowedOwnerType } from '@/views/BudgetStatement/types';
 
-export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://expenses.makerdao.network';
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://fusion.sky.money';
 
 export const siteRoutes = {
   home: '/',
@@ -17,6 +17,7 @@ export const siteRoutes = {
   coreUnitActivityFeed: (shortCode: string) => `/contributors/core-units/${shortCode}/activity-feed`,
   globalActivityFeed: '/activity-feed',
   cookiesPolicy: '/cookies-policy',
+  termsOfUse: '/terms-of-use',
   recognizedDelegateReport: '/contributors/recognized-delegates/budget-statements',
   recognizedDelegate: '/contributors/recognized-delegates',
   endgame: '/endgame',

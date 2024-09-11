@@ -55,8 +55,8 @@ const ReservesWaterfallChartSection: React.FC<Props> = ({
       />
       <FilterContainer>
         <FiltersBundle
+          asPopover={[]}
           heightForScroll
-          asPopover={['tablet_768', 'desktop']}
           filters={filters}
           resetFilters={{
             canReset,
@@ -129,9 +129,11 @@ const FilterContainer = styled('div')(({ theme }) => ({
   marginBottom: 22,
   [theme.breakpoints.up('tablet_768')]: {
     marginBottom: 20,
+    marginLeft: -12,
   },
   [theme.breakpoints.up('desktop_1024')]: {
     marginBottom: 26,
+    marginLeft: 'revert',
   },
   [theme.breakpoints.up('desktop_1280')]: {
     marginBottom: 22,

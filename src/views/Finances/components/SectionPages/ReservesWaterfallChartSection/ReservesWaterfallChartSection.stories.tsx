@@ -15,8 +15,65 @@ const meta: Meta<typeof ReservesWaterfallChartSection> = {
 };
 export default meta;
 
+const granularityItems = [
+  {
+    label: 'Monthly',
+    value: 'monthly',
+  },
+  {
+    label: 'Quarterly',
+    value: 'quarterly',
+  },
+  {
+    label: 'Annually',
+    value: 'annual',
+  },
+];
+
+const categories = [
+  {
+    label: 'Atlas Immutable Budget',
+  },
+  {
+    label: 'MakerDAO Legacy Budget',
+  },
+  {
+    label: 'Scope Framework Budget',
+  },
+];
+
 const data = [1200, 2251, 1243, 1208, 1254, 1325, 2138, 2186, -1921, -1311, -234, 2500, 27121];
 
+const filtersConfig = [
+  {
+    type: 'select',
+    id: 'Granularity',
+    label: 'Granularity',
+    selected: 'monthly',
+    multiple: false,
+    onChange: () => null,
+    options: granularityItems,
+    withAll: false,
+    widthStyles: {
+      width: 'fit-content',
+      menuWidth: 350,
+    },
+  },
+  {
+    type: 'select',
+    id: 'Categories',
+    label: 'Categories',
+    selected: categories,
+    multiple: true,
+    onChange: () => null,
+    options: categories,
+    withAll: false,
+    widthStyles: {
+      width: 'fit-content',
+      menuWidth: 350,
+    },
+  },
+];
 const args = [
   {
     selectedGranularity: 'monthly',
@@ -41,11 +98,11 @@ const args = [
     handleSelectChangeItem: () => null,
     handleGranularityChange: () => null,
     handleResetFilter: () => null,
-    items: [],
+    items: ['Reserves Balance', 'Outflow', 'Inflow'],
     popupContainerHeight: 120,
     isDisabled: true,
     series: builderWaterfallSeries(data, true, false, false, true),
-    filters: [],
+    filters: filtersConfig,
     canReset: true,
     onReset: () => null,
   },
@@ -76,7 +133,7 @@ const args = [
     items: [],
     popupContainerHeight: 120,
     isDisabled: true,
-    filters: [],
+    filters: filtersConfig,
     canReset: true,
     onReset: () => null,
   },
@@ -107,7 +164,7 @@ const args = [
     items: [],
     popupContainerHeight: 120,
     isDisabled: true,
-    filters: [],
+    filters: filtersConfig,
     canReset: true,
     onReset: () => null,
   },
@@ -138,7 +195,7 @@ const args = [
     items: [],
     popupContainerHeight: 120,
     isDisabled: true,
-    filters: [],
+    filters: filtersConfig,
     canReset: true,
     onReset: () => null,
   },
