@@ -101,12 +101,13 @@ runs:
       id: deploy
       uses: bitovi/github-actions-deploy-eks-helm@v1.2.10
       with:
+        atomic: true
+        chart-path: techops-services/common
+        chart-repository: https://techops-services.github.io/helm-charts
         cluster-name: ${{ inputs.CLUSTER_NAME }}
         config-files: ${{ inputs.HELM_VALUES }}
-        chart-path: techops-services/common
+        create-namespace: false
+        name: ${{ inputs.APP_NAME }}
         namespace: ${{ inputs.APP_NAME }}
         timeout: 3m0s
-        name: ${{ inputs.APP_NAME }}
-        chart-repository: https://techops-services.github.io/helm-charts
         version: 0.0.35
-        atomic: true
