@@ -103,7 +103,7 @@ runs:
 
     - name: Deploy to EKS with Helm
       id: deploy
-      uses: bitovi/github-actions-deploy-eks-helm@v1.2.8
+      uses: bitovi/github-actions-deploy-eks-helm@v1.2.10
       with:
         cluster-name: ${{ inputs.CLUSTER_NAME }}
         config-files: ${{ inputs.HELM_VALUES }}
