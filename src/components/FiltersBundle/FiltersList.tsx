@@ -1,6 +1,6 @@
 import { styled } from '@mui/material';
 import SimpleBar from 'simplebar-react';
-import CumulativeFilterComponent from '@/components/FiltersBundle/defaults/CumulativeFilter/CumulativeFilter';
+import CumulativeAsList from './defaults/CumulativeFilter/CumulativeAsList';
 import CustomCheckbox from './defaults/CustomCheckbox';
 import RadioAsList from './defaults/RadioAsList';
 import SelectAsList from './defaults/SelectAsList';
@@ -28,7 +28,7 @@ const FilterList: React.FC<FilterListProps> = ({ filters, handleClose, heightFor
             return <CustomCheckbox filter={filter} />;
           }
           case 'cumulative': {
-            return <CumulativeFilterComponent filter={filter} />;
+            return <CumulativeAsList filter={filter} />;
           }
           default: {
             throw new Error('Unknown filter type');

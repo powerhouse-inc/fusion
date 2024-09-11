@@ -17,7 +17,7 @@ const CumulativeFilterComponent: React.FC<CumulativeFilterProps> = ({ filter }) 
   const [open, setOpen] = useState<boolean>(false);
   const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
   const anchorRef = useRef(null);
-
+  // const combinedMenuProps = deepmerge(StyledMenuProps(theme, style?.menuWidth || 200), menuProps);
   const handleOpenMenu = () => {
     if (filter.isCumulative) {
       setOpen((prev) => !prev);
