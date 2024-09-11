@@ -1,7 +1,5 @@
-import { styled } from '@mui/material';
+import { styled, useTheme } from '@mui/material';
 import RadioInputSVG from '@ses/components/svg/RadioInputSVG';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
-import type { WithIsLight } from '@ses/core/utils/typesHelpers';
 
 type ItemType = 'relative' | 'absolute';
 
@@ -11,29 +9,33 @@ interface CumulativeSelectItemProps {
   onClick: () => void;
 }
 
-const RelativeIcon: React.FC<WithIsLight> = ({ isLight }) => (
+interface IconProps {
+  isLight: boolean;
+}
+
+const RelativeIcon: React.FC<IconProps> = ({ isLight }) => (
   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
     <line
       x1="1.3999"
       y1="15.5858"
       x2="14.1278"
       y2="2.85786"
-      stroke={isLight ? '#546978' : '#405361'}
+      stroke={isLight ? '#6F7A85' : '#5B646D'}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeDasharray="4 4"
     />
-    <path d="M1 1L0.999999 17" stroke={isLight ? '#231536' : '#D2D4EF'} strokeWidth="2" strokeLinecap="round" />
-    <path d="M1 17L17 17" stroke={isLight ? '#231536' : '#D2D4EF'} strokeWidth="2" strokeLinecap="round" />
+    <path d="M1 1L0.999999 17" stroke={isLight ? '#343839' : '#FCFCFC'} strokeWidth="2" strokeLinecap="round" />
+    <path d="M1 17L17 17" stroke={isLight ? '#343839' : '#FCFCFC'} strokeWidth="2" strokeLinecap="round" />
   </svg>
 );
 
-const AbsoluteIcon: React.FC<WithIsLight> = ({ isLight }) => (
+const AbsoluteIcon: React.FC<IconProps> = ({ isLight }) => (
   <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M1.11719 8.62109L15.2593 4.29165"
-      stroke={isLight ? '#546978' : '#405361'}
+      stroke={isLight ? '#6F7A85' : '#5B646D'}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -41,21 +43,27 @@ const AbsoluteIcon: React.FC<WithIsLight> = ({ isLight }) => (
     />
     <path
       d="M1 1.39258L0.999999 16.0002"
-      stroke={isLight ? '#231536' : '#D2D4EF'}
+      stroke={isLight ? '#343839' : '#FCFCFC'}
       strokeWidth="2"
       strokeLinecap="round"
     />
-    <path d="M1 16L17 16" stroke={isLight ? '#231536' : '#D2D4EF'} strokeWidth="2" strokeLinecap="round" />
+    <path d="M1 16L17 16" stroke={isLight ? '#343839' : '#FCFCFC'} strokeWidth="2" strokeLinecap="round" />
   </svg>
 );
 
 const CumulativeSelectItem: React.FC<CumulativeSelectItemProps> = ({ type, selected, onClick }) => {
-  const { isLight } = useThemeContext();
+  const theme = useTheme();
 
   return (
     <Item type={type} onClick={onClick}>
       <Content>
-        <Icon>{type === 'relative' ? <RelativeIcon isLight={isLight} /> : <AbsoluteIcon isLight={isLight} />}</Icon>
+        <Icon>
+          {type === 'relative' ? (
+            <RelativeIcon isLight={theme.palette.isLight} />
+          ) : (
+            <AbsoluteIcon isLight={theme.palette.isLight} />
+          )}
+        </Icon>
         <TextContainer>
           <Title>{type === 'relative' ? 'Relative' : 'Absolute'} Cumulative</Title>
           <Description>
@@ -82,8 +90,9 @@ const Item = styled('div')<{ type: ItemType }>(({ theme, type }) => ({
   padding: type === 'relative' ? '24px 16px 20px' : '20px 16px 24px',
   gap: 16,
 
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : '#2b303b',
   '&:hover': {
-    backgroundColor: theme.palette.mode === 'light' ? '#F6F8F9' : '#25273D',
+    backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : '#292E39',
   },
 }));
 
@@ -100,20 +109,21 @@ const Icon = styled('div')({
 const TextContainer = styled('div')({
   display: 'flex',
   flexDirection: 'column',
-  gap: 4,
+  gap: 8,
 });
 
 const Title = styled('div')(({ theme }) => ({
   fontSize: 14,
-  lineHeight: '17px',
-  fontWeight: 400,
-  color: theme.palette.mode === 'light' ? '#231536' : '#D2D4EF',
+  lineHeight: '22px',
+  fontWeight: 600,
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
 }));
 
 const Description = styled('div')(({ theme }) => ({
   fontSize: 12,
-  lineHeight: '15px',
-  color: theme.palette.mode === 'light' ? '#708390' : '#546978',
+  lineHeight: '18px',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[600],
+  fontWeight: 500,
 }));
 
 const CheckIcon = styled('div')(() => ({
@@ -123,10 +133,10 @@ const CheckIcon = styled('div')(() => ({
 
 const RadioInput = styled(RadioInputSVG)(({ theme }) => ({
   '& > circle:first-of-type': {
-    stroke: theme.palette.mode === 'light' ? '#231536' : '#D2D4EF',
+    stroke: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   },
 
   '& > circle:nth-child(2)': {
-    fill: theme.palette.mode === 'light' ? '#231536' : '#D2D4EF',
+    fill: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   },
 }));
