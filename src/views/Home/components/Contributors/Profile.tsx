@@ -20,7 +20,7 @@ const Profile: FC<Props> = ({ contributor, className }) => (
           <TitleLinks>
             <ContainerShortCodeName>
               <ShortCode>{contributor.shortCode}</ShortCode>
-              <Name>{contributor.name}</Name>
+              <Name className="profile-name">{contributor.name}</Name>
             </ContainerShortCodeName>
             <StatusMobile>
               <StatusChipStyled status={contributor.status as TeamStatus} />

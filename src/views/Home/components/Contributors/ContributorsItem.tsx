@@ -21,16 +21,34 @@ import ProfileUpdated from './ProfileUpdated';
 import type { Theme } from '@mui/material';
 import type { FC } from 'react';
 
+interface CustomStyles {
+  container?: React.CSSProperties;
+  profile?: React.CSSProperties;
+  scopes?: React.CSSProperties;
+  role?: React.CSSProperties;
+  category?: React.CSSProperties;
+  ftes?: React.CSSProperties;
+}
+
 interface Props {
   contributor: Team;
   className?: string;
   hasDefaultColors?: boolean;
   textDefault?: boolean;
+  // Add new props for customization
+  customStyles?: CustomStyles;
 }
-const ContributorsItem: FC<Props> = ({ contributor, className, hasDefaultColors = true, textDefault }) => {
+const ContributorsItem: FC<Props> = ({
+  contributor,
+  className,
+  hasDefaultColors = true,
+  textDefault,
+  customStyles,
+}) => {
   const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
   const isDesktop1280Plus = useMediaQuery((theme: Theme) => theme.breakpoints.up('desktop_1280'));
   const isEcosystemActor = contributor.type === ResourceType.EcosystemActor;
+  console.log('customStyles', customStyles);
   return (
     <LinkStyled
       href={
@@ -39,10 +57,15 @@ const ContributorsItem: FC<Props> = ({ contributor, className, hasDefaultColors 
           : siteRoutes.coreUnitAbout(contributor.shortCode)
       }
     >
-      <Container className={className}>
+      <Container className={className} customStyles={customStyles}>
         <ContainerData>
           <ProfileArrow>
-            <ProfileStyled contributor={contributor} type={contributor.type} textDefault={textDefault ?? false} />
+            <ProfileStyled
+              contributor={contributor}
+              type={contributor.type}
+              textDefault={textDefault ?? false}
+              customStyles={customStyles}
+            />
             <ArrowContainerMobile>
               <InternalLinkButtonStyled showIcon isLink={false} />
             </ArrowContainerMobile>
@@ -90,7 +113,7 @@ const ContributorsItem: FC<Props> = ({ contributor, className, hasDefaultColors 
 
         {contributor.type === ResourceType.EcosystemActor ? (
           <>
-            <ScopesDesk>
+            <ScopesDesk customStyles={customStyles}>
               {contributor?.scopes?.length > 1 ? (
                 <GroupScopesContributors items={contributor.scopes} />
               ) : contributor?.scopes?.length === 0 || contributor.scopes === null ? (
@@ -101,7 +124,7 @@ const ContributorsItem: FC<Props> = ({ contributor, className, hasDefaultColors 
                 ))
               )}
             </ScopesDesk>
-            <RoleDesk>
+            <RoleDesk customStyles={customStyles}>
               <RoleChipDeskStyled
                 status={contributor.category?.[0] as TeamRole}
                 hasDefaultColors={hasDefaultColors}
@@ -112,10 +135,10 @@ const ContributorsItem: FC<Props> = ({ contributor, className, hasDefaultColors 
           </>
         ) : textDefault ? (
           <>
-            <ScopesDesk>
+            <ScopesDesk customStyles={customStyles}>
               {contributor.type === ResourceType.CoreUnit ? (
                 // New code for Core Unit categories
-                <ContainerCategories>
+                <ContainerCategories customStyles={customStyles}>
                   {contributor?.category?.length > 2 ? (
                     <GroupScopesContributors items={contributor.category as TeamCategory[]} />
                   ) : contributor?.category?.length === 0 || contributor.category === null ? (
@@ -136,7 +159,7 @@ const ContributorsItem: FC<Props> = ({ contributor, className, hasDefaultColors 
                 ))
               )}
             </ScopesDesk>
-            <RoleDesk>
+            <RoleDesk customStyles={customStyles}>
               <RoleChipDeskStyled
                 status={contributor.category?.[0] as TeamRole}
                 hasDefaultColors={hasDefaultColors}
@@ -147,7 +170,7 @@ const ContributorsItem: FC<Props> = ({ contributor, className, hasDefaultColors 
           </>
         ) : (
           <>
-            <ContainerCategoryDesk>
+            <ContainerCategoryDesk customStyles={customStyles}>
               <Label>Category</Label>
               <ContainerCategories>
                 {contributor?.category?.length > 2 ? (
@@ -161,7 +184,7 @@ const ContributorsItem: FC<Props> = ({ contributor, className, hasDefaultColors 
                 )}
               </ContainerCategories>
             </ContainerCategoryDesk>
-            <ContainerFTEsDesk>
+            <ContainerFTEsDesk customStyles={customStyles}>
               <LabelFTs>FTES</LabelFTs>
               <FTS>{getFTEsFromCoreUnit(contributor as unknown as CoreUnit)}</FTS>
             </ContainerFTEsDesk>
@@ -197,7 +220,7 @@ const ContainerData = styled('div')(({ theme }) => ({
   },
 }));
 
-const Container = styled(Card)(({ theme }) => ({
+const Container = styled(Card)<{ customStyles?: CustomStyles }>(({ theme, customStyles }) => ({
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
@@ -221,6 +244,7 @@ const Container = styled(Card)(({ theme }) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  ...customStyles?.container,
 }));
 const Line = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -256,14 +280,15 @@ const Scopes = styled('div')({
   gap: 4,
 });
 const RoleMobileContainer = styled('div')({});
-const ScopesDesk = styled('div')(({ theme }) => ({
+const ScopesDesk = styled('div')<{ customStyles?: CustomStyles }>(({ theme, customStyles }) => ({
   display: 'none',
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'flex',
     minWidth: 80,
   },
+  ...customStyles?.scopes,
 }));
-const RoleDesk = styled('div')(({ theme }) => ({
+const RoleDesk = styled('div')<{ customStyles?: CustomStyles }>(({ theme, customStyles }) => ({
   display: 'none',
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'flex',
@@ -271,6 +296,7 @@ const RoleDesk = styled('div')(({ theme }) => ({
     flexDirection: 'row',
     justifyContent: 'center',
   },
+  ...customStyles?.role,
 }));
 
 const DateUpdated = styled('div')(({ theme }) => ({
@@ -304,28 +330,32 @@ const ContainerScopeRoleMobile = styled('div')(({ theme }) => ({
   },
 }));
 
-const ProfileStyled = styled(Profile)<{ type: ResourceType; textDefault: boolean }>(({ theme, type, textDefault }) => ({
-  width: 180,
-  [theme.breakpoints.up('desktop_1024')]: {
-    width: 185,
-  },
-  [theme.breakpoints.up('desktop_1280')]: {
-    width: 230,
-  },
-  [theme.breakpoints.up('desktop_1440')]: {
-    width: type === ResourceType.EcosystemActor ? 250 : 292,
-    ...(textDefault && {
-      width: 252,
-    }),
-  },
-}));
+const ProfileStyled = styled(Profile)<{ type: ResourceType; textDefault: boolean; customStyles?: CustomStyles }>(
+  ({ theme, type, textDefault, customStyles }) => ({
+    width: 180,
+    [theme.breakpoints.up('desktop_1024')]: {
+      width: 185,
+    },
+    [theme.breakpoints.up('desktop_1280')]: {
+      width: 230,
+    },
+    [theme.breakpoints.up('desktop_1440')]: {
+      width: type === ResourceType.EcosystemActor ? 250 : 292,
+      ...(textDefault && {
+        width: 252,
+      }),
+    },
+    ...customStyles?.profile,
+  })
+);
 
-const ContainerCategories = styled('div')(({ theme }) => ({
+const ContainerCategories = styled('div')<{ customStyles?: CustomStyles }>(({ theme, customStyles }) => ({
   display: 'flex',
   gap: 4,
   [theme.breakpoints.up('desktop_1024')]: {
     flexDirection: 'column',
   },
+  ...customStyles?.category,
 }));
 
 const ContainerCategoryMobile = styled('div')({
@@ -334,7 +364,7 @@ const ContainerCategoryMobile = styled('div')({
   gap: 2,
 });
 
-const ContainerCategoryDesk = styled('div')(({ theme }) => ({
+const ContainerCategoryDesk = styled('div')<{ customStyles?: CustomStyles }>(({ theme, customStyles }) => ({
   display: 'none',
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'flex',
@@ -343,8 +373,9 @@ const ContainerCategoryDesk = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('desktop_1440')]: {
     width: 168,
   },
+  ...customStyles?.category,
 }));
-const ContainerFTEsDesk = styled('div')(({ theme }) => ({
+const ContainerFTEsDesk = styled('div')<{ customStyles?: CustomStyles }>(({ theme, customStyles }) => ({
   display: 'none',
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'flex',
@@ -354,6 +385,7 @@ const ContainerFTEsDesk = styled('div')(({ theme }) => ({
     flexDirection: 'column',
     justifyContent: 'center',
   },
+  ...customStyles?.ftes,
 }));
 
 const ContainerFTEsMobile = styled('div')({

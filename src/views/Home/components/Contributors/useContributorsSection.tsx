@@ -73,6 +73,39 @@ export const useContributorsSection = (teams: Team[]) => {
   const hasDefaultColors = activeDetailTab === '1';
   const textDefault = activeDetailTab === '1';
 
+  // Custom Styles for each column in the component
+  const customStyles = {
+    profile: {
+      [theme.breakpoints.up('desktop_1024')]: {
+        width: 260,
+        '& .profile-name': {
+          width: 180,
+        },
+      },
+    },
+    scopes: {
+      [theme.breakpoints.up('desktop_1024')]: {
+        display: 'flex',
+
+        width: 180,
+      },
+    },
+    role: {
+      [theme.breakpoints.up('desktop_1024')]: {
+        display: 'flex',
+        width: 180,
+        justifyContent: 'center',
+      },
+    },
+    category: {
+      [theme.breakpoints.up('desktop_1024')]: {
+        display: 'flex',
+        flexDirection: 'column',
+        minWidth: 143,
+      },
+    },
+  };
+
   return {
     hasDefaultColors,
     teamCategoriesTabs,
@@ -86,5 +119,6 @@ export const useContributorsSection = (teams: Team[]) => {
     teamCategoryDataMock,
     contributors,
     textDefault,
+    customStyles,
   };
 };
