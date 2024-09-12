@@ -1,5 +1,4 @@
-import { styled, useTheme } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
+import { IconButton, styled, useTheme } from '@mui/material';
 import CheckOnComponent from '../svg/check-on-new';
 import CheckboxOff from '../svg/checkbox-off';
 import type { FC } from 'react';
@@ -15,13 +14,14 @@ const CheckBox: FC<Props> = ({ label, isChecked, setIsChecked }) => {
   const handleClick = () => {
     setIsChecked(isChecked);
   };
+
   return (
-    <Container>
+    <Container onClick={handleClick}>
       <IconButton
-        onClick={handleClick}
         sx={{
-          padding: '0px',
+          padding: 0,
         }}
+        disableRipple
       >
         {isChecked ? (
           <CheckOnComponent
@@ -39,29 +39,24 @@ const CheckBox: FC<Props> = ({ label, isChecked, setIsChecked }) => {
           />
         )}
       </IconButton>
-      <StyleLabel isChecked={isChecked} onClick={handleClick}>
-        {label}
-      </StyleLabel>
+      <StyledLabel isChecked={isChecked}>{label}</StyledLabel>
     </Container>
   );
 };
 
 const Container = styled('div')({
   display: 'flex',
-  flexDirection: 'row',
   alignItems: 'center',
+  cursor: 'pointer',
 });
 
-const StyleLabel = styled('span')<{ isChecked: boolean }>(({ isChecked, theme }) => ({
+const StyledLabel = styled('span')<{ isChecked: boolean }>(({ isChecked, theme }) => ({
+  marginLeft: 7,
   fontFamily: 'Inter, sans-serif',
-  fontStyle: ' normal',
   fontWeight: isChecked ? 600 : 500,
   fontSize: '14px',
   lineHeight: '22px',
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
-  display: 'inline-block',
-  marginLeft: '10px',
-  cursor: 'pointer',
 }));
 
 export default CheckBox;

@@ -41,7 +41,7 @@ const MainWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <>
       {children}
-      {isShowBanner && themeMode !== undefined && <ContainerOverlay />}
+      {isShowBanner && themeMode !== undefined && <OverlayContainer />}
       {isShowBanner && themeMode !== undefined && (
         <PolicyBannerPosition>
           <CookiesPolicyBanner
@@ -60,25 +60,31 @@ const MainWrapper: FC<{ children: ReactNode }> = ({ children }) => {
 
 export default MainWrapper;
 
-const ContainerOverlay = styled('div')(({ theme }) => ({
+const OverlayContainer = styled('div')(({ theme }) => ({
   position: 'fixed',
   top: 0,
   width: '100%',
+  height: 'calc(100vh - 318px)',
+  background: 'rgba(37, 42, 52, 0.10)',
+  backdropFilter: 'blur(2.5px)',
   zIndex: zIndexEnum.OVERLAY_MOBILE_TOOLTIP,
-  height: 'calc(100vh - 282px)',
-  background: 'rgba(52, 52, 66, 0.1)',
-  backdropFilter: theme.palette.isLight ? 'blur(2px)' : 'blur(4px)',
 
-  [theme.breakpoints.down('tablet_768')]: {
-    height: 'calc(100vh - 458px)',
+  [theme.breakpoints.up('tablet_768')]: {
+    height: 'calc(100vh - 284px)',
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
+    height: 'calc(100vh - 292px)',
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    height: 'calc(100vh - 274px)',
   },
 }));
 
 const PolicyBannerPosition = styled('div')(() => ({
-  bottom: 0,
-  zIndex: 10,
-  width: '100%',
   position: 'fixed',
-  borderRadius: '90px',
+  bottom: 0,
+  width: '100%',
+  borderRadius: '6px 6px 0px 0px',
   transition: 'all 0.5s ease-in',
+  zIndex: zIndexEnum.HEADER_PAGE,
 }));
