@@ -25,8 +25,8 @@ const ContributorsView: React.FC<Props> = ({ teams }) => {
     textDefault,
     hasDefaultColors,
     customStyles,
+    sizeScopeLargeSmall,
   } = useContributorsSection(teams);
-
   return (
     <ContributorsPageContainer>
       <SEOHead
@@ -59,6 +59,7 @@ const ContributorsView: React.FC<Props> = ({ teams }) => {
                             textDefault={textDefault}
                             hasDefaultColors={hasDefaultColors}
                             customStyles={customStyles}
+                            sizeScope={sizeScopeLargeSmall}
                           />
                         ))}
                       </ContainerContributors>

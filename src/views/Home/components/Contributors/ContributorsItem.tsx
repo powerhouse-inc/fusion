@@ -5,6 +5,7 @@ import Card from '@/components/Card/Card';
 import CategoryChip from '@/components/CategoryChip/CategoryChip';
 import InternalLinkButton from '@/components/InternalLinkButton/InternalLinkButton';
 import RoleChip from '@/components/RoleChip/RoleChip';
+import type { ScopeSizeVariant } from '@/components/ScopeChip/ScopeChip';
 import ScopeChip from '@/components/ScopeChip/ScopeChip';
 
 import { siteRoutes } from '@/config/routes';
@@ -35,6 +36,7 @@ interface Props {
   className?: string;
   hasDefaultColors?: boolean;
   textDefault?: boolean;
+  sizeScope?: ScopeSizeVariant;
   // Add new props for customization
   customStyles?: CustomStyles;
 }
@@ -44,9 +46,10 @@ const ContributorsItem: FC<Props> = ({
   hasDefaultColors = true,
   textDefault,
   customStyles,
+  sizeScope,
 }) => {
   const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
-  const isDesktop1280Plus = useMediaQuery((theme: Theme) => theme.breakpoints.up('desktop_1280'));
+  // const isDesktop1280Plus = useMediaQuery((theme: Theme) => theme.breakpoints.up('desktop_1280'));
   const isEcosystemActor = contributor.type === ResourceType.EcosystemActor;
   console.log('customStyles', customStyles);
   return (
@@ -119,9 +122,7 @@ const ContributorsItem: FC<Props> = ({
               ) : contributor?.scopes?.length === 0 || contributor.scopes === null ? (
                 <PlaceHolderEcosystemActor />
               ) : (
-                contributor?.scopes?.map((item, index) => (
-                  <ScopeChip scope={item} key={index} size={isDesktop1280Plus ? 'medium' : 'small'} />
-                ))
+                contributor?.scopes?.map((item, index) => <ScopeChip scope={item} key={index} size={sizeScope} />)
               )}
             </ScopesDesk>
             <RoleDesk customStyles={customStyles}>
@@ -154,9 +155,7 @@ const ContributorsItem: FC<Props> = ({
               ) : contributor?.scopes?.length === 0 || contributor.scopes === null ? (
                 <PlaceHolderEcosystemActor />
               ) : (
-                contributor?.scopes?.map((item, index) => (
-                  <ScopeChip scope={item} key={index} size={isDesktop1280Plus ? 'medium' : 'small'} />
-                ))
+                contributor?.scopes?.map((item, index) => <ScopeChip scope={item} key={index} size={sizeScope} />)
               )}
             </ScopesDesk>
             <RoleDesk customStyles={customStyles}>
@@ -209,7 +208,7 @@ const ContainerData = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   width: '100%',
   padding: '8px 8px 0px 8px',
-  gap: 8,
+  gap: 6,
   [theme.breakpoints.up('tablet_768')]: {
     gap: 6,
   },
@@ -293,6 +292,7 @@ const RoleDesk = styled('div')<{ customStyles?: CustomStyles }>(({ theme, custom
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'flex',
     width: 170,
+    border: '2px solid red',
     flexDirection: 'row',
     justifyContent: 'center',
   },
@@ -333,6 +333,7 @@ const ContainerScopeRoleMobile = styled('div')(({ theme }) => ({
 const ProfileStyled = styled(Profile)<{ type: ResourceType; textDefault: boolean; customStyles?: CustomStyles }>(
   ({ theme, type, textDefault, customStyles }) => ({
     width: 180,
+
     [theme.breakpoints.up('desktop_1024')]: {
       width: 185,
     },
