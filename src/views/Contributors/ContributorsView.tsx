@@ -7,6 +7,7 @@ import FancyTabs from '@/components/FancyTabs/FancyTabs';
 import ShadowWrapper from '@/components/FancyTabs/ShadowWrapper';
 import type { Team } from '@/core/models/interfaces/team';
 import { SEOHead } from '@/stories/components/SEOHead/SEOHead';
+import ContributorsItem from '../Home/components/Contributors/ContributorsItem';
 import { useContributorsSection } from '../Home/components/Contributors/useContributorsSection';
 
 interface Props {
@@ -18,8 +19,13 @@ const ContributorsView: React.FC<Props> = ({ teams }) => {
     activeDetailTab,
     handleActiveDetailTab,
 
+    contributors,
     teamDetailsTabs,
     subTitle,
+    textDefault,
+    hasDefaultColors,
+    customStyles,
+    sizeScopeLargeSmall,
   } = useContributorsSection(teams);
   return (
     <ContributorsPageContainer>
@@ -45,7 +51,18 @@ const ContributorsView: React.FC<Props> = ({ teams }) => {
                   <Title>{subTitle}</Title>
                   <ContainerScroll>
                     <SimpleBarStyled>
-                      <ContainerContributors>ContainerContributors</ContainerContributors>
+                      <ContainerContributors>
+                        {contributors.map((contributor) => (
+                          <ContributorsItem
+                            key={contributor.id}
+                            contributor={contributor}
+                            textDefault={textDefault}
+                            hasDefaultColors={hasDefaultColors}
+                            customStyles={customStyles}
+                            sizeScope={sizeScopeLargeSmall}
+                          />
+                        ))}
+                      </ContainerContributors>
                     </SimpleBarStyled>
                   </ContainerScroll>
                 </ContributorInformation>
@@ -62,14 +79,11 @@ export default ContributorsView;
 
 const ContributorsPageContainer = styled(PageContainer)(() => ({}));
 
-const SectionsContainer = styled('div')(({ theme }) => ({
+const SectionsContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 40,
   marginTop: 24,
-  [theme.breakpoints.up('desktop_1280')]: {
-    gap: 32,
-  },
 }));
 const DescriptionContainer = styled('div')(() => ({
   display: 'flex',

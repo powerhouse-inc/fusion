@@ -27,7 +27,9 @@ const ContributorsSection: FC<Props> = ({ teams }) => {
     teamCategoryDataMock,
     contributors,
     textDefault,
+    sizeScopeMediumSmall,
   } = useContributorsSection(teams);
+
   return (
     <Container>
       <TabsDescriptions>
@@ -66,6 +68,7 @@ const ContributorsSection: FC<Props> = ({ teams }) => {
                       contributor={contributor}
                       hasDefaultColors={hasDefaultColors}
                       textDefault={textDefault}
+                      sizeScope={sizeScopeMediumSmall}
                     />
                   ))}
                 </ContainerContributors>
