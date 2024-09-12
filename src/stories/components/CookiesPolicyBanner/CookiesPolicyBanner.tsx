@@ -1,7 +1,7 @@
 import { styled } from '@mui/material';
-import { ButtonType } from '../../../core/enums/buttonTypeEnum';
-import CheckBox from '../CheckBox/CheckBox';
-import { CustomButton } from '../CustomButton/CustomButton';
+import CheckBox from '@ses/components/CheckBox/CheckBox';
+import { CustomButton } from '@ses/components/CustomButton/CustomButton';
+import { ButtonType } from '@/core/enums/buttonTypeEnum';
 import type { FC } from 'react';
 
 interface Props {
@@ -26,14 +26,18 @@ const CookiesPolicyBanner: FC<Props> = ({
   };
   return (
     <Container>
-      <ContainerData>
-        <StyleParagraph>
+      <DataContainer>
+        <StyledParagraph>
           This website uses cookies for analytic purposes only. Cookies are anonymous and do not link to user data. We
           collect information to improve the user experience and validate UI changes. You can still use the page without
-          cookies. For more information, please read our <br />
-          <LinkCookiesPolicy href="/cookies-policy">cookies policy.</LinkCookiesPolicy>
-        </StyleParagraph>
-        <ContainerCheckBox>
+          cookies. For more information, please read our
+          <Space>&nbsp;</Space>
+          <LineBreak>
+            <br />
+          </LineBreak>
+          <CookiesPolicyLink href="/cookies-policy">cookies policy.</CookiesPolicyLink>
+        </StyledParagraph>
+        <CheckBoxContainer>
           <CheckBox
             label="Functional cookies"
             isChecked={functionalCheckbox}
@@ -44,71 +48,107 @@ const CookiesPolicyBanner: FC<Props> = ({
             isChecked={analyticsCheckbox}
             setIsChecked={handleCheckbox(setAnalyticsCheckbox)}
           />
-        </ContainerCheckBox>
-        <ContainerButton>
+        </CheckBoxContainer>
+        <ButtonContainer>
+          <StyledCustomButton
+            label="Accept configured cookies"
+            buttonType={ButtonType.Primary}
+            onClick={handleAcceptCookies}
+            allowsHover={false}
+          />
           <RejectAllCookiesButton
             label="Reject all cookies"
             buttonType={ButtonType.Secondary}
             onClick={handleRejectCookies}
             allowsHover={false}
           />
-          <CustomButtonStyled
-            label="Accept configured cookies"
-            buttonType={ButtonType.Primary}
-            onClick={handleAcceptCookies}
-            allowsHover={false}
-          />
-        </ContainerButton>
-      </ContainerData>
+        </ButtonContainer>
+      </DataContainer>
     </Container>
   );
 };
 
 const Container = styled('div')(({ theme }) => ({
-  background: theme.palette.isLight ? '#FFFFFF' : '#10191F',
-  borderRadius: '6px',
-  padding: '40px 24px',
-  height: '458px',
-  boxShadow: !theme.palette.isLight ? '0px -15px 35px 10px rgba(0, 27, 141, 0.15)' : 'none',
+  height: '338px',
+  padding: '16px 16px 40px',
+  borderRadius: '6px 6px 0px 0px',
+  background: theme.palette.isLight ? '#FFFFFF' : theme.palette.colors.charcoal[900],
+  boxShadow: '0px -4px 15px 0px rgba(74, 88, 115, 0.15)',
 
-  [theme.breakpoints.between('tablet_768', 'desktop_1280')]: {
-    padding: '40px 63px',
-  },
-  [theme.breakpoints.between('desktop_1280', 'desktop_1440')]: {
-    padding: '40px 286px',
-  },
-  [theme.breakpoints.between('desktop_1440', 'desktop_1920')]: {
-    padding: '40px 366px',
-  },
-  [theme.breakpoints.up('desktop_1920')]: {
-    padding: '40px 606px',
-  },
   [theme.breakpoints.up('tablet_768')]: {
-    height: '282px',
+    height: '304px',
+    padding: '40px 64px 58px',
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
+    height: '312px',
+    padding: '40px 120px 58px',
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    padding: '40px 163px 58px',
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    height: '294px',
+    padding: '40px 184px 64px',
   },
 }));
 
-const ContainerData = styled('div')(({ theme }) => ({
+const DataContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  maxWidth: '375px',
+  maxWidth: '343px',
   margin: '0px auto',
 
   [theme.breakpoints.up('tablet_768')]: {
-    maxWidth: '708px',
-    margin: '0px auto',
+    maxWidth: '640px',
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
+    maxWidth: '784px',
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    maxWidth: '954px',
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    maxWidth: '1072px',
   },
 }));
 
-const LinkCookiesPolicy = styled('a')(({ theme }) => ({
+const StyledParagraph = styled('p')(({ theme }) => ({
+  margin: 0,
   fontFamily: 'Inter, sans-serif',
-  fontStyle: 'normal',
+  fontWeight: 600,
+  fontSize: 14,
+  lineHeight: '22px',
+  color: theme.palette.isLight ? theme.palette.colors.gray[500] : theme.palette.colors.gray[600],
+
+  [theme.breakpoints.up('tablet_768')]: {
+    textAlign: 'center',
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
+    fontSize: 16,
+    lineHeight: '24px',
+  },
+}));
+
+const Space = styled('span')(({ theme }) => ({
+  [theme.breakpoints.up('tablet_768')]: {
+    display: 'none',
+  },
+}));
+
+const LineBreak = styled('span')(({ theme }) => ({
+  display: 'none',
+
+  [theme.breakpoints.up('tablet_768')]: {
+    display: 'inline',
+  },
+}));
+
+const CookiesPolicyLink = styled('a')(({ theme }) => ({
+  fontFamily: 'Inter, sans-serif',
   fontWeight: 600,
   fontSize: 14,
   lineHeight: '22px',
   color: theme.palette.colors.sky[1000],
-  marginLeft: '2px',
-  textAlign: 'center',
 
   [theme.breakpoints.up('desktop_1024')]: {
     fontSize: 16,
@@ -116,38 +156,33 @@ const LinkCookiesPolicy = styled('a')(({ theme }) => ({
   },
 }));
 
-const ContainerCheckBox = styled('div')(({ theme }) => ({
+const CheckBoxContainer = styled('div')(({ theme }) => ({
   display: 'flex',
-  flexDirection: 'row',
-  gap: '34px',
-  margin: '0 auto',
-  marginTop: '32px',
+  gap: 58,
+  margin: '16px auto 0px',
 
   [theme.breakpoints.up('tablet_768')]: {
-    marginTop: '24px',
+    gap: 64,
+    marginTop: 32,
   },
 }));
 
-const ContainerButton = styled('div')(({ theme }) => ({
+const ButtonContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  paddingLeft: '22px',
-  paddingRight: '22px',
-  marginTop: '32px',
   alignItems: 'center',
+  gap: 16,
+  marginTop: 32,
 
   [theme.breakpoints.up('tablet_768')]: {
-    display: 'flex',
-    flexDirection: 'row',
-    margin: '0 auto',
-    marginTop: '24px',
-    height: '48px',
+    flexDirection: 'row-reverse',
+    justifyContent: 'center',
+    gap: 32,
   },
 }));
 
-const CustomButtonStyled = styled(CustomButton)(({ theme }) => ({
+const StyledCustomButton = styled(CustomButton)(({ theme }) => ({
   padding: '14.5px 40px',
-  marginTop: '24px',
   width: 285,
   height: 48,
   backgroundColor: theme.palette.colors.sky[1000],
@@ -169,10 +204,6 @@ const CustomButtonStyled = styled(CustomButton)(({ theme }) => ({
     lineHeight: '19px',
     color: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.slate[50],
   },
-
-  [theme.breakpoints.up('tablet_768')]: {
-    marginTop: '0px',
-  },
 }));
 
 const RejectAllCookiesButton = styled(CustomButton)(({ theme }) => ({
@@ -186,22 +217,6 @@ const RejectAllCookiesButton = styled(CustomButton)(({ theme }) => ({
     lineHeight: '19px',
     color: theme.palette.isLight ? theme.palette.colors.gray[600] : theme.palette.colors.slate[100],
   },
-
-  [theme.breakpoints.up('tablet_768')]: {
-    marginRight: 24,
-  },
-}));
-
-const StyleParagraph = styled('p')(({ theme }) => ({
-  fontFamily: 'Inter, sans-serif',
-  fontStyle: 'normal',
-  fontWeight: 400,
-  fontSize: '16px',
-  lineHeight: '22px',
-  textAlign: 'center',
-  color: theme.palette.isLight ? theme.palette.colors.gray[500] : theme.palette.colors.gray[600],
-  marginBottom: '0px',
-  marginTop: '0px',
 }));
 
 export default CookiesPolicyBanner;
