@@ -292,7 +292,7 @@ const RoleDesk = styled('div')<{ customStyles?: CustomStyles }>(({ theme, custom
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'flex',
     width: 170,
-    border: '2px solid red',
+
     flexDirection: 'row',
     justifyContent: 'center',
   },
