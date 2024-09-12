@@ -1,8 +1,7 @@
-import { ClickAwayListener, Grow, Paper, Popper, styled, useMediaQuery } from '@mui/material';
+import { ClickAwayListener, Grow, Paper, Popper, styled, useMediaQuery, useTheme } from '@mui/material';
 import CheckOnComponent from '@ses/components/svg/check-on-new';
 import CheckboxOff from '@ses/components/svg/checkbox-off';
 import { SelectChevronDown } from '@ses/components/svg/select-chevron-down';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
 import { useState, useRef } from 'react';
 import CumulativeSelectItem from './CumulativeSelectItem';
 import type { CumulativeFilter } from '../../types';
@@ -13,11 +12,12 @@ interface CumulativeFilterProps {
 }
 
 const CumulativeFilterComponent: React.FC<CumulativeFilterProps> = ({ filter }) => {
-  const { isLight } = useThemeContext();
   const [open, setOpen] = useState<boolean>(false);
+  const theme = useTheme();
+  const isLight = theme.palette.isLight;
   const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
   const anchorRef = useRef(null);
-  // const combinedMenuProps = deepmerge(StyledMenuProps(theme, style?.menuWidth || 200), menuProps);
+
   const handleOpenMenu = () => {
     if (filter.isCumulative) {
       setOpen((prev) => !prev);
@@ -37,35 +37,19 @@ const CumulativeFilterComponent: React.FC<CumulativeFilterProps> = ({ filter }) 
       <SelectBtn>
         <CheckBtn onClick={filter.handleToggleCumulative}>
           {filter.isCumulative ? (
-            <CheckOnComponent fill="#25273D" fillDark="#D2D4EF" width={12} height={12} />
+            <CheckOnComponent fill="#343839" fillDark="#D7D8D9" width={12} height={12} />
           ) : (
-            <CheckboxOff fill="#25273D" fillDark="#D2D4EF" width={12} height={12} />
+            <CheckboxOff fill="#343839" fillDark="#D7D8D9" width={12} height={12} />
           )}
         </CheckBtn>
         {getButtonText()}
         <MenuBtn isActive={filter.isCumulative} onClick={handleOpenMenu} ref={anchorRef}>
           <StyledSelectChevronDown
             isOpen={open}
-            fill={isLight ? (filter.isCumulative ? '#25273D' : '#BEBFC5') : filter.isCumulative ? '#B7A6CD' : '#48495F'}
+            fill={isLight ? (filter.isCumulative ? '#25273D' : '#BEBFC5') : filter.isCumulative ? '#D7D8D9' : '#48495F'}
           />
         </MenuBtn>
       </SelectBtn>
-
-      {filter.isCumulative && (
-        <MobileItems>
-          <CumulativeSelectItem
-            onClick={() => filter.handleChangeCumulativeType('relative')}
-            type="relative"
-            selected={filter.cumulativeType === 'relative'}
-          />
-          <Divider />
-          <CumulativeSelectItem
-            onClick={() => filter.handleChangeCumulativeType('absolute')}
-            type="absolute"
-            selected={filter.cumulativeType === 'absolute'}
-          />
-        </MobileItems>
-      )}
 
       <DesktopPopper
         open={open}
@@ -85,19 +69,19 @@ const CumulativeFilterComponent: React.FC<CumulativeFilterProps> = ({ filter }) 
           >
             <CustomPaper>
               <ClickAwayListener onClickAway={() => setOpen(false)}>
-                <div>
+                <ItemsContainer>
                   <CumulativeSelectItem
                     onClick={() => filter.handleChangeCumulativeType('relative')}
                     type="relative"
                     selected={filter.cumulativeType === 'relative'}
                   />
-                  <Divider />
+
                   <CumulativeSelectItem
                     onClick={() => filter.handleChangeCumulativeType('absolute')}
                     type="absolute"
                     selected={filter.cumulativeType === 'absolute'}
                   />
-                </div>
+                </ItemsContainer>
               </ClickAwayListener>
             </CustomPaper>
           </Grow>
@@ -115,16 +99,19 @@ const SelectBtn = styled('button')(({ theme }) => ({
   justifyContent: 'space-between',
   gap: 8,
   fontFamily: 'Inter, sans-serif',
-  fontSize: 14,
-  lineHeight: '18px',
+  fontSize: 16,
   fontWeight: 600,
   background: theme.palette.mode === 'light' ? '#ffffff' : '#10191F',
-  padding: '7px 0 7px 16px',
+  padding: '4px 8px',
   outline: 'none',
   backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.charcoal[800],
   border: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[300] : theme.palette.colors.charcoal[700]}`,
   borderRadius: 8,
   color: theme.palette.isLight ? theme.palette.colors.gray[700] : theme.palette.colors.gray[300],
+  height: 32,
+
+  lineHeight: '24px',
+  letterSpacing: '-0.32px',
 }));
 
 const CheckBtn = styled('div')(() => ({
@@ -140,28 +127,21 @@ const MenuBtn = styled('div')<{ isActive: boolean }>(({ isActive, theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  height: 18,
-  paddingLeft: 11,
-  paddingRight: 16,
+  height: 24,
+  paddingLeft: 8,
   cursor: isActive ? 'pointer' : 'auto',
+
   borderLeft: `1px solid ${theme.palette.mode === 'light' ? '#D4D9E1' : '#787A9B'}`,
 }));
 
 const CustomPaper = styled(Paper)(({ theme }) => ({
   width: 282,
-
-  bgcolor: theme.palette.isLight ? '#ffffff' : theme.palette.colors.charcoal[900],
-  backgroundColor: theme.palette.isLight ? '#ffffff' : theme.palette.colors.charcoal[900],
+  bgcolor: theme.palette.isLight ? theme.palette.colors.gray[50] : '#2b303b',
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : '#2b303b',
   borderRadius: 6,
   overflow: 'hidden',
   boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
-  marginTop: 9,
-}));
-
-const Divider = styled('div')(() => ({
-  height: 1,
-  width: '100%',
-  background: '#D4D9E1',
+  marginTop: 8,
 }));
 
 const StyledSelectChevronDown = styled(SelectChevronDown)<{ isOpen: boolean }>(({ isOpen }) => ({
@@ -172,17 +152,24 @@ const Container = styled('div')({
   position: 'relative',
 });
 
-const MobileItems = styled('div')(({ theme }) => ({
-  display: 'none',
-  [theme.breakpoints.down('tablet_768')]: {
-    display: 'block',
-    marginTop: 8,
-  },
-}));
-
 const DesktopPopper = styled(Popper)(({ theme }) => ({
   display: 'none',
   [theme.breakpoints.up('tablet_768')]: {
     display: 'block',
+    backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : '#2b303b',
+    bgcolor: theme.palette.isLight ? theme.palette.colors.gray[50] : '#2b303b',
+    overflow: 'hidden',
+    '&.MuiPopper-root': {
+      overflow: 'hidden',
+      borderRadius: 12,
+    },
   },
+}));
+
+const ItemsContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 8,
+
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : '#2b303b',
 }));
