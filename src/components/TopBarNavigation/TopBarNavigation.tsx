@@ -7,11 +7,10 @@ import SkyLogoDeskDark from 'public/assets/svg/sky-desk-dark.svg';
 import SkyLogoDesk from 'public/assets/svg/sky-desk.svg';
 import SkyLogoMobile from 'public/assets/svg/sky-mobile.svg';
 import ThemeDark from 'public/assets/svg/theme.svg';
-import React from 'react';
 import CustomSelect from '@/components/CustomSelect/CustomSelect';
+import SkyButton from '@/components/SkyButton/SkyButton';
 import { siteRoutes } from '@/config/routes';
 import { zIndexEnum } from '@/core/enums/zIndexEnum';
-import SkyBottom from '../SkyBottom/SkyBottom';
 import LinkNavBar from './LinkNavBar';
 import MenuUserOptions from './MenuUser/MenuUserOptions';
 import { useTopBarNavigation } from './useTopBarNavigation';
@@ -278,8 +277,7 @@ const LoginContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const StyledButton = styled(SkyBottom)({
-  padding: '4px 24px',
+const StyledButton = styled(SkyButton)({
   lineHeight: '0px',
 });
 

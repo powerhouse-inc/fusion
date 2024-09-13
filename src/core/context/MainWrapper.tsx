@@ -67,7 +67,7 @@ const OverlayContainer = styled('div')(({ theme }) => ({
   height: 'calc(100vh - 318px)',
   background: 'rgba(37, 42, 52, 0.10)',
   backdropFilter: 'blur(2.5px)',
-  zIndex: zIndexEnum.OVERLAY_MOBILE_TOOLTIP,
+  zIndex: zIndexEnum.HEADER_PAGE + 1,
 
   [theme.breakpoints.up('tablet_768')]: {
     height: 'calc(100vh - 284px)',
@@ -86,5 +86,5 @@ const PolicyBannerPosition = styled('div')(() => ({
   width: '100%',
   borderRadius: '6px 6px 0px 0px',
   transition: 'all 0.5s ease-in',
-  zIndex: zIndexEnum.HEADER_PAGE,
+  zIndex: zIndexEnum.HEADER_PAGE + 2,
 }));
