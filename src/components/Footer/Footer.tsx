@@ -33,10 +33,7 @@ const Footer = () => (
       <FooterBottomRight>
         <StyledLink href={siteRoutes.cookiesPolicy}>Cookie Policy</StyledLink>
         <StyledLink href={siteRoutes.disclaimer}>Disclaimer</StyledLink>
-        <StyledLink href={'https://docs.sky.money/legal-terms'} target="_blank">
-          Terms of Use
-        </StyledLink>
-        <BuiltWith>
+        <BuiltWith onClick={() => window.open('https://www.powerhouse.inc/', '_blank')}>
           <FooterButtonLink>Built with</FooterButtonLink>
           <PowerhouseIcon width={16} height={16} />
           <FooterButtonLink>Powerhouse</FooterButtonLink>
@@ -180,6 +177,7 @@ const FooterBottomRight = styled('div')(({ theme }) => ({
 const BuiltWith = styled('div')(() => ({
   display: 'flex',
   alignItems: 'center',
+  cursor: 'pointer',
   '& > p:first-of-type': {
     marginRight: 8,
   },
