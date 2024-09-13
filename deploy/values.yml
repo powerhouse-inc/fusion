@@ -38,10 +38,10 @@ podAnnotations:
 
 resources:
   limits:
-    cpu: 1.2
+    cpu: 1.8
     memory: 1.5Gi
   requests:
-    cpu: 0.75
+    cpu: 1.2
     memory: 0.75Gi
 
 env:
@@ -88,8 +88,8 @@ autoscaling:
   enabled: true
   minReplicas: ${AUTOSCALING_MIN_REPLICAS}
   maxReplicas: ${AUTOSCALING_MAX_REPLICAS}
-  targetCPUUtilizationPercentage: 85
-  targetMemoryUtilizationPercentage: 85
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
   scaleUp:
     stabilizationWindowSeconds: 30
     policyType: Pods
