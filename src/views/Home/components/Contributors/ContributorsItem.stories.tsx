@@ -1,4 +1,3 @@
-// import { useTheme } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
 import lightTheme from '@ses/styles/theme/themes';
 import { EcosystemActorBuilder } from '@/core/businessLogic/builders/actors/actorsBuilder';
