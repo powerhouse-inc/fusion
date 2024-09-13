@@ -83,7 +83,19 @@ export const useContributorsSection = (teams: Team[]) => {
   const customStyles = {
     profile: {
       [theme.breakpoints.up('desktop_1024')]: {
+        width: 245,
+        '& .profile-name': {
+          width: 180,
+        },
+      },
+      [theme.breakpoints.up('desktop_1280')]: {
         width: 250,
+        '& .profile-name': {
+          width: 180,
+        },
+      },
+      [theme.breakpoints.up('desktop_1440')]: {
+        width: 248,
         '& .profile-name': {
           width: 180,
         },
@@ -92,7 +104,11 @@ export const useContributorsSection = (teams: Team[]) => {
     scopes: {
       [theme.breakpoints.up('desktop_1024')]: {
         display: 'flex',
-        width: 180,
+        width: 163,
+      },
+      [theme.breakpoints.up('desktop_1440')]: {
+        display: 'flex',
+        width: 145,
       },
     },
     role: {
@@ -100,13 +116,27 @@ export const useContributorsSection = (teams: Team[]) => {
         display: 'flex',
         width: 180,
         justifyContent: 'center',
+        '& div > div': {
+          fontSize: 14,
+          lineHeight: '22px',
+        },
       },
     },
     category: {
       [theme.breakpoints.up('desktop_1024')]: {
         display: 'flex',
         flexDirection: 'column',
-        minWidth: 143,
+        minWidth: 168,
+      },
+    },
+    lastModified: {
+      justifyContent: 'center',
+      [theme.breakpoints.up('desktop_1280')]: {
+        minWidth: 138,
+        justifyContent: 'end',
+      },
+      [theme.breakpoints.up('desktop_1440')]: {
+        width: 138,
       },
     },
   };
