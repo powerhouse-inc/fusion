@@ -25,6 +25,8 @@ export default DisclaimerView;
 const Container = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
   width: '100%',
   paddingTop: 88,
   paddingBottom: 64,
@@ -33,7 +35,7 @@ const Container = styled('div')(({ theme }) => ({
     paddingTop: 122,
   },
   [theme.breakpoints.up('desktop_1280')]: {
-    paddingBottom: 16,
+    paddingBottom: 24,
   },
   [theme.breakpoints.up('desktop_1440')]: {
     paddingBottom: 41,
@@ -48,35 +50,39 @@ const Container = styled('div')(({ theme }) => ({
 const ContainerData = styled(Card)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  marginTop: '40px',
-  maxWidth: '1312px',
-  margin: '0 auto',
-  padding: '32px',
+  maxWidth: 343,
+  width: '100%',
+  marginTop: 34,
+  padding: '16px 16px 24px',
 
-  [theme.breakpoints.between('desktop_1280', 'desktop_1440')]: {
-    maxWidth: '1184px',
+  [theme.breakpoints.up('tablet_768')]: {
+    maxWidth: 704,
+    padding: '16px 24px 24px',
   },
-  [theme.breakpoints.between('tablet_768', 'desktop_1280')]: {
-    maxWidth: '770px',
+  [theme.breakpoints.up('desktop_1024')]: {
+    maxWidth: 960,
+    padding: '16px 32px 24px',
   },
-  [theme.breakpoints.down('tablet_768')]: {
-    maxWidth: '343px',
-    padding: '32px 24px',
+  [theme.breakpoints.up('desktop_1280')]: {
+    maxWidth: 1200,
+    marginTop: 0,
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    maxWidth: 1312,
+    marginTop: 8,
   },
 }));
 
 const Title = styled('div')(({ theme }) => ({
+  marginBottom: 24,
   fontFamily: 'Inter, sans-serif',
-  textAlign: 'center',
-  fontStyle: 'normal',
   fontWeight: 700,
   fontSize: 18,
   lineHeight: '21.6px',
-  alignItems: 'center',
+  textAlign: 'center',
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
-  marginBottom: 24,
 
-  [theme.breakpoints.between('tablet_768', 'desktop_1280')]: {
+  [theme.breakpoints.up('desktop_1280')]: {
     fontSize: 20,
     lineHeight: '24px',
   },
@@ -85,7 +91,6 @@ const Title = styled('div')(({ theme }) => ({
 const ParagraphStyle = styled('p')(({ theme }) => ({
   margin: 0,
   fontFamily: 'Inter, sans-serif',
-  fontStyle: 'normal',
   fontWeight: 400,
   fontSize: 14,
   lineHeight: '24px',
