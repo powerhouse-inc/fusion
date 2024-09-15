@@ -19,6 +19,7 @@ import type { EChartsOption } from 'echarts-for-react';
 const DEFAULT_METRIC: AnalyticMetric = 'Budget';
 const DEFAULT_GRANULARITY: AnalyticGranularity = 'monthly';
 const METRIC_FILTER_OPTIONS = ['Budget', 'Forecast', 'Net Protocol Outflow', 'Net Expenses On-Chain', 'Actuals'];
+
 const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, allBudgets: Budget[]) => {
   const router = useRouter();
   const { isLight } = useThemeContext();
@@ -231,7 +232,7 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
             ? 'Net On-Chain'
             : filter
           : filter,
-        value: filter,
+        value: getKeyMetricBreakDownChart(filter),
       })),
       withAll: false,
       widthStyles: {

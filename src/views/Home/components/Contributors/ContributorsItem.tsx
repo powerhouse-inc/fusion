@@ -29,6 +29,7 @@ interface CustomStyles {
   role?: React.CSSProperties;
   category?: React.CSSProperties;
   ftes?: React.CSSProperties;
+  lastModified?: React.CSSProperties;
 }
 
 interface Props {
@@ -49,9 +50,8 @@ const ContributorsItem: FC<Props> = ({
   sizeScope,
 }) => {
   const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
-  // const isDesktop1280Plus = useMediaQuery((theme: Theme) => theme.breakpoints.up('desktop_1280'));
   const isEcosystemActor = contributor.type === ResourceType.EcosystemActor;
-  console.log('customStyles', customStyles);
+
   return (
     <LinkStyled
       href={
@@ -125,7 +125,7 @@ const ContributorsItem: FC<Props> = ({
                 contributor?.scopes?.map((item, index) => <ScopeChip scope={item} key={index} size={sizeScope} />)
               )}
             </ScopesDesk>
-            <RoleDesk customStyles={customStyles}>
+            <RoleDesk customStyles={customStyles} type={contributor.type}>
               <RoleChipDeskStyled
                 status={contributor.category?.[0] as TeamRole}
                 hasDefaultColors={hasDefaultColors}
@@ -158,7 +158,7 @@ const ContributorsItem: FC<Props> = ({
                 contributor?.scopes?.map((item, index) => <ScopeChip scope={item} key={index} size={sizeScope} />)
               )}
             </ScopesDesk>
-            <RoleDesk customStyles={customStyles}>
+            <RoleDesk customStyles={customStyles} type={contributor.type}>
               <RoleChipDeskStyled
                 status={contributor.category?.[0] as TeamRole}
                 hasDefaultColors={hasDefaultColors}
@@ -190,7 +190,7 @@ const ContributorsItem: FC<Props> = ({
           </>
         )}
 
-        <DateUpdated>
+        <DateUpdated customStyles={customStyles}>
           <ProfileUpdated date={getProfileUpdate(contributor)} type={contributor.type} />
         </DateUpdated>
         <ArrowContainerDesk>
@@ -287,23 +287,23 @@ const ScopesDesk = styled('div')<{ customStyles?: CustomStyles }>(({ theme, cust
   },
   ...customStyles?.scopes,
 }));
-const RoleDesk = styled('div')<{ customStyles?: CustomStyles }>(({ theme, customStyles }) => ({
+const RoleDesk = styled('div')<{ customStyles?: CustomStyles; type?: ResourceType }>(({ theme, customStyles }) => ({
   display: 'none',
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'flex',
     width: 170,
 
     flexDirection: 'row',
-    justifyContent: 'center',
   },
   ...customStyles?.role,
 }));
 
-const DateUpdated = styled('div')(({ theme }) => ({
+const DateUpdated = styled('div')<{ customStyles?: CustomStyles }>(({ theme, customStyles }) => ({
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'flex',
     minWidth: 120,
   },
+  ...customStyles?.lastModified,
 }));
 const ArrowContainerDesk = styled('div')(({ theme }) => ({
   display: 'none',
@@ -323,7 +323,7 @@ const ContainerScopeRoleMobile = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
-  marginBottom: 8,
+  marginBottom: 7,
 
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'none',
@@ -346,7 +346,7 @@ const ProfileStyled = styled(Profile)<{ type: ResourceType; textDefault: boolean
         width: 252,
       }),
     },
-    ...customStyles?.profile,
+    ...(customStyles?.profile || {}),
   })
 );
 
