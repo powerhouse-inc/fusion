@@ -1,7 +1,6 @@
-import React from 'react';
-import CookiesPolicyContainer from '../../src/stories/containers/CookiesPolicy/CookiesPolicyContainer';
+import CookiesPolicyView from '@/views/CookiesPolicy/CookiesPolicyView';
 
-const CookiesPolicy = () => <CookiesPolicyContainer />;
+const CookiesPolicy = () => <CookiesPolicyView />;
 
 export async function getServerSideProps() {
   return { props: {} };
