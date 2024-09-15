@@ -1,6 +1,6 @@
-import { useCookiesPolicyBanner } from '@ses/containers/CookiesPolicy/useCookiesPolicyBanner';
 import React, { createContext, useContext } from 'react';
-import type { CookiesInterface } from '../utils/typesHelpers';
+import type { CookiesInterface } from '@/core/utils/typesHelpers';
+import { useCookiesPolicyBanner } from '@/views/CookiesPolicy/useCookiesPolicyView';
 import type { ReactNode } from 'react';
 
 export type CookiesContextValues = {
@@ -40,9 +40,8 @@ const CookiesProviderTracking = ({ cookiesObject, children }: Props) => {
     isThemeTrackingAccepted,
     isTimestampTrackingAccepted,
     isAnalyticsTrackingAccepted,
-  } = useCookiesPolicyBanner({
-    cookiesObject,
-  });
+  } = useCookiesPolicyBanner(cookiesObject);
+
   return (
     <CookiesContextTracking.Provider
       value={{
