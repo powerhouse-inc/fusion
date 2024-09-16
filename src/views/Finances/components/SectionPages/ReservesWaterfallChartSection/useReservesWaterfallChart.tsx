@@ -3,8 +3,10 @@ import sortBy from 'lodash/sortBy';
 import { useEffect, useMemo, useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import type { Filter, SelectOption } from '@/components/FiltersBundle/types';
+import useRestorationFromUrlState from '@/core/hooks/useRestorationFromUrlState';
 import { fetchAnalytics } from '@/views/Finances/api/queries';
 
+import { FinancesSectionId } from '@/views/Finances/types';
 import type { LegendItemsWaterfall } from '@/views/Finances/utils/types';
 import { formatBudgetName } from '@/views/Finances/utils/utils';
 import BudgetItem from '../../ReservesWaterfallFilters/BudgetItem';
@@ -34,16 +36,30 @@ const granularityItems = [
     value: 'annual',
   },
 ];
+
+const DEFAULT_GRANULARITY: AnalyticGranularity = 'monthly';
+const DEFAULT_ACTIVE_ELEMENTS: string[] = [];
+
 export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], allBudgets: Budget[], year: string) => {
   const theme = useTheme();
   const isLight = theme.palette.isLight;
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const isTable = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
   const isDesk1024 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1024', 'desktop_1280'));
-  const [activeElements, setActiveElements] = useState<string[]>([]);
-  const [selectedGranularity, setSelectedGranularity] = useState<AnalyticGranularity>('monthly');
+  const [activeElements, setActiveElements] = useState<string[]>(DEFAULT_ACTIVE_ELEMENTS);
+  const [selectedGranularity, setSelectedGranularity] = useState<AnalyticGranularity>(DEFAULT_GRANULARITY);
   const [resetActiveElements, setResetActiveElements] = useState(true);
   const levelOfDetail = codePath.split('/').length + 1;
+
+  const { handleCurrentSectionStateUpdate } = useRestorationFromUrlState(FinancesSectionId.RESERVE_CHART, (state) => {
+    if (state?.activeElements && state.activeElements.length > 0) {
+      setActiveElements(state.activeElements);
+      setResetActiveElements(false);
+    }
+    if (state?.granularity && state.granularity.length > 0) {
+      setSelectedGranularity(state.granularity[0] as AnalyticGranularity);
+    }
+  });
 
   // title of the waterfall chart section
   const titleChart = useMemo(() => {
@@ -155,11 +171,16 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
     },
   ];
   // if the default filters are selected then the "Reset filters" button should be disabled
-  const areDefaultFiltersSelected = activeElements.length === selectAll.length && selectedGranularity === 'monthly';
+  const areDefaultFiltersSelected =
+    activeElements.length === selectAll.length && selectedGranularity === DEFAULT_GRANULARITY;
 
-  const canReset = selectedGranularity !== 'monthly' || activeElements.length !== selectAll.length;
+  const canReset = selectedGranularity !== DEFAULT_GRANULARITY || activeElements.length !== selectAll.length;
   const onReset = () => {
     handleResetFilter();
+    handleCurrentSectionStateUpdate({
+      activeElements: DEFAULT_ACTIVE_ELEMENTS,
+      granularity: DEFAULT_GRANULARITY,
+    });
   };
 
   const filters: Filter[] = [
@@ -171,6 +192,9 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
       multiple: false,
       onChange: (value: string | number | (string | number)[]) => {
         setSelectedGranularity(value as AnalyticGranularity);
+        handleCurrentSectionStateUpdate({
+          granularity: value as string,
+        });
       },
       options: granularityItems,
       withAll: false,
@@ -187,6 +211,9 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
       withAll: true,
       onChange: (value: string | number | (string | number)[]) => {
         setActiveElements(value as string[]);
+        handleCurrentSectionStateUpdate({
+          activeElements: value as string[],
+        });
       },
       options: items,
       customOptionsRender: (option: SelectOption, isActive: boolean) => (
