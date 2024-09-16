@@ -95,7 +95,7 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
       budgets,
       isLight,
       barWidth,
-      getKeyMetricBreakDownChart(selectedMetric),
+      selectedMetric,
       allBudgets
     );
 
