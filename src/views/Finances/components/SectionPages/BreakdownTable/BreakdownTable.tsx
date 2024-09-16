@@ -51,7 +51,6 @@ const BreakdownTable: React.FC<Props> = ({
           <FinancesTable
             breakdownTable={breakdownTable}
             metrics={activeItems}
-            year={year}
             period={selectedValue as PeriodicSelectionFilter}
           />
         </TableWrapper>
