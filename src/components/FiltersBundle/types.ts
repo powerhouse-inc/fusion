@@ -87,6 +87,7 @@ export interface CumulativeFilter extends GenericFilter {
   options?: RadioOption[];
   cumulativeType: 'absolute' | 'relative';
   isCumulative: boolean;
+  onChange: () => void;
   handleChangeCumulativeType: (value: 'absolute' | 'relative') => void;
   handleToggleCumulative: () => void;
   customOptionsRender?: (option: RadioOption, isActive: boolean, theme?: Theme) => ReactNode;

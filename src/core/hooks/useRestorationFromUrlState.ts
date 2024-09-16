@@ -25,8 +25,8 @@ export const buildInMemoryUrlState = (query: ParsedUrlQuery): DecodedUrlState =>
       // all the params of each section have the "section key" appended to end of its name to prevent collisions
       if (queryKey.endsWith(sectionKey)) {
         const paramKey = queryKey.replace(sectionKey, '');
-        state[sectionKey][paramKey] =
-          typeof query[queryKey] === 'string' ? query[queryKey].split(',') : query[queryKey];
+        const value = query[queryKey];
+        state[sectionKey][paramKey] = typeof value === 'string' ? value.split(',') : value;
       }
     });
   });
@@ -100,7 +100,8 @@ const useRestorationFromUrlState = (
           newState[sectionKey] = {};
         }
         Object.keys(data).forEach((paramKey) => {
-          newState[sectionKey][paramKey] = typeof data[paramKey] === 'string' ? [data[paramKey]] : data[paramKey];
+          const value = data[paramKey];
+          newState[sectionKey][paramKey] = typeof value === 'string' ? value.split(',') : value;
         });
 
         updateUrlFromState(newState);
