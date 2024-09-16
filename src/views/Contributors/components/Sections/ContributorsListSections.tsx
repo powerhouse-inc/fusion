@@ -37,13 +37,7 @@ const ContributorsListSections: FC<Props> = ({
   <ContributorsContainer>
     <ContainerTabs>
       <ShadowWrapper>
-        <FancyTabs
-          tabs={tabs}
-          activeTab={activeTab}
-          onTabChange={(tab: string) => {
-            onTabChange(tab);
-          }}
-        />
+        <FancyTabs tabs={tabs} activeTab={activeTab} onTabChange={onTabChange} />
 
         <ContributorInformation>
           <Title>{subTitle}</Title>
@@ -109,7 +103,6 @@ const Title = styled('div')(({ theme }) => ({
 
 const ContainerContributors = styled('div')({
   display: 'flex',
-  width: 'calc(100%-8px)', // Reduces the width of the container to make space for the scrollbar margin
   flexDirection: 'column',
   gap: 8,
   padding: 8,
