@@ -114,7 +114,7 @@ export const getFinancesData = async (): Promise<FormattedFinancesData> => {
   data.OperationalReserves = clone(data.ProtocolNetOutflow);
   Object.keys(data.OperationalReserves).forEach((key) => {
     data.OperationalReserves[key as BudgetKey] = data.ProtocolNetOutflow[key as BudgetKey].map(
-      (value, index) => Math.abs(value ?? 0) - Math.abs(data.PaymentsOffChainIncluded[key as BudgetKey][index] ?? 0)
+      (value, index) => value ?? 0 - data.PaymentsOffChainIncluded[key as BudgetKey][index] ?? 0
     );
   });
 
