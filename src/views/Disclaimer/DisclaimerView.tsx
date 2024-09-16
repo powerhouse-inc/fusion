@@ -4,9 +4,9 @@ import type { FC } from 'react';
 
 const DisclaimerView: FC = () => (
   <Container>
-    <ContainerData>
+    <DataContainer>
       <Title>Disclaimer</Title>
-      <ParagraphStyle>
+      <StyledParagraph>
         All content provided here in our website, hyperlinked sites, associated applications, forums, blogs, social
         media accounts and other platforms ("Site") is for your general information only, procured from third party
         sources. We make no warranties of any kind in relation to our content, including but not limited to accuracy and
@@ -15,8 +15,8 @@ const DisclaimerView: FC = () => (
         own risk and discretion. You should conduct your own research, review, analyze and verify our content before
         relying on them. Trading is a highly risky activity that can lead to major losses, please therefore consult your
         financial advisor before making any decision. No content on our Site is meant to be a solicitation or offer.
-      </ParagraphStyle>
-    </ContainerData>
+      </StyledParagraph>
+    </DataContainer>
   </Container>
 );
 
@@ -32,7 +32,7 @@ const Container = styled('div')(({ theme }) => ({
   paddingBottom: 64,
 
   [theme.breakpoints.up('tablet_768')]: {
-    paddingTop: 122,
+    paddingTop: 114,
   },
   [theme.breakpoints.up('desktop_1280')]: {
     paddingBottom: 24,
@@ -47,16 +47,14 @@ const Container = styled('div')(({ theme }) => ({
   },
 }));
 
-const ContainerData = styled(Card)(({ theme }) => ({
+const DataContainer = styled(Card)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  maxWidth: 343,
-  width: '100%',
-  marginTop: 34,
+  margin: '40px 16px 0',
   padding: '16px 16px 24px',
 
   [theme.breakpoints.up('tablet_768')]: {
-    maxWidth: 704,
+    margin: '40px 32px 0',
     padding: '16px 24px 24px',
   },
   [theme.breakpoints.up('desktop_1024')]: {
@@ -65,16 +63,16 @@ const ContainerData = styled(Card)(({ theme }) => ({
   },
   [theme.breakpoints.up('desktop_1280')]: {
     maxWidth: 1200,
-    marginTop: 0,
+    marginTop: 2,
   },
   [theme.breakpoints.up('desktop_1440')]: {
     maxWidth: 1312,
-    marginTop: 8,
+    marginTop: 16,
   },
 }));
 
 const Title = styled('div')(({ theme }) => ({
-  marginBottom: 24,
+  marginBottom: 16,
   fontFamily: 'Inter, sans-serif',
   fontWeight: 700,
   fontSize: 18,
@@ -88,7 +86,7 @@ const Title = styled('div')(({ theme }) => ({
   },
 }));
 
-const ParagraphStyle = styled('p')(({ theme }) => ({
+const StyledParagraph = styled('p')(({ theme }) => ({
   margin: 0,
   fontFamily: 'Inter, sans-serif',
   fontWeight: 400,

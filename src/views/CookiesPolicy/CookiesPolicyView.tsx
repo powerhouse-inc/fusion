@@ -80,7 +80,7 @@ const Container = styled('div')(({ theme }) => ({
   paddingBottom: 64,
 
   [theme.breakpoints.up('tablet_768')]: {
-    paddingTop: 122,
+    paddingTop: 114,
   },
   [theme.breakpoints.up('desktop_1280')]: {
     paddingBottom: 16,
