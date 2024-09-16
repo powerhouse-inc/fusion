@@ -4,7 +4,7 @@ import type { Meta } from '@storybook/react';
 import type { FigmaParams } from 'sb-figma-comparator';
 
 const meta: Meta<typeof CookiesPolicyBanner> = {
-  title: 'Components/General/CookiesPolicyBanner',
+  title: 'Fusion/Components/CookiesPolicyBanner',
   component: CookiesPolicyBanner,
   parameters: {
     layout: 'fullscreen',
