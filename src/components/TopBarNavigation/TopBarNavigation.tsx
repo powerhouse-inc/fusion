@@ -15,13 +15,8 @@ import LinkNavBar from './LinkNavBar';
 import MenuUserOptions from './MenuUser/MenuUserOptions';
 import { useTopBarNavigation } from './useTopBarNavigation';
 import type { Theme } from '@mui/material';
-import type { FC } from 'react';
 
-interface Props {
-  className?: string;
-}
-
-const TopBarNavigation: FC<Props> = ({ className }) => {
+const TopBarNavigation: React.FC = () => {
   const {
     shouldHaveBlur,
     filter,
@@ -39,7 +34,7 @@ const TopBarNavigation: FC<Props> = ({ className }) => {
   return (
     <ContainerWrapper shouldHaveBlur={shouldHaveBlur}>
       <Container>
-        <NavContainer aria-label="Primary Navigation" className={className}>
+        <NavContainer aria-label="Primary Navigation">
           <LeftSection>
             <LinkStyled href="/">
               <LogoContainerMobile>
