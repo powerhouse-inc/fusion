@@ -40,7 +40,6 @@ const useRestorationFromUrlState = (
 ) => {
   const router = useRouter();
   const [urlState, setUrlState] = useState<DecodedUrlState>({});
-  console.log('urlState' + sectionKey, urlState);
 
   const [initialized, setInitialized] = useState<boolean>(false);
 
@@ -78,7 +77,6 @@ const useRestorationFromUrlState = (
               [ENABLED_SECTIONS_KEY]: availableKeys,
               ...queries,
             },
-            // hash: router.
           },
           undefined,
           {
