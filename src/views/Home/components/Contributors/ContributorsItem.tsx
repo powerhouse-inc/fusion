@@ -22,7 +22,7 @@ import ProfileUpdated from './ProfileUpdated';
 import type { Theme } from '@mui/material';
 import type { FC } from 'react';
 
-interface CustomStyles {
+export interface CustomStyles {
   container?: React.CSSProperties;
   profile?: React.CSSProperties;
   scopes?: React.CSSProperties;
@@ -98,17 +98,26 @@ const ContributorsItem: FC<Props> = ({
             ) : (
               <>
                 <ContainerCategoryMobile>
-                  <Label>Category</Label>
+                  {!textDefault && <Label>Category</Label>}
                   <ContainerCategories>
                     {contributor.category?.map((category) => (
                       <CategoryChip key={category} category={category as TeamCategory} />
                     ))}
                   </ContainerCategories>
                 </ContainerCategoryMobile>
-                <ContainerFTEsMobile>
-                  <Label>FTS</Label>
-                  <FTS>{getFTEsFromCoreUnit(contributor as unknown as CoreUnit)}</FTS>
-                </ContainerFTEsMobile>
+                {textDefault ? (
+                  <RoleChipDeskStyled
+                    status={contributor.category?.[0] as TeamRole}
+                    hasDefaultColors={hasDefaultColors}
+                    textDefault={textDefault}
+                    type={contributor.type}
+                  />
+                ) : (
+                  <ContainerFTEsMobile>
+                    <Label>FTS</Label>
+                    <FTS>{getFTEsFromCoreUnit(contributor as unknown as CoreUnit)}</FTS>
+                  </ContainerFTEsMobile>
+                )}
               </>
             )}
           </ContainerScopeRoleMobile>
@@ -324,7 +333,6 @@ const ContainerScopeRoleMobile = styled('div')(({ theme }) => ({
   flexDirection: 'row',
   justifyContent: 'space-between',
   marginBottom: 7,
-
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'none',
   },
