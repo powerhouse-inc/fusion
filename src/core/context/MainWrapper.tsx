@@ -1,6 +1,6 @@
 import { styled } from '@mui/material';
-import CookiesPolicyBanner from '@ses/components/CookiesPolicyBanner/CookiesPolicyBanner';
 import { useLayoutEffect } from 'react';
+import CookiesPolicyBanner from '@/components/CookiesPolicyBanner/CookiesPolicyBanner';
 import { zIndexEnum } from '../enums/zIndexEnum';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { getPageWrapper } from '../utils/dom';

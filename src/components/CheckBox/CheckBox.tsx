@@ -1,15 +1,15 @@
 import { IconButton, styled, useTheme } from '@mui/material';
-import CheckOnComponent from '../svg/check-on-new';
-import CheckboxOff from '../svg/checkbox-off';
+import CheckOnComponent from '@ses/components/svg/check-on-new';
+import CheckboxOff from '@ses/components/svg/checkbox-off';
 import type { FC } from 'react';
 
-interface Props {
+interface CheckBoxProps {
   label: string;
   isChecked: boolean;
   setIsChecked: (isChecked: boolean) => void;
 }
 
-const CheckBox: FC<Props> = ({ label, isChecked, setIsChecked }) => {
+const CheckBox: FC<CheckBoxProps> = ({ label, isChecked, setIsChecked }) => {
   const theme = useTheme();
   const handleClick = () => {
     setIsChecked(isChecked);
