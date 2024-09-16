@@ -1,4 +1,5 @@
 import { Button, Divider, styled } from '@mui/material';
+import { Fragment } from 'react';
 import CustomSelect from '@/components/CustomSelect/CustomSelect';
 import type { CustomSelectProps } from '@/components/CustomSelect/type';
 import CumulativeFilterComponent from '@/components/FiltersBundle/defaults/CumulativeFilter/CumulativeFilter';
@@ -20,56 +21,60 @@ const FilterDesktop: React.FC<FilterDesktopProps> = ({ filters, searchFilter, re
       </ResetButton>
     )}
     {/* render all filters */}
-    {filters.map((filter) => {
-      switch (filter.type) {
-        case 'select': {
-          return (
-            <CustomSelect
-              label={filter.label}
-              multiple={filter.multiple}
-              alwaysNumberedLabel={filter.alwaysNumberedLabel}
-              selected={filter.selected as string | string[]}
-              options={filter.options as CustomSelectProps['options']}
-              onChange={filter.onChange as CustomSelectProps['onChange']}
-              customOptionsRender={filter.customOptionsRender as CustomSelectProps['customOptionsRender']}
-              withAll={filter.withAll}
-              customOptionsRenderAll={filter.customOptionsRenderAll as CustomSelectProps['customOptionsRenderAll']}
-              style={filter.widthStyles}
-              menuProps={{ disableScrollLock: true }}
-            />
-          );
-        }
-        case 'radio': {
-          return (
-            <div key={filter.id}>
-              {filter.options.map((option) => (
-                <label key={option.value}>
-                  <input type="radio" value={option.value} checked={option.selected} />
-                  {option.label}
-                </label>
-              ))}
-            </div>
-          );
-        }
-        case 'checkbox': {
-          return (
-            // TODO: implement a checkbox component UI for desktop
-            <div key={filter.id}>
-              <label>
-                <input type="checkbox" checked={filter.selected} />
-                {filter.label}
-              </label>
-            </div>
-          );
-        }
-        case 'cumulative': {
-          return <CumulativeFilterComponent filter={filter} />;
-        }
-        default: {
-          throw new Error('Unknown filter type');
-        }
-      }
-    })}
+    {filters.map((filter) => (
+      <Fragment key={filter.id}>
+        {(() => {
+          switch (filter.type) {
+            case 'select': {
+              return (
+                <CustomSelect
+                  label={filter.label}
+                  multiple={filter.multiple}
+                  alwaysNumberedLabel={filter.alwaysNumberedLabel}
+                  selected={filter.selected as string | string[]}
+                  options={filter.options as CustomSelectProps['options']}
+                  onChange={filter.onChange as CustomSelectProps['onChange']}
+                  customOptionsRender={filter.customOptionsRender as CustomSelectProps['customOptionsRender']}
+                  withAll={filter.withAll}
+                  customOptionsRenderAll={filter.customOptionsRenderAll as CustomSelectProps['customOptionsRenderAll']}
+                  style={filter.widthStyles}
+                  menuProps={{ disableScrollLock: true }}
+                />
+              );
+            }
+            case 'radio': {
+              return (
+                <div key={filter.id}>
+                  {filter.options.map((option) => (
+                    <label key={option.value}>
+                      <input type="radio" value={option.value} checked={option.selected} />
+                      {option.label}
+                    </label>
+                  ))}
+                </div>
+              );
+            }
+            case 'checkbox': {
+              return (
+                // TODO: implement a checkbox component UI for desktop
+                <div key={filter.id}>
+                  <label>
+                    <input type="checkbox" checked={filter.selected} />
+                    {filter.label}
+                  </label>
+                </div>
+              );
+            }
+            case 'cumulative': {
+              return <CumulativeFilterComponent filter={filter} />;
+            }
+            default: {
+              throw new Error('Unknown filter type');
+            }
+          }
+        })()}
+      </Fragment>
+    ))}
     {!!searchFilter && (
       <SearchWrapper>
         <CustomDivider orientation="vertical" flexItem />

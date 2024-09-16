@@ -53,7 +53,9 @@ const InternalLinkButton: React.FunctionComponent<Props> = ({
 
 export default InternalLinkButton;
 
-const ContainerLink = styled(Link)<{ buttonType?: string; showIcon: boolean; label: boolean }>(
+const ContainerLink = styled(Link, {
+  shouldForwardProp: (prop) => !['buttonType', 'label', 'showIcon'].includes(prop as string),
+})<{ buttonType?: string; showIcon: boolean; label: boolean }>(
   ({ theme, buttonType = 'primary', label, showIcon }) => ({
     minHeight: 32,
     display: 'flex',
@@ -153,7 +155,9 @@ const ContainerLink = styled(Link)<{ buttonType?: string; showIcon: boolean; lab
   })
 );
 
-const ContainerDiv = styled('div')<{ buttonType?: string; showIcon: boolean; label: boolean }>(
+const ContainerDiv = styled('div', {
+  shouldForwardProp: (prop) => !['buttonType', 'label', 'showIcon'].includes(prop as string),
+})<{ buttonType?: string; showIcon: boolean; label: boolean }>(
   ({ theme, buttonType = 'primary', label, showIcon }) => ({
     minHeight: 32,
     display: 'flex',

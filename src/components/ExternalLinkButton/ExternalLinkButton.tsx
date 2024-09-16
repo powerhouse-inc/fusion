@@ -28,7 +28,9 @@ const ExternalLinkButton: React.FC<ExternalLinkButtonProps> = ({
 
 export default ExternalLinkButton;
 
-const ExternalButton = styled(Link)<{ wrapText: boolean }>(({ theme, wrapText }) => ({
+const ExternalButton = styled(Link, {
+  shouldForwardProp: (prop) => prop !== 'wrapText',
+})<{ wrapText: boolean }>(({ theme, wrapText }) => ({
   display: 'flex',
   gap: 8,
   borderRadius: 6,

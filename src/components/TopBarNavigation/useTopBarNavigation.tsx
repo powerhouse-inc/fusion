@@ -99,11 +99,8 @@ export const useTopBarNavigation = () => {
   };
 
   const shouldHaveBlur = useMemo(() => {
-    if (router.asPath === '/') {
-      return true;
-    } else {
-      return false;
-    }
+    const path = router.asPath.split('#')[0];
+    return path === '/';
   }, [router.asPath]);
 
   return {
