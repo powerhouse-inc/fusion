@@ -2,6 +2,7 @@ import { styled, useMediaQuery } from '@mui/material';
 import { siteRoutes } from '@ses/config/routes';
 import { usLocalizedNumber } from '@ses/core/utils/humanization';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { defaultOrder, orderMetrics } from '../HeaderTable/utils';
 import LinkCellComponent from '../LinkCellComponent/LinkCellComponent';
 import { removePatternAfterSlash } from '../SectionPages/BreakdownTable/utils';
@@ -13,11 +14,11 @@ interface Props {
   className?: string;
   breakdownTable: TableFinances[];
   metrics: string[];
-  year: string;
   period: PeriodicSelectionFilter;
 }
 
-const FinancesTable: React.FC<Props> = ({ className, breakdownTable, metrics, period, year }) => {
+const FinancesTable: React.FC<Props> = ({ className, breakdownTable, metrics, period }) => {
+  const router = useRouter();
   const iteration = period === 'Quarterly' ? 5 : period === 'Monthly' ? 13 : period === 'Annually' ? 1 : 3;
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const desk1440 = useMediaQuery((theme: Theme) => theme.breakpoints.up('desktop_1024'));
@@ -41,9 +42,16 @@ const FinancesTable: React.FC<Props> = ({ className, breakdownTable, metrics, pe
         <TableContainer className={className} key={index}>
           <TableBody isAnnual={isAnnual}>
             {table.rows.map((row: ItemRow, index) => {
-              const href = `${siteRoutes.finances(
-                removePatternAfterSlash(row.codePath ?? '').replace('atlas/', '')
-              )}?year=${year}&period=${period}${metrics.map((metric) => `&metric=${metric}`).join('')}#breakdown-table`;
+              const href = `${siteRoutes.finances(removePatternAfterSlash(row.codePath ?? '').replace('atlas/', ''))}${
+                router.query
+                  ? `?${new URLSearchParams(
+                      Object.fromEntries(Object.entries(router.query).filter(([key]) => key !== 'path')) as Record<
+                        string,
+                        string
+                      >
+                    ).toString()}`
+                  : ''
+              }`;
 
               return (
                 <TableRow key={index} isMain={row.isMain} isAnnual={isAnnual}>
