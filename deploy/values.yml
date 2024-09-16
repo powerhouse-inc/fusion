@@ -76,13 +76,13 @@ livenessProbe:
     port: ${PORT}
   initialDelaySeconds: 5
   periodSeconds: 30
-  timeoutSeconds: 10
+  timeoutSeconds: 60
 readinessProbe:
   httpGet:
     port: ${PORT}
   initialDelaySeconds: 5
   periodSeconds: 30
-  timeoutSeconds: 10
+  timeoutSeconds: 60
 
 autoscaling:
   enabled: true
