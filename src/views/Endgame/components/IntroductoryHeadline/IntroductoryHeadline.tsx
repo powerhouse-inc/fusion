@@ -5,9 +5,9 @@ const IntroductoryHeadline: React.FC = () => (
   <Section>
     <HeadlineTitle>The Maker Endgame</HeadlineTitle>
     <HeadlineSubtext>
-      Endgame is a holistic initiative fortifying MakerDAO's ecosystem through governance and tokenomics enhancements;
-      from Aligned Artifacts, like Atlas and Scopes, for governance alignment, to new tokenomics updates, like adjusted
-      MKR burn and minting, to boost sustainability.
+      Endgame is a holistic initiative fortifying Sky Ecosystem through governance and tokenomics enhancements; from
+      Aligned Artifacts, like Atlas and Scopes, for governance alignment, to new tokenomics updates, like adjusted SKY
+      burn and minting, to boost sustainability.
     </HeadlineSubtext>
   </Section>
 );
