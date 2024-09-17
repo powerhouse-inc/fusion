@@ -5,4 +5,5 @@ const CookiesPolicy = () => <CookiesPolicyView />;
 export async function getServerSideProps() {
   return { props: {} };
 }
+
 export default CookiesPolicy;
