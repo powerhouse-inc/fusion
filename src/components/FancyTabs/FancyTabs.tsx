@@ -43,7 +43,9 @@ const TabsContainer = styled('div')(() => ({
   gap: 8,
 }));
 
-const Tab = styled('button')<{ active: boolean }>(({ theme, active }) => ({
+const Tab = styled('button', {
+  shouldForwardProp: (prop) => prop !== 'active',
+})<{ active: boolean }>(({ theme, active }) => ({
   all: 'unset', // Remove all default styles
   display: 'flex',
   alignItems: 'center',

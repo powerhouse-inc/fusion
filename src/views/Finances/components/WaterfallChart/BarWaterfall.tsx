@@ -33,7 +33,10 @@ const BarWaterfall: FC<Props> = ({
 
 export default BarWaterfall;
 
-const ContainerBar = styled('div')<{ isLast?: boolean; marginBottom?: number }>(({ theme, marginBottom }) => ({
+const ContainerBar = styled('div', { shouldForwardProp: (prop) => prop !== 'marginBottom' })<{
+  isLast?: boolean;
+  marginBottom?: number;
+}>(({ theme, marginBottom }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-start',
@@ -52,42 +55,42 @@ const ContainerBar = styled('div')<{ isLast?: boolean; marginBottom?: number }>(
   },
 }));
 
-const SkeletonBarStyleInflow = styled(Skeleton)<{ heightInflow: number; isLastOrFirstInflow?: boolean }>(
-  ({ theme, heightInflow, isLastOrFirstInflow }) => ({
-    display: 'flex',
-    backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.slate[400],
+const SkeletonBarStyleInflow = styled(Skeleton, {
+  shouldForwardProp: (prop) => prop !== 'heightInflow' && prop !== 'isLastOrFirstInflow',
+})<{ heightInflow: number; isLastOrFirstInflow?: boolean }>(({ theme, heightInflow, isLastOrFirstInflow }) => ({
+  display: 'flex',
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.slate[400],
 
-    height: heightInflow,
-    width: 16,
-    borderRadius: isLastOrFirstInflow ? '4px 4px 0px 0px' : 4,
-    [theme.breakpoints.up('tablet_768')]: {
-      width: 32,
-      borderRadius: isLastOrFirstInflow ? '8px 8px 0px 0px' : 8,
-    },
-    [theme.breakpoints.up('desktop_1024')]: {
-      width: 44,
-    },
-    [theme.breakpoints.up('desktop_1280')]: {
-      width: 48,
-    },
-  })
-);
-const SkeletonBarStyleOutFlow = styled(Skeleton)<{ heightOutFlow: number; isLastOrFirstOutFlow?: boolean }>(
-  ({ theme, heightOutFlow, isLastOrFirstOutFlow }) => ({
-    backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.slate[400],
-    height: heightOutFlow,
-    borderRadius: isLastOrFirstOutFlow ? '4px 4px 0px 0px' : 4,
+  height: heightInflow,
+  width: 16,
+  borderRadius: isLastOrFirstInflow ? '4px 4px 0px 0px' : 4,
+  [theme.breakpoints.up('tablet_768')]: {
+    width: 32,
+    borderRadius: isLastOrFirstInflow ? '8px 8px 0px 0px' : 8,
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
+    width: 44,
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    width: 48,
+  },
+}));
+const SkeletonBarStyleOutFlow = styled(Skeleton, {
+  shouldForwardProp: (prop) => prop !== 'heightOutFlow' && prop !== 'isLastOrFirstOutFlow',
+})<{ heightOutFlow: number; isLastOrFirstOutFlow?: boolean }>(({ theme, heightOutFlow, isLastOrFirstOutFlow }) => ({
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.slate[400],
+  height: heightOutFlow,
+  borderRadius: isLastOrFirstOutFlow ? '4px 4px 0px 0px' : 4,
 
-    width: 16,
-    [theme.breakpoints.up('tablet_768')]: {
-      width: 32,
-      borderRadius: isLastOrFirstOutFlow ? '8px 8px 0px 0px' : 8,
-    },
-    [theme.breakpoints.up('desktop_1024')]: {
-      width: 44,
-    },
-    [theme.breakpoints.up('desktop_1280')]: {
-      width: 48,
-    },
-  })
-);
+  width: 16,
+  [theme.breakpoints.up('tablet_768')]: {
+    width: 32,
+    borderRadius: isLastOrFirstOutFlow ? '8px 8px 0px 0px' : 8,
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
+    width: 44,
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    width: 48,
+  },
+}));

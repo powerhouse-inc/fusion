@@ -61,6 +61,7 @@ const ChangePassword: React.FC<{ adminChange?: boolean }> = ({ adminChange = fal
         </UserWrapper>
         <ChangePasswordLabel isLight={isLight}>Change {adminChange ? 'User' : 'Your'} Password</ChangePasswordLabel>
         <Form
+          name="changePasswordForm"
           onSubmit={(e) => {
             e.preventDefault();
             form.handleSubmit();

@@ -9,8 +9,10 @@ import useSWRImmutable from 'swr/immutable';
 import useSWRInfinite from 'swr/infinite';
 import { accountsSnapshotQuery } from '@/components/AccountsSnapshot/api/queries';
 import type { Sort, Option } from '@/components/SortsBundle/types';
+import useRestorationFromUrlState from '@/core/hooks/useRestorationFromUrlState';
 import type { Snapshots } from '@/core/models/dto/snapshotAccountDTO';
 import { getExpenseReportsQuery, getExpenseReportsStatusesQuery } from '@/views/Finances/api/queries';
+import { FinancesSectionId } from '@/views/Finances/types';
 import { getHeadersExpenseReport } from '@/views/Finances/utils/utils';
 import type { Theme } from '@mui/material';
 import type { AnalyticMetric } from '@ses/core/models/interfaces/analytic';
@@ -19,13 +21,36 @@ import type { BudgetStatement } from '@ses/core/models/interfaces/budgetStatemen
 export const useExpenseReports = (budgetPath: string) => {
   // metric filter:
   const [selectedMetric, setSelectedMetric] = useState<AnalyticMetric>('Actuals');
-  const onMetricChange = (value: AnalyticMetric) => setSelectedMetric(value);
 
   // status filter
   const [selectedStatuses, setSelectedStatuses] = useState<BudgetStatus[]>([]);
-  const onStatusSelectChange = (statuses: BudgetStatus[]) => setSelectedStatuses(statuses);
+
+  const { handleCurrentSectionStateUpdate } = useRestorationFromUrlState(
+    FinancesSectionId.BUDGET_STATEMENTS,
+    (state) => {
+      if (state?.metric && state.metric.length > 0) {
+        setSelectedMetric(state.metric[0] as AnalyticMetric);
+      }
+      if (state?.statuses && state.statuses.length > 0) {
+        setSelectedStatuses(state.statuses as BudgetStatus[]);
+      }
+    }
+  );
+
+  const onMetricChange = (value: AnalyticMetric) => {
+    handleCurrentSectionStateUpdate({ metric: value });
+    setSelectedMetric(value);
+  };
+  const onStatusSelectChange = (statuses: BudgetStatus[]) => {
+    handleCurrentSectionStateUpdate({ statuses });
+    setSelectedStatuses(statuses);
+  };
 
   const handleResetFilter = () => {
+    handleCurrentSectionStateUpdate({
+      metric: 'Actuals',
+      statuses: [],
+    });
     setSelectedMetric('Actuals');
     setSelectedStatuses([]);
   };

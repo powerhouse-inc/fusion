@@ -1,6 +1,6 @@
 import { styled } from '@mui/material';
-import CookiesPolicyBanner from '@ses/components/CookiesPolicyBanner/CookiesPolicyBanner';
 import { useLayoutEffect } from 'react';
+import CookiesPolicyBanner from '@/components/CookiesPolicyBanner/CookiesPolicyBanner';
 import { zIndexEnum } from '../enums/zIndexEnum';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { getPageWrapper } from '../utils/dom';
@@ -60,24 +60,14 @@ const MainWrapper: FC<{ children: ReactNode }> = ({ children }) => {
 
 export default MainWrapper;
 
-const OverlayContainer = styled('div')(({ theme }) => ({
+const OverlayContainer = styled('div')(() => ({
   position: 'fixed',
   top: 0,
   width: '100%',
-  height: 'calc(100vh - 318px)',
+  height: '100%',
   background: 'rgba(37, 42, 52, 0.10)',
   backdropFilter: 'blur(2.5px)',
-  zIndex: zIndexEnum.OVERLAY_MOBILE_TOOLTIP,
-
-  [theme.breakpoints.up('tablet_768')]: {
-    height: 'calc(100vh - 284px)',
-  },
-  [theme.breakpoints.up('desktop_1024')]: {
-    height: 'calc(100vh - 292px)',
-  },
-  [theme.breakpoints.up('desktop_1440')]: {
-    height: 'calc(100vh - 274px)',
-  },
+  zIndex: zIndexEnum.HEADER_PAGE + 1,
 }));
 
 const PolicyBannerPosition = styled('div')(() => ({
@@ -86,5 +76,5 @@ const PolicyBannerPosition = styled('div')(() => ({
   width: '100%',
   borderRadius: '6px 6px 0px 0px',
   transition: 'all 0.5s ease-in',
-  zIndex: zIndexEnum.HEADER_PAGE,
+  zIndex: zIndexEnum.HEADER_PAGE + 2,
 }));

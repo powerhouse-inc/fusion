@@ -4,24 +4,41 @@ import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import type { Filter } from '@/components/FiltersBundle/types';
+import useRestorationFromUrlState from '@/core/hooks/useRestorationFromUrlState';
 import { fetchAnalytics } from '@/views/Finances/api/queries';
 import type { LineChartSeriesData } from '@/views/Finances/utils/types';
 import { buildExpenseMetricsLineChartSeries } from '@/views/Finances/utils/utils';
+import { FinancesSectionId } from '../../types';
 import type { AnalyticGranularity, AnalyticMetric, AnalyticSeriesRow } from '@ses/core/models/interfaces/analytic';
 
 export type CumulativeType = 'relative' | 'absolute';
+const DEFAULT_GRANULARITY = 'monthly';
+const DEFAULT_CUMULATIVE = false;
+const DEFAULT_CUMULATIVE_TYPE = 'relative';
 
 export const useExpenseMetrics = (year: string) => {
   const theme = useTheme();
 
-  const [selectedGranularity, setSelectedGranularity] = useState<AnalyticGranularity>('monthly');
-  const [isCumulative, setIsCumulative] = useState(false);
-  const [cumulativeType, setCumulativeType] = useState<CumulativeType>('relative');
+  const [selectedGranularity, setSelectedGranularity] = useState<AnalyticGranularity>(DEFAULT_GRANULARITY);
+  const [isCumulative, setIsCumulative] = useState(DEFAULT_CUMULATIVE);
+  const [cumulativeType, setCumulativeType] = useState<CumulativeType>(DEFAULT_CUMULATIVE_TYPE);
 
   const router = useRouter();
   const urlPath = Array.isArray(router.query.path) ? router.query.path.join('/') : router.query.path;
   const codePath = urlPath ? `atlas/${urlPath}` : 'atlas';
   const levelOfDetail = codePath === 'atlas' ? 1 : codePath.split('/').length;
+
+  const { handleCurrentSectionStateUpdate } = useRestorationFromUrlState(FinancesSectionId.EXPENSE_METRICS, (state) => {
+    if (state?.granularity && state.granularity.length > 0) {
+      setSelectedGranularity(state.granularity[0] as AnalyticGranularity);
+    }
+    if (state?.cumulative && state.cumulative.length > 0) {
+      setIsCumulative(Boolean(state.cumulative[0]));
+    }
+    if (state?.cumulativeType && state.cumulativeType.length > 0) {
+      setCumulativeType(state.cumulativeType[0] as CumulativeType);
+    }
+  });
 
   // fetch actual data from the API
   const { data: analytics, error } = useSWRImmutable([selectedGranularity, year, codePath, levelOfDetail], async () =>
@@ -30,10 +47,15 @@ export const useExpenseMetrics = (year: string) => {
 
   const handleChangeCumulativeType = (value: CumulativeType) => {
     setCumulativeType(value);
+    handleCurrentSectionStateUpdate({ cumulativeType: value });
   };
   const handleToggleCumulative = () => {
-    setIsCumulative((prev) => !prev);
-    setCumulativeType('relative');
+    setIsCumulative(!isCumulative);
+    setCumulativeType(DEFAULT_CUMULATIVE_TYPE);
+    handleCurrentSectionStateUpdate({
+      cumulative: (!isCumulative).toString(),
+      cumulativeType: DEFAULT_CUMULATIVE_TYPE,
+    });
   };
 
   const isLoading = !analytics && !error;
@@ -174,6 +196,7 @@ export const useExpenseMetrics = (year: string) => {
       selected: selectedGranularity,
       onChange: (value: string | number | (string | number)[]) => {
         setSelectedGranularity(value as AnalyticGranularity);
+        handleCurrentSectionStateUpdate({ granularity: value as string });
       },
       widthStyles: {
         width: 'fit-content',
@@ -185,23 +208,25 @@ export const useExpenseMetrics = (year: string) => {
       label: 'Cumulative',
       cumulativeType,
       isCumulative,
+      onChange: () => null,
       handleChangeCumulativeType,
       handleToggleCumulative,
       selected: isCumulative,
       options: cumulativeItems,
-      onChange: () => {
-        setIsCumulative((prev) => !prev);
-        setCumulativeType('relative');
-      },
     },
   ];
 
   const canReset = selectedGranularity !== 'monthly' || isCumulative;
 
   const onReset = () => {
-    setSelectedGranularity('monthly');
-    setIsCumulative(false);
-    setCumulativeType('relative');
+    setSelectedGranularity(DEFAULT_GRANULARITY);
+    setIsCumulative(DEFAULT_CUMULATIVE);
+    setCumulativeType(DEFAULT_CUMULATIVE_TYPE);
+    handleCurrentSectionStateUpdate({
+      granularity: DEFAULT_GRANULARITY,
+      cumulative: DEFAULT_CUMULATIVE.toString(),
+      cumulativeType: DEFAULT_CUMULATIVE_TYPE,
+    });
   };
 
   return {

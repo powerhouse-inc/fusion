@@ -1,4 +1,5 @@
 import { styled } from '@mui/material';
+import AtlasRiskDashboardIcon from 'public/assets/svg/atlas_risk_dashboard.svg';
 import DiscordIcon from 'public/assets/svg/discord.svg';
 import GithubIcon from 'public/assets/svg/github.svg';
 import ConnectIcon from 'public/assets/svg/makerdao_connect.svg';
@@ -12,7 +13,6 @@ import type { FooterContact, LinkCategory, TypeIconFooter } from './type';
 const XStyled = styled(X)(({ theme }) => ({
   width: 22,
   height: 22,
-
   marginLeft: 6,
 
   [theme.breakpoints.up('tablet_768')]: {
@@ -20,6 +20,7 @@ const XStyled = styled(X)(({ theme }) => ({
     marginRight: 8,
   },
 }));
+
 const linkCategory: LinkCategory[] = [
   {
     name: 'Sky Ecosystem',
@@ -69,6 +70,7 @@ const linkCategory: LinkCategory[] = [
       {
         label: 'Atlas Risk Dashboard',
         link: 'https://info.sky.money/',
+        Icon: AtlasRiskDashboardIcon,
       },
       {
         label: 'Connect',

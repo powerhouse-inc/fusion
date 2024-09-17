@@ -1,10 +1,10 @@
 import { styled } from '@mui/material';
-import CheckBox from '@ses/components/CheckBox/CheckBox';
-import { CustomButton } from '@ses/components/CustomButton/CustomButton';
-import { ButtonType } from '@/core/enums/buttonTypeEnum';
+import CheckBox from '@/components/CheckBox/CheckBox';
+import SecondaryButton from '@/components/SecondaryButton/SecondaryButton';
+import SkyButton from '@/components/SkyButton/SkyButton';
 import type { FC } from 'react';
 
-interface Props {
+interface CookiesPolicyBannerProps {
   functionalCheckbox: boolean;
   analyticsCheckbox: boolean;
   setFunctionalCheckbox: (isChecked: boolean) => void;
@@ -13,7 +13,7 @@ interface Props {
   handleRejectCookies: () => void;
 }
 
-const CookiesPolicyBanner: FC<Props> = ({
+const CookiesPolicyBanner: FC<CookiesPolicyBannerProps> = ({
   functionalCheckbox,
   analyticsCheckbox,
   setFunctionalCheckbox,
@@ -24,6 +24,7 @@ const CookiesPolicyBanner: FC<Props> = ({
   const handleCheckbox = (key: (val: boolean) => void) => (val: boolean) => {
     key(!val);
   };
+
   return (
     <Container>
       <DataContainer>
@@ -50,18 +51,8 @@ const CookiesPolicyBanner: FC<Props> = ({
           />
         </CheckBoxContainer>
         <ButtonContainer>
-          <StyledCustomButton
-            label="Accept configured cookies"
-            buttonType={ButtonType.Primary}
-            onClick={handleAcceptCookies}
-            allowsHover={false}
-          />
-          <RejectAllCookiesButton
-            label="Reject all cookies"
-            buttonType={ButtonType.Secondary}
-            onClick={handleRejectCookies}
-            allowsHover={false}
-          />
+          <SkyButton title="Accept configured cookies" onClick={handleAcceptCookies} />
+          <SecondaryButton title="Reject all cookies" onClick={handleRejectCookies} />
         </ButtonContainer>
       </DataContainer>
     </Container>
@@ -69,25 +60,24 @@ const CookiesPolicyBanner: FC<Props> = ({
 };
 
 const Container = styled('div')(({ theme }) => ({
-  height: '338px',
   padding: '16px 16px 40px',
   borderRadius: '6px 6px 0px 0px',
   background: theme.palette.isLight ? '#FFFFFF' : theme.palette.colors.charcoal[900],
   boxShadow: '0px -4px 15px 0px rgba(74, 88, 115, 0.15)',
 
   [theme.breakpoints.up('tablet_768')]: {
-    height: '304px',
+    height: 304,
     padding: '40px 64px 58px',
   },
   [theme.breakpoints.up('desktop_1024')]: {
-    height: '312px',
+    height: 312,
     padding: '40px 120px 58px',
   },
   [theme.breakpoints.up('desktop_1280')]: {
     padding: '40px 163px 58px',
   },
   [theme.breakpoints.up('desktop_1440')]: {
-    height: '294px',
+    height: 294,
     padding: '40px 184px 64px',
   },
 }));
@@ -95,20 +85,21 @@ const Container = styled('div')(({ theme }) => ({
 const DataContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  maxWidth: '343px',
+  maxWidth: 540,
+  width: '100%',
   margin: '0px auto',
 
   [theme.breakpoints.up('tablet_768')]: {
-    maxWidth: '640px',
+    maxWidth: 640,
   },
   [theme.breakpoints.up('desktop_1024')]: {
-    maxWidth: '784px',
+    maxWidth: 784,
   },
   [theme.breakpoints.up('desktop_1280')]: {
-    maxWidth: '954px',
+    maxWidth: 954,
   },
   [theme.breakpoints.up('desktop_1440')]: {
-    maxWidth: '1072px',
+    maxWidth: 1072,
   },
 }));
 
@@ -173,49 +164,20 @@ const ButtonContainer = styled('div')(({ theme }) => ({
   alignItems: 'center',
   gap: 16,
   marginTop: 32,
+  '& > button:first-of-type, & > button:last-of-type': {
+    width: 343,
+  },
 
   [theme.breakpoints.up('tablet_768')]: {
     flexDirection: 'row-reverse',
     justifyContent: 'center',
     gap: 32,
-  },
-}));
-
-const StyledCustomButton = styled(CustomButton)(({ theme }) => ({
-  padding: '14.5px 40px',
-  width: 285,
-  height: 48,
-  backgroundColor: theme.palette.colors.sky[1000],
-  border: 'none',
-  '&:hover': {
-    backgroundColor: theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.sky[900],
-    '& > div': {
-      color: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.slate[50],
+    '& > button:first-of-type': {
+      width: 251,
     },
-  },
-  '&:active': {
-    backgroundColor: theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.sky[900],
-    '& > div': {
-      color: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.slate[50],
+    '& > button:last-of-type': {
+      width: 256,
     },
-  },
-  '& > div': {
-    fontSize: '16px',
-    lineHeight: '19px',
-    color: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.slate[50],
-  },
-}));
-
-const RejectAllCookiesButton = styled(CustomButton)(({ theme }) => ({
-  width: 285,
-  height: 48,
-  padding: '14.5px 76px',
-  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.slate[500],
-  border: 'none',
-  '& > div': {
-    fontSize: '16px',
-    lineHeight: '19px',
-    color: theme.palette.isLight ? theme.palette.colors.gray[600] : theme.palette.colors.slate[100],
   },
 }));
 

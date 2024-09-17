@@ -27,7 +27,9 @@ const ContributorDescription: FC<Props> = ({ contributor, isLegacy, className })
 
 export default ContributorDescription;
 
-const Container = styled(Link)<{ isLegacy: boolean }>(({ theme, isLegacy }) => ({
+const Container = styled(Link, {
+  shouldForwardProp: (prop) => !['isLegacy'].includes(prop as string),
+})<{ isLegacy: boolean }>(({ theme, isLegacy }) => ({
   display: 'flex',
   flexDirection: 'column',
   position: 'relative',

@@ -5,6 +5,7 @@ import Arrow from 'public/assets/svg/arrow.svg';
 import ArrowCollapse from 'public/assets/svg/arrow_collapse.svg';
 import ArrowExpand from 'public/assets/svg/arrow_expand.svg';
 import ArrowSelect from 'public/assets/svg/arrow_select.svg';
+import AtlasRiskDashboard from 'public/assets/svg/atlas_risk_dashboard.svg';
 import AvatarPlaceholder from 'public/assets/svg/avatar_placeholder.svg';
 import BarChartLine from 'public/assets/svg/bar_chart_line.svg';
 import BlueLines from 'public/assets/svg/blue_lines.svg';
@@ -294,5 +295,9 @@ export const iconsPowerHose = [
   {
     Icon: CircleOutlinedFilledDark,
     title: 'circle_outlined_filled_dark',
+  },
+  {
+    Icon: AtlasRiskDashboard,
+    title: 'atlas_risk_dashboard',
   },
 ];

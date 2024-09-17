@@ -50,6 +50,7 @@ const Search: React.FC<SearchInputProps> = ({
           value={value}
           defaultValue={defaultValue}
           autoComplete="off"
+          name="search"
         />
       </InputWrapper>
     </Container>
@@ -58,7 +59,10 @@ const Search: React.FC<SearchInputProps> = ({
 
 export default Search;
 
-const Container = styled('div')<{ fullWidth: boolean; width: number }>(({ fullWidth, width }) => ({
+const Container = styled('div', { shouldForwardProp: (prop) => prop !== 'fullWidth' && prop !== 'width' })<{
+  fullWidth: boolean;
+  width: number;
+}>(({ fullWidth, width }) => ({
   display: 'flex',
   justifyContent: 'flex-end',
   gap: 10,

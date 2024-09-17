@@ -13,7 +13,7 @@ const LinkNavBar: FC<Props> = ({ href, label, selected }) => (
   <NavItem>
     <LinkStyle
       href={href}
-      active={label.toLocaleLowerCase() === selected.toLocaleLowerCase()}
+      isActive={label.toLocaleLowerCase() === selected.toLocaleLowerCase()}
       target={label.toLocaleLowerCase() === 'connect' ? '_blank' : '_self'}
     >
       <span>{label}</span>
@@ -30,7 +30,9 @@ const NavItem = styled('li')({
   textDecoration: 'none',
 });
 
-const LinkStyle = styled(Link)<{ active: boolean }>(({ theme, active }) => ({
+const LinkStyle = styled(Link, {
+  shouldForwardProp: (prop) => prop !== 'isActive',
+})<{ isActive: boolean }>(({ theme, isActive }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: 6,
@@ -39,19 +41,19 @@ const LinkStyle = styled(Link)<{ active: boolean }>(({ theme, active }) => ({
   fontWeight: 600,
   lineHeight: '24px',
   color: theme.palette.isLight
-    ? active
+    ? isActive
       ? theme.palette.colors.charcoal[900]
       : theme.palette.colors.slate[100]
-    : active
+    : isActive
     ? theme.palette.colors.gray[50]
     : theme.palette.colors.gray[600],
 
   ':hover': {
     color: theme.palette.isLight
-      ? active
+      ? isActive
         ? theme.palette.colors.charcoal[900]
         : theme.palette.colors.slate[200]
-      : active
+      : isActive
       ? theme.palette.colors.gray[50]
       : theme.palette.colors.slate[100],
   },

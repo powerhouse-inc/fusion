@@ -253,51 +253,51 @@ const Desktop = styled(SegmentsContainer)(({ theme }) => ({
   },
 }));
 
-const Segment = styled('div')<{ maxWidth?: number; maxSegmentWidthMobile?: number }>(
-  ({ theme, maxWidth, maxSegmentWidthMobile }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    gap: 4,
-    fontSize: 16,
-    lineHeight: '24px',
+const Segment = styled('div', {
+  shouldForwardProp: (prop) => !['maxWidth', 'maxSegmentWidthMobile'].includes(prop as string),
+})<{ maxWidth?: number; maxSegmentWidthMobile?: number }>(({ theme, maxWidth, maxSegmentWidthMobile }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 4,
+  fontSize: 16,
+  lineHeight: '24px',
+  fontWeight: 600,
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.charcoal[100],
+  maxWidth: maxWidth || maxSegmentWidthMobile || MAX_SEGMENT_WIDTH_MOBILE_DEFAULT,
+
+  '& a': {
+    color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[300],
+    textDecoration: 'none',
+    fontWeight: 400,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+
+  '& b': {
     fontWeight: 600,
-    color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.charcoal[100],
-    maxWidth: maxWidth || maxSegmentWidthMobile || MAX_SEGMENT_WIDTH_MOBILE_DEFAULT,
+    lineHeight: '21px',
+    marginLeft: 4,
+  },
 
-    '& a': {
-      color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[300],
-      textDecoration: 'none',
-      fontWeight: 400,
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
+  '& svg': {
+    minWidth: 24,
+  },
+
+  '&:hover': {
+    a: {
+      color: theme.palette.colors.slate[200],
     },
 
-    '& b': {
-      fontWeight: 600,
-      lineHeight: '21px',
-      marginLeft: 4,
+    b: {
+      color: theme.palette.isLight ? theme.palette.colors.slate[200] : theme.palette.colors.slate[100],
     },
 
-    '& svg': {
-      minWidth: 24,
+    'svg path': {
+      fill: theme.palette.isLight ? theme.palette.colors.slate[300] : theme.palette.colors.slate[200],
     },
-
-    '&:hover': {
-      a: {
-        color: theme.palette.colors.slate[200],
-      },
-
-      b: {
-        color: theme.palette.isLight ? theme.palette.colors.slate[200] : theme.palette.colors.slate[100],
-      },
-
-      'svg path': {
-        fill: theme.palette.isLight ? theme.palette.colors.slate[300] : theme.palette.colors.slate[200],
-      },
-    },
-  })
-);
+  },
+}));
 
 const EllipseSegment = styled('span')(() => ({
   whiteSpace: 'nowrap',

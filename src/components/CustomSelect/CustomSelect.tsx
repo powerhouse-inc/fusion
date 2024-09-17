@@ -101,7 +101,9 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 
 export default CustomSelect;
 
-const StyledFormControl = styled(FormControl)<{
+const StyledFormControl = styled(FormControl, {
+  shouldForwardProp: (prop) => prop !== 'maxWidth',
+})<{
   fullWidth: boolean;
   width: CSSProperties['width'];
   maxWidth: CSSProperties['maxWidth'];
@@ -152,29 +154,31 @@ const MenuItemLabel = styled(MenuItem)({
   },
 });
 
-const MenuItemDefault = styled(MenuItem)<{ borderTop: boolean; borderBottom: boolean }>(
-  ({ theme, borderTop, borderBottom }) => ({
-    borderTopLeftRadius: borderTop ? 12 : 0,
-    borderTopRightRadius: borderTop ? 12 : 0,
-    borderBottomLeftRadius: borderBottom ? 12 : 0,
-    borderBottomRightRadius: borderBottom ? 12 : 0,
-    backgroundColor: 'transparent!important',
-    minHeight: 32,
-    margin: '4px 0',
+const MenuItemDefault = styled(MenuItem, {
+  shouldForwardProp: (prop) => prop !== 'borderTop' && prop !== 'borderBottom',
+})<{ borderTop: boolean; borderBottom: boolean }>(({ theme, borderTop, borderBottom }) => ({
+  borderTopLeftRadius: borderTop ? 12 : 0,
+  borderTopRightRadius: borderTop ? 12 : 0,
+  borderBottomLeftRadius: borderBottom ? 12 : 0,
+  borderBottomRightRadius: borderBottom ? 12 : 0,
+  backgroundColor: 'transparent!important',
+  minHeight: 32,
+  margin: '4px 0',
 
-    '& .check path': {
-      fill: theme.palette.isLight ? theme.palette.colors.gray[300] : theme.palette.colors.charcoal[800],
-    },
-    '&:hover .check path': {
-      fill: theme.palette.colors.gray[500],
-    },
-    '& .check.active path': {
-      fill: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
-    },
-  })
-);
+  '& .check path': {
+    fill: theme.palette.isLight ? theme.palette.colors.gray[300] : theme.palette.colors.charcoal[800],
+  },
+  '&:hover .check path': {
+    fill: theme.palette.colors.gray[500],
+  },
+  '& .check.active path': {
+    fill: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
+  },
+}));
 
-const MenuItemTypography = styled(Typography)(({ theme, active }: { theme: Theme; active: boolean }) => ({
+const MenuItemTypography = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== 'active',
+})<{ active: boolean }>(({ theme, active }) => ({
   color: theme.palette.isLight ? theme.palette.colors.slate[600] : theme.palette.colors.gray[50],
   fontSize: '14px',
   fontWeight: active ? 600 : 400,

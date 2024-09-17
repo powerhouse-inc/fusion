@@ -1,5 +1,4 @@
 import { Button, styled } from '@mui/material';
-import BlueLinesIcon from 'public/assets/svg/blue_lines.svg';
 import CircleIcon from 'public/assets/svg/circle.svg';
 import Card from '@/components/Card/Card';
 import ExternalLinkButton from '@/components/ExternalLinkButton/ExternalLinkButton';
@@ -25,12 +24,6 @@ const FinancesBarChartCard: FC<FinancesBarChartCardProps> = ({ revenueAndSpendin
     <Title>Sky Ecosystem Finances</Title>
     <FinancesBarChartContainer>
       <div>
-        <AnnualProfit>
-          <AnnualProfitLegend>
-            <BlueLinesIcon />
-            <Text>Annual Profit</Text>
-          </AnnualProfitLegend>
-        </AnnualProfit>
         <FinancesBarChart revenueAndSpendingData={revenueAndSpendingData} years={years} />
       </div>
       <Legends>
@@ -49,7 +42,7 @@ const FinancesBarChartCard: FC<FinancesBarChartCardProps> = ({ revenueAndSpendin
           </RevenueLegendButtons>
         </RevenueLegend>
         <SpendingLegend>
-          <LegendTitle>Spending</LegendTitle>
+          <LegendTitle>Operational Spending</LegendTitle>
           <SpendingLegendButtons>
             <LegendButton index={3} startIcon={<CircleIcon />} disableRipple>
               USDS/DAI Expensed
@@ -126,38 +119,8 @@ const FinancesBarChartContainer = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('desktop_1280')]: {
     flexDirection: 'column',
     gap: 32,
-    marginTop: 24,
+    marginTop: 42,
   },
-}));
-
-const AnnualProfit = styled('div')(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'flex-end',
-
-  [theme.breakpoints.up('tablet_768')]: {
-    paddingLeft: 49,
-  },
-
-  [theme.breakpoints.up('desktop_1280')]: {
-    paddingLeft: 18,
-  },
-
-  [theme.breakpoints.up('desktop_1440')]: {
-    paddingLeft: 49,
-  },
-}));
-
-const Text = styled('span')(({ theme }) => ({
-  fontWeight: 500,
-  fontSize: 12,
-  lineHeight: '18px',
-  color: theme.palette.colors.slate[200],
-}));
-
-const AnnualProfitLegend = styled('div')(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: 8,
 }));
 
 const Legends = styled('div')(({ theme }) => ({

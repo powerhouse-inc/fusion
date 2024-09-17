@@ -52,14 +52,14 @@ export type BudgetKey =
 export type FormattedFinancesData = Record<MetricKey, Record<BudgetKey, number[]>>;
 
 const pathRegexMap: Record<BudgetKey, RegExp> = {
-  legacyOthers: /^atlas\/legacy\/(?!.*core-units).*$/g,
-  legacyCoreUnits: /^atlas\/legacy\/core-units.*$/g,
-  governanceScope: /^atlas\/scopes\/GOV.*$/g,
-  stability: /^atlas\/scopes\/STA.*$/g,
-  support: /^atlas\/scopes\/SUP.*$/g,
-  protocol: /^atlas\/scopes\/PRO.*$/g,
-  accessibility: /^atlas\/scopes\/ACC.*$/g,
-  immutable: /^atlas\/immutable.*$/g,
+  legacyOthers: /^atlas\/legacy\/(?!.*core-units).*$/,
+  legacyCoreUnits: /^atlas\/legacy\/core-units.*$/,
+  governanceScope: /^atlas\/scopes\/GOV.*$/,
+  stability: /^atlas\/scopes\/STA.*$/,
+  support: /^atlas\/scopes\/SUP.*$/,
+  protocol: /^atlas\/scopes\/PRO.*$/,
+  accessibility: /^atlas\/scopes\/ACC.*$/,
+  immutable: /^atlas\/immutable.*$/,
 };
 
 const emptyData: Record<BudgetKey, number[]> = {
@@ -94,7 +94,7 @@ export const getFinancesData = async (): Promise<FormattedFinancesData> => {
     series.rows.forEach((row) => {
       const metric = row.metric as MetricKeyExtended;
       Object.keys(pathRegexMap).forEach((key) => {
-        if (pathRegexMap?.[key as BudgetKey].test(row.dimensions[0].path)) {
+        if (pathRegexMap[key as BudgetKey].test(row.dimensions[0].path)) {
           const index = (year - 2021) * 4 + quarter - 1;
 
           if (!data[metric][key as BudgetKey][index]) {

@@ -1,5 +1,5 @@
-import CheckBox from '@ses/components/CheckBox/CheckBox';
-import { createThemeModeVariants } from '@ses/core/utils/storybook/factories';
+import CheckBox from '@/components/CheckBox/CheckBox';
+import { createThemeModeVariants } from '@/core/utils/storybook/factories';
 import type { Meta } from '@storybook/react';
 
 const meta: Meta<typeof CheckBox> = {
@@ -28,20 +28,19 @@ Checked.parameters = {
       'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?node-id=3384%3A17690&t=0QkX2DAbV9YY8AId-4',
   },
 };
-
 CheckedDarkMode.parameters = {
   figma: {
     component:
       'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?node-id=3384%3A17690&t=0QkX2DAbV9YY8AId-4',
   },
 };
+
 Unchecked.parameters = {
   figma: {
     component:
       'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?node-id=3384%3A17690&t=0QkX2DAbV9YY8AId-4',
   },
 };
-
 UncheckedDarkMode.parameters = {
   figma: {
     component:

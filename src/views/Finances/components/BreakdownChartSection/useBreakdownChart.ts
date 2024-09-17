@@ -1,10 +1,11 @@
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useThemeContext } from '@ses/core/context/ThemeContext';
 import lightTheme from '@ses/styles/theme/themes';
-import { useRouter } from 'next/router';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import type { Filter } from '@/components/FiltersBundle/types';
+import useRestorationFromUrlState from '@/core/hooks/useRestorationFromUrlState';
+import { FinancesSectionId } from '../../types';
 import { getBudgetsAnalytics, getKeyMetricBreakDownChart } from '../../utils/utils';
 import { getBarWidth, parseAnalyticsToSeriesBreakDownChart, setBorderRadiusForSeries } from './utils';
 import type { SelectItem } from '@ses/components/SingleItemSelect/SingleItemSelect';
@@ -19,41 +20,13 @@ import type { EChartsOption } from 'echarts-for-react';
 const DEFAULT_METRIC: AnalyticMetric = 'Budget';
 const DEFAULT_GRANULARITY: AnalyticGranularity = 'monthly';
 const METRIC_FILTER_OPTIONS = ['Budget', 'Forecast', 'Net Protocol Outflow', 'Net Expenses On-Chain', 'Actuals'];
+
 const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, allBudgets: Budget[]) => {
-  const router = useRouter();
   const { isLight } = useThemeContext();
   const isMobile = useMediaQuery(lightTheme.breakpoints.down('tablet_768'));
   const isTablet = useMediaQuery(lightTheme.breakpoints.between('tablet_768', 'desktop_1024'));
   const isDesktop1024 = useMediaQuery(lightTheme.breakpoints.between('desktop_1024', 'desktop_1280'));
   const isDesktop1280 = useMediaQuery(lightTheme.breakpoints.up('desktop_1280'));
-
-  const metricItems: SelectItem<AnalyticMetric>[] = useMemo(
-    () => [
-      {
-        label: 'Budget',
-        value: 'Budget',
-      },
-      {
-        label: 'Forecast',
-        value: 'Forecast',
-      },
-      {
-        label: 'Net Protocol Outflow',
-        value: 'ProtocolNetOutflow',
-        labelWhenSelected: isMobile || isTablet ? 'Prtcol Outfl' : 'Protocol Outflow',
-      },
-      {
-        label: 'Net Expenses On-Chain',
-        value: 'PaymentsOnChain',
-        labelWhenSelected: 'Net On-Chain',
-      },
-      {
-        label: 'Actuals',
-        value: 'Actuals',
-      },
-    ],
-    [isMobile, isTablet]
-  );
 
   const granularityItems: SelectItem<AnalyticGranularity>[] = useMemo(
     () => [
@@ -81,62 +54,17 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
   const [selectedMetric, setSelectedMetric] = useState<AnalyticMetric>(DEFAULT_METRIC);
   const [selectedGranularity, setSelectedGranularity] = useState<AnalyticGranularity>(DEFAULT_GRANULARITY);
 
-  // update filters from url params
-  const [appliedUrlFilters, setAppliedUrlFilters] = useState<boolean>(false);
-  useEffect(() => {
-    if (appliedUrlFilters) return;
-    setAppliedUrlFilters(true); // prevent from applying the filters twice when the component is re-rendered
-    if (router.asPath.includes('#breakdown-chart')) {
-      const metricInURL = router.query.metric;
-      const granularityInURL = router.query.period;
-
-      // update metric if it is valid
-      if (
-        typeof metricInURL === 'string' &&
-        metricItems.map((item) => item.value).includes(metricInURL as AnalyticMetric)
-      ) {
-        setSelectedMetric(metricInURL as AnalyticMetric);
-      }
-
-      // update granularity if it is valid
-      if (
-        typeof granularityInURL === 'string' &&
-        granularityItems.map((item) => item.value).includes(granularityInURL as AnalyticGranularity)
-      ) {
-        setSelectedGranularity(granularityInURL as AnalyticGranularity);
-      }
+  const { handleCurrentSectionStateUpdate } = useRestorationFromUrlState(FinancesSectionId.BREAKDOWN_CHART, (state) => {
+    if (state?.metric && state.metric.length > 0) {
+      setSelectedMetric(state.metric[0] as AnalyticMetric);
     }
-  }, [appliedUrlFilters, granularityItems, metricItems, router]);
+    if (state?.granularity && state.granularity.length > 0) {
+      setSelectedGranularity(state.granularity[0] as AnalyticGranularity);
+    }
+  });
 
   const refBreakDownChart = useRef<EChartsOption | null>(null);
   const barWidth = getBarWidth(isMobile, isTablet, isDesktop1024, isDesktop1280, selectedGranularity);
-
-  const updateUrl = useCallback(
-    (metric: AnalyticMetric, granularity: AnalyticGranularity) => {
-      router
-        .replace(
-          {
-            query: {
-              path: router.query.path,
-              year,
-              metric,
-              period: granularity,
-            },
-            hash: 'breakdown-chart',
-          },
-          undefined,
-          {
-            shallow: true,
-          }
-        )
-        .catch((error) => {
-          if (!error.cancelled) {
-            throw error;
-          }
-        });
-    },
-    [router, year]
-  );
 
   const handleChangeSwitch = () => {
     if (!isChecked && inactiveSeries.length > 0) {
@@ -167,7 +95,7 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
       budgets,
       isLight,
       barWidth,
-      getKeyMetricBreakDownChart(selectedMetric),
+      selectedMetric,
       allBudgets
     );
 
@@ -219,10 +147,9 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
       selected: selectedMetric,
       multiple: false,
       onChange: (value: string | number | (string | number)[]) => {
-        updateUrl(value as AnalyticMetric, selectedGranularity);
+        handleCurrentSectionStateUpdate({ metric: value as string });
         setSelectedMetric(value as AnalyticMetric);
       },
-
       options: METRIC_FILTER_OPTIONS.map((filter) => ({
         label: isTablet
           ? filter === 'Net Protocol Outflow'
@@ -231,7 +158,7 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
             ? 'Net On-Chain'
             : filter
           : filter,
-        value: filter,
+        value: getKeyMetricBreakDownChart(filter),
       })),
       withAll: false,
       widthStyles: {
@@ -246,7 +173,7 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
       selected: selectedGranularity,
       multiple: false,
       onChange: (value: string | number | (string | number)[]) => {
-        updateUrl(selectedMetric, value as AnalyticGranularity);
+        handleCurrentSectionStateUpdate({ granularity: value as string });
         setSelectedGranularity(value as AnalyticGranularity);
       },
       options: granularityItems,
@@ -262,7 +189,10 @@ const useBreakdownChart = (budgets: Budget[], year: string, codePath: string, al
   const onReset = () => {
     setSelectedMetric(DEFAULT_METRIC);
     setSelectedGranularity(DEFAULT_GRANULARITY);
-    updateUrl(DEFAULT_METRIC, DEFAULT_GRANULARITY);
+    handleCurrentSectionStateUpdate({
+      metric: DEFAULT_METRIC,
+      granularity: DEFAULT_GRANULARITY,
+    });
   };
   // Show the toggle and scroll in the legend of the chart
   const showScrollAndToggle = isMobile ? series.length > 6 : series.length > 8;

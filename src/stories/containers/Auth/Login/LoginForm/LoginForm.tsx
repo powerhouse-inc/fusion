@@ -37,6 +37,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, clearErrors, hasUserInactiv
           e.preventDefault();
           form.handleSubmit();
         }}
+        name=""
       >
         <InputsWrapper>
           <TextInput

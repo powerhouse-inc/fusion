@@ -28,7 +28,9 @@ const TabDescriptions: FC<Props> = ({ contributorsDescription, isLegacy }) => (
 
 export default TabDescriptions;
 
-const Container = styled('div')<{ isLegacy?: boolean }>(() => ({
+const Container = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'isLegacy',
+})<{ isLegacy?: boolean }>(() => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
@@ -48,7 +50,9 @@ const TitleSection = styled('div')(({ theme }) => ({
   background: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
 }));
 
-const ContainerData = styled('div')<{ isLegacy: boolean }>(({ theme, isLegacy = false }) => ({
+const ContainerData = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'isLegacy',
+})<{ isLegacy: boolean }>(({ theme, isLegacy = false }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
