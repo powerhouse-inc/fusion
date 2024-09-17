@@ -60,25 +60,24 @@ const CookiesPolicyBanner: FC<CookiesPolicyBannerProps> = ({
 };
 
 const Container = styled('div')(({ theme }) => ({
-  height: '338px',
   padding: '16px 16px 40px',
   borderRadius: '6px 6px 0px 0px',
   background: theme.palette.isLight ? '#FFFFFF' : theme.palette.colors.charcoal[900],
   boxShadow: '0px -4px 15px 0px rgba(74, 88, 115, 0.15)',
 
   [theme.breakpoints.up('tablet_768')]: {
-    height: '304px',
+    height: 304,
     padding: '40px 64px 58px',
   },
   [theme.breakpoints.up('desktop_1024')]: {
-    height: '312px',
+    height: 312,
     padding: '40px 120px 58px',
   },
   [theme.breakpoints.up('desktop_1280')]: {
     padding: '40px 163px 58px',
   },
   [theme.breakpoints.up('desktop_1440')]: {
-    height: '294px',
+    height: 294,
     padding: '40px 184px 64px',
   },
 }));
@@ -86,20 +85,21 @@ const Container = styled('div')(({ theme }) => ({
 const DataContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  maxWidth: '343px',
+  maxWidth: 540,
+  width: '100%',
   margin: '0px auto',
 
   [theme.breakpoints.up('tablet_768')]: {
-    maxWidth: '640px',
+    maxWidth: 640,
   },
   [theme.breakpoints.up('desktop_1024')]: {
-    maxWidth: '784px',
+    maxWidth: 784,
   },
   [theme.breakpoints.up('desktop_1280')]: {
-    maxWidth: '954px',
+    maxWidth: 954,
   },
   [theme.breakpoints.up('desktop_1440')]: {
-    maxWidth: '1072px',
+    maxWidth: 1072,
   },
 }));
 
