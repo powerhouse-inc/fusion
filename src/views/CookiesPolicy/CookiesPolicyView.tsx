@@ -1,9 +1,9 @@
 import { styled } from '@mui/material';
+import { SEOHead } from '@ses/components/SEOHead/SEOHead';
 import { useCallback } from 'react';
 import Card from '@/components/Card/Card';
 import SkyButton from '@/components/SkyButton/SkyButton';
 import { useCookiesContextTracking } from '@/core/context/CookiesContext';
-import { SEOHead } from '@/stories/components/SEOHead/SEOHead';
 import type { FC } from 'react';
 
 const CookiesPolicyView: FC = () => {

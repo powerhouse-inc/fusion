@@ -1,9 +1,14 @@
 import { styled } from '@mui/material';
+import { SEOHead } from '@ses/components/SEOHead/SEOHead';
 import Card from '@/components/Card/Card';
 import type { FC } from 'react';
 
 const DisclaimerView: FC = () => (
   <Container>
+    <SEOHead
+      title="Sky Fusion - Disclaimer"
+      description="Sky Fusion Dashboard offers key data insights into the Sky Ecosystem's finances, governance, contributors, and roadmaps."
+    />
     <DataContainer>
       <Title>Disclaimer</Title>
       <StyledParagraph>
