@@ -124,7 +124,9 @@ const LegendContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const ContainerMobile = styled('div')<{ isLessThanFifteen?: boolean }>(({ theme, isLessThanFifteen = false }) => ({
+const ContainerMobile = styled('div', { shouldForwardProp: (prop) => prop !== 'isLessThanFifteen' })<{
+  isLessThanFifteen?: boolean;
+}>(({ theme, isLessThanFifteen = false }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 16,
@@ -157,7 +159,7 @@ const ContainerSeries = styled('div')(({ theme }) => ({
   },
 }));
 
-const SimpleBarStyled = styled(SimpleBar)<{ isLessThanFifteen?: boolean }>(({ theme }) => ({
+const SimpleBarStyled = styled(SimpleBar)(({ theme }) => ({
   height: '100%',
   width: '100%',
   display: 'flex',
@@ -224,7 +226,9 @@ const SimpleContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const SimpleContainerSeries = styled('div')<{ showLessGap?: boolean }>(({ theme, showLessGap = false }) => ({
+const SimpleContainerSeries = styled('div', { shouldForwardProp: (prop) => prop !== 'showLessGap' })<{
+  showLessGap?: boolean;
+}>(({ theme, showLessGap = false }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',

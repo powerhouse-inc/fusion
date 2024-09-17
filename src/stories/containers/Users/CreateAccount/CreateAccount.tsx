@@ -46,6 +46,7 @@ const CreateAccount: React.FC = () => {
           Create a new user account to provide access to the administration area.
         </Description>
         <Form
+          name="createAccountForm"
           onSubmit={(e) => {
             e.preventDefault();
             form.handleSubmit();

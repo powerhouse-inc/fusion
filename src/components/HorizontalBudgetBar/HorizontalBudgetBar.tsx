@@ -60,7 +60,9 @@ const BarContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const Actuals = styled('div')<{ width: number }>(({ theme, width }) => ({
+const Actuals = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'width',
+})<{ width: number }>(({ theme, width }) => ({
   position: 'absolute',
   top: 0,
   left: 0,
@@ -71,7 +73,9 @@ const Actuals = styled('div')<{ width: number }>(({ theme, width }) => ({
   transition: 'width 0.85s ease-in-out',
 }));
 
-const Prediction = styled('div')<{ width: number }>(({ theme, width }) => ({
+const Prediction = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'width',
+})<{ width: number }>(({ theme, width }) => ({
   position: 'absolute',
   top: 0,
   left: 0,
@@ -82,7 +86,9 @@ const Prediction = styled('div')<{ width: number }>(({ theme, width }) => ({
   transition: 'width 0.85s ease-in-out',
 }));
 
-const BudgetCapLine = styled('div')<{ position: number }>(({ theme, position }) => ({
+const BudgetCapLine = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'position',
+})<{ position: number }>(({ theme, position }) => ({
   position: 'absolute',
   top: 0,
   left: `${position}%`,

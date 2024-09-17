@@ -36,16 +36,18 @@ const ContainerIcon = styled('div')(({ theme }) => ({
   },
 }));
 
-const Circle = styled('div')<{ color: string }>(({ color, theme }) => ({
-  width: 12,
-  height: 12,
-  borderRadius: '50%',
-  backgroundColor: color,
-  [theme.breakpoints.up('tablet_768')]: {
+const Circle = styled('div', { shouldForwardProp: (prop) => prop !== 'color' })<{ color: string }>(
+  ({ color, theme }) => ({
     width: 12,
     height: 12,
-  },
-}));
+    borderRadius: '50%',
+    backgroundColor: color,
+    [theme.breakpoints.up('tablet_768')]: {
+      width: 12,
+      height: 12,
+    },
+  })
+);
 
 const Title = styled('div')(({ theme }) => ({
   fontFamily: 'Inter, sans-serif',

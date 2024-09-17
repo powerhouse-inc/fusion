@@ -36,7 +36,7 @@ const CustomSheet: React.FC<CustomSheetProps> = ({
 
 export default CustomSheet;
 
-const SheetWrapper = styled(Sheet)(({ theme, isOpen }) => ({
+const SheetWrapper = styled(Sheet)<{ isOpen: boolean }>(({ theme, isOpen }) => ({
   backgroundColor: isOpen ? 'rgba(37, 42, 52, 0.10)' : 'none',
   backdropFilter: isOpen ? 'blur(2.5px)' : 'none',
 

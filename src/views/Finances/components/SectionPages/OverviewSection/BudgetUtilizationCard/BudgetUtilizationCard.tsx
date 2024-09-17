@@ -166,7 +166,9 @@ const Legend = styled('div')(({ theme }) => ({
   },
 }));
 
-const LegendItem = styled('div')<{ dotColor: string }>(({ theme, dotColor }) => ({
+const LegendItem = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'dotColor',
+})<{ dotColor: string }>(({ theme, dotColor }) => ({
   position: 'relative',
   fontSize: 12,
   fontWeight: 700,
@@ -204,7 +206,9 @@ const Description = styled('div')(({ theme }) => ({
   color: theme.palette.colors.gray[500],
 }));
 
-const Percent = styled('div')<{ isRightPartZero: boolean }>(({ theme, isRightPartZero }) => ({
+const Percent = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'isRightPartZero',
+})<{ isRightPartZero: boolean }>(({ theme, isRightPartZero }) => ({
   fontSize: 20,
   fontWeight: 700,
   lineHeight: '120%',

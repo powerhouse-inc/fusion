@@ -71,55 +71,55 @@ const FilterTabs: React.FC<FilterTabsProps> = ({ selectedMetric, onChangeTab }) 
 
 export default FilterTabs;
 
-const Wrapper = styled('div')<{ hasSmokeLeft: boolean; hasSmokeRight: boolean }>(
-  ({ theme, hasSmokeLeft, hasSmokeRight }) => ({
-    background: theme.palette.isLight ? theme.palette.colors.gray[50] : '#232832',
-    overflow: 'hidden',
-    borderRadius: '12px 12px 0px 0px',
-    position: 'relative',
-    maxWidth: '100%',
-    boxShadow: theme.palette.isLight
-      ? '1px 0px 15px 0px rgba(117, 117, 117, 0.15)'
-      : '4px 0px 12.3px 0px rgba(23, 24, 29, 0.30)',
+const Wrapper = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'hasSmokeLeft' && prop !== 'hasSmokeRight',
+})<{ hasSmokeLeft: boolean; hasSmokeRight: boolean }>(({ theme, hasSmokeLeft, hasSmokeRight }) => ({
+  background: theme.palette.isLight ? theme.palette.colors.gray[50] : '#232832',
+  overflow: 'hidden',
+  borderRadius: '12px 12px 0px 0px',
+  position: 'relative',
+  maxWidth: '100%',
+  boxShadow: theme.palette.isLight
+    ? '1px 0px 15px 0px rgba(117, 117, 117, 0.15)'
+    : '4px 0px 12.3px 0px rgba(23, 24, 29, 0.30)',
 
-    ...(hasSmokeLeft && {
-      '&::before': {
-        pointerEvents: 'none',
-        touchAction: 'none',
-        content: '""',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: 59,
-        height: '100%',
-        background: theme.palette.isLight
-          ? 'linear-gradient(90deg, #FCFCFC 21.24%, rgba(252, 252, 252, 0.00) 100%)'
-          : 'linear-gradient(90deg, #232832 21.24%, rgba(252, 252, 252, 0.00) 100%)',
-      },
-    }),
-
-    ...(hasSmokeRight && {
-      '&::after': {
-        pointerEvents: 'none',
-        touchAction: 'none',
-        content: '""',
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        width: 59,
-        height: '100%',
-        background: theme.palette.isLight
-          ? 'linear-gradient(270deg, #FCFCFC 21.24%, rgba(252, 252, 252, 0.00) 100%)'
-          : 'linear-gradient(270deg, #232832 21.24%, rgba(252, 252, 252, 0.00) 100%)',
-      },
-    }),
-
-    [theme.breakpoints.up('tablet_768')]: {
-      minWidth: 192,
-      borderRadius: '12px 0px 0px 12px',
+  ...(hasSmokeLeft && {
+    '&::before': {
+      pointerEvents: 'none',
+      touchAction: 'none',
+      content: '""',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: 59,
+      height: '100%',
+      background: theme.palette.isLight
+        ? 'linear-gradient(90deg, #FCFCFC 21.24%, rgba(252, 252, 252, 0.00) 100%)'
+        : 'linear-gradient(90deg, #232832 21.24%, rgba(252, 252, 252, 0.00) 100%)',
     },
-  })
-);
+  }),
+
+  ...(hasSmokeRight && {
+    '&::after': {
+      pointerEvents: 'none',
+      touchAction: 'none',
+      content: '""',
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      width: 59,
+      height: '100%',
+      background: theme.palette.isLight
+        ? 'linear-gradient(270deg, #FCFCFC 21.24%, rgba(252, 252, 252, 0.00) 100%)'
+        : 'linear-gradient(270deg, #232832 21.24%, rgba(252, 252, 252, 0.00) 100%)',
+    },
+  }),
+
+  [theme.breakpoints.up('tablet_768')]: {
+    minWidth: 192,
+    borderRadius: '12px 0px 0px 12px',
+  },
+}));
 
 const TabContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -145,58 +145,60 @@ const TabContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const Tab = styled('div')<{ active: boolean }>(({ theme, active }) => ({
-  fontSize: 12,
-  fontWeight: active ? 700 : 500,
-  lineHeight: active ? '18px' : '22px',
-  color: active
-    ? theme.palette.isLight
-      ? theme.palette.colors.gray[900]
-      : theme.palette.colors.slate[50]
-    : theme.palette.isLight
-    ? theme.palette.colors.gray[500]
-    : theme.palette.colors.slate[400],
-  background: active
-    ? theme.palette.isLight
-      ? theme.palette.colors.slate[50]
-      : theme.palette.colors.charcoal[900]
-    : 'transparent',
-  whiteSpace: 'nowrap',
-  padding: `8px 8px ${active ? 8 : 4}px`,
-  cursor: 'pointer',
+const Tab = styled('div', { shouldForwardProp: (prop) => prop !== 'active' })<{ active: boolean }>(
+  ({ theme, active }) => ({
+    fontSize: 12,
+    fontWeight: active ? 700 : 500,
+    lineHeight: active ? '18px' : '22px',
+    color: active
+      ? theme.palette.isLight
+        ? theme.palette.colors.gray[900]
+        : theme.palette.colors.slate[50]
+      : theme.palette.isLight
+      ? theme.palette.colors.gray[500]
+      : theme.palette.colors.slate[400],
+    background: active
+      ? theme.palette.isLight
+        ? theme.palette.colors.slate[50]
+        : theme.palette.colors.charcoal[900]
+      : 'transparent',
+    whiteSpace: 'nowrap',
+    padding: `8px 8px ${active ? 8 : 4}px`,
+    cursor: 'pointer',
 
-  [theme.breakpoints.up('tablet_768')]: {
-    padding: '0 24px',
-    lineHeight: '22px',
-    position: 'relative',
-
-    '&:before': {
-      content: '""',
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: 4,
-      height: '100%',
-      borderRadius: '0px 4px 4px 0px',
-      background: active
-        ? theme.palette.isLight
-          ? theme.palette.colors.gray[900]
-          : theme.palette.colors.charcoal[700]
-        : 'transparent',
-    },
-
-    '&:hover': {
-      background: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[900],
+    [theme.breakpoints.up('tablet_768')]: {
+      padding: '0 24px',
+      lineHeight: '22px',
+      position: 'relative',
 
       '&:before': {
-        background: theme.palette.isLight ? theme.palette.colors.gray[400] : '#323740',
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: 4,
+        height: '100%',
+        borderRadius: '0px 4px 4px 0px',
+        background: active
+          ? theme.palette.isLight
+            ? theme.palette.colors.gray[900]
+            : theme.palette.colors.charcoal[700]
+          : 'transparent',
+      },
+
+      '&:hover': {
+        background: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[900],
+
+        '&:before': {
+          background: theme.palette.isLight ? theme.palette.colors.gray[400] : '#323740',
+        },
       },
     },
-  },
 
-  [theme.breakpoints.up('desktop_1280')]: {
-    fontSize: 14,
-    lineHeight: '22px',
-    padding: '2px 16px 2px 24px',
-  },
-}));
+    [theme.breakpoints.up('desktop_1280')]: {
+      fontSize: 14,
+      lineHeight: '22px',
+      padding: '2px 16px 2px 24px',
+    },
+  })
+);
