@@ -60,24 +60,14 @@ const MainWrapper: FC<{ children: ReactNode }> = ({ children }) => {
 
 export default MainWrapper;
 
-const OverlayContainer = styled('div')(({ theme }) => ({
+const OverlayContainer = styled('div')(() => ({
   position: 'fixed',
   top: 0,
   width: '100%',
-  height: 'calc(100vh - 318px)',
+  height: '100%',
   background: 'rgba(37, 42, 52, 0.10)',
   backdropFilter: 'blur(2.5px)',
   zIndex: zIndexEnum.HEADER_PAGE + 1,
-
-  [theme.breakpoints.up('tablet_768')]: {
-    height: 'calc(100vh - 284px)',
-  },
-  [theme.breakpoints.up('desktop_1024')]: {
-    height: 'calc(100vh - 292px)',
-  },
-  [theme.breakpoints.up('desktop_1440')]: {
-    height: 'calc(100vh - 274px)',
-  },
 }));
 
 const PolicyBannerPosition = styled('div')(() => ({
