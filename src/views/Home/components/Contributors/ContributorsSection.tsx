@@ -123,7 +123,9 @@ const ContributorInformation = styled(Card)(() => ({
   overFlow: 'hidden',
 }));
 
-const CardTabs = styled(Card)<{ isLegacy: boolean }>(({ theme }) => ({
+const CardTabs = styled(Card, {
+  shouldForwardProp: (prop) => prop !== 'isLegacy',
+})<{ isLegacy: boolean }>(({ theme }) => ({
   borderTopLeftRadius: 0,
   boxShadow: 'none',
   height: 'calc(100% - 32px)',
