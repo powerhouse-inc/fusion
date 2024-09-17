@@ -12,7 +12,7 @@ service:
 
 image:
   repository: ${ECR_REGISTRY}/${ECR_REPO_NAME}
-  tag: ${IMAGE_TAG}
+  tag: '${IMAGE_TAG}'
   pullPolicy: Always
 
 serviceAccount:
