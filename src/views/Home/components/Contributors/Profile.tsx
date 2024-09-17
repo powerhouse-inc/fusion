@@ -20,7 +20,7 @@ const Profile: FC<Props> = ({ contributor, className }) => (
           <TitleLinks>
             <ContainerShortCodeName>
               <ShortCode>{contributor.shortCode}</ShortCode>
-              <Name>{contributor.name}</Name>
+              <Name className="profile-name">{contributor.name}</Name>
             </ContainerShortCodeName>
             <StatusMobile>
               <StatusChipStyled status={contributor.status as TeamStatus} />
@@ -50,7 +50,6 @@ const ContainerTitleStatus = styled('div')(() => ({
 const TitleLinks = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: 2,
   [theme.breakpoints.up('tablet_768')]: {
     gap: 'revert',
   },
@@ -64,6 +63,7 @@ const ContainerAvatarDescription = styled('div')(({ theme }) => ({
   flexDirection: 'row',
   gap: 4,
   alignItems: 'center',
+
   [theme.breakpoints.up('tablet_768')]: {
     display: 'flex',
     flexDirection: 'row',
@@ -72,9 +72,10 @@ const ContainerAvatarDescription = styled('div')(({ theme }) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 8,
   },
   [theme.breakpoints.up('desktop_1280')]: {
-    gap: 8,
+    gap: 6,
   },
   [theme.breakpoints.up('desktop_1440')]: {
     marginTop: 4,
@@ -139,12 +140,9 @@ const ContainerDescription = styled('div')(({ theme }) => ({
   },
 }));
 
-const StatusMobile = styled('div')(({ theme }) => ({
+const StatusMobile = styled('div')(() => ({
   display: 'flex',
   alignItems: 'flex-start',
-  [theme.breakpoints.up('tablet_768')]: {
-    marginTop: 1,
-  },
 }));
 const ContainerShortCodeName = styled('div')({
   display: 'flex',
@@ -154,4 +152,6 @@ const ContainerShortCodeName = styled('div')({
 
 const StatusChipStyled = styled(StatusChip)({
   padding: '1px 16px 1px 16px',
+  fontSize: 14,
+  lineHeight: '22px',
 });
