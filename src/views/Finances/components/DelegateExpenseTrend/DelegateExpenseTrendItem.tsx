@@ -121,7 +121,7 @@ const DelegateExpenseTrendItem: FC<Props> = ({ budget, selectedMetric, now = Dat
             </ContainerStatus>
           </ContainerIconName>
           <ArrowMobile>
-            <InternalLinkButton href={link || ''} buttonType="primary" />
+            <InternalLinkButton href={link || ''} buttonType="primary" isLink={false} />
           </ArrowMobile>
         </ContainerMobile>
         <ReportingMonth>
@@ -140,14 +140,14 @@ const DelegateExpenseTrendItem: FC<Props> = ({ budget, selectedMetric, now = Dat
             </StatusTable>
           )}
           <ContainerArrow>
-            <InternalLinkButton href={link || ''} buttonType="primary" />
+            <InternalLinkButton href={link || ''} buttonType="primary" isLink={false} />
           </ContainerArrow>
         </ContainerStatusTable>
         <LastModifiedDesk>
           <LabelLastModifiedText>{lastModifiedRelative}</LabelLastModifiedText>
         </LastModifiedDesk>
         <ViewContainer>
-          <InternalLinkButton href={link || ''} buttonType="primary" label="View" />
+          <InternalLinkButton href={link || ''} buttonType="primary" label="View" isLink={false} />
         </ViewContainer>
       </ContainerDesk>
       <Divider />

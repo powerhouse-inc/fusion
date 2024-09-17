@@ -146,78 +146,85 @@ const TableContainer = styled('table')(({ theme }) => ({
   overflow: 'hidden',
 }));
 
-const Headed = styled('th')<{ period?: PeriodicSelectionFilter; isHeader: boolean; isUncategorized: boolean }>(
-  ({ theme, period, isHeader, isUncategorized }) => ({
-    borderRight: `1px solid ${
-      theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.charcoal[800]
-    }`,
-    fontSize: 12,
-    color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[200],
-    width: 87,
-    textAlign: 'center',
-    verticalAlign: 'center',
-    padding: '16px 4px 16px 8px',
-    whiteSpace: 'normal',
-    overflowWrap: 'break-word',
-    wordBreak: 'break-word',
-    position: 'relative',
+const Headed = styled('th', {
+  shouldForwardProp: (prop) => !['period', 'isUncategorized', 'isHeader'].includes(prop as string),
+})<{
+  period?: PeriodicSelectionFilter;
+  isHeader: boolean;
+  isUncategorized: boolean;
+}>(({ theme, period, isHeader, isUncategorized }) => ({
+  borderRight: `1px solid ${
+    theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.charcoal[800]
+  }`,
+  fontSize: 12,
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[200],
+  width: 87,
+  textAlign: 'center',
+  verticalAlign: 'center',
+  padding: '16px 4px 16px 8px',
+  whiteSpace: 'normal',
+  overflowWrap: 'break-word',
+  wordBreak: 'break-word',
+  position: 'relative',
 
-    ...(isUncategorized && {
-      fontStyle: 'italic',
+  ...(isUncategorized && {
+    fontStyle: 'italic',
+  }),
+
+  '& .link': {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textDecoration: 'none',
+    color: 'inherit',
+    zIndex: 1,
+  },
+
+  [theme.breakpoints.up('tablet_768')]: {
+    fontSize: isHeader || isUncategorized ? 14 : 12,
+    width: 150,
+  },
+
+  [theme.breakpoints.up('desktop_1024')]: {
+    width: 150,
+  },
+
+  [theme.breakpoints.up('desktop_1280')]: {
+    width: 220,
+    padding: '16px 0px 16px 32px',
+  },
+
+  [theme.breakpoints.up('desktop_1440')]: {
+    width: period === 'Quarterly' ? 261 : period === 'Annually' ? 200 : 188,
+    padding: '16px 0px 16px 32px',
+    textOverflow: period === 'Monthly' ? 'ellipsis' : 'revert',
+    ...(period === 'Monthly' && {
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
     }),
+    ...(period === 'Annually' && {
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+    }),
+  },
 
-    '& .link': {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      textDecoration: 'none',
-      color: 'inherit',
-      zIndex: 1,
-    },
+  [theme.breakpoints.up('desktop_1920')]: {
+    width: period === 'Annually' ? 212 : 230,
+    padding: period === 'Quarterly' ? '16px 0px 16px 16px' : '16px 0px 16px 32px',
+  },
+}));
 
-    [theme.breakpoints.up('tablet_768')]: {
-      fontSize: isHeader || isUncategorized ? 14 : 12,
-      width: 150,
-    },
-
-    [theme.breakpoints.up('desktop_1024')]: {
-      width: 150,
-    },
-
-    [theme.breakpoints.up('desktop_1280')]: {
-      width: 220,
-      padding: '16px 0px 16px 32px',
-    },
-
-    [theme.breakpoints.up('desktop_1440')]: {
-      width: period === 'Quarterly' ? 261 : period === 'Annually' ? 200 : 188,
-      padding: '16px 0px 16px 32px',
-      textOverflow: period === 'Monthly' ? 'ellipsis' : 'revert',
-      ...(period === 'Monthly' && {
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-      }),
-      ...(period === 'Annually' && {
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-      }),
-    },
-
-    [theme.breakpoints.up('desktop_1920')]: {
-      width: period === 'Annually' ? 212 : 230,
-      padding: period === 'Quarterly' ? '16px 0px 16px 16px' : '16px 0px 16px 32px',
-    },
-  })
-);
-
-const TableRow = styled('tr')<{ isMain?: boolean; isAnnual: boolean }>(({ theme, isMain = false, isAnnual }) => ({
+const TableRow = styled('tr', { shouldForwardProp: (prop) => prop !== 'isAnnual' && prop !== 'isMain' })<{
+  isMain?: boolean;
+  isAnnual: boolean;
+}>(({ theme, isMain = false, isAnnual }) => ({
   '& th': {
     borderTopLeftRadius: isMain ? 12 : 0,
     borderBottomLeftRadius: isMain ? 12 : 0,
@@ -248,32 +255,34 @@ const TableRow = styled('tr')<{ isMain?: boolean; isAnnual: boolean }>(({ theme,
   }),
 }));
 
-const TableBody = styled('tbody')<{ isAnnual: boolean }>(({ theme, isAnnual }) => ({
-  '& tr:nth-of-type(odd):not(:first-child)': {
-    // odd rows
-    backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : '#232832',
-    borderRadius: 40,
-  },
-  '& tr:nth-of-type(even):not(:first-child)': {
-    // even rows
-    backgroundColor: theme.palette.isLight ? '#fff' : theme.palette.colors.charcoal[900],
-  },
-  '& tr:first-of-type': {
-    // header sub-table
-    backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : '#212630',
-  },
+const TableBody = styled('tbody', { shouldForwardProp: (prop) => prop !== 'isAnnual' })<{ isAnnual: boolean }>(
+  ({ theme, isAnnual }) => ({
+    '& tr:nth-of-type(odd):not(:first-of-type)': {
+      // odd rows
+      backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : '#232832',
+      borderRadius: 40,
+    },
+    '& tr:nth-of-type(even):not(:first-of-type)': {
+      // even rows
+      backgroundColor: theme.palette.isLight ? '#fff' : theme.palette.colors.charcoal[900],
+    },
+    '& tr:first-of-type': {
+      // header sub-table
+      backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : '#212630',
+    },
 
-  ...(!isAnnual && {
-    '& tr:nth-of-type(odd):not(:first-child) td:last-of-type': {
-      // odd rows of the totals column
-      backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.charcoal[900],
-    },
-    '& tr:nth-of-type(even):not(:first-child) td:last-of-type': {
-      // even rows of the totals column
-      backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[100] : '#2C323E',
-    },
-  }),
-}));
+    ...(!isAnnual && {
+      '& tr:nth-of-type(odd):not(:first-of-type) td:last-of-type': {
+        // odd rows of the totals column
+        backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.charcoal[900],
+      },
+      '& tr:nth-of-type(even):not(:first-of-type) td:last-of-type': {
+        // even rows of the totals column
+        backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[100] : '#2C323E',
+      },
+    }),
+  })
+);
 const AnnualCell = styled('td')(({ theme }) => ({
   padding: '16px 8px',
   textAlign: 'center',

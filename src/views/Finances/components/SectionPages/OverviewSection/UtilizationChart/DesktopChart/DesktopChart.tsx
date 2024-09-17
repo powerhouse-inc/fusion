@@ -357,6 +357,7 @@ const Container = styled('div')<{ isDeepLevel: boolean }>(({ theme, isDeepLevel 
     flexDirection: 'row',
     width: '100%',
     gap: 20,
+
     justifyContent: 'center',
   },
 
@@ -459,10 +460,11 @@ const SwiperWrapper = styled('div')<{ isDeepLevel: boolean; numberSliderPerLevel
       height: 8,
       borderRadius: '50%',
 
-      '&:first-child': {
+      '&:first-of-type': {
         borderRadius: '6px 0 0 6px',
       },
-      '&:last-child': {
+
+      '&:last-of-type': {
         borderRadius: '0 6px 6px 0',
       },
     },
