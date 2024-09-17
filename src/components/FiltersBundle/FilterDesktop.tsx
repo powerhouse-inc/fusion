@@ -47,7 +47,7 @@ const FilterDesktop: React.FC<FilterDesktopProps> = ({ filters, searchFilter, re
                 <div key={filter.id}>
                   {filter.options.map((option) => (
                     <label key={option.value}>
-                      <input type="radio" value={option.value} checked={option.selected} />
+                      <input type="radio" value={option.value} checked={option.selected} name={filter.label} />
                       {option.label}
                     </label>
                   ))}
@@ -59,7 +59,7 @@ const FilterDesktop: React.FC<FilterDesktopProps> = ({ filters, searchFilter, re
                 // TODO: implement a checkbox component UI for desktop
                 <div key={filter.id}>
                   <label>
-                    <input type="checkbox" checked={filter.selected} />
+                    <input type="checkbox" checked={filter.selected} name={filter.label} />
                     {filter.label}
                   </label>
                 </div>

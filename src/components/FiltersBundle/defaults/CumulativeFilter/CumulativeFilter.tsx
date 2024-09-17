@@ -123,16 +123,18 @@ const CheckBtn = styled('div')(() => ({
   cursor: 'pointer',
 }));
 
-const MenuBtn = styled('div')<{ isActive: boolean }>(({ isActive, theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  height: 24,
-  paddingLeft: 8,
-  cursor: isActive ? 'pointer' : 'auto',
+const MenuBtn = styled('div', { shouldForwardProp: (prop) => prop !== 'isActive' })<{ isActive: boolean }>(
+  ({ isActive, theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 24,
+    paddingLeft: 8,
+    cursor: isActive ? 'pointer' : 'auto',
 
-  borderLeft: `1px solid ${theme.palette.mode === 'light' ? '#D4D9E1' : '#787A9B'}`,
-}));
+    borderLeft: `1px solid ${theme.palette.mode === 'light' ? '#D4D9E1' : '#787A9B'}`,
+  })
+);
 
 const CustomPaper = styled(Paper)(({ theme }) => ({
   width: 282,
@@ -144,7 +146,9 @@ const CustomPaper = styled(Paper)(({ theme }) => ({
   marginTop: 8,
 }));
 
-const StyledSelectChevronDown = styled(SelectChevronDown)<{ isOpen: boolean }>(({ isOpen }) => ({
+const StyledSelectChevronDown = styled(SelectChevronDown, { shouldForwardProp: (prop) => prop !== 'isOpen' })<{
+  isOpen: boolean;
+}>(({ isOpen }) => ({
   transform: isOpen ? 'scaleY(-1)' : 'scaleY(1)',
 }));
 

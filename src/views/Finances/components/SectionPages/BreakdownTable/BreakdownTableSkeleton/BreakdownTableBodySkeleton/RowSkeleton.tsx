@@ -36,6 +36,7 @@ const RowSkeleton: React.FC<Props> = ({ numberItemsHeader, numberWith, backgroun
         <ContainerItemsHeader style={{}}>
           {itemsHeader.map((_, index) => (
             <ItemStyledSkeleton
+              key={index}
               variant="rectangular"
               width={numberWith[index]}
               height={9.62}

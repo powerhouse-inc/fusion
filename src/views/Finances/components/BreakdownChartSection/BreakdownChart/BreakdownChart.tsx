@@ -507,24 +507,26 @@ const ChartContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const YearXAxis = styled('div')<{ isLessMobile: boolean }>(({ theme, isLessMobile }) => {
-  const border = `1px solid ${
-    theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700]
-  }`;
+const YearXAxis = styled('div', { shouldForwardProp: (prop) => prop !== 'isLessMobile' })<{ isLessMobile: boolean }>(
+  ({ theme, isLessMobile }) => {
+    const border = `1px solid ${
+      theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700]
+    }`;
 
-  return {
-    position: 'absolute',
-    bottom: isLessMobile ? 12 : 0,
-    left: isLessMobile ? 30 : 40,
-    right: 5,
-    height: 11,
-    borderLeft: border,
-    borderRight: border,
-    borderBottom: border,
-    borderBottomLeftRadius: 3,
-    borderBottomRightRadius: 3,
-  };
-});
+    return {
+      position: 'absolute',
+      bottom: isLessMobile ? 12 : 0,
+      left: isLessMobile ? 30 : 40,
+      right: 5,
+      height: 11,
+      borderLeft: border,
+      borderRight: border,
+      borderBottom: border,
+      borderBottomLeftRadius: 3,
+      borderBottomRightRadius: 3,
+    };
+  }
+);
 
 const YearText = styled('div')(({ theme }) => ({
   fontSize: 12,

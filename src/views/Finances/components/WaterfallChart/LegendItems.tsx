@@ -23,13 +23,17 @@ const ContainerItem = styled('div')({
   gap: 8,
 });
 
-const SkeletonIcon = styled(Skeleton)<{ circleDimension: number }>(({ theme, circleDimension }) => ({
+const SkeletonIcon = styled(Skeleton, { shouldForwardProp: (prop) => prop !== 'circleDimension' })<{
+  circleDimension: number;
+}>(({ theme, circleDimension }) => ({
   width: circleDimension,
   height: circleDimension,
   backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.slate[400],
 }));
 
-const SkeletonValue = styled(Skeleton)<{ legendWith: number }>(({ theme, legendWith }) => ({
+const SkeletonValue = styled(Skeleton, { shouldForwardProp: (prop) => prop !== 'legendWith' })<{
+  legendWith: number;
+}>(({ theme, legendWith }) => ({
   width: legendWith,
   backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[100] : theme.palette.colors.slate[400],
   height: 12,

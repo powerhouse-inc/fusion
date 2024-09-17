@@ -82,7 +82,7 @@ const CumulativeSelectItem: React.FC<CumulativeSelectItemProps> = ({ type, selec
 
 export default CumulativeSelectItem;
 
-const Item = styled('div')<{ type: ItemType }>(({ theme, type }) => ({
+const Item = styled('div', { shouldForwardProp: (prop) => prop !== 'type' })<{ type: ItemType }>(({ theme, type }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
