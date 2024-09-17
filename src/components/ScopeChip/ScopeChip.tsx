@@ -26,36 +26,39 @@ const ScopeChip: React.FC<Props> = ({ scope, className, size = 'large' }) => {
 };
 
 export default ScopeChip;
-const Chip = styled('div')<{ colors: ScopeColors; scope: TeamScopeEnum; type: ScopeSizeVariant }>(
-  ({ theme, scope, colors, type }) => ({
-    fontFamily: 'Inter, sans-serif',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 6,
-    width: 'fit-content',
-    border: `1.5px solid ${theme.palette.isLight ? colors[scope]?.color : colors[scope]?.colorDark}`,
-    background: theme.palette.isLight ? colors[scope]?.background : colors[scope]?.backgroundDark,
+const Chip = styled('div', {
+  shouldForwardProp: (prop) => !['colors', 'scope', 'type'].includes(prop as string),
+})<{ colors: ScopeColors; scope: TeamScopeEnum; type: ScopeSizeVariant }>(({ theme, scope, colors, type }) => ({
+  fontFamily: 'Inter, sans-serif',
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  borderRadius: 6,
+  width: 'fit-content',
+  border: `1.5px solid ${theme.palette.isLight ? colors[scope]?.color : colors[scope]?.colorDark}`,
+  background: theme.palette.isLight ? colors[scope]?.background : colors[scope]?.backgroundDark,
 
-    ...(type === 'small' && {
-      padding: '0px 2px',
-    }),
+  ...(type === 'small' && {
+    padding: '0px 2px',
+  }),
 
-    ...((type === 'medium' || type === 'large') && {
-      padding: '0px 7px ',
-    }),
-    ...(type === 'extraLarge' && {
-      padding: '5px 8px ',
-      border: `2px solid ${theme.palette.isLight ? colors[scope]?.color : colors[scope]?.colorDark}`,
-    }),
-    ...(scope === TeamScopeEnum.All && {
-      padding: '1px 16px 1px 16px',
-      border: `1.5px solid ${theme.palette.isLight ? colors[scope]?.borderColor : colors[scope]?.borderColorDark}`,
-    }),
-  })
-);
+  ...((type === 'medium' || type === 'large') && {
+    padding: '0px 7px ',
+  }),
+  ...(type === 'extraLarge' && {
+    padding: '5px 8px ',
+    border: `2px solid ${theme.palette.isLight ? colors[scope]?.color : colors[scope]?.colorDark}`,
+  }),
+  ...(scope === TeamScopeEnum.All && {
+    padding: '1px 16px 1px 16px',
+    border: `1.5px solid ${theme.palette.isLight ? colors[scope]?.borderColor : colors[scope]?.borderColorDark}`,
+  }),
+}));
 
-const Code = styled('div')<{
+const Code = styled('div', {
+  shouldForwardProp: (prop) =>
+    prop !== 'isUppercase' && prop !== 'colors' && prop !== 'scope' && prop !== 'className' && prop !== 'type',
+})<{
   isUppercase?: boolean;
   colors: ScopeColors;
   scope: TeamScopeEnum;

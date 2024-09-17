@@ -304,7 +304,9 @@ const ContainerScopeRoleMobile = styled('div')(({ theme }) => ({
   },
 }));
 
-const ProfileStyled = styled(Profile)<{ type: ResourceType; textDefault: boolean }>(({ theme, type, textDefault }) => ({
+const ProfileStyled = styled(Profile, {
+  shouldForwardProp: (prop) => prop !== 'type' && prop !== 'textDefault',
+})<{ type: ResourceType; textDefault: boolean }>(({ theme, type, textDefault }) => ({
   width: 180,
   [theme.breakpoints.up('desktop_1024')]: {
     width: 185,
