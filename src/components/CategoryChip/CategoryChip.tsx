@@ -19,7 +19,9 @@ const CategoryChip: React.FC<StatusChipProps> = ({ category, className }) => {
   );
 };
 export default CategoryChip;
-const Chip = styled('div')<{ colors: CustomColors; category: TeamCategory }>(({ theme, colors, category }) => ({
+const Chip = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'colors' && prop !== 'category',
+})<{ colors: CustomColors; category: TeamCategory }>(({ theme, colors, category }) => ({
   display: 'flex',
   alignItems: 'center',
   fontFamily: 'Inter, sans-serif',

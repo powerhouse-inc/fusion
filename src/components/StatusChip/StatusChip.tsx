@@ -1,4 +1,5 @@
 import { styled } from '@mui/material';
+
 import React from 'react';
 import { TeamStatus } from '@/core/models/interfaces/types';
 import { useCustomColors } from './useCustomColors';
@@ -21,7 +22,9 @@ export const StatusChip: React.FC<StatusChipProps> = ({ status, className, isFil
   );
 };
 
-const Chip = styled('div')<{ colors: CustomColors; status: TeamStatus }>(({ theme, colors, status }) => ({
+const Chip = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'colors' && prop !== 'status',
+})<{ colors: CustomColors; status: TeamStatus }>(({ theme, colors, status }) => ({
   fontFamily: 'Inter, sans-serif',
   display: 'flex',
   alignItems: 'center',

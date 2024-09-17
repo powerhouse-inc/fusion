@@ -358,7 +358,9 @@ const ProfileStyled = styled(Profile)<{ type: ResourceType; textDefault: boolean
   })
 );
 
-const ContainerCategories = styled('div')<{ customStyles?: CustomStyles }>(({ theme, customStyles }) => ({
+const ContainerCategories = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'customStyles',
+})<{ customStyles?: CustomStyles }>(({ theme, customStyles }) => ({
   display: 'flex',
   gap: 4,
   [theme.breakpoints.up('desktop_1024')]: {

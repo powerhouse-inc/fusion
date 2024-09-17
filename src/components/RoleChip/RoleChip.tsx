@@ -28,7 +28,9 @@ const RoleChip: React.FC<ScopeChipProps> = ({ status, className, hasDefaultColor
 };
 
 export default RoleChip;
-const Chip = styled('div')<{
+const Chip = styled('div', {
+  shouldForwardProp: (prop) => !['colors', 'status', 'hasDefaultColors'].includes(prop as string),
+})<{
   colors: RoleColors;
   status: TeamRole;
   hasDefaultColors?: boolean;
@@ -51,7 +53,9 @@ const Chip = styled('div')<{
   }),
 }));
 
-const Status = styled('div')<{ hasDefaultColors?: boolean }>(({ theme, hasDefaultColors }) => ({
+const Status = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'hasDefaultColors',
+})<{ hasDefaultColors?: boolean }>(({ theme, hasDefaultColors }) => ({
   fontSize: 12,
   fontWeight: 600,
   lineHeight: '22px',
