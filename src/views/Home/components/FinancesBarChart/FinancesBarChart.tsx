@@ -22,7 +22,7 @@ const FinancesBarChart: FC<FinancesBarChartProps> = ({ revenueAndSpendingData })
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
 
-  const { chartSeries, makerLineData } = useMemo(() => {
+  const { chartSeries } = useMemo(() => {
     const series: Record<string, number[]> = {
       psm: [],
       liquidationIncome: [],
@@ -31,31 +31,22 @@ const FinancesBarChart: FC<FinancesBarChartProps> = ({ revenueAndSpendingData })
       daiSpent: [],
     };
 
-    const makerLineData = [] as { coord: [number, number] }[][];
-
     const years = Object.keys(revenueAndSpendingData)
       // limit the years to 2021-2024 as there's no UI space for more years
       .filter((year) => Number(year) >= 2021 && Number(year) <= 2024)
       .sort((a, b) => Number(a) - Number(b));
 
-    years.forEach((year, index) => {
+    years.forEach((year) => {
       const record = revenueAndSpendingData[year];
-
       series.psm.push(record.psm);
       series.liquidationIncome.push(record.liquidationIncome);
       series.fees.push(record.fees);
       series.mkrVesting.push(record.mkrVesting);
       series.daiSpent.push(record.daiSpent);
-
-      makerLineData.push([
-        { coord: [index === years.length - 1 ? index - 1 : index, revenueAndSpendingData[year].annualProfit] },
-        { coord: [index === years.length - 1 ? index : index + 1, revenueAndSpendingData[year].annualProfit] },
-      ]);
     });
 
     return {
       chartSeries: series,
-      makerLineData,
     };
   }, [revenueAndSpendingData]);
 
@@ -76,18 +67,6 @@ const FinancesBarChart: FC<FinancesBarChartProps> = ({ revenueAndSpendingData })
         itemStyle: {
           color: 'inherit',
         },
-      },
-      markLine: {
-        silent: true,
-        lineStyle: {
-          margin: [0 - 8, 0, -8],
-          width: 2,
-          color: theme.palette.colors.blue[900],
-          type: 'dashed',
-          cap: 'round',
-        },
-        symbol: ['none', 'none'],
-        data: makerLineData,
       },
     },
     {
@@ -268,16 +247,13 @@ const Container = styled('div')(({ theme }) => ({
     width: 385,
     height: 253,
   },
-
   [theme.breakpoints.up('desktop_1024')]: {
     width: 526,
   },
-
   [theme.breakpoints.up('desktop_1280')]: {
     width: 449,
     height: 360,
   },
-
   [theme.breakpoints.up('desktop_1440')]: {
     width: 480,
   },
