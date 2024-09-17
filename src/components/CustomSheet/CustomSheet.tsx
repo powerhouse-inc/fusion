@@ -36,26 +36,24 @@ const CustomSheet: React.FC<CustomSheetProps> = ({
 
 export default CustomSheet;
 
-const SheetWrapper = styled(Sheet, { shouldForwardProp: (prop) => prop !== 'isOpen' })<{ isOpen: boolean }>(
-  ({ theme, isOpen }) => ({
-    backgroundColor: isOpen ? 'rgba(37, 42, 52, 0.10)' : 'none',
-    backdropFilter: isOpen ? 'blur(2.5px)' : 'none',
+const SheetWrapper = styled(Sheet)<{ isOpen: boolean }>(({ theme, isOpen }) => ({
+  backgroundColor: isOpen ? 'rgba(37, 42, 52, 0.10)' : 'none',
+  backdropFilter: isOpen ? 'blur(2.5px)' : 'none',
 
-    '& .react-modal-sheet-header': {
-      alignItems: 'flex-start !important',
-      marginTop: 4,
-      height: '10px !important',
-      marginBottom: 18,
-    },
+  '& .react-modal-sheet-header': {
+    alignItems: 'flex-start !important',
+    marginTop: 4,
+    height: '10px !important',
+    marginBottom: 18,
+  },
 
-    '& .react-modal-sheet-drag-indicator': {
-      backgroundColor: `${
-        theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[800]
-      } !important`,
-      width: '20px !important',
-    },
-  })
-);
+  '& .react-modal-sheet-drag-indicator': {
+    backgroundColor: `${
+      theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[800]
+    } !important`,
+    width: '20px !important',
+  },
+}));
 
 const SheetContainer = styled(Sheet.Container)(({ theme }) => ({
   borderTopRightRadius: '12px !important',
