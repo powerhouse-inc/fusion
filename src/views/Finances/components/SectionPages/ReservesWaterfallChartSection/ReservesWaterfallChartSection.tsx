@@ -101,11 +101,11 @@ const Section = styled(Card)(({ theme }) => ({
     gap: 24,
   },
   [theme.breakpoints.up('desktop_1024')]: {
-    padding: '16px 58px 24px ',
+    padding: '16px 24px 24px ',
   },
   [theme.breakpoints.up('desktop_1280')]: {
     marginTop: 32,
-    padding: '16px 71px 24px ',
+    padding: '16px 24px 24px ',
   },
   [theme.breakpoints.up('desktop_1440')]: {
     padding: '16px 24px 24px ',
