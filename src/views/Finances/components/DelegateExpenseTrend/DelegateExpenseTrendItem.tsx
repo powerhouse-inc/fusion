@@ -563,7 +563,7 @@ const ViewContainer = styled('div')(({ theme }) => ({
     display: 'block',
     alignSelf: 'center',
     height: 'fit-content',
-    '& > a': {
+    '& > div': {
       padding: '4px 16px 4px 24px',
     },
   },
@@ -597,7 +597,7 @@ const ContainerArrow = styled('div')(({ theme }) => ({
 
   [theme.breakpoints.between('tablet_768', 'desktop_1024')]: {
     display: 'block',
-    '& > a': {
+    '& > div': {
       padding: '4px 16px',
       '&:hover': {
         padding: '4px 16px',
@@ -609,7 +609,7 @@ const ContainerArrow = styled('div')(({ theme }) => ({
 const ArrowMobile = styled('div')(({ theme }) => ({
   display: 'flex',
   alignSelf: 'flex-start',
-  '& > a': {
+  '& > div': {
     padding: '4px 8px',
     '&:hover': {
       padding: '4px 8px',
