@@ -1,6 +1,5 @@
 import { styled } from '@mui/material';
 import React from 'react';
-import SimpleBar from 'simplebar-react';
 import Card from '@/components/Card/Card';
 import type { FancyTabItem } from '@/components/FancyTabs/FancyTabs';
 import FancyTabs from '@/components/FancyTabs/FancyTabs';
@@ -42,20 +41,18 @@ const ContributorsListSections: FC<Props> = ({
         <ContributorInformation>
           <Title>{subTitle}</Title>
           <ContainerScroll>
-            <SimpleBarStyled>
-              <ContainerContributors>
-                {teams.map((team) => (
-                  <ContributorsItem
-                    key={team.id}
-                    contributor={team}
-                    textDefault={textDefault}
-                    hasDefaultColors={hasDefaultColors}
-                    customStyles={customStyles}
-                    sizeScope={sizeScope}
-                  />
-                ))}
-              </ContainerContributors>
-            </SimpleBarStyled>
+            <ContainerContributors>
+              {teams.map((team) => (
+                <ContributorsItem
+                  key={team.id}
+                  contributor={team}
+                  textDefault={textDefault}
+                  hasDefaultColors={hasDefaultColors}
+                  customStyles={customStyles}
+                  sizeScope={sizeScope}
+                />
+              ))}
+            </ContainerContributors>
           </ContainerScroll>
         </ContributorInformation>
       </ShadowWrapper>
@@ -101,33 +98,24 @@ const Title = styled('div')(({ theme }) => ({
   },
 }));
 
-const ContainerContributors = styled('div')({
+const ContainerContributors = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
   padding: 8,
   flex: 1,
-});
-const SimpleBarStyled = styled(SimpleBar)(({ theme }) => ({
-  height: '100%',
-  width: '100%',
-
-  '.simplebar-scrollbar::before': {
-    width: 4,
-    marginLeft: 4,
-    height: 128,
-    background: theme.palette.isLight ? theme.palette.colors.charcoal[500] : theme.palette.colors.charcoal[700],
-    borderRadius: 12,
-  },
-
   [theme.breakpoints.up('tablet_768')]: {
-    height: 480,
+    gap: 12,
   },
   [theme.breakpoints.up('desktop_1024')]: {
-    height: 540,
+    gap: 8,
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    padding: '6px 8px 8px',
   },
   [theme.breakpoints.up('desktop_1440')]: {
-    height: 550,
+    padding: '6px 8px 8px',
+    gap: 7,
   },
 }));
 

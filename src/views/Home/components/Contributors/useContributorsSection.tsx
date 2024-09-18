@@ -136,7 +136,10 @@ export const useContributorsSection = (teams: Team[]) => {
         justifyContent: 'end',
       },
       [theme.breakpoints.up('desktop_1440')]: {
-        width: 138,
+        minWidth: 138,
+        '& > div': {
+          padding: '0px 16px',
+        },
       },
     },
   };

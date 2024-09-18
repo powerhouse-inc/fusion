@@ -77,9 +77,6 @@ const ContainerAvatarDescription = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('desktop_1280')]: {
     gap: 6,
   },
-  [theme.breakpoints.up('desktop_1440')]: {
-    marginTop: 4,
-  },
 }));
 
 const Name = styled('div')(({ theme }) => ({
