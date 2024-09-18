@@ -208,7 +208,12 @@ export const useExpenseMetrics = (year: string) => {
       label: 'Cumulative',
       cumulativeType,
       isCumulative,
-      onChange: () => null,
+      onChange: () => {
+        setIsCumulative(!isCumulative);
+        handleCurrentSectionStateUpdate({
+          cumulative: (!isCumulative).toString(),
+        });
+      },
       handleChangeCumulativeType,
       handleToggleCumulative,
       selected: isCumulative,
