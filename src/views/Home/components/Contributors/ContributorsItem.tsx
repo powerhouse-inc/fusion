@@ -216,10 +216,10 @@ const ContainerData = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  padding: '8px 8px 0px 8px',
-  gap: 6,
+  padding: '8px 6px 0px 8px',
+  gap: 8,
   [theme.breakpoints.up('tablet_768')]: {
-    gap: 6,
+    gap: 8,
   },
   [theme.breakpoints.up('desktop_1024')]: {
     flexDirection: 'row',
@@ -248,7 +248,7 @@ const Container = styled(Card)<{ customStyles?: CustomStyles }>(({ theme, custom
   },
   [theme.breakpoints.up('desktop_1440')]: {
     flexDirection: 'row',
-    padding: '12px 16px',
+    padding: '13px 16px',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
@@ -332,7 +332,8 @@ const ContainerScopeRoleMobile = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
-  marginBottom: 7,
+  marginBottom: 6,
+  marginTop: -2,
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'none',
   },
