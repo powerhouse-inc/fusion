@@ -2,16 +2,16 @@ import { styled } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import CookiesPolicyBanner from '@/components/CookiesPolicyBanner/CookiesPolicyBanner';
+import { siteRoutes } from '@/config/routes';
 import { zIndexEnum } from '../enums/zIndexEnum';
 import { useScrollLock } from '../hooks/useScrollLock';
-import { getPageWrapper } from '../utils/dom';
 import { useCookiesContextTracking } from './CookiesContext';
 import { useThemeContext } from './ThemeContext';
 import type { FC, ReactNode } from 'react';
 
 const MainWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   const { themeMode } = useThemeContext();
-  const { unlockScroll } = useScrollLock();
+  const { lockScroll, unlockScroll } = useScrollLock();
   const router = useRouter();
 
   const {
@@ -25,21 +25,20 @@ const MainWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   } = useCookiesContextTracking();
 
   useEffect(() => {
-    if (isShowBanner && router.pathname !== '/cookies-policy') {
-      const pageWrapper = getPageWrapper();
-      if (pageWrapper) {
-        pageWrapper.style.overflow = 'hidden';
-      }
+    if (isShowBanner && !router.pathname.startsWith(siteRoutes.cookiesPolicy)) {
+      lockScroll();
     }
     return () => {
       unlockScroll();
     };
-  }, [isShowBanner, router.pathname, unlockScroll]);
+  }, [isShowBanner, router.pathname, lockScroll, unlockScroll]);
 
   return (
     <>
       {children}
-      {isShowBanner && themeMode !== undefined && router.pathname !== '/cookies-policy' && <OverlayContainer />}
+      {isShowBanner && themeMode !== undefined && !router.pathname.startsWith(siteRoutes.cookiesPolicy) && (
+        <OverlayContainer />
+      )}
       {isShowBanner && themeMode !== undefined && (
         <PolicyBannerPosition>
           <CookiesPolicyBanner
