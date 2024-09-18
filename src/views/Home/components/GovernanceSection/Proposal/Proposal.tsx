@@ -99,6 +99,7 @@ const DescriptionContainer = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('tablet_768')]: {
     border: 'unset',
     background: 'unset',
+    width: '100%',
   },
 
   [theme.breakpoints.up('desktop_1280')]: {

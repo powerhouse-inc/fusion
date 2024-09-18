@@ -41,7 +41,7 @@ const NameContainer = styled.div({
 
 const GroupContainer = styled.div({
   [lightTheme.breakpoints.down('tablet_768')]: {
-    '&:first-child > div:first-child': {
+    '&:first-of-type > div:first-of-type': {
       marginTop: 40,
     },
   },

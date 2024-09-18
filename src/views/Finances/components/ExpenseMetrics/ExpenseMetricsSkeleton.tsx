@@ -20,8 +20,8 @@ const MakerDAOExpenseMetricsSkeleton: FC = () => {
             <path
               d="M7.99952 194L61.9995 200.5L116 179.5L170 183.125L224 174L278 158L332 183.125L386 175L440 183L494 177L548 165.5L602 139"
               stroke={stroke}
-              stroke-width="2"
-              stroke-linecap="round"
+              strokeWidth="2"
+              strokeLinecap="round"
             />
             <circle cx="8" cy="194" r="4.5" fill={fill} stroke={stroke} />
             <circle cx="62" cy="200" r="4.5" fill={fill} stroke={stroke} />
@@ -38,8 +38,8 @@ const MakerDAOExpenseMetricsSkeleton: FC = () => {
             <path
               d="M7.99953 154L61.9995 170.5L116 119.5L170 133.125L224 93.9998L278 128L332 113.125L386 94.9998L440 133L494 147L548 145.5L602 79"
               stroke={stroke}
-              stroke-width="2"
-              stroke-linecap="round"
+              strokeWidth="2"
+              strokeLinecap="round"
             />
             <circle cx="8" cy="153" r="4.5" fill={fill} stroke={stroke} />
             <circle cx="62" cy="170" r="4.5" fill={fill} stroke={stroke} />
@@ -56,8 +56,8 @@ const MakerDAOExpenseMetricsSkeleton: FC = () => {
             <path
               d="M7.99953 174L61.9995 140.5L116 99.4999L170 93.1249L224 54L278 57.9999L332 93.1249L386 75L440 153L494 107L548 85.5L602 59.0001"
               stroke={stroke}
-              stroke-width="2"
-              stroke-linecap="round"
+              strokeWidth="2"
+              strokeLinecap="round"
             />
             <circle cx="8" cy="174" r="4.5" fill={fill} stroke={stroke} />
             <circle cx="62" cy="140" r="4.5" fill={fill} stroke={stroke} />
@@ -74,8 +74,8 @@ const MakerDAOExpenseMetricsSkeleton: FC = () => {
             <path
               d="M7.99952 63.9996L61.9995 70.4998L116 49.4997L170 53.1248L224 43.9998L278 27.9998L332 53.1248L386 44.9998L440 52.9998L494 46.9998L548 35.4998L602 8.99998"
               stroke={stroke}
-              stroke-width="2"
-              stroke-linecap="round"
+              strokeWidth="2"
+              strokeLinecap="round"
             />
             <circle cx="8" cy="64" r="4.5" fill={fill} stroke={stroke} />
             <circle cx="62" cy="70" r="4.5" fill={fill} stroke={stroke} />
@@ -92,8 +92,8 @@ const MakerDAOExpenseMetricsSkeleton: FC = () => {
             <path
               d="M8.00378 286.5L62.0038 276L116.004 280.5L170.004 272L224.004 253.5L278.004 264L332.004 255L386.004 249L440.004 228.5L494.004 240L548.004 231L602.004 235.5"
               stroke={stroke}
-              stroke-width="2"
-              stroke-linecap="round"
+              strokeWidth="2"
+              strokeLinecap="round"
             />
             <circle cx="170" cy="272" r="4.5" fill={fill} stroke={stroke} />
             <circle cx="224" cy="253" r="4.5" fill={fill} stroke={stroke} />
@@ -113,8 +113,8 @@ const MakerDAOExpenseMetricsSkeleton: FC = () => {
             <path
               d="M7.99952 194L59.9995 200.5L118 179.5L176 183.125L234 174L292 158L350 183.125L408 175L466 183L524 177L582 165.5L640 139"
               stroke={stroke}
-              stroke-width="2"
-              stroke-linecap="round"
+              strokeWidth="2"
+              strokeLinecap="round"
             />
             <circle cx="8" cy="194" r="4.5" fill={fill} stroke={stroke} />
             <circle cx="60" cy="200" r="4.5" fill={fill} stroke={stroke} />
@@ -131,8 +131,8 @@ const MakerDAOExpenseMetricsSkeleton: FC = () => {
             <path
               d="M7.99953 154L59.9995 170.5L118 119.5L176 133.125L234 93.9998L292 128L350 113.125L408 94.9998L466 133L524 147L582 145.5L640 79"
               stroke={stroke}
-              stroke-width="2"
-              stroke-linecap="round"
+              strokeWidth="2"
+              strokeLinecap="round"
             />
             <circle cx="8" cy="153" r="4.5" fill={fill} stroke={stroke} />
             <circle cx="60" cy="170" r="4.5" fill={fill} stroke={stroke} />
@@ -149,8 +149,8 @@ const MakerDAOExpenseMetricsSkeleton: FC = () => {
             <path
               d="M7.99953 174L59.9995 140.5L118 99.4999L176 93.1249L234 54L292 57.9999L350 93.1249L408 75L466 153L524 107L582 85.5L640 59.0001"
               stroke={stroke}
-              stroke-width="2"
-              stroke-linecap="round"
+              strokeWidth="2"
+              strokeLinecap="round"
             />
             <circle cx="8" cy="174" r="4.5" fill={fill} stroke={stroke} />
             <circle cx="60" cy="140" r="4.5" fill={fill} stroke={stroke} />
@@ -167,8 +167,8 @@ const MakerDAOExpenseMetricsSkeleton: FC = () => {
             <path
               d="M7.99952 63.9996L59.9995 70.4998L118 49.4997L176 53.1248L234 43.9998L292 27.9998L350 53.1248L408 44.9998L466 52.9998L524 46.9998L582 35.4998L640 8.99997"
               stroke={stroke}
-              stroke-width="2"
-              stroke-linecap="round"
+              strokeWidth="2"
+              strokeLinecap="round"
             />
             <circle cx="8" cy="64" r="4.5" fill={fill} stroke={stroke} />
             <circle cx="60" cy="70" r="4.5" fill={fill} stroke={stroke} />
@@ -185,8 +185,8 @@ const MakerDAOExpenseMetricsSkeleton: FC = () => {
             <path
               d="M8.00385 286.5L60.0038 276L118.004 280.5L176.004 272L234.004 253.5L292.004 264L350.004 255L408.004 249L466.004 228.5L524.004 240L582.004 231L640.004 235.5"
               stroke={stroke}
-              stroke-width="2"
-              stroke-linecap="round"
+              strokeWidth="2"
+              strokeLinecap="round"
             />
             <circle cx="176" cy="272" r="4.5" fill={fill} stroke={stroke} />
             <circle cx="234" cy="253" r="4.5" fill={fill} stroke={stroke} />

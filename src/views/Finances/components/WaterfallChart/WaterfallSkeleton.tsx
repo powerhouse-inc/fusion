@@ -108,8 +108,8 @@ const WaterfallSkeleton = () => {
         ) : (
           <ContainerAxisXDesk>
             <LegendAxis monthWith={40} yearWidth={32} />
-            {arrayLegendAxisX.map(() => (
-              <LegendAxis monthWith={isTablet ? 32 : isDesk1024 ? 34 : 32} yearWidth={40} />
+            {arrayLegendAxisX.map((_, index) => (
+              <LegendAxis monthWith={isTablet ? 32 : isDesk1024 ? 34 : 32} yearWidth={40} key={index} />
             ))}
             <LegendAxis monthWith={40} yearWidth={32} />
           </ContainerAxisXDesk>

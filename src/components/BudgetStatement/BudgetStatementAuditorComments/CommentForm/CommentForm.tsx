@@ -60,6 +60,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ currentBudgetStatus, budgetSt
       </CommentHeader>
       <FormContainer>
         <TextArea
+          name="comment"
           placeholder={`${isCommenting ? '' : '(Optional)'} Add comment here...`}
           value={textareaValue}
           onChange={handleChangeTextarea}
