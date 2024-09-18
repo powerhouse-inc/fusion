@@ -52,7 +52,7 @@ const linkCategory: LinkCategory[] = [
       },
       {
         label: 'Sky Technical Documentation',
-        link: 'https://docs.sky.money/',
+        link: 'https://developers.sky.money/',
       },
       {
         label: 'Brand Assets',
