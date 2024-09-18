@@ -35,7 +35,9 @@ export const CircleAvatar: React.FC<CircleAvatarProps> = ({
   );
 };
 
-const Container = styled('div')<{
+const Container = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'name' && prop !== 'backgroundImage',
+})<{
   name: string;
   backgroundImage?: string;
 }>(({ theme, backgroundImage, name }) => ({

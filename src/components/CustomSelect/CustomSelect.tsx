@@ -105,7 +105,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 export default CustomSelect;
 
 const StyledFormControl = styled(FormControl, {
-  shouldForwardProp: (prop) => prop !== 'maxWidth',
+  shouldForwardProp: (prop) => !['maxWidth', 'fullWidth', 'width'].includes(prop as string),
 })<{
   fullWidth: boolean;
   width: CSSProperties['width'];

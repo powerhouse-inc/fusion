@@ -44,7 +44,9 @@ const Tab: React.FC<TabProps> = ({ children, id, href, tabQuery, active = false,
 
 export default Tab;
 
-const StyledTab = styled('a')<{ active: boolean }>(({ theme, active }) => ({
+const StyledTab = styled('a', {
+  shouldForwardProp: (prop) => prop !== 'active',
+})<{ active: boolean }>(({ theme, active }) => ({
   fontFamily: 'Inter, sans-serif',
   color: theme.palette.isLight
     ? active
