@@ -1,5 +1,6 @@
 import { IconButton, styled } from '@mui/material';
 import ArrowUpIcon from 'public/assets/svg/fusion_arrow_up.svg';
+import { zIndexEnum } from '@/core/enums/zIndexEnum';
 import useHomeButton from './useHomeButton';
 import type { FC } from 'react';
 
@@ -36,7 +37,7 @@ const Container = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
   opacity: 0.5,
   cursor: 'pointer',
-  zIndex: 100,
+  zIndex: zIndexEnum.HOME_BUTTON,
 
   '&:hover': { opacity: 1 },
 

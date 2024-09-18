@@ -10,7 +10,6 @@ const CookiesPolicyView: FC = () => {
   const { isShowBanner, setIsShowBanner } = useCookiesContextTracking();
 
   const handlePolicyBanner = useCallback(() => {
-    window.scrollTo(0, 0);
     setIsShowBanner(!isShowBanner);
   }, [isShowBanner, setIsShowBanner]);
 
@@ -60,9 +59,11 @@ const CookiesPolicyView: FC = () => {
               configure to accept cookies constitutes an acceptance of our and third-party cookies.
             </StyledParagraph>
           </TextContainer>
-          <ButtonContainer>
-            <SkyButton title="Configure my settings" onClick={handlePolicyBanner} />
-          </ButtonContainer>
+          {!isShowBanner && (
+            <ButtonContainer>
+              <SkyButton title="Configure my settings" onClick={handlePolicyBanner} />
+            </ButtonContainer>
+          )}
         </div>
       </DataContainer>
     </Container>

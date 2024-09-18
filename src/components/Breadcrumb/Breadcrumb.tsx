@@ -3,6 +3,7 @@ import Link from 'next/link';
 import AngleRight from 'public/assets/svg/angle_right.svg';
 import { useEffect, useId, useMemo, useState } from 'react';
 import Container from '@/components/Container/Container';
+import { zIndexEnum } from '@/core/enums/zIndexEnum';
 import DotsSegment from './DotsSegment';
 
 export interface BreadcrumbItem {
@@ -191,7 +192,7 @@ const Wrapper = styled('div')(({ theme }) => ({
   width: '100%',
   position: 'fixed',
   top: 64,
-  zIndex: 1000,
+  zIndex: zIndexEnum.BREADCRUMB,
   background: theme.palette.isLight ? theme.palette.colors.gray[50] : '#1B1E24',
 
   [theme.breakpoints.up('tablet_768')]: {
