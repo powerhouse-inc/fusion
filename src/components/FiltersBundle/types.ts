@@ -49,6 +49,7 @@ export interface SelectFilter extends GenericFilter {
     width?: CSSProperties['width'];
     menuWidth?: number; // value in px
     maxWidth?: number; // value in px
+    height?: CSSProperties['height']; // value in px
   };
   // Height of the items default should be 32px for container of options
   itemOptionStyles?: {
