@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
+import { FinancesSectionId } from '@/views/Finances/types';
 import type { ParsedUrlQuery } from 'querystring';
 
 export interface DecodedUrlState {
@@ -16,16 +17,27 @@ export const buildInMemoryUrlState = (query: ParsedUrlQuery): DecodedUrlState =>
       ? query[ENABLED_SECTIONS_KEY].split(',')
       : query[ENABLED_SECTIONS_KEY] ?? [];
 
+  if (
+    (query.metric !== undefined || query.granularity !== undefined) &&
+    !availableKeys.includes(FinancesSectionId.BREAKDOWN_CHART) // breakdown chart special case
+  ) {
+    availableKeys.push(FinancesSectionId.BREAKDOWN_CHART);
+  }
+
   const state: DecodedUrlState = {};
 
   availableKeys.forEach((sectionKey) => {
     state[sectionKey] = {};
 
     Object.keys(query).forEach((queryKey) => {
+      if (queryKey === 'metric' || queryKey === 'granularity') {
+        // breakdown chart special case
+        queryKey += FinancesSectionId.BREAKDOWN_CHART;
+      }
       // all the params of each section have the "section key" appended to end of its name to prevent collisions
       if (queryKey.endsWith(sectionKey)) {
         const paramKey = queryKey.replace(sectionKey, '');
-        const value = query[queryKey];
+        const value = sectionKey === FinancesSectionId.BREAKDOWN_CHART ? query[paramKey] : query[queryKey];
         state[sectionKey][paramKey] = typeof value === 'string' ? value.split(',') : value;
       }
     });
@@ -61,11 +73,17 @@ const useRestorationFromUrlState = (
     (state: DecodedUrlState) => {
       const availableKeys = Object.keys(state);
 
+      const availableKeysFiltered = availableKeys.filter((key) => key !== FinancesSectionId.BREAKDOWN_CHART);
+
       const queries: ParsedUrlQuery = {};
 
       availableKeys.forEach((sectionKey) => {
         Object.keys(state[sectionKey]).forEach((paramKey) => {
-          queries[`${paramKey}${sectionKey}`] = state[sectionKey][paramKey];
+          if (sectionKey === FinancesSectionId.BREAKDOWN_CHART) {
+            queries[paramKey] = state[sectionKey][paramKey];
+          } else {
+            queries[`${paramKey}${sectionKey}`] = state[sectionKey][paramKey];
+          }
         });
       });
 
@@ -74,7 +92,7 @@ const useRestorationFromUrlState = (
           {
             query: {
               ...router.query,
-              [ENABLED_SECTIONS_KEY]: availableKeys,
+              [ENABLED_SECTIONS_KEY]: availableKeysFiltered,
               ...queries,
             },
           },
