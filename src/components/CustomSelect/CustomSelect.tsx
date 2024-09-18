@@ -31,7 +31,10 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
     withAll,
     onChange,
   });
-  const combinedMenuProps = deepmerge(StyledMenuProps(theme, style?.menuWidth || 200), menuProps);
+  const combinedMenuProps = deepmerge(
+    StyledMenuProps(theme, style?.menuWidth || 200, style?.height || 'fit-content'),
+    menuProps
+  );
 
   return (
     <StyledFormControl
@@ -199,9 +202,10 @@ const CheckIcon = styled(Check)(() => ({
   height: 16,
 }));
 
-const StyledMenuProps = (theme: Theme, width: number) => ({
+const StyledMenuProps = (theme: Theme, width: number, height: string | number) => ({
   PaperProps: {
     sx: {
+      height,
       width: `${width}px`,
       color: '#000',
       backgroundImage: 'none',

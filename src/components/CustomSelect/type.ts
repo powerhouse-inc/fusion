@@ -24,6 +24,7 @@ export interface CustomSelectProps {
     width?: CSSProperties['width']; // value in px
     menuWidth?: number; // value in px
     maxWidth?: number; // value in px
+    height?: CSSProperties['height']; // value in px
   };
   notShowDescription?: boolean;
   className?: string;

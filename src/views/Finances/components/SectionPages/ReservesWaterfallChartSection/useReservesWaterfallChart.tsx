@@ -230,6 +230,7 @@ export const useReservesWaterfallChart = (codePath: string, budgets: Budget[], a
       widthStyles: {
         width: 'fit-content',
         menuWidth: 350,
+        height: items.length > 6 ? 300 : undefined,
       },
     },
   ];

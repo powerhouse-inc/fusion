@@ -87,7 +87,7 @@ const LinkWrapper = styled.div<{ hasItemsToCount?: boolean; hasManyItems?: boole
   ({ hasItemsToCount = true, hasManyItems = false }) => ({
     display: 'flex',
     alignItems: 'center',
-    '&:first-child .crumb': {
+    '&:first-of-type .crumb': {
       maxWidth: hasItemsToCount ? 180 : 120,
       marginLeft: 0,
     },
