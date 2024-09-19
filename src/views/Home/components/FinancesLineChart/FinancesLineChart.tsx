@@ -451,7 +451,9 @@ const LegendItem = styled('div')(({ theme }) => ({
   },
 }));
 
-const Dot = styled('div')<{ color: string }>(({ theme, color }) => ({
+const Dot = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'color',
+})<{ color: string }>(({ theme, color }) => ({
   width: 8,
   height: 8,
   borderRadius: '50%',
