@@ -1,4 +1,5 @@
 import { styled } from '@mui/material';
+import Link from 'next/link';
 import CheckBox from '@/components/CheckBox/CheckBox';
 import SecondaryButton from '@/components/SecondaryButton/SecondaryButton';
 import SkyButton from '@/components/SkyButton/SkyButton';
@@ -134,12 +135,13 @@ const LineBreak = styled('span')(({ theme }) => ({
   },
 }));
 
-const CookiesPolicyLink = styled('a')(({ theme }) => ({
+const CookiesPolicyLink = styled(Link)(({ theme }) => ({
   fontFamily: 'Inter, sans-serif',
   fontWeight: 600,
   fontSize: 14,
   lineHeight: '22px',
   color: theme.palette.colors.sky[1000],
+  textDecoration: 'none',
 
   [theme.breakpoints.up('desktop_1024')]: {
     fontSize: 16,

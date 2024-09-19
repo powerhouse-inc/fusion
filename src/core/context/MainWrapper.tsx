@@ -1,9 +1,10 @@
 import { styled } from '@mui/material';
-import { useLayoutEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import CookiesPolicyBanner from '@/components/CookiesPolicyBanner/CookiesPolicyBanner';
+import { siteRoutes } from '@/config/routes';
 import { zIndexEnum } from '../enums/zIndexEnum';
 import { useScrollLock } from '../hooks/useScrollLock';
-import { getPageWrapper } from '../utils/dom';
 import { useCookiesContextTracking } from './CookiesContext';
 import { useThemeContext } from './ThemeContext';
 import type { FC, ReactNode } from 'react';
@@ -11,6 +12,7 @@ import type { FC, ReactNode } from 'react';
 const MainWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   const { themeMode } = useThemeContext();
   const { lockScroll, unlockScroll } = useScrollLock();
+  const router = useRouter();
 
   const {
     isShowBanner,
@@ -22,26 +24,21 @@ const MainWrapper: FC<{ children: ReactNode }> = ({ children }) => {
     setFunctionalCheckbox,
   } = useCookiesContextTracking();
 
-  useLayoutEffect(() => {
-    if (isShowBanner) {
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-        const pageWrapper = getPageWrapper();
-        if (pageWrapper) {
-          pageWrapper.style.overflow = 'hidden';
-        }
-      }, 100);
+  useEffect(() => {
+    if (isShowBanner && !router.pathname.startsWith(siteRoutes.cookiesPolicy)) {
       lockScroll();
     }
     return () => {
       unlockScroll();
     };
-  }, [isShowBanner, lockScroll, unlockScroll]);
+  }, [isShowBanner, router.pathname, lockScroll, unlockScroll]);
 
   return (
     <>
       {children}
-      {isShowBanner && themeMode !== undefined && <OverlayContainer />}
+      {isShowBanner && themeMode !== undefined && !router.pathname.startsWith(siteRoutes.cookiesPolicy) && (
+        <OverlayContainer />
+      )}
       {isShowBanner && themeMode !== undefined && (
         <PolicyBannerPosition>
           <CookiesPolicyBanner
@@ -67,7 +64,7 @@ const OverlayContainer = styled('div')(() => ({
   height: '100%',
   background: 'rgba(37, 42, 52, 0.10)',
   backdropFilter: 'blur(2.5px)',
-  zIndex: zIndexEnum.HEADER_PAGE + 1,
+  zIndex: zIndexEnum.MAIN_OVERLAY,
 }));
 
 const PolicyBannerPosition = styled('div')(() => ({
@@ -76,5 +73,5 @@ const PolicyBannerPosition = styled('div')(() => ({
   width: '100%',
   borderRadius: '6px 6px 0px 0px',
   transition: 'all 0.5s ease-in',
-  zIndex: zIndexEnum.HEADER_PAGE + 2,
+  zIndex: zIndexEnum.COOKIE_POLICY_BANNER,
 }));
