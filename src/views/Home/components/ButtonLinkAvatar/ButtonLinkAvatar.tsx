@@ -97,7 +97,7 @@ const Title = styled('div')(({ theme }) => ({
     textOverflow: 'ellipsis',
   },
   [theme.breakpoints.up('desktop_1280')]: {
-    maxWidth: '100%',
+    maxWidth: 130,
   },
 }));
 

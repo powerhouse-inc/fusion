@@ -144,6 +144,13 @@ export const useContributorsSection = (teams: Team[]) => {
     },
   };
 
+  // Contributors Home Page
+  const subtitleContributors = `These are the  ${
+    activeCategoryTab === '1' ? 'Current' : 'Legacy'
+  } Contributors in the Sky Ecosystem.`;
+
+  const EAContributors = ecosystemActors.slice(0, 6);
+
   return {
     hasDefaultColors,
     teamCategoriesTabs,
@@ -160,5 +167,7 @@ export const useContributorsSection = (teams: Team[]) => {
     customStyles,
     sizeScopeMediumSmall,
     sizeScopeLargeSmall,
+    subtitleContributors,
+    EAContributors,
   };
 };
