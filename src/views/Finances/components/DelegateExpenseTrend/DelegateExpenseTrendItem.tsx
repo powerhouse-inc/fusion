@@ -205,7 +205,9 @@ const ExtendedGenericDelegate = styled(GenericDelegateCard)(({ theme }) => ({
   },
 }));
 
-const CircleAvatarWithIconStyled = styled(CircleAvatarWithIcon)<{ isCoreUnit: boolean }>(({ isCoreUnit, theme }) => ({
+const CircleAvatarWithIconStyled = styled(CircleAvatarWithIcon, {
+  shouldForwardProp: (prop) => prop !== 'isCoreUnit',
+})<{ isCoreUnit: boolean }>(({ isCoreUnit, theme }) => ({
   width: 39,
   height: 38,
   minWidth: 39,

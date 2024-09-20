@@ -26,7 +26,7 @@ const filter = {
     start: '2021-01-01',
     end: '2025-01-01',
     granularity: 'quarterly',
-    metrics: ['Actuals', 'PaymentsOnChain', 'ProtocolNetOutflow', 'PaymentsOffChainIncluded', 'Forecast'],
+    metrics: ['Actuals', 'PaymentsOnChain', 'ProtocolNetOutflow', 'Forecast'],
     dimensions: [
       {
         name: 'budget',
@@ -39,7 +39,7 @@ const filter = {
 };
 
 export type MetricKey = 'Actuals' | 'PaymentsOnChain' | 'Forecast' | 'OperationalReserves';
-export type MetricKeyExtended = MetricKey | 'ProtocolNetOutflow' | 'PaymentsOffChainIncluded';
+export type MetricKeyExtended = MetricKey | 'ProtocolNetOutflow' | 'PaymentsOnChainSum';
 export type BudgetKey =
   | 'legacyOthers'
   | 'legacyCoreUnits'
@@ -83,7 +83,7 @@ export const getFinancesData = async (): Promise<FormattedFinancesData> => {
     PaymentsOnChain: clone(emptyData),
     Forecast: clone(emptyData),
     ProtocolNetOutflow: clone(emptyData),
-    PaymentsOffChainIncluded: clone(emptyData),
+    PaymentsOnChainSum: clone(emptyData),
     OperationalReserves: clone(emptyData),
   };
 
@@ -97,12 +97,20 @@ export const getFinancesData = async (): Promise<FormattedFinancesData> => {
         if (pathRegexMap[key as BudgetKey].test(row.dimensions[0].path)) {
           const index = (year - 2021) * 4 + quarter - 1;
 
+          if (metric === 'PaymentsOnChain') {
+            // we need to add the sum variant to prevent collisions with PaymentsOnChain that
+            // requires "value" field instead of "sum"
+            if (!data.PaymentsOnChainSum[key as BudgetKey][index]) {
+              data.PaymentsOnChainSum[key as BudgetKey][index] = row.sum ?? 0;
+            } else {
+              data.PaymentsOnChainSum[key as BudgetKey][index] += row.sum ?? 0;
+            }
+          }
+
           if (!data[metric][key as BudgetKey][index]) {
-            data[metric][key as BudgetKey][index] =
-              (metric === 'PaymentsOffChainIncluded' || metric === 'ProtocolNetOutflow' ? row.sum : row.value) ?? 0;
+            data[metric][key as BudgetKey][index] = (metric === 'ProtocolNetOutflow' ? row.sum : row.value) ?? 0;
           } else {
-            data[metric][key as BudgetKey][index] +=
-              (metric === 'PaymentsOffChainIncluded' || metric === 'ProtocolNetOutflow' ? row.sum : row.value) ?? 0;
+            data[metric][key as BudgetKey][index] += (metric === 'ProtocolNetOutflow' ? row.sum : row.value) ?? 0;
           }
         }
       });
@@ -110,11 +118,11 @@ export const getFinancesData = async (): Promise<FormattedFinancesData> => {
   });
 
   // calculate operational reserves
-  // it is ProtocolNetOutflow - PaymentsOffChainIncluded
+  // it is ProtocolNetOutflow - PaymentsOnChain
   data.OperationalReserves = clone(data.ProtocolNetOutflow);
   Object.keys(data.OperationalReserves).forEach((key) => {
     data.OperationalReserves[key as BudgetKey] = data.ProtocolNetOutflow[key as BudgetKey].map(
-      (value, index) => (value ?? 0) - (data.PaymentsOffChainIncluded[key as BudgetKey][index] ?? 0)
+      (value, index) => (value ?? 0) - (data.PaymentsOnChainSum[key as BudgetKey][index] ?? 0)
     );
   });
 

@@ -105,7 +105,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 export default CustomSelect;
 
 const StyledFormControl = styled(FormControl, {
-  shouldForwardProp: (prop) => prop !== 'maxWidth',
+  shouldForwardProp: (prop) => !['maxWidth', 'fullWidth', 'width'].includes(prop as string),
 })<{
   fullWidth: boolean;
   width: CSSProperties['width'];
@@ -245,6 +245,17 @@ const StyledMenuProps = (theme: Theme, width: number, height: string | number) =
           },
           bgcolor: `${theme.palette.isLight ? 'rgba(243, 245, 247, 0.50)' : 'rgba(37, 42, 52, 0.20)'} !important`,
         },
+      },
+      // Add this style for scroll in case fix height props are passed
+      '&::-webkit-scrollbar': {
+        width: 4,
+        marginLeft: 4,
+        borderRadius: 12,
+      },
+      '&::-webkit-scrollbar-thumb': {
+        background: theme.palette.isLight ? theme.palette.colors.charcoal[500] : theme.palette.colors.charcoal[700],
+        borderRadius: 12,
+        height: 16,
       },
     },
   },

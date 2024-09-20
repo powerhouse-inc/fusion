@@ -50,7 +50,9 @@ const Container = styled('div')({
   cursor: 'pointer',
 });
 
-const StyledLabel = styled('span')<{ isChecked: boolean }>(({ isChecked, theme }) => ({
+const StyledLabel = styled('span', {
+  shouldForwardProp: (prop) => prop !== 'isChecked',
+})<{ isChecked: boolean }>(({ isChecked, theme }) => ({
   marginLeft: 7,
   fontFamily: 'Inter, sans-serif',
   fontWeight: isChecked ? 600 : 500,

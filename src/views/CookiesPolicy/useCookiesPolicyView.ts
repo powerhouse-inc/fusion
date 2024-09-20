@@ -1,6 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { useScrollLock } from '@/core/hooks/useScrollLock';
 import { daysToExpire } from '@/core/utils/date';
 import type { CookiesInterface } from '@/core/utils/typesHelpers';
 
@@ -11,7 +10,6 @@ export const useCookiesPolicyBanner = (cookiesObject: CookiesInterface) => {
     'analyticsTracking',
     'themeModeCookie',
   ]);
-  const { unlockScroll } = useScrollLock();
 
   const isThemeTrackingAccepted = useMemo(
     () => !!cookiesObject.allowsThemeTracking,
@@ -111,8 +109,7 @@ export const useCookiesPolicyBanner = (cookiesObject: CookiesInterface) => {
     deletedFunctionalTracking();
     deletedAnalyticsTracking();
     deletedThemeCookie();
-    unlockScroll();
-  }, [deletedFunctionalTracking, deletedAnalyticsTracking, deletedThemeCookie, unlockScroll]);
+  }, [deletedFunctionalTracking, deletedAnalyticsTracking, deletedThemeCookie]);
 
   const handleAcceptCookies = useCallback(() => {
     setIsShowBanner(false);
