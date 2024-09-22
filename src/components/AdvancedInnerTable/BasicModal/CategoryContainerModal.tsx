@@ -16,7 +16,7 @@ interface Props {
   handleChangeItemAccordion: (id: string, expanded: boolean) => void;
 }
 
-const ContainerModal: React.FC<Props> = ({
+const CategoryContainerModal: React.FC<Props> = ({
   headCountCategories,
   noHeadCountCategories,
   isCheckedExpandedAll,
@@ -92,7 +92,7 @@ const ContainerModal: React.FC<Props> = ({
   </Container>
 );
 
-export default ContainerModal;
+export default CategoryContainerModal;
 
 const Container = styled('div')<{ isSomeOpen?: boolean }>(({ theme, isSomeOpen }) => ({
   display: 'flex',

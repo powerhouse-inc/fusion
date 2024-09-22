@@ -1,13 +1,13 @@
 import { ParsedExpenseCategoryBuilder } from '@ses/core/businessLogic/builders/categoriesBuilders';
 import { withFixedPositionRelative } from '@ses/core/utils/storybook/decorators';
 import { createThemeModeVariants } from '@ses/core/utils/storybook/factories';
-import ContainerModal from './ContainerModal';
+import CategoryContainerModal from './CategoryContainerModal';
 import type { Meta } from '@storybook/react';
 import type { FigmaParams } from 'sb-figma-comparator';
 
-const meta: Meta<typeof ContainerModal> = {
-  title: 'Components/General/ContainerModal',
-  component: ContainerModal,
+const meta: Meta<typeof CategoryContainerModal> = {
+  title: 'Fusion/Components/CategoryContainerModal',
+  component: CategoryContainerModal,
   decorators: [withFixedPositionRelative],
   parameters: {
     layout: 'fullscreen',
@@ -97,7 +97,7 @@ const variantsArgs = [
 ];
 
 const [[UnExpanded, UnExpandedDarkMode], [Expanded, ExpandedDarkMode]] = createThemeModeVariants(
-  ContainerModal,
+  CategoryContainerModal,
   variantsArgs
 );
 export { UnExpanded, UnExpandedDarkMode, Expanded, ExpandedDarkMode };
