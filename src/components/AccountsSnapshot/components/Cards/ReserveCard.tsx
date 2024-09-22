@@ -364,7 +364,7 @@ const ArrowContainer = styled('div')(({ theme }) => ({
 }));
 
 const Arrow = styled('svg', {
-  shouldForwardProp: (prop) => ['hasTransactions', 'isExpanded', 'isGroup'].includes(prop as string),
+  shouldForwardProp: (prop) => !['hasTransactions', 'isExpanded', 'isGroup'].includes(prop as string),
 })<{ hasTransactions?: boolean; isExpanded: boolean; isGroup: boolean }>(
   ({ theme, hasTransactions, isExpanded, isGroup }) => ({
     transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
