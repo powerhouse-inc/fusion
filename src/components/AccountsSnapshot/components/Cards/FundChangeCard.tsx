@@ -132,7 +132,9 @@ export const RightArrowContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-export const FillSpace = styled('div')<{ position: 'left' | 'right' }>(({ theme, position }) => ({
+export const FillSpace = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'position',
+})<{ position: 'left' | 'right' }>(({ theme, position }) => ({
   minWidth: position === 'left' ? 85 : 65,
   height: '100%',
 
@@ -150,7 +152,9 @@ export const FillSpace = styled('div')<{ position: 'left' | 'right' }>(({ theme,
   },
 }));
 
-export const Arrow = styled('div')<{ direction: 'left' | 'right' }>(({ theme, direction }) => {
+export const Arrow = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'direction',
+})<{ direction: 'left' | 'right' }>(({ theme, direction }) => {
   const margin = 24;
   const borderStyle = `2px solid ${
     theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[700]

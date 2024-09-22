@@ -45,7 +45,9 @@ const TitleWrapper = styled('div')({
   marginBottom: 8,
 });
 
-const Title = styled('h2')<{ level: HeaderLevel }>(({ theme, level }) => ({
+const Title = styled('h2', {
+  shouldForwardProp: (prop) => prop !== 'level',
+})<{ level: HeaderLevel }>(({ theme, level }) => ({
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   fontWeight: 700,
   fontSize: level === 'h1' ? 20 : level === 'h2' ? 18 : 16,
