@@ -79,7 +79,9 @@ const ProposalsContainer = styled(Card)(() => ({
 
 const SectionContainer = styled('section')(() => ({}));
 
-const SectionHeader = styled('div')<{ isMain?: boolean }>(({ theme, isMain = false }) => ({
+const SectionHeader = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'isMain',
+})<{ isMain?: boolean }>(({ theme, isMain = false }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
