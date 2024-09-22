@@ -62,6 +62,27 @@ function MyApp(props: MyAppProps) {
     }
   }, [props.pageProps?.protected, router]);
 
+  useEffect(() => {
+    router.beforePopState((state) => {
+      state.options.scroll = false;
+      return true;
+    });
+    window.history.scrollRestoration = 'manual';
+
+    return () => {
+      router.beforePopState(() => true);
+      window.history.scrollRestoration = 'auto';
+    };
+  }, [router]);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'instant',
+    });
+  }, [router.pathname]);
+
   return (
     <CookiesProvider>
       <Provider store={store}>

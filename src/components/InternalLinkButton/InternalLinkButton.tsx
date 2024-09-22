@@ -11,6 +11,7 @@ interface Props {
   className?: string;
   buttonType?: 'primary' | 'secondary';
   isLink?: boolean;
+  replaceHistory?: boolean;
 }
 
 const InternalLinkButton: React.FunctionComponent<Props> = ({
@@ -20,6 +21,7 @@ const InternalLinkButton: React.FunctionComponent<Props> = ({
   className,
   buttonType = 'primary',
   isLink = true,
+  replaceHistory = false,
 }) => {
   const WrapperComponent = isLink
     ? ({ children }: PropsWithChildren) => (
@@ -29,6 +31,7 @@ const InternalLinkButton: React.FunctionComponent<Props> = ({
           buttonType={buttonType}
           label={!!label}
           showIcon={showIcon}
+          replace={replaceHistory}
         >
           {children}
         </ContainerLink>

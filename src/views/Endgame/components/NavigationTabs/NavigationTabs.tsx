@@ -1,5 +1,6 @@
 import { styled } from '@mui/material';
 import Container from '@/components/Container/Container';
+import { siteRoutes } from '@/config/routes';
 import { NavigationTabEnum } from '../../useEndgameView';
 import type { FC } from 'react';
 
@@ -18,7 +19,15 @@ const NavigationTabs: FC<NavigationTabsProps> = ({ activeTab }) => {
           behavior: 'smooth',
         });
         setTimeout(() => {
-          window.history.replaceState(null, '', `#${tab}`);
+          window.history.replaceState(
+            {
+              ...window.history.state,
+              url: `${siteRoutes.endgame}#${tab}`,
+              as: `${siteRoutes.endgame}#${tab}`,
+            },
+            '',
+            `${siteRoutes.endgame}#${tab}`
+          );
         }, 300);
       }
     }
