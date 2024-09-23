@@ -1,6 +1,10 @@
 import { styled } from '@mui/material';
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import './Markdown.module.scss';
+
+// Use uuid to generate unique keys
+const generateKey = (prefix: string) => `${prefix}-${uuidv4()}`;
 
 export const customRenderer = {
   image(href: string) {
@@ -9,8 +13,9 @@ export const customRenderer = {
         style={{
           width: '100%',
         }}
+        key={generateKey('image')}
       >
-        <ImageTag src={href} className="img-container" key={Math.random()} />
+        <ImageTag src={href} className="img-container" />
       </div>
     );
   },
@@ -25,7 +30,7 @@ export const customRenderer = {
           marginBottom: 0,
           textAlign: 'left',
         }}
-        key={Math.random()}
+        key={generateKey('paragraph')}
       >
         {text}
       </ResponsiveParagraph>
@@ -41,7 +46,7 @@ export const customRenderer = {
           fontFamily: 'Inter, sans-serif',
           textAlign: 'left',
         }}
-        key={Math.random()}
+        key={generateKey('list')}
       >
         {text}
       </ResponsiveList>
@@ -58,7 +63,7 @@ export const customRenderer = {
           fontFamily: 'Inter, sans-serif',
           textAlign: 'left',
         }}
-        key={Math.random()}
+        key={generateKey('listitem')}
       >
         {text}
       </ResponsiveItem>
@@ -68,7 +73,7 @@ export const customRenderer = {
     return (
       <ResponsiveCode
         className="tag-code"
-        key={Math.random()}
+        key={generateKey('code')}
         style={{
           backgroundColor: 'transparent',
           color: '#343839',
@@ -138,7 +143,7 @@ export const customRendererDark = {
           width: '100%',
         }}
       >
-        <ImageTag src={href} className="img-container" key={href} />
+        <ImageTag src={href} className="img-container" key={generateKey('image')} />
       </div>
     );
   },
@@ -154,7 +159,7 @@ export const customRendererDark = {
           marginBottom: 0,
           textAlign: 'left',
         }}
-        key={Math.random()}
+        key={generateKey('paragraph')}
       >
         {text}
       </ResponsiveParagraph>
@@ -171,7 +176,7 @@ export const customRendererDark = {
           fontFamily: 'Inter, sans-serif',
           textAlign: 'left',
         }}
-        key={Math.random()}
+        key={generateKey('list')}
       >
         {text}
       </ResponsiveList>
@@ -188,7 +193,7 @@ export const customRendererDark = {
           fontFamily: 'Inter, sans-serif',
           textAlign: 'left',
         }}
-        key={Math.random()}
+        key={generateKey('listitem')}
       >
         {text}
       </ResponsiveItem>
@@ -198,7 +203,7 @@ export const customRendererDark = {
     return (
       <ResponsiveCode
         className="tag-code"
-        key={Math.random()}
+        key={generateKey('code')}
         style={{
           backgroundColor: 'transparent',
           color: '#FCFCFC',

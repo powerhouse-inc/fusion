@@ -3,21 +3,19 @@ import { useEffect, useState } from 'react';
 
 const useHeaderCard = () => {
   const { isFunctionalTrackingAccepted } = useCookiesContextTracking();
+  const [isExpandedFromLocalStorage, setIsExpandedFromLocalStorage] = useState<boolean | undefined>(undefined);
 
-  const [isExpandedFromLocalStorage] = useState(() => {
+  useEffect(() => {
     if (typeof window !== 'undefined') {
       if (!isFunctionalTrackingAccepted) {
         window.localStorage.removeItem('home-header-card-expanded');
-        return true;
+        setIsExpandedFromLocalStorage(true);
+      } else {
+        const homeHeaderCardExpanded = window.localStorage.getItem('home-header-card-expanded');
+        setIsExpandedFromLocalStorage(homeHeaderCardExpanded !== '0');
       }
-      const homeHeaderCardExpanded = window.localStorage.getItem('home-header-card-expanded');
-      if (homeHeaderCardExpanded === '0') {
-        return false;
-      }
-      return true;
     }
-    return undefined;
-  });
+  }, [isFunctionalTrackingAccepted]);
 
   const [isExpandedCopy, setIsExpandedCopy] = useState(isExpandedFromLocalStorage);
   const handleIsExpandedCopy = (expandedCopy: boolean | undefined) => {
