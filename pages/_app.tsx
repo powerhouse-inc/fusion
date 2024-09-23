@@ -76,6 +76,16 @@ function MyApp(props: MyAppProps) {
   }, [router]);
 
   useEffect(() => {
+    /*
+    According to https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollTo#behavior 'instant' is a valid option.
+    Other possible solutions such as:
+      document.documentElement.style.scrollBehavior = 'auto';
+      window.scrollTo(0, 0);
+      document.documentElement.style.scrollBehavior = 'smooth';
+    does not work as expected after testing cross browser.
+    */
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     window.scrollTo({
       top: 0,
       left: 0,
