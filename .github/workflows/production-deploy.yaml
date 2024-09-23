@@ -1,8 +1,6 @@
 name: Production deployment
 
 on:
-  push:
-    branches: [ sky-production ]
   workflow_dispatch:
 
 jobs:
