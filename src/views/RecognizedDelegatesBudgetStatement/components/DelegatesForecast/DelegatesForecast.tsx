@@ -1,26 +1,24 @@
-import styled from '@emotion/styled';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
-import { ResourceType } from '@ses/core/models/interfaces/types';
-import lightTheme from '@ses/styles/theme/themes';
-import React from 'react';
+import { styled } from '@mui/material';
 import { AdvancedInnerTable } from '@/components/AdvancedInnerTable/AdvancedInnerTable';
+import type { BudgetStatement } from '@/core/models/interfaces/budgetStatement';
+import { ResourceType } from '@/core/models/interfaces/types';
 import { TransparencyEmptyTable } from '@/views/CoreUnitBudgetStatement/components/Placeholders/TransparencyEmptyTable';
 import { useDelegatesForecast } from './useDelegatesForecast';
-import type { BudgetStatement } from '@ses/core/models/interfaces/budgetStatement';
 import type { DateTime } from 'luxon';
+import type { FC } from 'react';
 
 interface Props {
   currentMonth: DateTime;
   budgetStatement: BudgetStatement[];
 }
 
-const DelegatesForecast: React.FC<Props> = ({ currentMonth, budgetStatement }) => {
-  const { isLight } = useThemeContext();
+const DelegatesForecast: FC<Props> = ({ currentMonth, budgetStatement }) => {
   const { breakdownHeadersForecast, breakdownItemsForecast, mainTableColumnsForecast, mainTableItemsForecast } =
     useDelegatesForecast(currentMonth, budgetStatement);
+
   return (
     <Container>
-      <TotalsMonth isLight={isLight}>{currentMonth.toFormat('MMM yyyy')} Totals</TotalsMonth>
+      <TotalsMonth>{currentMonth.toFormat('MMM yyyy')} Totals</TotalsMonth>
       <AdvancedInnerTable
         columns={mainTableColumnsForecast}
         items={mainTableItemsForecast}
@@ -32,7 +30,7 @@ const DelegatesForecast: React.FC<Props> = ({ currentMonth, budgetStatement }) =
         }
       />
       {mainTableItemsForecast.length > 0 && (
-        <TitleBreakdown isLight={isLight}>{currentMonth.toFormat('MMM yyyy')} Breakdown</TitleBreakdown>
+        <TitleBreakdown>{currentMonth.toFormat('MMM yyyy')} Breakdown</TitleBreakdown>
       )}
 
       {mainTableItemsForecast.length > 0 && (
@@ -50,27 +48,28 @@ const DelegatesForecast: React.FC<Props> = ({ currentMonth, budgetStatement }) =
   );
 };
 
-const Container = styled.div({
+const Container = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-});
+}));
 
-const TotalsMonth = styled.div<{ isLight: boolean }>(({ isLight }) => ({
+const TotalsMonth = styled('div')(({ theme }) => ({
   fontFamily: 'Inter, sans-serif',
   fontStyle: 'normal',
   fontWeight: 700,
   fontSize: '16px',
   lineHeight: '19px',
-  color: isLight ? '#231536' : '#9FAFB9',
+  color: theme.palette.isLight ? '#231536' : '#9FAFB9',
   marginBottom: 16,
-  [lightTheme.breakpoints.up('table_834')]: {
+
+  [theme.breakpoints.up('tablet_768')]: {
     marginBottom: 24,
     fontSize: '20px',
     lineHeight: '24px',
   },
 }));
 
-const TitleBreakdown = styled.div<{ isLight: boolean }>(({ isLight }) => ({
+const TitleBreakdown = styled('div')(({ theme }) => ({
   fontFamily: 'Inter, sans-serif',
   fontStyle: 'normal',
   fontWeight: 600,
@@ -79,9 +78,9 @@ const TitleBreakdown = styled.div<{ isLight: boolean }>(({ isLight }) => ({
   letterSpacing: '0.4px',
   marginTop: 40,
   marginBottom: 32,
-  color: isLight ? '#231536' : '#9FAFB9',
+  color: theme.palette.isLight ? '#231536' : '#9FAFB9',
 
-  [lightTheme.breakpoints.up('table_834')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     marginTop: 0,
     fontSize: '20px',
     lineHeight: '24px',

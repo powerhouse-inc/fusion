@@ -1,3 +1,10 @@
+import _ from 'lodash';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { InnerTableColumn, InnerTableRow, RowType } from '@/components/AdvancedInnerTable/types';
+import { useUrlAnchor } from '@/core/hooks/useUrlAnchor';
+import type { BudgetStatement } from '@/core/models/interfaces/budgetStatement';
+import type { BudgetStatementLineItem } from '@/core/models/interfaces/budgetStatementWallet';
+import { API_MONTH_TO_FORMAT } from '@/core/utils/date';
 import {
   budgetTotalActual,
   budgetTotalDifference,
@@ -11,16 +18,9 @@ import {
   getWalletDifference,
   getWalletForecast,
   getWalletPayment,
-} from '@ses/core/utils/finances';
-import _ from 'lodash';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { InnerTableColumn, InnerTableRow, RowType } from '@/components/AdvancedInnerTable/types';
+} from '@/core/utils/finances';
+import { getWalletWidthForWallets } from '@/core/utils/string';
 import { renderWallet } from '@/views/CoreUnitBudgetStatement/BudgetStatementtUtils';
-import { useUrlAnchor } from '../../../../core/hooks/useUrlAnchor';
-import { API_MONTH_TO_FORMAT } from '../../../../core/utils/date';
-import { getWalletWidthForWallets } from '../../../../core/utils/string';
-import type { BudgetStatement } from '@ses/core/models/interfaces/budgetStatement';
-import type { BudgetStatementLineItem } from '@ses/core/models/interfaces/budgetStatementWallet';
 import type { DateTime } from 'luxon';
 
 export const useDelegatesActuals = (propsCurrentMonth: DateTime, budgetStatements: BudgetStatement[] | undefined) => {
