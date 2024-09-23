@@ -10,6 +10,13 @@ export default function useSortsBundle() {
 
   const [areSortsOpen, setAreSortsOpen] = useState(false);
   const handleToggleOpenSorts = () => {
+    if (areSortsOpen) {
+      setTimeout(() => {
+        document.documentElement.style.scrollBehavior = 'smooth';
+      }, 300);
+    } else {
+      document.documentElement.style.scrollBehavior = 'auto';
+    }
     setAreSortsOpen((prev) => !prev);
   };
 
