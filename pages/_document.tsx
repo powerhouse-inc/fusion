@@ -9,9 +9,9 @@ export default class MyDocument extends Document<Props> {
     return (
       <Html>
         <Head>
-          <meta http-equiv="refresh" content="0; url=https://fusion.sky.money" />
+          <meta http-equiv="refresh" content="0; url=https://fsusion.sky.money" />
         </Head>
-        <body>Redirecting...</body>
+        <body />
       </Html>
     );
   }

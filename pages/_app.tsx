@@ -11,7 +11,7 @@ export type NextPageWithLayout = NextPage<{ protected?: boolean }> & {
 };
 
 function MyApp() {
-  return <div>Redirecting...</div>;
+  return <div />;
 }
 
 export default MyApp;
