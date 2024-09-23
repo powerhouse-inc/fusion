@@ -1,20 +1,20 @@
 import { styled } from '@mui/material';
 import { CustomLink } from '@ses/components/CustomLink/CustomLink';
 import { SEOHead } from '@ses/components/SEOHead/SEOHead';
-import { siteRoutes } from '@ses/config/routes';
-import { CommentActivityContext } from '@ses/core/context/CommentActivityContext';
-import { ResourceType } from '@ses/core/models/interfaces/types';
 import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import AuditorCommentsContainer from '@/components/BudgetStatement/BudgetStatementAuditorComments/AuditorCommentsContainer/AuditorCommentsContainer';
 import BudgetStatementPager from '@/components/BudgetStatement/BudgetStatementPager/BudgetStatementPager';
 import PageContainer from '@/components/Container/PageContainer';
 import Tabs from '@/components/Tabs/Tabs';
 import TeamHeader from '@/components/TeamHeader/TeamHeader';
+import { siteRoutes } from '@/config/routes';
+import { CommentActivityContext } from '@/core/context/CommentActivityContext';
+import type { DelegatesDto } from '@/core/models/dto/delegatesDTO';
 import type { Snapshots } from '@/core/models/dto/snapshotAccountDTO';
+import { ResourceType } from '@/core/models/interfaces/types';
 import DelegatesActuals from './components/DelegatesActuals/DelegatesActuals';
 import DelegatesForecast from './components/DelegatesForecast/DelegatesForecast';
 import useRecognizedDelegatesReport, { DELEGATES_REPORT_IDS_ENUM } from './useRecognizedDelegatesReport';
-import type { DelegatesDto } from '@ses/core/models/dto/delegatesDTO';
 
 type RecognizedDelegatesProps = {
   delegates: DelegatesDto;
@@ -125,35 +125,24 @@ export default RecognizedDelegatesBudgetStatementView;
 
 const ContainerInside = styled('div')(({ theme }) => ({
   display: 'block',
-  textAlign: 'left',
   width: '100%',
-  maxWidth: '1440px',
-  marginBottom: 0,
-  marginLeft: 'auto',
-  marginRight: 'auto',
-  marginTop: 24,
-  paddingRight: '64px',
-  paddingLeft: '64px',
+  margin: '24px auto 0px',
+  paddingRight: 16,
+  paddingLeft: 16,
+  textAlign: 'left',
 
-  [theme.breakpoints.up('desktop_1920')]: {
-    maxWidth: '1312px',
-    paddingRight: '0px',
-    paddingLeft: '0px',
+  [theme.breakpoints.up('tablet_768')]: {
+    paddingRight: 32,
+    paddingLeft: 32,
   },
-
-  [theme.breakpoints.between('desktop_1280', 'desktop_1440')]: {
-    paddingRight: '48px',
-    paddingLeft: '48px',
+  [theme.breakpoints.up('desktop_1280')]: {
+    paddingRight: 48,
+    paddingLeft: 48,
   },
-
-  [theme.breakpoints.between('tablet_768', 'desktop_1280')]: {
-    paddingRight: '32px',
-    paddingLeft: '32px',
-  },
-
-  [theme.breakpoints.down('tablet_768')]: {
-    paddingRight: '16px',
-    paddingLeft: '16px',
+  [theme.breakpoints.up('desktop_1440')]: {
+    maxWidth: 1312,
+    paddingRight: 0,
+    paddingLeft: 0,
   },
 }));
 
@@ -185,24 +174,24 @@ const Description = styled('div')(({ theme }) => ({
   lineHeight: '22px',
   letterSpacing: 0,
   color: theme.palette.isLight ? '#231536' : '#d2d4ef',
-  '> a': {
+  '& > a': {
     fontSize: 14,
     lineHeight: '18px',
     letterSpacing: 0,
   },
-  '> span a': {
+  '& > span a': {
     fontSize: 14,
     lineHeight: '18px',
     letterSpacing: 0,
   },
   [theme.breakpoints.up('tablet_768')]: {
     fontSize: 16,
-    '> a': {
+    '& > a': {
       fontSize: 16,
       lineHeight: '18px',
       letterSpacing: 0,
     },
-    '> span a': {
+    '& > span a': {
       fontSize: 16,
       lineHeight: '18px',
       letterSpacing: 0,

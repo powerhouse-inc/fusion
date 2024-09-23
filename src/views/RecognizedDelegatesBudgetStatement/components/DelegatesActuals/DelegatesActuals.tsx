@@ -1,25 +1,21 @@
-import styled from '@emotion/styled';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { styled, useMediaQuery } from '@mui/material';
 import { CustomLink } from '@ses/components/CustomLink/CustomLink';
-import { useThemeContext } from '@ses/core/context/ThemeContext';
-import { ResourceType } from '@ses/core/models/interfaces/types';
-import lightTheme from '@ses/styles/theme/themes';
-import React from 'react';
 import { AdvancedInnerTable } from '@/components/AdvancedInnerTable/AdvancedInnerTable';
+import type { BudgetStatement } from '@/core/models/interfaces/budgetStatement';
+import { ResourceType } from '@/core/models/interfaces/types';
 import { TransparencyEmptyTable } from '@/views/CoreUnitBudgetStatement/components/Placeholders/TransparencyEmptyTable';
 import { useDelegatesActuals } from './useDelegatesActuals';
-import type { BudgetStatement } from '@ses/core/models/interfaces/budgetStatement';
+import type { Theme } from '@mui/material';
 import type { DateTime } from 'luxon';
+import type { FC } from 'react';
 
 interface Props {
   currentMonth: DateTime;
   budgetStatement: BudgetStatement[];
 }
 
-const DelegatesActuals: React.FC<Props> = ({ currentMonth, budgetStatement }) => {
-  const { isLight } = useThemeContext();
-  const isMobile = useMediaQuery(lightTheme.breakpoints.between('mobile_375', 'table_834'));
-
+const DelegatesActuals: FC<Props> = ({ currentMonth, budgetStatement }) => {
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const {
     breakdownColumnsActuals,
     breakdownItemsActuals,
@@ -27,10 +23,11 @@ const DelegatesActuals: React.FC<Props> = ({ currentMonth, budgetStatement }) =>
     mainTableColumnsActuals,
     mainTableItemsActuals,
   } = useDelegatesActuals(currentMonth, budgetStatement);
+
   return (
     <Container>
       {currentBudgetStatement && (
-        <TransactionLink isLight={isLight}>
+        <TransactionLink>
           View the
           <CustomLink
             children="onchain transactions for recognized delegates"
@@ -42,7 +39,7 @@ const DelegatesActuals: React.FC<Props> = ({ currentMonth, budgetStatement }) =>
           />
         </TransactionLink>
       )}
-      <TotalsMonth isLight={isLight}>{currentMonth.toFormat('MMM yyyy')} Totals</TotalsMonth>
+      <TotalsMonth>{currentMonth.toFormat('MMM yyyy')} Totals</TotalsMonth>
       <AdvancedInnerTable
         columns={mainTableColumnsActuals}
         items={mainTableItemsActuals}
@@ -54,7 +51,7 @@ const DelegatesActuals: React.FC<Props> = ({ currentMonth, budgetStatement }) =>
         }
       />
       {mainTableItemsActuals.length > 0 && (
-        <TitleBreakdown isLight={isLight}>{currentMonth.toFormat('MMM yyyy')} Breakdown</TitleBreakdown>
+        <TitleBreakdown>{currentMonth.toFormat('MMM yyyy')} Breakdown</TitleBreakdown>
       )}
       {mainTableItemsActuals.length > 0 && (
         <AdvancedInnerTable
@@ -71,12 +68,12 @@ const DelegatesActuals: React.FC<Props> = ({ currentMonth, budgetStatement }) =>
   );
 };
 
-const Container = styled.div({
+const Container = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-});
+}));
 
-const TransactionLink = styled.div<{ isLight: boolean }>(({ isLight }) => ({
+const TransactionLink = styled('div')(({ theme }) => ({
   display: 'inline',
   fontFamily: 'Inter, sans-serif',
   fontStyle: 'normal',
@@ -84,37 +81,39 @@ const TransactionLink = styled.div<{ isLight: boolean }>(({ isLight }) => ({
   fontSize: 14,
   lineHeight: '22px',
   marginBottom: 32,
-  '> a ': {
+  '& > a ': {
     whiteSpace: 'unset',
   },
-  color: isLight ? '#231536' : '#D2D4EF',
-  [lightTheme.breakpoints.up('table_834')]: {
+  color: theme.palette.isLight ? '#231536' : '#D2D4EF',
+
+  [theme.breakpoints.up('tablet_768')]: {
     display: 'block',
     fontSize: 16,
     lineHeight: '22px',
-    '> a ': {
+    '& > a ': {
       fontSize: 16,
       lineHeight: '18px',
     },
   },
 }));
 
-const TotalsMonth = styled.div<{ isLight: boolean }>(({ isLight }) => ({
+const TotalsMonth = styled('div')(({ theme }) => ({
   fontFamily: 'Inter, sans-serif',
   fontStyle: 'normal',
   fontWeight: 700,
   fontSize: '16px',
   lineHeight: '19px',
-  color: isLight ? '#231536' : '#9FAFB9',
+  color: theme.palette.isLight ? '#231536' : '#9FAFB9',
   marginBottom: 16,
-  [lightTheme.breakpoints.up('table_834')]: {
+
+  [theme.breakpoints.up('tablet_768')]: {
     marginBottom: 24,
     fontSize: '20px',
     lineHeight: '24px',
   },
 }));
 
-const TitleBreakdown = styled.div<{ isLight: boolean }>(({ isLight }) => ({
+const TitleBreakdown = styled('div')(({ theme }) => ({
   fontFamily: 'Inter, sans-serif',
   fontStyle: 'normal',
   fontWeight: 600,
@@ -123,12 +122,13 @@ const TitleBreakdown = styled.div<{ isLight: boolean }>(({ isLight }) => ({
   letterSpacing: '0.4px',
   marginTop: 40,
   marginBottom: 32,
-  color: isLight ? '#231536' : '#9FAFB9',
+  color: theme.palette.isLight ? '#231536' : '#9FAFB9',
 
-  [lightTheme.breakpoints.up('table_834')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     marginTop: 0,
     fontSize: '20px',
     lineHeight: '24px',
   },
 }));
+
 export default DelegatesActuals;
