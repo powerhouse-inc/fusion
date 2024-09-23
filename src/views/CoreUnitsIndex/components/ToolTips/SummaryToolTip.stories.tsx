@@ -6,7 +6,6 @@ import type { Meta } from '@storybook/react';
 const meta: Meta<typeof SummaryToolTip> = {
   title: 'Fusion/Views/Core Units Index/SummaryToolTip',
   component: SummaryToolTip,
-
   parameters: {
     chromatic: {
       pauseAnimationAtEnd: true,
@@ -21,7 +20,7 @@ const variantsArgs = [
     status: TeamStatus.Accepted,
     name: 'Sustainable Ecosystem Scaling',
     imageUrl: 'https://makerdao-ses.github.io/ecosystem-dashboard/core-units/ses-001/logo.png',
-    statusModified: new Date(),
+    statusModified: new Date('2023-08-19T09:08:34.123'),
     href: '#',
     categories: [TeamCategory.Operational, TeamCategory.Legal],
   },

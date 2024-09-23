@@ -4,7 +4,7 @@ import ExpenseReportStatus from './ExpenseReportStatus';
 import type { Meta } from '@storybook/react';
 
 const meta: Meta<typeof ExpenseReportStatus> = {
-  title: 'Components/AuditorComments/ExpenseReportStatus',
+  title: 'Fusion/Components/Budget Statements/Comments/ExpenseReportStatus',
   component: ExpenseReportStatus,
   argTypes: {
     status: {
