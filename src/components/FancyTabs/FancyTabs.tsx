@@ -16,7 +16,7 @@ interface FancyTabsProps {
 const FancyTabs: React.FC<FancyTabsProps> = ({ tabs, activeTab, onTabChange, className }) => (
   <Wrapper className="no-select">
     <TabsContainer className={className}>
-      {tabs.map((tab) => (
+      {tabs?.map((tab) => (
         <Tab key={tab.id} role="tab" active={tab.id === activeTab} onClick={() => onTabChange(tab.id)}>
           {tab.icon} <span>{tab.title}</span>
         </Tab>
