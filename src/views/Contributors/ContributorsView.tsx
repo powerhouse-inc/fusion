@@ -4,6 +4,7 @@ import PageContainer from '@/components/Container/PageContainer';
 import type { Team } from '@/core/models/interfaces/team';
 import { SEOHead } from '@/stories/components/SEOHead/SEOHead';
 import { useContributorsSection } from '../Home/components/Contributors/useContributorsSection';
+import ContributorsCategorySection from './components/Sections/ContributorsCategorySection';
 import ContributorsListSections from './components/Sections/ContributorsListSections';
 
 interface Props {
@@ -22,6 +23,9 @@ const ContributorsView: React.FC<Props> = ({ teams }) => {
     hasDefaultColors,
     customStyles,
     sizeScopeLargeSmall,
+    activeCategoryTab,
+    handleActiveCategoryTab,
+    teamCategoriesTabs,
   } = useContributorsSection(teams);
   return (
     <ContributorsPageContainer>
@@ -31,7 +35,13 @@ const ContributorsView: React.FC<Props> = ({ teams }) => {
       />
       <Container>
         <SectionsContainer>
-          <DescriptionContainer>DescriptionContainer</DescriptionContainer>
+          <ContributorsCategorySection
+            teams={teams}
+            activeTab={activeCategoryTab}
+            onTabChange={handleActiveCategoryTab}
+            tabs={teamCategoriesTabs}
+          />
+
           <ContributorsListSections
             activeTab={activeDetailTab}
             onTabChange={handleActiveDetailTab}
@@ -58,11 +68,4 @@ const SectionsContainer = styled('div')(() => ({
   flexDirection: 'column',
   gap: 40,
   marginTop: 24,
-}));
-const DescriptionContainer = styled('div')(() => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 16,
-  border: '1px solid',
-  height: 300, // Delete this
 }));
