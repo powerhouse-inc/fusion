@@ -23,6 +23,7 @@ interface TeamHeaderProps {
 const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className, withDescription = true }) => {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const chips =
+    // it is an ecosystem actor
     team.type === ResourceType.EcosystemActor ? (
       team.scopes?.length > 0 && (
         <ScopeList>
@@ -32,10 +33,12 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className, withDescriptio
         </ScopeList>
       )
     ) : team.type === ResourceType.Delegates ? (
+      // it is a delegates
       <ExternalLinkButton href="https://makerburn.com/#/expenses/core-units/DELEGATES">
         Onchain Transactions
       </ExternalLinkButton>
     ) : (
+      // it is a core unit
       team.category?.length > 0 && (
         <CategoryList>
           {team.category?.map((category) => (
@@ -51,7 +54,15 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className, withDescriptio
         <Container>
           <Content>
             <TeamBasicInfo>
-              <Avatar name={team.name} image={team.image} />
+              <Avatar
+                name={team.name}
+                image={team.image}
+                isSmall={[
+                  ResourceType.Keepers,
+                  ResourceType.SpecialPurposeFund,
+                  ResourceType.AlignedDelegates,
+                ].includes(team.type)}
+              />
               <InfoContent>
                 <TeamName>
                   <Code>{team.shortCode}</Code> {team.name}
@@ -75,7 +86,13 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className, withDescriptio
               </InfoContent>
             </TeamBasicInfo>
 
-            <LinksContainer>
+            <LinksContainer
+              shouldBeCentered={[
+                ResourceType.Keepers,
+                ResourceType.SpecialPurposeFund,
+                ResourceType.AlignedDelegates,
+              ].includes(team.type)}
+            >
               <SocialMediaLinksButton socialMedia={team.socialMediaChannels?.[0]} />
             </LinksContainer>
           </Content>
@@ -121,30 +138,43 @@ const TeamBasicInfo = styled('div')(({ theme }) => ({
   },
 }));
 
-const Avatar = styled(CircleAvatar)(({ theme }) => ({
-  width: 48,
-  height: 48,
-  minWidth: 48,
-  minHeight: 48,
+const Avatar = styled(CircleAvatar, {
+  shouldForwardProp: (prop) => prop !== 'isSmall',
+})<{ isSmall: boolean }>(({ theme, isSmall }) => ({
+  ...(isSmall
+    ? {
+        width: 40,
+        height: 40,
+        minWidth: 40,
+        minHeight: 40,
+      }
+    : {
+        width: 48,
+        height: 48,
+        minWidth: 48,
+        minHeight: 48,
 
-  [theme.breakpoints.up('tablet_768')]: {
-    width: 56,
-    height: 56,
-    minWidth: 56,
-    minHeight: 56,
-  },
+        [theme.breakpoints.up('tablet_768')]: {
+          width: 56,
+          height: 56,
+          minWidth: 56,
+          minHeight: 56,
+        },
+      }),
 }));
 
 const InfoContent = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignContent: 'center',
+  justifyContent: 'center',
   width: '100%',
   maxWidth: 'calc(100% - 48px)',
 
   [theme.breakpoints.up('tablet_768')]: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    justifyContent: 'normal',
   },
 }));
 
@@ -221,10 +251,16 @@ const CategoryList = styled('div')(({ theme }) => ({
   },
 }));
 
-const LinksContainer = styled('div')(({ theme }) => ({
-  [theme.breakpoints.between('tablet_768', 'desktop_1024')]: {
+const LinksContainer = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'shouldBeCentered',
+})<{ shouldBeCentered: boolean }>(({ theme, shouldBeCentered }) => ({
+  ...(shouldBeCentered && {
     display: 'flex',
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
+  }),
+
+  [theme.breakpoints.between('tablet_768', 'desktop_1024')]: {
+    alignSelf: shouldBeCentered ? 'center' : 'flex-end',
   },
 }));
 
