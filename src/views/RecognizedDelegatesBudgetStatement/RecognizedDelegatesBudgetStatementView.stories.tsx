@@ -47,7 +47,7 @@ export { LightMode, DarkMode };
 
 const optionStyles = {
   style: {
-    top: -16,
+    top: -32,
     left: -16,
   },
 };
@@ -92,7 +92,7 @@ LightMode.parameters = {
         },
       },
       1440: {
-        component: '',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=3376-35509&m=dev',
         options: {
           componentStyle: {
             width: 1440,

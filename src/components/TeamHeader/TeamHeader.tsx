@@ -58,10 +58,11 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className, withDescriptio
                   ResourceType.Keepers,
                   ResourceType.SpecialPurposeFund,
                   ResourceType.AlignedDelegates,
+                  ResourceType.Delegates,
                 ].includes(team.type)}
               />
               <InfoContent>
-                <TeamName isCentered={team.type === ResourceType.Delegates}>
+                <TeamName shouldBeCentered={team.type === ResourceType.Delegates}>
                   <Code>{team.shortCode}</Code>
                   {team.name}
                 </TeamName>
@@ -83,11 +84,11 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className, withDescriptio
               </InfoContent>
             </TeamBasicInfo>
             <LinksContainer
-              isCentered={team.type === ResourceType.Delegates}
               shouldBeCentered={[
                 ResourceType.Keepers,
                 ResourceType.SpecialPurposeFund,
                 ResourceType.AlignedDelegates,
+                ResourceType.Delegates,
               ].includes(team.type)}
             >
               <SocialMediaLinksButton socialMedia={team.socialMediaChannels?.[0]} />
@@ -201,8 +202,8 @@ const StatusChipForCoreUnit = styled(StatusChip)(({ theme }) => ({
 }));
 
 const TeamName = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'isCentered',
-})<{ isCentered: boolean }>(({ theme, isCentered }) => ({
+  shouldForwardProp: (prop) => prop !== 'shouldBeCentered',
+})<{ shouldBeCentered: boolean }>(({ theme, shouldBeCentered }) => ({
   fontSize: 16,
   lineHeight: '24px',
   fontWeight: 600,
@@ -212,7 +213,7 @@ const TeamName = styled('div', {
   textOverflow: 'ellipsis',
 
   [theme.breakpoints.up('tablet_768')]: {
-    ...(isCentered && { alignSelf: 'center' }),
+    ...(shouldBeCentered && { alignSelf: 'center' }),
     marginRight: 8,
     fontSize: 18,
     lineHeight: '21.6px',
@@ -262,10 +263,6 @@ const LinksContainer = styled('div', {
 
   [theme.breakpoints.between('tablet_768', 'desktop_1024')]: {
     alignSelf: shouldBeCentered ? 'center' : 'flex-end',
-  },
-
-  [theme.breakpoints.up('desktop_1024')]: {
-    ...(isCentered && { alignSelf: 'center' }),
   },
 }));
 
