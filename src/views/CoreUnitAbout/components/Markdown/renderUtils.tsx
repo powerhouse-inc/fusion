@@ -2,25 +2,20 @@ import { styled } from '@mui/material';
 import React from 'react';
 import './Markdown.module.scss';
 
-// Use uuid to generate unique keys
-
-// Generate a stable key based on unique content rather than a random UUID
-const generateStableKey = (prefix: string, content: string | number) => `${prefix}-${content}`;
-
 export const customRenderer = {
-  image(href: string) {
+  image(href: string, index: number) {
     return (
       <div
         style={{
           width: '100%',
         }}
-        key={generateStableKey('image', href)}
+        key={`image-${index}`}
       >
         <ImageTag src={href} className="img-container" />
       </div>
     );
   },
-  paragraph(text: string) {
+  paragraph(text: string, index: number) {
     return (
       <ResponsiveParagraph
         className="paragraph"
@@ -31,13 +26,13 @@ export const customRenderer = {
           marginBottom: 0,
           textAlign: 'left',
         }}
-        key={generateStableKey('paragraph', text)}
+        key={`paragraph-${index}`}
       >
         {text}
       </ResponsiveParagraph>
     );
   },
-  list(text: string) {
+  list(text: string, index: number) {
     return (
       <ResponsiveList
         className="ol_tags"
@@ -47,13 +42,13 @@ export const customRenderer = {
           fontFamily: 'Inter, sans-serif',
           textAlign: 'left',
         }}
-        key={generateStableKey('list', text)}
+        key={`list-${index}`}
       >
         {text}
       </ResponsiveList>
     );
   },
-  listitem(text: string) {
+  listitem(text: string, index: number) {
     return (
       <ResponsiveItem
         className="ol_"
@@ -64,17 +59,17 @@ export const customRenderer = {
           fontFamily: 'Inter, sans-serif',
           textAlign: 'left',
         }}
-        key={generateStableKey('listitem', text)}
+        key={`listitem-${index}`}
       >
         {text}
       </ResponsiveItem>
     );
   },
-  code(text: string) {
+  code(text: string, index: number) {
     return (
       <ResponsiveCode
         className="tag-code"
-        key={generateStableKey('code', text)}
+        key={`code-${index}`}
         style={{
           backgroundColor: 'transparent',
           color: '#343839',
@@ -90,7 +85,7 @@ export const customRenderer = {
       </ResponsiveCode>
     );
   },
-  heading(text: string, level: number) {
+  heading(text: string, level: number, index: number) {
     switch (level) {
       case 1:
         return (
@@ -98,6 +93,7 @@ export const customRenderer = {
             style={{
               color: '#343839',
             }}
+            key={`heading1-${index}`}
           >
             {text}
           </HeadingResponsiveH1>
@@ -108,6 +104,7 @@ export const customRenderer = {
             style={{
               color: '#343839',
             }}
+            key={`heading2-${index}`}
           >
             {text}
           </HeadingResponsiveH2>
@@ -118,6 +115,7 @@ export const customRenderer = {
             style={{
               color: '#343839',
             }}
+            key={`heading3-${index}`}
           >
             {text}
           </HeadingResponsiveH3>
@@ -128,6 +126,7 @@ export const customRenderer = {
             style={{
               color: '#343839',
             }}
+            key={`heading-default-${index}`}
           >
             {text}
           </HeadingResponsiveH3>
@@ -137,18 +136,19 @@ export const customRenderer = {
 };
 
 export const customRendererDark = {
-  image(href: string) {
+  image(href: string, index: number) {
     return (
       <div
         style={{
           width: '100%',
         }}
+        key={`image-${index}`}
       >
-        <ImageTag src={href} className="img-container" key={generateStableKey('image', href)} />
+        <ImageTag src={href} className="img-container" />
       </div>
     );
   },
-  paragraph(text: string) {
+  paragraph(text: string, index: number) {
     return (
       <ResponsiveParagraph
         className="paragraph"
@@ -160,13 +160,13 @@ export const customRendererDark = {
           marginBottom: 0,
           textAlign: 'left',
         }}
-        key={generateStableKey('paragraph', text)}
+        key={`paragraph-${index}`}
       >
         {text}
       </ResponsiveParagraph>
     );
   },
-  list(text: string) {
+  list(text: string, index: number) {
     return (
       <ResponsiveList
         className="ol_tags"
@@ -177,13 +177,13 @@ export const customRendererDark = {
           fontFamily: 'Inter, sans-serif',
           textAlign: 'left',
         }}
-        key={generateStableKey('list', text)}
+        key={`listitem-${index}`}
       >
         {text}
       </ResponsiveList>
     );
   },
-  listitem(text: string) {
+  listitem(text: string, index: number) {
     return (
       <ResponsiveItem
         className="ol_"
@@ -194,17 +194,17 @@ export const customRendererDark = {
           fontFamily: 'Inter, sans-serif',
           textAlign: 'left',
         }}
-        key={generateStableKey('listitem', text)}
+        key={`listitem-${index}`}
       >
         {text}
       </ResponsiveItem>
     );
   },
-  code(text: string) {
+  code(text: string, index: number) {
     return (
       <ResponsiveCode
         className="tag-code"
-        key={generateStableKey('code', text)}
+        key={`code-${index}`}
         style={{
           backgroundColor: 'transparent',
           color: '#FCFCFC',
