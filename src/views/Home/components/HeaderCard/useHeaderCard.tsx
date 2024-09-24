@@ -1,5 +1,6 @@
 import { useCookiesContextTracking } from '@ses/core/context/CookiesContext';
 import { useEffect, useState } from 'react';
+import { siteRoutes } from '@/config/routes';
 
 const useHeaderCard = () => {
   const { isFunctionalTrackingAccepted } = useCookiesContextTracking();
@@ -60,7 +61,16 @@ const useHeaderCard = () => {
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
-        e.isIntersecting && window.history.replaceState(null, '', `#${e.target.id}`);
+        e.isIntersecting &&
+          window.history.replaceState(
+            {
+              ...window.history.state,
+              url: `${siteRoutes.home}#${e.target.id}`,
+              as: `${siteRoutes.home}#${e.target.id}`,
+            },
+            '',
+            `${siteRoutes.home}#${e.target.id}`
+          );
       });
     }, observerOptions);
 

@@ -1,5 +1,6 @@
 import { createRef, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
+import { siteRoutes } from '@/config/routes';
 import { fetchAnalytics } from '../Finances/api/queries';
 import type { BudgetTransitionPlainData, TransitionStatusDataShown } from './types';
 import type { Analytic } from '@ses/core/models/interfaces/analytic';
@@ -61,7 +62,15 @@ const useEndgameView = (budgetTransitionAnalytics: Analytic, yearsRange: string[
 
     if (newActiveTab && newActiveTab !== activeTab) {
       setActiveTab(newActiveTab);
-      window.history.replaceState(null, '', `#${newActiveTab}`);
+      window.history.replaceState(
+        {
+          ...window.history.state,
+          url: `${siteRoutes.endgame}#${newActiveTab}`,
+          as: `${siteRoutes.endgame}#${newActiveTab}`,
+        },
+        '',
+        `${siteRoutes.endgame}#${newActiveTab}`
+      );
     }
   }, [activeTab]);
 

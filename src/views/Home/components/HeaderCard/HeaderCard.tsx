@@ -72,9 +72,9 @@ const HeaderCard: FC = () => {
                 <MobileHeaderButtonContainer>
                   <MobileHeaderButton
                     disableRipple
-                    href={headerCardData.buttonLinks[1]}
                     onClick={() => {
                       handleIsMobileMenuExpanded(false);
+                      document.querySelector(headerCardData.buttonLinks[1])?.scrollIntoView();
                     }}
                   >
                     {headerCardData.buttonTexts[1]}
@@ -83,9 +83,9 @@ const HeaderCard: FC = () => {
                 <MobileHeaderButtonContainer>
                   <MobileHeaderButton
                     disableRipple
-                    href={headerCardData.buttonLinks[2]}
                     onClick={() => {
                       handleIsMobileMenuExpanded(false);
+                      document.querySelector(headerCardData.buttonLinks[2])?.scrollIntoView();
                     }}
                   >
                     {headerCardData.buttonTexts[2]}
@@ -94,9 +94,9 @@ const HeaderCard: FC = () => {
                 <MobileHeaderButtonContainer>
                   <MobileHeaderButton
                     disableRipple
-                    href={headerCardData.buttonLinks[3]}
                     onClick={() => {
                       handleIsMobileMenuExpanded(false);
+                      document.querySelector(headerCardData.buttonLinks[3])?.scrollIntoView();
                     }}
                   >
                     {headerCardData.buttonTexts[3]}
@@ -112,13 +112,34 @@ const HeaderCard: FC = () => {
           <HeaderButton index={0} endIcon={<BarChartLineIcon />} disableRipple>
             {headerCardData.buttonTexts[0]}
           </HeaderButton>
-          <HeaderButton index={1} href={headerCardData.buttonLinks[1]} endIcon={<MegaphoneIcon />} disableRipple>
+          <HeaderButton
+            index={1}
+            onClick={() => {
+              document.querySelector(headerCardData.buttonLinks[1])?.scrollIntoView();
+            }}
+            endIcon={<MegaphoneIcon />}
+            disableRipple
+          >
             {headerCardData.buttonTexts[1]}
           </HeaderButton>
-          <HeaderButton index={2} href={headerCardData.buttonLinks[2]} endIcon={<PersonSquareIcon />} disableRipple>
+          <HeaderButton
+            index={2}
+            onClick={() => {
+              document.querySelector(headerCardData.buttonLinks[2])?.scrollIntoView();
+            }}
+            endIcon={<PersonSquareIcon />}
+            disableRipple
+          >
             {headerCardData.buttonTexts[2]}
           </HeaderButton>
-          <HeaderButton index={3} href={headerCardData.buttonLinks[3]} endIcon={<MapIcon />} disableRipple>
+          <HeaderButton
+            index={3}
+            onClick={() => {
+              document.querySelector(headerCardData.buttonLinks[3])?.scrollIntoView();
+            }}
+            endIcon={<MapIcon />}
+            disableRipple
+          >
             {headerCardData.buttonTexts[3]}
           </HeaderButton>
         </Buttons>

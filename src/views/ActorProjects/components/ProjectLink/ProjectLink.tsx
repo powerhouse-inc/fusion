@@ -9,7 +9,7 @@ interface ProjectLinkProps {
 }
 
 const ProjectLink: React.FC<ProjectLinkProps> = ({ href, code, name }) => (
-  <LinkCard as={href ? 'a' : 'div'} href={href ?? ''}>
+  <LinkCard href={href ?? ''}>
     <TextBox>
       <ProjectLabel>Project</ProjectLabel>
       <NameBox addLimit={!!href}>
