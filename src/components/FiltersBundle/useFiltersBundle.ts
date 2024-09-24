@@ -31,6 +31,13 @@ export default function useFiltersBundle({ filters, order, asPopover }: Props) {
   const triggerRef = useRef<HTMLDivElement | null>(null);
   const [areFiltersOpen, setAreFiltersOpen] = useState(false);
   const handleToggleOpenFilters = () => {
+    if (areFiltersOpen) {
+      setTimeout(() => {
+        document.documentElement.style.scrollBehavior = 'smooth';
+      }, 300);
+    } else {
+      document.documentElement.style.scrollBehavior = 'auto';
+    }
     setAreFiltersOpen((prev) => !prev);
   };
 
