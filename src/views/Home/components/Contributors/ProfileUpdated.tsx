@@ -1,5 +1,5 @@
 import { styled } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ResourceType } from '@/core/models/interfaces/types';
 import type { DateTime } from 'luxon';
 import type { FC } from 'react';
@@ -10,11 +10,20 @@ interface Props {
 }
 
 const ProfileUpdated: FC<Props> = ({ date, type }) => {
+  const [formattedDate, setFormattedDate] = useState<string | null>(null);
   const labelText = type === ResourceType.CoreUnit ? 'Expense Report' : 'Profile Updated';
+
+  useEffect(() => {
+    if (date?.isValid) {
+      setFormattedDate(date?.toFormat('dd.MM.yyyy'));
+    } else {
+      setFormattedDate('No data');
+    }
+  }, [date]);
   return (
     <Container>
       <Label>{labelText}</Label>
-      <DateContainer>{date?.toFormat('dd.MM.yyyy') ?? 'No data'}</DateContainer>
+      <DateContainer>{formattedDate}</DateContainer>
     </Container>
   );
 };
