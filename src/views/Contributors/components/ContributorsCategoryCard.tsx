@@ -14,23 +14,24 @@ interface Props {
   teams: Team[];
   title: string;
   totalContributors: number;
+  href: string;
 }
 
-const ContributorsCategoryCard: FC<Props> = ({ description, teams, title, totalContributors }) => (
+const ContributorsCategoryCard: FC<Props> = ({ description, teams, title, totalContributors, href }) => (
   <Container>
     <ContainerHeaderDescription>
       <Header>
         <Title>{title}</Title>
         <LinkMobile>
-          <InternalLinkButton isLink />
+          <InternalLinkButton isLink href={href} />
         </LinkMobile>
         <LinkTable>
-          <InternalLinkButton isLink label="View" />
+          <InternalLinkButton isLink label="View" href={href} />
         </LinkTable>
       </Header>
       <Description>{description}</Description>
       <LinkDesk>
-        <InternalLinkButton isLink label="View" />
+        <InternalLinkButton isLink label="View" href={href} />
       </LinkDesk>
     </ContainerHeaderDescription>
     <Content>
@@ -46,8 +47,8 @@ const Container = styled(Card)(({ theme }) => ({
   boxShadow: 'none',
   flex: 1,
   padding: 8,
-  border: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[200] : 'red'}`,
-  background: theme.palette.isLight ? theme.palette.colors.gray[50] : 'red',
+  border: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.charcoal[800]}`,
+  background: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.charcoal[900],
   [theme.breakpoints.up('tablet_768')]: {
     flexDirection: 'column',
   },
@@ -71,7 +72,7 @@ const Header = styled('div')(({ theme }) => ({
 }));
 
 const Title = styled('div')(({ theme }) => ({
-  color: theme.palette.isLight ? theme.palette.colors.gray[900] : 'red',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   fontFamily: 'Inter, sans-serif',
   fontSize: 14,
   fontWeight: 600,
@@ -84,7 +85,7 @@ const Title = styled('div')(({ theme }) => ({
 }));
 
 const Description = styled('div')(({ theme }) => ({
-  color: theme.palette.isLight ? theme.palette.colors.gray[500] : 'red',
+  color: theme.palette.isLight ? theme.palette.colors.gray[500] : theme.palette.colors.gray[600],
   fontFamily: 'Inter, sans-serif',
   fontSize: 12,
   fontWeight: 500,
