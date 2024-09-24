@@ -38,25 +38,24 @@ const Card = styled('div')(({ theme }) => ({
   display: 'flex',
   width: '100%',
   flexDirection: 'column',
-  backgroundColor: '#FFF',
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : '#2b303b',
   borderRadius: 6,
 
   gap: 8,
   [theme.breakpoints.up('tablet_768')]: {
     padding: 0,
   },
-  [theme.breakpoints.up('desktop_1024')]: {},
 }));
 
 const Title = styled('div')(({ theme }) => ({
-  background: theme.palette.isLight ? theme.palette.colors.slate[50] : 'red',
+  background: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
   padding: '2px 0px 2px 8px',
 
   borderRadius: '12px 12px 0px 0px',
   fontSize: 14,
   fontWeight: 600,
   lineHeight: '22px',
-  color: theme.palette.isLight ? theme.palette.colors.gray[900] : 'red',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   [theme.breakpoints.up('tablet_768')]: {
     padding: '2px 0px 2px 16px',
   },

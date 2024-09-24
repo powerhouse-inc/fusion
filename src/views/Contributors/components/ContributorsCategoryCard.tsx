@@ -47,8 +47,8 @@ const Container = styled(Card)(({ theme }) => ({
   boxShadow: 'none',
   flex: 1,
   padding: 8,
-  border: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[200] : 'red'}`,
-  background: theme.palette.isLight ? theme.palette.colors.gray[50] : 'red',
+  border: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.charcoal[800]}`,
+  background: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.charcoal[900],
   [theme.breakpoints.up('tablet_768')]: {
     flexDirection: 'column',
   },
@@ -72,7 +72,7 @@ const Header = styled('div')(({ theme }) => ({
 }));
 
 const Title = styled('div')(({ theme }) => ({
-  color: theme.palette.isLight ? theme.palette.colors.gray[900] : 'red',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   fontFamily: 'Inter, sans-serif',
   fontSize: 14,
   fontWeight: 600,
@@ -85,7 +85,7 @@ const Title = styled('div')(({ theme }) => ({
 }));
 
 const Description = styled('div')(({ theme }) => ({
-  color: theme.palette.isLight ? theme.palette.colors.gray[500] : 'red',
+  color: theme.palette.isLight ? theme.palette.colors.gray[500] : theme.palette.colors.gray[600],
   fontFamily: 'Inter, sans-serif',
   fontSize: 12,
   fontWeight: 500,
