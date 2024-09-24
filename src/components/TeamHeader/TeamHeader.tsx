@@ -7,7 +7,6 @@ import SocialMediaLinksButton from '../ButtonLink/SocialMediaLinksButton';
 import CategoryChip from '../CategoryChip/CategoryChip';
 import CircleAvatar from '../CircleAvatar/CircleAvatar';
 import Container from '../Container/Container';
-import ExternalLinkButton from '../ExternalLinkButton/ExternalLinkButton';
 import RoleChip from '../RoleChip/RoleChip';
 import ScopeChip from '../ScopeChip/ScopeChip';
 import { StatusChip } from '../StatusChip/StatusChip';
@@ -34,9 +33,7 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className, withDescriptio
       )
     ) : team.type === ResourceType.Delegates ? (
       // it is a delegates
-      <ExternalLinkButton href="https://makerburn.com/#/expenses/core-units/DELEGATES">
-        Onchain Transactions
-      </ExternalLinkButton>
+      <CoreUnitSubmissionLink team={team} />
     ) : (
       // it is a core unit
       team.category?.length > 0 && (
@@ -61,11 +58,13 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className, withDescriptio
                   ResourceType.Keepers,
                   ResourceType.SpecialPurposeFund,
                   ResourceType.AlignedDelegates,
+                  ResourceType.Delegates,
                 ].includes(team.type)}
               />
               <InfoContent>
-                <TeamName>
-                  <Code>{team.shortCode}</Code> {team.name}
+                <TeamName shouldBeCentered={team.type === ResourceType.Delegates}>
+                  <Code>{team.shortCode}</Code>
+                  {team.name}
                 </TeamName>
                 {[ResourceType.EcosystemActor, ResourceType.CoreUnit].includes(team.type) && (
                   <ChipsContainer>
@@ -74,7 +73,6 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className, withDescriptio
                     ) : (
                       <StatusChipForCoreUnit status={team.status as TeamStatus} />
                     )}
-
                     {team.type === ResourceType.EcosystemActor ? (
                       <RoleChip status={(team.category?.[0] ?? '') as TeamRole} />
                     ) : (
@@ -85,12 +83,12 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className, withDescriptio
                 {chips}
               </InfoContent>
             </TeamBasicInfo>
-
             <LinksContainer
               shouldBeCentered={[
                 ResourceType.Keepers,
                 ResourceType.SpecialPurposeFund,
                 ResourceType.AlignedDelegates,
+                ResourceType.Delegates,
               ].includes(team.type)}
             >
               <SocialMediaLinksButton socialMedia={team.socialMediaChannels?.[0]} />
@@ -107,9 +105,8 @@ export default TeamHeader;
 
 const MainContainer = styled('div')(({ theme }) => ({
   marginTop: 40,
-  zIndex: 3,
   width: '100%',
-  background: theme.palette.isLight ? theme.palette.colors.gray[50] : 'rgba(25, 29, 36, 1)',
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.background.dm,
 }));
 
 const HeaderWrapper = styled('div')(({ theme }) => ({
@@ -133,7 +130,7 @@ const TeamBasicInfo = styled('div')(({ theme }) => ({
   width: '100%',
   maxWidth: 'calc(100% - 40px)',
 
-  [theme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('desktop_1024')]: {
     gap: 16,
   },
 }));
@@ -178,18 +175,13 @@ const InfoContent = styled('div')(({ theme }) => ({
   },
 }));
 
-const ChipsContainer = styled('div')(({ theme }) => ({
+const ChipsContainer = styled('div')(() => ({
   display: 'flex',
   gap: 4,
-
   '& > *': {
     alignSelf: 'center',
     textWrap: 'nowrap',
     height: 24,
-  },
-
-  [theme.breakpoints.up('tablet_768')]: {
-    gap: 8,
   },
 }));
 
@@ -209,7 +201,9 @@ const StatusChipForCoreUnit = styled(StatusChip)(({ theme }) => ({
   },
 }));
 
-const TeamName = styled('div')(({ theme }) => ({
+const TeamName = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'shouldBeCentered',
+})<{ shouldBeCentered: boolean }>(({ theme, shouldBeCentered }) => ({
   fontSize: 16,
   lineHeight: '24px',
   fontWeight: 600,
@@ -219,13 +213,21 @@ const TeamName = styled('div')(({ theme }) => ({
   textOverflow: 'ellipsis',
 
   [theme.breakpoints.up('tablet_768')]: {
+    ...(shouldBeCentered && { alignSelf: 'center' }),
+    marginRight: 8,
+    fontSize: 18,
+    lineHeight: '21.6px',
+    fontWeight: 700,
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
     marginRight: 16,
     fontSize: 20,
-    fontWeight: 700,
+    lineHeight: '24px',
   },
 }));
 
 const Code = styled('span')(({ theme }) => ({
+  marginRight: 4,
   color: theme.palette.isLight ? theme.palette.colors.gray[400] : theme.palette.colors.gray[600],
 }));
 
