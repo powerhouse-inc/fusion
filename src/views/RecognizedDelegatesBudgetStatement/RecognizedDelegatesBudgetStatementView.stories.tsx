@@ -91,9 +91,8 @@ LightMode.parameters = {
           ...optionStyles,
         },
       },
-
       1440: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=3376-35509&m=dev',
+        component: '',
         options: {
           componentStyle: {
             width: 1440,
