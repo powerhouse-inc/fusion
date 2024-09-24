@@ -54,3 +54,27 @@ export const legacyTeams = [
     href: siteRoutes.finances('legacy/spfs?year=2024'),
   },
 ] as TeamType[];
+
+export const ContributorsCategoryCardData = [
+  {
+    name: 'Ecosystem Actors',
+    description:
+      "Ecosystem Actors undertake key projects like feature development and marketing under guidelines that promote the Sky Ecosystem's growth. They facilitate vital operational activities, ensuring alignment with ecosystem goals.",
+    teams: 24,
+    href: siteRoutes.ecosystemActors,
+  },
+  {
+    name: 'Aligned Delegates',
+    description:
+      "Aligned Delegates use delegated voting to ensure protocol alignment, adhering to stringent requirements while providing crucial governance insights. They serve as key governance participants, maintaining the ecosystem's universal alignment.",
+    teams: 16,
+    href: siteRoutes.ecosystemActors,
+  },
+  {
+    name: 'Aligned Delegates',
+    description:
+      'Keepers manage crucial financial operations within Sky, ensuring the stability and efficiency of the SkyDollar and overall Sky Ecosystem health. Their actions directly impact the economic resilience of the Sky.',
+    teams: 4,
+    href: siteRoutes.ecosystemActors,
+  },
+] as TeamType[];

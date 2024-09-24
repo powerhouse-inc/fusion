@@ -71,15 +71,23 @@ const GoUpButton = styled(IconButton)(({ theme }) => ({
   padding: 4,
   borderRadius: 0,
 
-  '& > svg path': {
-    ...(!theme.palette.isLight && {
-      fill: theme.palette.colors.charcoal[300],
-    }),
+  '& > svg': {
+    width: 24,
+    height: 24,
+    '& path': {
+      ...(!theme.palette.isLight && {
+        fill: theme.palette.colors.charcoal[300],
+      }),
+    },
   },
 
   [theme.breakpoints.up('desktop_1440')]: {
     width: 48,
     height: 48,
     padding: 6,
+    '& > svg': {
+      width: 36,
+      height: 36,
+    },
   },
 }));

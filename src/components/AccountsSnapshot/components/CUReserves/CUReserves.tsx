@@ -218,7 +218,9 @@ const OnChainSubsection = styled('div')(({ theme }) => ({
   },
 }));
 
-const OffChainSubsection = styled('div')<{ isDisabled?: boolean }>(({ isDisabled = false }) => ({
+const OffChainSubsection = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'isDisabled',
+})<{ isDisabled?: boolean }>(({ isDisabled = false }) => ({
   marginTop: 24,
   opacity: isDisabled ? 0.3 : 1,
 }));

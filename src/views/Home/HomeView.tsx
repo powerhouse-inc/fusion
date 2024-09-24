@@ -5,7 +5,7 @@ import PageContainer from '@/components/Container/PageContainer';
 import type { ExtendedExecutiveProposal } from '@/core/models/interfaces/makervote';
 import type { Roadmap } from '@/core/models/interfaces/roadmaps';
 import type { Team } from '@/core/models/interfaces/team';
-import ContributorsSection from './components/Contributors/ContributorsSection';
+import ContributorsSection from '../Contributors/components/Sections/ContributorsSections';
 import FinancesSection from './components/FinancesSection/FinancesSection';
 import GovernanceSection from './components/GovernanceSection/GovernanceSection';
 import HeaderCard from './components/HeaderCard/HeaderCard';

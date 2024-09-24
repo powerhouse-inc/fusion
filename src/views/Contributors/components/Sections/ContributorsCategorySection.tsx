@@ -5,9 +5,9 @@ import type { FancyTabItem } from '@/components/FancyTabs/FancyTabs';
 import FancyTabs from '@/components/FancyTabs/FancyTabs';
 import ShadowWrapper from '@/components/FancyTabs/ShadowWrapper';
 import type { Team } from '@/core/models/interfaces/team';
-import ContributorsCategoryCard from '@/views/Contributors/components/ContributorsCategoryCard';
-import { useContributorsCategorySection } from '@/views/Contributors/components/Sections/useContributorsCategorySection';
-import { currentTeams, legacyTeams } from '@/views/Contributors/staticData';
+import { currentTeams } from '../../staticData';
+import ContributorsCategoryCard from '../ContributorsCategoryCard';
+import { useContributorsCategorySection } from './useContributorsCategorySection';
 import type { FC } from 'react';
 
 interface Props {
@@ -18,8 +18,7 @@ interface Props {
 }
 
 const ContributorsCategorySection: FC<Props> = ({ teams, tabs, activeTab, onTabChange }) => {
-  const { ecosystemActors, subtitleContributors, alignedDelegates, keepers, coreUnits } =
-    useContributorsCategorySection(teams);
+  const { ecosystemActors, subtitleContributors, alignedDelegates, keepers } = useContributorsCategorySection(teams);
   return (
     <ContributorsContainer>
       <ContainerTabs>
@@ -35,47 +34,22 @@ const ContributorsCategorySection: FC<Props> = ({ teams, tabs, activeTab, onTabC
                     description={currentTeams[0].description}
                     teams={ecosystemActors}
                     title={currentTeams[0].name}
-                    totalContributors={currentTeams[0].teams}
                     href={currentTeams[0].href}
+                    totalContributors={currentTeams[0].teams}
                   />
                   <ContributorsCategoryCard
                     description={currentTeams[1].description}
                     teams={alignedDelegates}
                     title={currentTeams[1].name}
-                    totalContributors={currentTeams[1].teams}
                     href={currentTeams[1].href}
+                    totalContributors={currentTeams[1].teams}
                   />
                   <ContributorsCategoryCard
+                    href={currentTeams[2].href}
                     description={currentTeams[2].description}
                     teams={keepers}
                     title={currentTeams[2].name}
                     totalContributors={currentTeams[2].teams}
-                    href={currentTeams[2].href}
-                  />
-                </ContainerContributors>
-              )}
-              {activeTab === '2' && (
-                <ContainerContributors>
-                  <ContributorsCategoryCard
-                    description={legacyTeams[0].description}
-                    teams={coreUnits}
-                    title={legacyTeams[0].name}
-                    totalContributors={legacyTeams[0].teams}
-                    href={legacyTeams[0].href}
-                  />
-                  <ContributorsCategoryCard
-                    description={legacyTeams[1].description}
-                    teams={coreUnits}
-                    title={legacyTeams[1].name}
-                    totalContributors={legacyTeams[1].teams}
-                    href={legacyTeams[1].href}
-                  />
-                  <ContributorsCategoryCard
-                    description={legacyTeams[2].description}
-                    teams={coreUnits}
-                    title={legacyTeams[2].name}
-                    totalContributors={legacyTeams[2].teams}
-                    href={legacyTeams[2].href}
                   />
                 </ContainerContributors>
               )}
