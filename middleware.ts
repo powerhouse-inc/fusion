@@ -17,7 +17,7 @@ export function middleware(request: NextRequest) {
 
   // Create a Response object
   const response = NextResponse.redirect(url, {
-    status: 308, // Permanent Redirect
+    status: 301, // Permanent Redirect
   });
 
   return response;
