@@ -14,23 +14,24 @@ interface Props {
   teams: Team[];
   title: string;
   totalContributors: number;
+  href: string;
 }
 
-const ContributorsCategoryCard: FC<Props> = ({ description, teams, title, totalContributors }) => (
+const ContributorsCategoryCard: FC<Props> = ({ description, teams, title, totalContributors, href }) => (
   <Container>
     <ContainerHeaderDescription>
       <Header>
         <Title>{title}</Title>
         <LinkMobile>
-          <InternalLinkButton isLink />
+          <InternalLinkButton isLink href={href} />
         </LinkMobile>
         <LinkTable>
-          <InternalLinkButton isLink label="View" />
+          <InternalLinkButton isLink label="View" href={href} />
         </LinkTable>
       </Header>
       <Description>{description}</Description>
       <LinkDesk>
-        <InternalLinkButton isLink label="View" />
+        <InternalLinkButton isLink label="View" href={href} />
       </LinkDesk>
     </ContainerHeaderDescription>
     <Content>
