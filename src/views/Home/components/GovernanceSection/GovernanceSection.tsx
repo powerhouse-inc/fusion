@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { styled } from '@mui/material';
 import type { ExtendedExecutiveProposal } from '@/core/models/interfaces/makervote';
 import { headerCardData, sectionsData } from '../../staticData';

@@ -25,8 +25,8 @@ const Proposals: React.FC<ProposalsProps> = ({ governanceProposals, hatAddress }
           </SectionHeader>
 
           <ProposalList>
-            {openProposals.map((proposal, index) => (
-              <Proposal key={index} proposal={proposal} isHat={hatAddress === proposal.address} />
+            {openProposals.map((proposal) => (
+              <Proposal key={proposal.key} proposal={proposal} isHat={hatAddress === proposal.address} />
             ))}
           </ProposalList>
         </SectionContainer>
@@ -42,8 +42,8 @@ const Proposals: React.FC<ProposalsProps> = ({ governanceProposals, hatAddress }
           </SectionHeader>
 
           <ProposalList>
-            {activeProposals.map((proposal, index) => (
-              <Proposal key={index} proposal={proposal} isHat={hatAddress === proposal.address} />
+            {activeProposals.map((proposal) => (
+              <Proposal key={proposal.key} proposal={proposal} isHat={hatAddress === proposal.address} />
             ))}
           </ProposalList>
         </SectionContainer>
@@ -59,8 +59,8 @@ const Proposals: React.FC<ProposalsProps> = ({ governanceProposals, hatAddress }
           </SectionHeader>
 
           <ProposalList>
-            {slicedPassedProposals.map((proposal, index) => (
-              <Proposal key={index} proposal={proposal} isHat={hatAddress === proposal.address} />
+            {slicedPassedProposals.map((proposal) => (
+              <Proposal key={proposal.key} proposal={proposal} isHat={hatAddress === proposal.address} />
             ))}
           </ProposalList>
         </SectionContainer>
