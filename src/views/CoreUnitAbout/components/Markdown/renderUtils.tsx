@@ -3,19 +3,18 @@ import React from 'react';
 import './Markdown.module.scss';
 
 export const customRenderer = {
-  image(href: string, index: number) {
+  image(href: string) {
     return (
       <div
         style={{
           width: '100%',
         }}
-        key={`image-${index}`}
       >
         <ImageTag src={href} className="img-container" />
       </div>
     );
   },
-  paragraph(text: string, index: number) {
+  paragraph(text: string) {
     return (
       <ResponsiveParagraph
         className="paragraph"
@@ -26,13 +25,12 @@ export const customRenderer = {
           marginBottom: 0,
           textAlign: 'left',
         }}
-        key={`paragraph-${index}`}
       >
         {text}
       </ResponsiveParagraph>
     );
   },
-  list(text: string, index: number) {
+  list(text: string) {
     return (
       <ResponsiveList
         className="ol_tags"
@@ -42,13 +40,12 @@ export const customRenderer = {
           fontFamily: 'Inter, sans-serif',
           textAlign: 'left',
         }}
-        key={`list-${index}`}
       >
         {text}
       </ResponsiveList>
     );
   },
-  listitem(text: string, index: number) {
+  listitem(text: string) {
     return (
       <ResponsiveItem
         className="ol_"
@@ -59,17 +56,15 @@ export const customRenderer = {
           fontFamily: 'Inter, sans-serif',
           textAlign: 'left',
         }}
-        key={`listitem-${index}`}
       >
         {text}
       </ResponsiveItem>
     );
   },
-  code(text: string, index: number) {
+  code(text: string) {
     return (
       <ResponsiveCode
         className="tag-code"
-        key={`code-${index}`}
         style={{
           backgroundColor: 'transparent',
           color: '#343839',
@@ -85,7 +80,7 @@ export const customRenderer = {
       </ResponsiveCode>
     );
   },
-  heading(text: string, level: number, index: number) {
+  heading(text: string, level: number) {
     switch (level) {
       case 1:
         return (
@@ -93,7 +88,6 @@ export const customRenderer = {
             style={{
               color: '#343839',
             }}
-            key={`heading1-${index}`}
           >
             {text}
           </HeadingResponsiveH1>
@@ -104,7 +98,6 @@ export const customRenderer = {
             style={{
               color: '#343839',
             }}
-            key={`heading2-${index}`}
           >
             {text}
           </HeadingResponsiveH2>
@@ -115,7 +108,6 @@ export const customRenderer = {
             style={{
               color: '#343839',
             }}
-            key={`heading3-${index}`}
           >
             {text}
           </HeadingResponsiveH3>
@@ -126,7 +118,6 @@ export const customRenderer = {
             style={{
               color: '#343839',
             }}
-            key={`heading-default-${index}`}
           >
             {text}
           </HeadingResponsiveH3>
@@ -136,19 +127,18 @@ export const customRenderer = {
 };
 
 export const customRendererDark = {
-  image(href: string, index: number) {
+  image(href: string) {
     return (
       <div
         style={{
           width: '100%',
         }}
-        key={`image-${index}`}
       >
         <ImageTag src={href} className="img-container" />
       </div>
     );
   },
-  paragraph(text: string, index: number) {
+  paragraph(text: string) {
     return (
       <ResponsiveParagraph
         className="paragraph"
@@ -160,13 +150,12 @@ export const customRendererDark = {
           marginBottom: 0,
           textAlign: 'left',
         }}
-        key={`paragraph-${index}`}
       >
         {text}
       </ResponsiveParagraph>
     );
   },
-  list(text: string, index: number) {
+  list(text: string) {
     return (
       <ResponsiveList
         className="ol_tags"
@@ -177,13 +166,12 @@ export const customRendererDark = {
           fontFamily: 'Inter, sans-serif',
           textAlign: 'left',
         }}
-        key={`listitem-${index}`}
       >
         {text}
       </ResponsiveList>
     );
   },
-  listitem(text: string, index: number) {
+  listitem(text: string) {
     return (
       <ResponsiveItem
         className="ol_"
@@ -194,17 +182,15 @@ export const customRendererDark = {
           fontFamily: 'Inter, sans-serif',
           textAlign: 'left',
         }}
-        key={`listitem-${index}`}
       >
         {text}
       </ResponsiveItem>
     );
   },
-  code(text: string, index: number) {
+  code(text: string) {
     return (
       <ResponsiveCode
         className="tag-code"
-        key={`code-${index}`}
         style={{
           backgroundColor: 'transparent',
           color: '#FCFCFC',
