@@ -1,10 +1,11 @@
 import { styled } from '@mui/material';
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import './Markdown.module.scss';
 
 // Use uuid to generate unique keys
-const generateKey = (prefix: string) => `${prefix}-${uuidv4()}`;
+
+// Generate a stable key based on unique content rather than a random UUID
+const generateStableKey = (prefix: string, content: string | number) => `${prefix}-${content}`;
 
 export const customRenderer = {
   image(href: string) {
@@ -13,7 +14,7 @@ export const customRenderer = {
         style={{
           width: '100%',
         }}
-        key={generateKey('image')}
+        key={generateStableKey('image', href)}
       >
         <ImageTag src={href} className="img-container" />
       </div>
@@ -30,7 +31,7 @@ export const customRenderer = {
           marginBottom: 0,
           textAlign: 'left',
         }}
-        key={generateKey('paragraph')}
+        key={generateStableKey('paragraph', text)}
       >
         {text}
       </ResponsiveParagraph>
@@ -46,7 +47,7 @@ export const customRenderer = {
           fontFamily: 'Inter, sans-serif',
           textAlign: 'left',
         }}
-        key={generateKey('list')}
+        key={generateStableKey('list', text)}
       >
         {text}
       </ResponsiveList>
@@ -63,7 +64,7 @@ export const customRenderer = {
           fontFamily: 'Inter, sans-serif',
           textAlign: 'left',
         }}
-        key={generateKey('listitem')}
+        key={generateStableKey('listitem', text)}
       >
         {text}
       </ResponsiveItem>
@@ -73,7 +74,7 @@ export const customRenderer = {
     return (
       <ResponsiveCode
         className="tag-code"
-        key={generateKey('code')}
+        key={generateStableKey('code', text)}
         style={{
           backgroundColor: 'transparent',
           color: '#343839',
@@ -143,7 +144,7 @@ export const customRendererDark = {
           width: '100%',
         }}
       >
-        <ImageTag src={href} className="img-container" key={generateKey('image')} />
+        <ImageTag src={href} className="img-container" key={generateStableKey('image', href)} />
       </div>
     );
   },
@@ -159,7 +160,7 @@ export const customRendererDark = {
           marginBottom: 0,
           textAlign: 'left',
         }}
-        key={generateKey('paragraph')}
+        key={generateStableKey('paragraph', text)}
       >
         {text}
       </ResponsiveParagraph>
@@ -176,7 +177,7 @@ export const customRendererDark = {
           fontFamily: 'Inter, sans-serif',
           textAlign: 'left',
         }}
-        key={generateKey('list')}
+        key={generateStableKey('list', text)}
       >
         {text}
       </ResponsiveList>
@@ -193,7 +194,7 @@ export const customRendererDark = {
           fontFamily: 'Inter, sans-serif',
           textAlign: 'left',
         }}
-        key={generateKey('listitem')}
+        key={generateStableKey('listitem', text)}
       >
         {text}
       </ResponsiveItem>
@@ -203,7 +204,7 @@ export const customRendererDark = {
     return (
       <ResponsiveCode
         className="tag-code"
-        key={generateKey('code')}
+        key={generateStableKey('code', text)}
         style={{
           backgroundColor: 'transparent',
           color: '#FCFCFC',
