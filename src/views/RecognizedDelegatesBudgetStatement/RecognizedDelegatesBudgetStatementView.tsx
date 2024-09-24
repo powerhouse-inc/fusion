@@ -126,18 +126,19 @@ export default RecognizedDelegatesBudgetStatementView;
 const ContainerInside = styled('div')(({ theme }) => ({
   display: 'block',
   width: '100%',
-  margin: '24px auto 0px',
+  margin: '16px auto 0px',
   paddingRight: 16,
   paddingLeft: 16,
   textAlign: 'left',
 
   [theme.breakpoints.up('tablet_768')]: {
+    marginTop: 24,
     paddingRight: 32,
     paddingLeft: 32,
   },
   [theme.breakpoints.up('desktop_1280')]: {
-    paddingRight: 48,
-    paddingLeft: 48,
+    paddingRight: 40,
+    paddingLeft: 40,
   },
   [theme.breakpoints.up('desktop_1440')]: {
     maxWidth: 1312,
@@ -147,14 +148,14 @@ const ContainerInside = styled('div')(({ theme }) => ({
 }));
 
 const ContainerTabs = styled('div')(({ theme }) => ({
-  margin: '32px 0',
+  margin: '32px 0 24px',
 
   '& > div > div > a': {
     paddingBottom: 8,
+  },
 
-    [theme.breakpoints.up('tablet_768')]: {
-      paddingBottom: 14,
-    },
+  [theme.breakpoints.up('tablet_768')]: {
+    marginTop: 24,
   },
 }));
 

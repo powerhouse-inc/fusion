@@ -1,11 +1,10 @@
-import { styled, useMediaQuery } from '@mui/material';
-import { CustomLink } from '@ses/components/CustomLink/CustomLink';
+import { styled } from '@mui/material';
 import { AdvancedInnerTable } from '@/components/AdvancedInnerTable/AdvancedInnerTable';
+import ExternalLinkButton from '@/components/ExternalLinkButton/ExternalLinkButton';
 import type { BudgetStatement } from '@/core/models/interfaces/budgetStatement';
 import { ResourceType } from '@/core/models/interfaces/types';
 import { TransparencyEmptyTable } from '@/views/CoreUnitBudgetStatement/components/Placeholders/TransparencyEmptyTable';
 import { useDelegatesActuals } from './useDelegatesActuals';
-import type { Theme } from '@mui/material';
 import type { DateTime } from 'luxon';
 import type { FC } from 'react';
 
@@ -15,7 +14,6 @@ interface Props {
 }
 
 const DelegatesActuals: FC<Props> = ({ currentMonth, budgetStatement }) => {
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const {
     breakdownColumnsActuals,
     breakdownItemsActuals,
@@ -27,16 +25,8 @@ const DelegatesActuals: FC<Props> = ({ currentMonth, budgetStatement }) => {
   return (
     <Container>
       {currentBudgetStatement && (
-        <TransactionLink>
-          View the
-          <CustomLink
-            children="onchain transactions for recognized delegates"
-            href="https://makerburn.com/#/expenses/core-units/DELEGATES"
-            fontSize={isMobile ? 14 : 16}
-            lineHeight="18px"
-            iconWidth={10}
-            iconHeight={10}
-          />
+        <TransactionLink href="https://makerburn.com/#/expenses/core-units/DELEGATES">
+          Onchain transactions for Recognized Delegates
         </TransactionLink>
       )}
       <TotalsMonth>{currentMonth.toFormat('MMM yyyy')} Totals</TotalsMonth>
@@ -73,26 +63,28 @@ const Container = styled('div')(() => ({
   flexDirection: 'column',
 }));
 
-const TransactionLink = styled('div')(({ theme }) => ({
-  display: 'inline',
-  fontFamily: 'Inter, sans-serif',
-  fontStyle: 'normal',
-  fontWeight: 400,
-  fontSize: 14,
-  lineHeight: '22px',
-  marginBottom: 32,
-  '& > a ': {
-    whiteSpace: 'unset',
+const TransactionLink = styled(ExternalLinkButton)(({ theme }) => ({
+  padding: '0px 6px 0px 8px',
+  alignItems: 'center',
+  border: `1px solid ${
+    theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.charcoal[800]
+  }`,
+  '&:hover': {
+    border: `1px solid ${
+      theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700]
+    }`,
   },
-  color: theme.palette.isLight ? '#231536' : '#D2D4EF',
+  '& div': {
+    width: 16,
+    height: 16,
+  },
 
   [theme.breakpoints.up('tablet_768')]: {
-    display: 'block',
+    padding: '4px 16px 4px 24px',
     fontSize: 16,
-    lineHeight: '22px',
-    '& > a ': {
-      fontSize: 16,
-      lineHeight: '18px',
+    '& div': {
+      width: 20,
+      height: 20,
     },
   },
 }));
@@ -104,10 +96,10 @@ const TotalsMonth = styled('div')(({ theme }) => ({
   fontSize: '16px',
   lineHeight: '19px',
   color: theme.palette.isLight ? '#231536' : '#9FAFB9',
+  marginTop: 24,
   marginBottom: 16,
 
   [theme.breakpoints.up('tablet_768')]: {
-    marginBottom: 24,
     fontSize: '20px',
     lineHeight: '24px',
   },

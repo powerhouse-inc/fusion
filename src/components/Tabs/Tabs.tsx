@@ -1,9 +1,9 @@
 import { styled } from '@mui/material';
-import { removeEmptyProperties } from '@ses/core/utils/urls';
 import { useRouter } from 'next/router';
 import ArrowCollapse from 'public/assets/svg/arrow_collapse.svg';
 import ArrowExpand from 'public/assets/svg/arrow_expand.svg';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { removeEmptyProperties } from '@/core/utils/urls';
 import Tab from './Tab';
 import TabPopover from './TabPopover';
 import type { CSSProperties } from 'react';
