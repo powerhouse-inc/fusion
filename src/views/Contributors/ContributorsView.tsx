@@ -26,6 +26,7 @@ const ContributorsView: React.FC<Props> = ({ teams }) => {
     activeCategoryTab,
     handleActiveCategoryTab,
     teamCategoriesTabs,
+    subtitleContributors,
   } = useContributorsSection(teams);
   return (
     <ContributorsPageContainer>
@@ -40,6 +41,7 @@ const ContributorsView: React.FC<Props> = ({ teams }) => {
             activeTab={activeCategoryTab}
             onTabChange={handleActiveCategoryTab}
             tabs={teamCategoriesTabs}
+            subtitleContributors={subtitleContributors}
           />
 
           <ContributorsListSections
