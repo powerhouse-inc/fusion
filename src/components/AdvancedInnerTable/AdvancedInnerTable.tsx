@@ -1,7 +1,7 @@
 import { styled } from '@mui/material';
 import React, { useId } from 'react';
 import { OpenModalTransparency } from '@/views/CoreUnitBudgetStatement/BudgetStatementtUtils';
-import { TransparencyEmptyTable } from '../../views/CoreUnitBudgetStatement/components/Placeholders/TransparencyEmptyTable';
+import { TransparencyEmptyTable } from '@/views/CoreUnitBudgetStatement/components/Placeholders/TransparencyEmptyTable';
 import { NumberCell } from './NumberCell/NumberCell';
 import { TextCell } from './TextCell/TextCell';
 import { TransparencyCard } from './TransparencyCard/TransparencyCard';

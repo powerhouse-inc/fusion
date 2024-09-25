@@ -1,6 +1,6 @@
 import { styled } from '@mui/material';
 import React from 'react';
-import { useThemeContext } from '../../../core/context/ThemeContext';
+import { useThemeContext } from '@/core/context/ThemeContext';
 import type { CSSProperties, FC } from 'react';
 
 export interface TableCellProps {

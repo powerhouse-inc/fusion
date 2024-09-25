@@ -1,4 +1,3 @@
-import { useMediaQuery } from '@mui/material';
 import { DateTime } from 'luxon';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import CommentsTab from '@/components/Tabs/CommentsTab/CommentsTab';
@@ -15,7 +14,6 @@ import { BudgetStatus, ResourceType } from '@/core/models/interfaces/types';
 import { budgetStatementCommentsCollectionId } from '@/core/utils/collectionsIds';
 import { LastVisitHandler } from '@/core/utils/lastVisitHandler';
 import type { TableItems } from '../CoreUnitBudgetStatement/CoreUnitBudgetStatementView';
-import type { Theme } from '@mui/material';
 
 export enum DELEGATES_REPORT_IDS_ENUM {
   ACTUALS = 'actuals',
@@ -39,7 +37,6 @@ const useRecognizedDelegatesReport = (delegates: DelegatesDto, snapshots: Snapsh
   const [lastVisitHandler, setLastVisitHandler] = useState<LastVisitHandler>();
   const { permissionManager } = useAuthContext();
   const { isTimestampTrackingAccepted } = useCookiesContextTracking();
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const allBudgetStatement = delegates?.budgetStatements || [];
 
   const onPrevious = useCallback(() => {
@@ -133,7 +130,7 @@ const useRecognizedDelegatesReport = (delegates: DelegatesDto, snapshots: Snapsh
         shortCode: 'DEL',
         name: 'Recognized Delegates',
         type: ResourceType.Delegates,
-        image: '/assets/img/mk-logo.png',
+        image: '/assets/img/recognized-delegates.svg',
         socialMediaChannels: [
           {
             website: 'https://vote.makerdao.com/delegates',
@@ -158,7 +155,6 @@ const useRecognizedDelegatesReport = (delegates: DelegatesDto, snapshots: Snapsh
 
   return {
     itemsBreadcrumb,
-    isMobile,
     tabItems,
     showExpenseReportStatusCTA,
     lastUpdateForBudgetStatement,
