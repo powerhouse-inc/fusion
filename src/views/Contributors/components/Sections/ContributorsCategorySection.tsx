@@ -6,7 +6,6 @@ import FancyTabs from '@/components/FancyTabs/FancyTabs';
 import ShadowWrapper from '@/components/FancyTabs/ShadowWrapper';
 import type { Team } from '@/core/models/interfaces/team';
 import { currentTeams, legacyTeams } from '../../staticData';
-// import ContributorsCategoryCard from '../ContributorsCategoryCard';
 import ContributorsCategoryCard from '../ContributorsCategoryCard';
 import { useContributorsCategorySection } from './useContributorsCategorySection';
 import type { FC } from 'react';
@@ -34,63 +33,62 @@ const ContributorsCategorySection: FC<Props> = ({ teams, tabs, activeTab, onTabC
       <ContainerTabs>
         <ShadowWrapper>
           <FancyTabs tabs={tabs} activeTab={activeTab} onTabChange={onTabChange} />
-
-          <ContributorInformation>
-            <Title>{subtitleContributors}</Title>
-            <ContainerScroll>
-              {activeTab === '1' && (
-                <ContainerContributors>
-                  <ContributorsCategoryCard
-                    description={currentTeams[0].description}
-                    teams={ecosystemActors}
-                    title={currentTeams[0].name}
-                    totalContributors={currentTeams[0].teams}
-                    href={currentTeams[0].href}
-                  />
-                  <ContributorsCategoryCard
-                    description={currentTeams[1].description}
-                    teams={alignedDelegates}
-                    title={currentTeams[1].name}
-                    totalContributors={currentTeams[1].teams}
-                    href={currentTeams[1].href}
-                  />
-                  <ContributorsCategoryCard
-                    description={currentTeams[2].description}
-                    teams={keepers}
-                    title={currentTeams[2].name}
-                    totalContributors={currentTeams[2].teams}
-                    href={currentTeams[2].href}
-                  />
-                </ContainerContributors>
-              )}
-              {activeTab === '2' && (
-                <ContainerContributors>
-                  <ContributorsCategoryCard
-                    description={legacyTeams[0].description}
-                    teams={coreUnits}
-                    title={legacyTeams[0].name}
-                    totalContributors={legacyTeams[0].teams}
-                    href={legacyTeams[0].href}
-                  />
-                  <ContributorsCategoryCard
-                    description={legacyTeams[1].description}
-                    teams={delegates}
-                    title={legacyTeams[1].name}
-                    totalContributors={legacyTeams[1].teams}
-                    href={legacyTeams[1].href}
-                  />
-                  <ContributorsCategoryCard
-                    description={legacyTeams[2].description}
-                    teams={spfs}
-                    title={legacyTeams[2].name}
-                    totalContributors={legacyTeams[2].teams}
-                    href={legacyTeams[2].href}
-                  />
-                </ContainerContributors>
-              )}
-            </ContainerScroll>
-          </ContributorInformation>
+          <Title>{subtitleContributors}</Title>
         </ShadowWrapper>
+        <ContributorInformation>
+          <ContainerScroll>
+            {activeTab === '1' && (
+              <ContainerContributors>
+                <ContributorsCategoryCard
+                  description={currentTeams[0].description}
+                  teams={ecosystemActors}
+                  title={currentTeams[0].name}
+                  totalContributors={currentTeams[0].teams}
+                  href={currentTeams[0].href}
+                />
+                <ContributorsCategoryCard
+                  description={currentTeams[1].description}
+                  teams={alignedDelegates}
+                  title={currentTeams[1].name}
+                  totalContributors={currentTeams[1].teams}
+                  href={currentTeams[1].href}
+                />
+                <ContributorsCategoryCard
+                  description={currentTeams[2].description}
+                  teams={keepers}
+                  title={currentTeams[2].name}
+                  totalContributors={currentTeams[2].teams}
+                  href={currentTeams[2].href}
+                />
+              </ContainerContributors>
+            )}
+            {activeTab === '2' && (
+              <ContainerContributors>
+                <ContributorsCategoryCard
+                  description={legacyTeams[0].description}
+                  teams={coreUnits}
+                  title={legacyTeams[0].name}
+                  totalContributors={legacyTeams[0].teams}
+                  href={legacyTeams[0].href}
+                />
+                <ContributorsCategoryCard
+                  description={legacyTeams[1].description}
+                  teams={delegates}
+                  title={legacyTeams[1].name}
+                  totalContributors={legacyTeams[1].teams}
+                  href={legacyTeams[1].href}
+                />
+                <ContributorsCategoryCard
+                  description={legacyTeams[2].description}
+                  teams={spfs}
+                  title={legacyTeams[2].name}
+                  totalContributors={legacyTeams[2].teams}
+                  href={legacyTeams[2].href}
+                />
+              </ContainerContributors>
+            )}
+          </ContainerScroll>
+        </ContributorInformation>
       </ContainerTabs>
     </ContributorsContainer>
   );
@@ -104,9 +102,13 @@ const ContributorsContainer = styled('div')(() => ({
   gap: 16,
 }));
 
-const ContainerTabs = styled('div')(() => ({
+const ContainerTabs = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
+  gap: 16,
+  [theme.breakpoints.up('desktop_1024')]: {
+    gap: 24,
+  },
 }));
 
 const ContributorInformation = styled(Card)(() => ({
@@ -127,6 +129,9 @@ const Title = styled('div')(({ theme }) => ({
 
   [theme.breakpoints.up('tablet_768')]: {
     borderRadius: '0px 12px 0px 0px',
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
+    borderRadius: '0px 12px 12px 12px',
   },
   [theme.breakpoints.up('desktop_1280')]: {
     fontSize: 16,
