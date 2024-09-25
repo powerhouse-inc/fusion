@@ -7,8 +7,7 @@ export const getCorrectCodeFromActivity = (activityParams: ChangeTrackingEvent) 
     return {
       ...activityParams,
       code: activityParams.params.owner?.code,
-      shortCode:
-        activityParams.params.owner?.shortCode === 'PH' ? 'POWERHOUSE' : activityParams.params.owner?.shortCode,
+      shortCode: (activityParams.params.owner?.shortCode ?? '').replace('-001', ''),
       type: activityParams.params.owner?.type,
     };
   } else {
