@@ -99,7 +99,7 @@ export const useDelegatesActuals = (propsCurrentMonth: DateTime, budgetStatement
       setScrolled(true);
       let offset = (breakdownTitleRef?.current?.offsetTop || 0) - 260;
       const windowsWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-      if (windowsWidth < 834) {
+      if (windowsWidth < 768) {
         offset += 90;
       }
       if ('scrollRestoration' in window.history) {

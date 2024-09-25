@@ -86,9 +86,9 @@ const Container = styled('div')<{ spaceEachCards?: number }>(({ theme, spaceEach
   background: theme.palette.isLight ? '#FFFFFF' : theme.palette.colors.charcoal[900],
   marginBottom: spaceEachCards,
   borderRadius: '12px',
-  [theme.breakpoints.between('mobile_375', 'tablet_768')]: {
-    ':last-child': {
-      marginBottom: '0px',
+  [theme.breakpoints.down('tablet_768')]: {
+    '&:last-of-type': {
+      marginBottom: 0,
     },
   },
   paddingBottom: 8,
