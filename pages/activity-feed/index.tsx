@@ -1,4 +1,5 @@
 import React from 'react';
+import { ResourceType } from '@/core/models/interfaces/types';
 import { fetchGlobalActivityFeedData } from '../../src/stories/containers/GlobalActivity/GlobalActivityAPI';
 import GlobalActivityFeedContainer from '../../src/stories/containers/GlobalActivity/GlobalActivityFeedContainer';
 import type { ChangeTrackingEvent } from '@ses/core/models/interfaces/activity';
@@ -22,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       teams,
-      activityFeed,
+      activityFeed: activityFeed.filter((event) => event.params?.owner?.type !== ResourceType.Scopes),
     },
   };
 };

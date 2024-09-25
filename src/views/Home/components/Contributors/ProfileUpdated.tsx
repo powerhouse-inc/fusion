@@ -11,10 +11,11 @@ interface Props {
 
 const ProfileUpdated: FC<Props> = ({ date, type }) => {
   const labelText = type === ResourceType.CoreUnit ? 'Expense Report' : 'Profile Updated';
+
   return (
     <Container>
       <Label>{labelText}</Label>
-      <DateContainer>{date?.toFormat('dd.MM.yyyy') ?? 'No data'}</DateContainer>
+      <DateContainer>{date?.isValid ? date.toUTC().toFormat('dd.MM.yyyy') : 'No data'}</DateContainer>
     </Container>
   );
 };

@@ -1,7 +1,6 @@
 import { styled } from '@mui/material';
 import { SEOHead } from '@ses/components/SEOHead/SEOHead';
 import { siteRoutes } from '@ses/config/routes';
-import { toAbsoluteURL } from '@ses/core/utils/urls';
 import AccountsSnapshotTabContainer from '@/components/AccountsSnapshot/AccountsSnapshotTabContainer';
 import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import BudgetStatementPager from '@/components/BudgetStatement/BudgetStatementPager/BudgetStatementPager';
@@ -43,12 +42,6 @@ const BudgetStatementView: React.FC<BudgetStatementViewProps> = ({
       <SEOHead
         title={seo.title}
         description={seo.description}
-        image={{
-          src: toAbsoluteURL('/assets/img/social-385x200.png'),
-          width: 385,
-          height: 200,
-        }}
-        twitterImage={toAbsoluteURL('/assets/img/social-1200x630.png')}
         canonicalURL={siteRoutes.budgetStatements(ownerTypeQuery)}
       />
 

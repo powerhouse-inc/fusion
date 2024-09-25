@@ -5,6 +5,7 @@ import FiltersBundle from '@/components/FiltersBundle/FiltersBundle';
 import type { Filter, ResetFilter } from '@/components/FiltersBundle/types';
 import SortsBundle from '@/components/SortsBundle/SortsBundle';
 import type { Sort } from '@/components/SortsBundle/types';
+import ExpenseReportStatus from '@/views/CoreUnitBudgetStatement/components/ExpenseReportStatus/ExpenseReportStatus';
 import type { Theme } from '@mui/material';
 import type { AnalyticMetric } from '@ses/core/models/interfaces/analytic';
 import type { BudgetStatus } from '@ses/core/models/interfaces/types';
@@ -88,9 +89,7 @@ const ExpenseReportsFilters: FC<ExpenseReportsFiltersProps> = ({
       selected: selectedStatuses,
       multiple: true,
       onChange: (values) => onStatusSelectChange(values as BudgetStatus[]),
-      customOptionsRender: (option) => (
-        <FilterChip status={option.value as BudgetStatus} text={option.label as string} />
-      ),
+      customOptionsRender: (option) => <ExpenseReportStatus status={option.value as BudgetStatus} />,
       widthStyles: {
         width: 'fit-content',
         menuWidth: 220,
