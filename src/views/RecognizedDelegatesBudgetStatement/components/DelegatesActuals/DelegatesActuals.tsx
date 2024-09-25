@@ -33,7 +33,6 @@ const DelegatesActuals: FC<Props> = ({ currentMonth, budgetStatement }) => {
       <AdvancedInnerTable
         columns={mainTableColumnsActuals}
         items={mainTableItemsActuals}
-        style={{ marginBottom: '64px' }}
         cardsTotalPosition="top"
         longCode="DEL"
         tablePlaceholder={
@@ -48,7 +47,6 @@ const DelegatesActuals: FC<Props> = ({ currentMonth, budgetStatement }) => {
           columns={breakdownColumnsActuals}
           items={breakdownItemsActuals}
           longCode="DEL"
-          style={{ marginBottom: '64px' }}
           tablePlaceholder={
             <TransparencyEmptyTable breakdown longCode="DEL" shortCode="DEL" resource={ResourceType.Delegates} />
           }
@@ -91,35 +89,31 @@ const TransactionLink = styled(ExternalLinkButton)(({ theme }) => ({
 
 const TotalsMonth = styled('div')(({ theme }) => ({
   fontFamily: 'Inter, sans-serif',
-  fontStyle: 'normal',
   fontWeight: 700,
-  fontSize: '16px',
-  lineHeight: '19px',
-  color: theme.palette.isLight ? '#231536' : '#9FAFB9',
+  fontSize: 16,
+  lineHeight: '24px',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   marginTop: 24,
   marginBottom: 16,
 
   [theme.breakpoints.up('tablet_768')]: {
-    fontSize: '20px',
-    lineHeight: '24px',
+    fontSize: 18,
+    lineHeight: '21.6px',
   },
 }));
 
 const TitleBreakdown = styled('div')(({ theme }) => ({
   fontFamily: 'Inter, sans-serif',
-  fontStyle: 'normal',
-  fontWeight: 600,
-  fontSize: '16px',
+  fontWeight: 700,
+  fontSize: 16,
   lineHeight: '19px',
-  letterSpacing: '0.4px',
-  marginTop: 40,
-  marginBottom: 32,
-  color: theme.palette.isLight ? '#231536' : '#9FAFB9',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
+  marginTop: 32,
+  marginBottom: 16,
 
   [theme.breakpoints.up('tablet_768')]: {
-    marginTop: 0,
-    fontSize: '20px',
-    lineHeight: '24px',
+    fontSize: 18,
+    lineHeight: '21.6px',
   },
 }));
 

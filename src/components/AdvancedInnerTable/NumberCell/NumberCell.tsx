@@ -1,7 +1,7 @@
 import { styled } from '@mui/material';
 import React from 'react';
 
-import { formatNumber } from '../../../core/utils/string';
+import { formatNumber } from '@/core/utils/string';
 import type { RowType } from '../types';
 
 interface NumberCellProps {
