@@ -130,7 +130,7 @@ const useRecognizedDelegatesReport = (delegates: DelegatesDto, snapshots: Snapsh
         shortCode: 'DEL',
         name: 'Recognized Delegates',
         type: ResourceType.Delegates,
-        image: '/assets/img/mk-logo.png',
+        image: '/assets/img/recognized-delegates.svg',
         socialMediaChannels: [
           {
             website: 'https://vote.makerdao.com/delegates',
