@@ -21,6 +21,12 @@ const TeamCard: FC<Props> = ({ teams, totalContributors }) => (
           href={
             team.type === ResourceType.CoreUnit
               ? siteRoutes.coreUnitAbout(team.shortCode)
+              : team?.type === ResourceType.AlignedDelegates
+              ? siteRoutes.finances('immutable/aligned-delegates?year=2024')
+              : team.type === ResourceType.Keepers
+              ? siteRoutes.finances('scopes/PRO/KPRS?year=2024')
+              : team.type === ResourceType.Delegates
+              ? siteRoutes.recognizedDelegate
               : siteRoutes.ecosystemActorAbout(team.shortCode)
           }
           img={team.image}

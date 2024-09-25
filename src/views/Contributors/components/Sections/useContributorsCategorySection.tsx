@@ -7,13 +7,30 @@ export const useContributorsCategorySection = (teams: Team[]) => {
 
   const handleActiveCategoryTab = (id: string) => setActiveCategoryTab(id);
 
-  // Filter teams by type
-  const ecosystemActors = teams?.filter((team) => team.type === ResourceType.EcosystemActor)?.slice(0, 6);
-  const alignedDelegates = teams?.filter((team) => team.type === ResourceType.CoreUnit)?.slice(0, 6);
-  const keepers = teams?.filter((team) => team.type === ResourceType.EcosystemActor)?.slice(0, 6);
-  const coreUnits = teams?.filter((team) => team.type === ResourceType.CoreUnit)?.slice(0, 6);
-  const delegates = teams?.filter((team) => team.type === ResourceType.AlignedDelegates)?.slice(0, 6);
-  const spfs = teams?.filter((team) => team.type === ResourceType.SpecialPurposeFund)?.slice(0, 6);
+  const ecosystemActors =
+    teams?.filter((team) => team.type === ResourceType.EcosystemActor).length > 6
+      ? teams.filter((team) => team.type === ResourceType.EcosystemActor).slice(0, 6)
+      : teams.filter((team) => team.type === ResourceType.EcosystemActor);
+  const alignedDelegates =
+    teams?.filter((team) => team.type === ResourceType.AlignedDelegates).length > 6
+      ? teams.filter((team) => team.type === ResourceType.AlignedDelegates).slice(0, 6)
+      : teams.filter((team) => team.type === ResourceType.AlignedDelegates);
+  const keepers =
+    teams?.filter((team) => team.type === ResourceType.Keepers).length > 6
+      ? teams.filter((team) => team.type === ResourceType.Keepers).slice(0, 6)
+      : teams.filter((team) => team.type === ResourceType.Keepers);
+  const coreUnits =
+    teams?.filter((team) => team.type === ResourceType.CoreUnit).length > 6
+      ? teams.filter((team) => team.type === ResourceType.CoreUnit).slice(0, 6)
+      : teams.filter((team) => team.type === ResourceType.CoreUnit);
+  const delegates =
+    teams?.filter((team) => team.type === ResourceType.Delegates).length > 6
+      ? teams.filter((team) => team.type === ResourceType.Delegates).slice(0, 6)
+      : teams.filter((team) => team.type === ResourceType.Delegates);
+  const spfs =
+    teams?.filter((team) => team.type === ResourceType.SpecialPurposeFund).length > 6
+      ? teams.filter((team) => team.type === ResourceType.SpecialPurposeFund).slice(0, 6)
+      : teams.filter((team) => team.type === ResourceType.SpecialPurposeFund);
 
   const teamCategoriesTabs = [
     {
@@ -28,11 +45,6 @@ export const useContributorsCategorySection = (teams: Team[]) => {
 
   const isLegacy = activeCategoryTab === '2';
 
-  // Contributors Home Page
-  const subtitleContributors = `These are the  ${
-    activeCategoryTab === '1' ? 'Current' : 'Legacy'
-  } Contributors in the Sky Ecosystem.`;
-
   return {
     teamCategoriesTabs,
     activeCategoryTab,
@@ -42,7 +54,7 @@ export const useContributorsCategorySection = (teams: Team[]) => {
     coreUnits,
     alignedDelegates,
     keepers,
-    subtitleContributors,
+
     delegates,
     spfs,
   };
