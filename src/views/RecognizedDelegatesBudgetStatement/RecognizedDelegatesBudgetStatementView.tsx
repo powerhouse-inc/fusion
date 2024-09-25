@@ -1,5 +1,4 @@
 import { styled } from '@mui/material';
-import { CustomLink } from '@ses/components/CustomLink/CustomLink';
 import { SEOHead } from '@ses/components/SEOHead/SEOHead';
 import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import AuditorCommentsContainer from '@/components/BudgetStatement/BudgetStatementAuditorComments/AuditorCommentsContainer/AuditorCommentsContainer';
@@ -14,6 +13,7 @@ import type { Snapshots } from '@/core/models/dto/snapshotAccountDTO';
 import { ResourceType } from '@/core/models/interfaces/types';
 import DelegatesActuals from './components/DelegatesActuals/DelegatesActuals';
 import DelegatesForecast from './components/DelegatesForecast/DelegatesForecast';
+import TransactionLink from './components/TransactionLink/TransactionLink';
 import useRecognizedDelegatesReport, { DELEGATES_REPORT_IDS_ENUM } from './useRecognizedDelegatesReport';
 
 type RecognizedDelegatesProps = {
@@ -24,7 +24,6 @@ type RecognizedDelegatesProps = {
 const RecognizedDelegatesBudgetStatementView: React.FC<RecognizedDelegatesProps> = ({ delegates, snapshots }) => {
   const {
     itemsBreadcrumb,
-    isMobile,
     lastUpdateForBudgetStatement,
     showExpenseReportStatusCTA,
     tabItems,
@@ -86,36 +85,19 @@ const RecognizedDelegatesBudgetStatementView: React.FC<RecognizedDelegatesProps>
           </CommentActivityContext.Provider>
         )}
 
-        <ContainerAdditionalNotes>
-          <TitleNotes>Additional Notes</TitleNotes>
-          <Description>
-            The expenses on this page are for all Recognized Delegates that receive compensation. To view all delegates
-            visit
-            <span>
-              <CustomLink
-                iconWidth={10}
-                iconHeight={10}
-                children={'vote.makerdao.com/delegates'}
-                href="https://vote.makerdao.com/delegates"
-                marginLeft="7px"
-              />
-            </span>
-          </Description>
-          <Description>
-            MakerDAO forum reports for delegate can be found
-            <SpacerDescription style={{ width: 1 }} />
-            <CustomLink
-              iconWidth={10}
-              iconHeight={10}
-              children={'here'}
+        <AdditionalNotesContainer>
+          <AdditionalNotesTitle>Additional Notes</AdditionalNotesTitle>
+          <AdditionalNotesDescriptionContainer>
+            <AdditionalNotesDescription>
+              The expenses on this page are for all Recognized Delegates that receive compensation.
+            </AdditionalNotesDescription>
+            <TransactionLink href="https://vote.makerdao.com/delegates" text="vote.makerdao.com/delegates" />
+            <TransactionLink
               href="https://forum.makerdao.com/tag/compensation"
-              marginLeft="7px"
-              style={{
-                marginLeft: isMobile ? '0px' : '4px',
-              }}
+              text="MakerDAO forum reports for delegate"
             />
-          </Description>
-        </ContainerAdditionalNotes>
+          </AdditionalNotesDescriptionContainer>
+        </AdditionalNotesContainer>
       </ContainerInside>
     </PageContainer>
   );
@@ -159,60 +141,42 @@ const ContainerTabs = styled('div')(({ theme }) => ({
   },
 }));
 
-const ContainerAdditionalNotes = styled('div')({
-  marginTop: 40,
-  marginBottom: 64,
-  fontFamily: 'Inter, sans-serif',
-  fontStyle: 'normal',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 16,
+const AdditionalNotesContainer = styled('div')({
+  margin: '32px 0px 64px',
 });
 
-const Description = styled('div')(({ theme }) => ({
+const AdditionalNotesTitle = styled('div')(({ theme }) => ({
+  fontFamily: 'Inter, sans-serif',
+  fontWeight: 700,
+  fontSize: 16,
+  lineHeight: '24px',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
+
+  [theme.breakpoints.up('tablet_768')]: {
+    fontSize: 18,
+    lineHeight: '21.6px',
+  },
+}));
+
+const AdditionalNotesDescriptionContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 8,
+  marginTop: 8,
+
+  [theme.breakpoints.up('tablet_768')]: {
+    marginTop: 16,
+  },
+}));
+
+const AdditionalNotesDescription = styled('div')(({ theme }) => ({
+  fontFamily: 'Inter, sans-serif',
   fontWeight: 400,
   fontSize: 14,
   lineHeight: '22px',
-  letterSpacing: 0,
-  color: theme.palette.isLight ? '#231536' : '#d2d4ef',
-  '& > a': {
-    fontSize: 14,
-    lineHeight: '18px',
-    letterSpacing: 0,
-  },
-  '& > span a': {
-    fontSize: 14,
-    lineHeight: '18px',
-    letterSpacing: 0,
-  },
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
+
   [theme.breakpoints.up('tablet_768')]: {
     fontSize: 16,
-    '& > a': {
-      fontSize: 16,
-      lineHeight: '18px',
-      letterSpacing: 0,
-    },
-    '& > span a': {
-      fontSize: 16,
-      lineHeight: '18px',
-      letterSpacing: 0,
-    },
-  },
-}));
-const TitleNotes = styled('div')(({ theme }) => ({
-  fontWeight: 700,
-  fontSize: '16px',
-  lineHeight: '19px',
-  display: 'flex',
-  color: theme.palette.isLight ? '#231536' : '#d2d4ef',
-  [theme.breakpoints.up('tablet_768')]: {
-    fontSize: 20,
-    lineHeight: '24px',
-  },
-}));
-
-const SpacerDescription = styled('div')(({ theme }) => ({
-  [theme.breakpoints.up('tablet_768')]: {
-    display: 'none',
   },
 }));
