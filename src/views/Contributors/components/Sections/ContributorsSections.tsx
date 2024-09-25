@@ -28,6 +28,7 @@ const ContributorsSection: FC<Props> = ({ teams }) => {
     contributors,
     textDefault,
     sizeScopeMediumSmall,
+    customStylesHomeView,
   } = useContributorsSection(teams);
 
   return (
@@ -69,6 +70,7 @@ const ContributorsSection: FC<Props> = ({ teams }) => {
                       hasDefaultColors={hasDefaultColors}
                       textDefault={textDefault}
                       sizeScope={sizeScopeMediumSmall}
+                      customStyles={customStylesHomeView}
                     />
                   ))}
                 </ContainerContributors>

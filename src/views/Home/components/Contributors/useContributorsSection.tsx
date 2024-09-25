@@ -144,6 +144,71 @@ export const useContributorsSection = (teams: Team[]) => {
     },
   };
 
+  // Custom Styles Contributors HomePage
+  const customStylesHomeView = {
+    profile: {
+      [theme.breakpoints.up('desktop_1024')]: {
+        width: 165,
+        '& .profile-name': {
+          width: 80,
+        },
+      },
+      [theme.breakpoints.up('desktop_1280')]: {
+        width: 250,
+        '& .profile-name': {
+          width: 180,
+        },
+      },
+      [theme.breakpoints.up('desktop_1440')]: {
+        width: 248,
+        '& .profile-name': {
+          width: 180,
+        },
+      },
+    },
+    scopes: {
+      [theme.breakpoints.up('desktop_1024')]: {
+        display: 'flex',
+        width: 90,
+      },
+      [theme.breakpoints.up('desktop_1440')]: {
+        display: 'flex',
+        width: 145,
+      },
+    },
+    role: {
+      [theme.breakpoints.up('desktop_1024')]: {
+        display: 'flex',
+        width: 180,
+        justifyContent: 'center',
+        '& div > div': {
+          fontSize: 14,
+          lineHeight: '22px',
+        },
+      },
+    },
+    category: {
+      [theme.breakpoints.up('desktop_1024')]: {
+        display: 'flex',
+        flexDirection: 'column',
+        minWidth: 168,
+      },
+    },
+    lastModified: {
+      justifyContent: 'center',
+      [theme.breakpoints.up('desktop_1280')]: {
+        minWidth: 138,
+        justifyContent: 'end',
+      },
+      [theme.breakpoints.up('desktop_1440')]: {
+        minWidth: 138,
+        '& > div': {
+          padding: '0px 16px',
+        },
+      },
+    },
+  };
+
   // Contributors Home Page
   const subtitleContributors = `These are the  ${
     activeCategoryTab === '1' ? 'Current' : 'Legacy'
@@ -169,5 +234,6 @@ export const useContributorsSection = (teams: Team[]) => {
     sizeScopeLargeSmall,
     subtitleContributors,
     EAContributors,
+    customStylesHomeView,
   };
 };

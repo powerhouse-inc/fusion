@@ -6,7 +6,6 @@ import FancyTabs from '@/components/FancyTabs/FancyTabs';
 import ShadowWrapper from '@/components/FancyTabs/ShadowWrapper';
 import type { Team } from '@/core/models/interfaces/team';
 import { currentTeams, legacyTeams } from '../../staticData';
-// import ContributorsCategoryCard from '../ContributorsCategoryCard';
 import ContributorsCategoryCard from '../ContributorsCategoryCard';
 import { useContributorsCategorySection } from './useContributorsCategorySection';
 import type { FC } from 'react';
