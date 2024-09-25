@@ -1,9 +1,9 @@
 import { styled } from '@mui/material';
 import { AdvancedInnerTable } from '@/components/AdvancedInnerTable/AdvancedInnerTable';
-import ExternalLinkButton from '@/components/ExternalLinkButton/ExternalLinkButton';
 import type { BudgetStatement } from '@/core/models/interfaces/budgetStatement';
 import { ResourceType } from '@/core/models/interfaces/types';
 import { TransparencyEmptyTable } from '@/views/CoreUnitBudgetStatement/components/Placeholders/TransparencyEmptyTable';
+import TransactionLink from '../TransactionLink/TransactionLink';
 import { useDelegatesActuals } from './useDelegatesActuals';
 import type { DateTime } from 'luxon';
 import type { FC } from 'react';
@@ -25,9 +25,10 @@ const DelegatesActuals: FC<Props> = ({ currentMonth, budgetStatement }) => {
   return (
     <Container>
       {currentBudgetStatement && (
-        <TransactionLink href="https://makerburn.com/#/expenses/core-units/DELEGATES">
-          Onchain transactions for Recognized Delegates
-        </TransactionLink>
+        <TransactionLink
+          href="https://makerburn.com/#/expenses/core-units/DELEGATES"
+          text="Onchain transactions for Recognized Delegates"
+        />
       )}
       <TotalsMonth>{currentMonth.toFormat('MMM yyyy')} Totals</TotalsMonth>
       <AdvancedInnerTable
@@ -59,32 +60,6 @@ const DelegatesActuals: FC<Props> = ({ currentMonth, budgetStatement }) => {
 const Container = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-}));
-
-const TransactionLink = styled(ExternalLinkButton)(({ theme }) => ({
-  padding: '0px 6px 0px 8px',
-  alignItems: 'center',
-  border: `1px solid ${
-    theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.charcoal[800]
-  }`,
-  '&:hover': {
-    border: `1px solid ${
-      theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700]
-    }`,
-  },
-  '& div': {
-    width: 16,
-    height: 16,
-  },
-
-  [theme.breakpoints.up('tablet_768')]: {
-    padding: '4px 16px 4px 24px',
-    fontSize: 16,
-    '& div': {
-      width: 20,
-      height: 20,
-    },
-  },
 }));
 
 const TotalsMonth = styled('div')(({ theme }) => ({
