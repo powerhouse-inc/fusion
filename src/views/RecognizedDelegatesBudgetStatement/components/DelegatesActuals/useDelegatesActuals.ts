@@ -112,7 +112,7 @@ export const useDelegatesActuals = (propsCurrentMonth: DateTime, budgetStatement
   const mainTableColumnsActuals = useMemo(() => {
     const mainTableColumnsActuals: InnerTableColumn[] = [
       {
-        header: 'Budget',
+        header: 'Wallet',
         align: 'left',
         type: 'custom',
         cellRender: renderWallet,
@@ -124,16 +124,19 @@ export const useDelegatesActuals = (propsCurrentMonth: DateTime, budgetStatement
         header: 'Forecast',
         align: 'right',
         type: 'incomeNumber',
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Actuals',
         align: 'right',
         type: 'incomeNumber',
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Difference',
         align: 'right',
         type: 'number',
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Payments',
@@ -221,7 +224,7 @@ export const useDelegatesActuals = (propsCurrentMonth: DateTime, budgetStatement
   const breakdownColumnsActuals = useMemo(() => {
     const breakdownColumns: InnerTableColumn[] = [
       {
-        header: 'Recognized delegates',
+        header: 'Recognized Delegates',
         align: 'left',
         type: 'text',
         hidden: !hasGroups,
@@ -235,27 +238,32 @@ export const useDelegatesActuals = (propsCurrentMonth: DateTime, budgetStatement
         isCardHeader: true,
         width: hasGroups ? '220px' : '240px',
         hidden: true,
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Forecast',
         align: 'right',
         type: 'incomeNumber',
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Actuals',
         align: 'right',
         type: 'incomeNumber',
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Difference',
         align: 'right',
         type: 'number',
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Comments',
         align: 'left',
         type: 'text',
         width: '300px',
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Payments',
@@ -294,6 +302,7 @@ export const useDelegatesActuals = (propsCurrentMonth: DateTime, budgetStatement
 
           result.push({
             type: type || 'normal',
+            borderBottom: true,
             items: [
               {
                 column: breakdownColumnsActuals[0],

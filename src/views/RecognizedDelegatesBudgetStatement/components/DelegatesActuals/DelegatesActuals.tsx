@@ -1,8 +1,8 @@
 import { styled } from '@mui/material';
 import { AdvancedInnerTable } from '@/components/AdvancedInnerTable/AdvancedInnerTable';
+import BudgetStatementsPlaceholder from '@/components/PlaceHolders/BudgetStatementsPlaceholder';
 import type { BudgetStatement } from '@/core/models/interfaces/budgetStatement';
 import { ResourceType } from '@/core/models/interfaces/types';
-import { TransparencyEmptyTable } from '@/views/CoreUnitBudgetStatement/components/Placeholders/TransparencyEmptyTable';
 import TransactionLink from '../TransactionLink/TransactionLink';
 import { useDelegatesActuals } from './useDelegatesActuals';
 import type { DateTime } from 'luxon';
@@ -34,10 +34,11 @@ const DelegatesActuals: FC<Props> = ({ currentMonth, budgetStatement }) => {
       <AdvancedInnerTable
         columns={mainTableColumnsActuals}
         items={mainTableItemsActuals}
+        cardSpacingSize="small"
         cardsTotalPosition="top"
         longCode="DEL"
         tablePlaceholder={
-          <TransparencyEmptyTable breakdown longCode="DEL" shortCode="DEL" resource={ResourceType.Delegates} />
+          <BudgetStatementsPlaceholder longCode="DEL" shortCode="DEL" resource={ResourceType.Delegates} />
         }
       />
       {mainTableItemsActuals.length > 0 && (
@@ -47,9 +48,10 @@ const DelegatesActuals: FC<Props> = ({ currentMonth, budgetStatement }) => {
         <AdvancedInnerTable
           columns={breakdownColumnsActuals}
           items={breakdownItemsActuals}
+          cardSpacingSize="small"
           longCode="DEL"
           tablePlaceholder={
-            <TransparencyEmptyTable breakdown longCode="DEL" shortCode="DEL" resource={ResourceType.Delegates} />
+            <BudgetStatementsPlaceholder longCode="DEL" shortCode="DEL" resource={ResourceType.Delegates} />
           }
         />
       )}
