@@ -1,7 +1,7 @@
 import { styled } from '@mui/material';
 import Link from 'next/link';
+import Arrow from 'public/assets/svg/arrow.svg';
 import React from 'react';
-import ArrowInternalLink from './ArrowInternalLink/ArrowInternalLink';
 import type { PropsWithChildren } from 'react';
 
 interface Props {
@@ -47,7 +47,7 @@ const InternalLinkButton: React.FunctionComponent<Props> = ({
       {label && <Text>{label}</Text>}
       {showIcon && (
         <IconContainer>
-          <ArrowInternalLink />
+          <Arrow />
         </IconContainer>
       )}
     </WrapperComponent>
@@ -268,6 +268,7 @@ const Text = styled('div')(({ theme }) => ({
 }));
 
 const IconContainer = styled('div')({
-  display: 'flex',
-  alignItems: 'center',
+  width: 24,
+  height: 24,
+  color: '#5B667E',
 });
