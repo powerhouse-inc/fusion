@@ -8,27 +8,22 @@ interface TransactionLinkProps {
 }
 
 const TransactionLink: FC<TransactionLinkProps> = ({ href, text }) => (
-  <StyledExternalLinkButton href={href}>{text}</StyledExternalLinkButton>
+  <StyledExternalLinkButton href={href} wrapText={false}>
+    {text}
+  </StyledExternalLinkButton>
 );
 
 const StyledExternalLinkButton = styled(ExternalLinkButton)(({ theme }) => ({
+  width: 'fit-content',
   padding: '0px 6px 0px 8px',
-  alignItems: 'center',
-  border: `1px solid ${
-    theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.charcoal[800]
-  }`,
-  '&:hover': {
-    border: `1px solid ${
-      theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700]
-    }`,
-  },
+  lineHeight: '24.8px',
   '& div': {
     width: 16,
     height: 16,
   },
 
   [theme.breakpoints.up('tablet_768')]: {
-    padding: '3px 16px 3px 24px',
+    padding: '2px 16px 2px 24px',
     fontSize: 16,
     '& div': {
       width: 20,
