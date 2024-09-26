@@ -1,8 +1,8 @@
 import { styled } from '@mui/material';
 import { AdvancedInnerTable } from '@/components/AdvancedInnerTable/AdvancedInnerTable';
+import BudgetStatementsPlaceholder from '@/components/PlaceHolders/BudgetStatementsPlaceholder';
 import type { BudgetStatement } from '@/core/models/interfaces/budgetStatement';
 import { ResourceType } from '@/core/models/interfaces/types';
-import { TransparencyEmptyTable } from '@/views/CoreUnitBudgetStatement/components/Placeholders/TransparencyEmptyTable';
 import { useDelegatesForecast } from './useDelegatesForecast';
 import type { DateTime } from 'luxon';
 import type { FC } from 'react';
@@ -22,11 +22,11 @@ const DelegatesForecast: FC<Props> = ({ currentMonth, budgetStatement }) => {
       <AdvancedInnerTable
         columns={mainTableColumnsForecast}
         items={mainTableItemsForecast}
-        style={{ marginBottom: '64px' }}
+        cardSpacingSize="small"
         cardsTotalPosition="top"
         longCode="DEL"
         tablePlaceholder={
-          <TransparencyEmptyTable breakdown longCode="DEL" shortCode="DEL" resource={ResourceType.Delegates} />
+          <BudgetStatementsPlaceholder longCode="DEL" shortCode="DEL" resource={ResourceType.Delegates} />
         }
       />
       {mainTableItemsForecast.length > 0 && (
@@ -38,9 +38,9 @@ const DelegatesForecast: FC<Props> = ({ currentMonth, budgetStatement }) => {
           columns={breakdownHeadersForecast}
           items={breakdownItemsForecast}
           longCode="DEL"
-          style={{ marginBottom: '64px' }}
+          cardSpacingSize="small"
           tablePlaceholder={
-            <TransparencyEmptyTable breakdown longCode="DEL" shortCode="DEL" resource={ResourceType.Delegates} />
+            <BudgetStatementsPlaceholder longCode="DEL" shortCode="DEL" resource={ResourceType.Delegates} />
           }
         />
       )}
@@ -55,35 +55,31 @@ const Container = styled('div')(() => ({
 
 const TotalsMonth = styled('div')(({ theme }) => ({
   fontFamily: 'Inter, sans-serif',
-  fontStyle: 'normal',
   fontWeight: 700,
-  fontSize: '16px',
-  lineHeight: '19px',
-  color: theme.palette.isLight ? '#231536' : '#9FAFB9',
+  fontSize: 16,
+  lineHeight: '24px',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
+  marginTop: 24,
   marginBottom: 16,
 
   [theme.breakpoints.up('tablet_768')]: {
-    marginBottom: 24,
-    fontSize: '20px',
-    lineHeight: '24px',
+    fontSize: 18,
+    lineHeight: '21.6px',
   },
 }));
 
 const TitleBreakdown = styled('div')(({ theme }) => ({
   fontFamily: 'Inter, sans-serif',
-  fontStyle: 'normal',
-  fontWeight: 600,
-  fontSize: '16px',
+  fontWeight: 700,
+  fontSize: 16,
   lineHeight: '19px',
-  letterSpacing: '0.4px',
-  marginTop: 40,
-  marginBottom: 32,
-  color: theme.palette.isLight ? '#231536' : '#9FAFB9',
+  color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
+  marginTop: 32,
+  marginBottom: 16,
 
   [theme.breakpoints.up('tablet_768')]: {
-    marginTop: 0,
-    fontSize: '20px',
-    lineHeight: '24px',
+    fontSize: 18,
+    lineHeight: '21.6px',
   },
 }));
 
