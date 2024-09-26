@@ -39,7 +39,7 @@ const SinceDateCoreUnit = styled(ExternalLinkButton)(({ theme }) => ({
   padding: '0px 2px 0px 4px',
   fontSize: 12,
   fontWeight: 500,
-  lineHeight: '24px',
+  lineHeight: '22.4px',
   alignItems: 'center',
   border: `1px solid ${
     theme.palette.isLight ? theme.palette.colors.charcoal[100] : theme.palette.colors.charcoal[800]

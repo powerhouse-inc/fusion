@@ -259,7 +259,7 @@ export const useDelegatesForecast = (currentMonth: DateTime, propBudgetStatement
   const mainTableColumnsForecast: InnerTableColumn[] = useMemo(
     () => [
       {
-        header: 'BUDGET',
+        header: 'Wallet',
         type: 'custom',
         cellRender: renderWallet,
         isCardHeader: true,
@@ -270,26 +270,31 @@ export const useDelegatesForecast = (currentMonth: DateTime, propBudgetStatement
         header: firstMonthForecast.toFormat('MMMM'),
         type: 'number',
         align: 'right',
+        hasBorderBottomOnCard: true,
       },
       {
         header: secondMonthForecast.toFormat('MMMM'),
         type: 'number',
         align: 'right',
+        hasBorderBottomOnCard: true,
       },
       {
         header: thirdMonthForecast.toFormat('MMMM'),
         type: 'number',
         align: 'right',
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Mthly Budget',
         type: 'number',
         align: 'right',
+        hasBorderBottomOnCard: true,
       },
       {
         header: '3 Months',
         type: 'number',
         align: 'right',
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Qtly Budget',
@@ -453,7 +458,7 @@ export const useDelegatesForecast = (currentMonth: DateTime, propBudgetStatement
   const breakdownHeadersForecast = useMemo(() => {
     const result: InnerTableColumn[] = [
       {
-        header: 'recognized delegates',
+        header: 'Recognized Delegates',
         hidden: !hasGroups,
         isCardHeader: true,
         width: '240px',
@@ -465,31 +470,37 @@ export const useDelegatesForecast = (currentMonth: DateTime, propBudgetStatement
         width: hasGroups ? '220px' : '240px',
         type: 'text',
         hidden: true,
+        hasBorderBottomOnCard: true,
       },
       {
         header: firstMonthForecast.toFormat('MMMM'),
         type: 'number',
         align: 'right',
+        hasBorderBottomOnCard: true,
       },
       {
         header: secondMonthForecast.toFormat('MMMM'),
         type: 'number',
         align: 'right',
+        hasBorderBottomOnCard: true,
       },
       {
         header: thirdMonthForecast.toFormat('MMMM'),
         type: 'number',
         align: 'right',
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Mthly Budget',
         type: 'number',
         align: 'right',
+        hasBorderBottomOnCard: true,
       },
       {
         header: '3 Months',
         type: 'number',
         align: 'right',
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Qtly Budget',
@@ -566,6 +577,7 @@ export const useDelegatesForecast = (currentMonth: DateTime, propBudgetStatement
 
           result.push({
             type: 'normal',
+            borderBottom: true,
             items: [
               {
                 column: breakdownHeadersForecast[0],
@@ -616,6 +628,7 @@ export const useDelegatesForecast = (currentMonth: DateTime, propBudgetStatement
 
       result.push({
         type: type || 'normal',
+        borderBottom: true,
         items: [
           {
             column: breakdownHeadersForecast[0],
