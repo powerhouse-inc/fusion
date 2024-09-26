@@ -89,6 +89,15 @@ const Title = styled('div')(({ theme }) => ({
   width: '100%',
 
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
+
+  [theme.breakpoints.up('tablet_768')]: {
+    maxWidth: 114,
+    minWidth: 'revert',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+
   [theme.breakpoints.up('desktop_1024')]: {
     maxWidth: 114,
     minWidth: 'revert',

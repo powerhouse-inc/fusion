@@ -8,11 +8,14 @@ import type { FC } from 'react';
 interface Props {
   teams: Team[];
   totalContributors: number;
+  type: string;
 }
 
-const TeamCard: FC<Props> = ({ teams, totalContributors }) => (
+const TeamCard: FC<Props> = ({ type, teams, totalContributors }) => (
   <Card>
-    <Title>Teams {totalContributors}</Title>
+    <Title>
+      {type} {totalContributors}
+    </Title>
 
     <TeamList>
       {teams.map((team) => (
@@ -46,7 +49,8 @@ const Card = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : '#2b303b',
   borderRadius: 6,
-
+  border: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.charcoal[800]}`,
+  overflow: 'hidden',
   gap: 8,
   [theme.breakpoints.up('tablet_768')]: {
     padding: 0,
@@ -56,17 +60,17 @@ const Card = styled('div')(({ theme }) => ({
 const Title = styled('div')(({ theme }) => ({
   background: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
   padding: '2px 0px 2px 8px',
-
-  borderRadius: '12px 12px 0px 0px',
   fontSize: 14,
   fontWeight: 600,
   lineHeight: '22px',
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   [theme.breakpoints.up('tablet_768')]: {
-    padding: '2px 0px 2px 16px',
+    padding: '2px 0px 2px 8px',
   },
   [theme.breakpoints.up('desktop_1024')]: {
-    padding: '2px 12px',
+    padding: '2px 8px',
+    fontSize: 16,
+    lineHeight: '24px',
   },
 }));
 
@@ -77,16 +81,15 @@ const TeamList = styled('div')(({ theme }) => ({
   gridColumnGap: 8,
   gridRowGap: 8,
   padding: '0px 8px 8px 8px',
-  [theme.breakpoints.up('tablet_768')]: {
+
+  [theme.breakpoints.up('desktop_1024')]: {
     gridTemplateColumns: 'repeat(2, 1fr)',
-    gridTemplateRows: 'repeat(3, 1fr)',
+    gridTemplateRows: 'repeat(2, 1fr)',
     gridColumnGap: 8,
     gridRowGap: 8,
-  },
-  [theme.breakpoints.up('desktop_1024')]: {
     padding: '0px 8px 8px 6px',
   },
   [theme.breakpoints.up('desktop_1280')]: {
-    padding: '0px 8px 0px 6px',
+    padding: '0px 8px 8px 6px',
   },
 }));
