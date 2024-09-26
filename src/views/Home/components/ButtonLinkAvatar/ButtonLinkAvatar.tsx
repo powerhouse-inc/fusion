@@ -37,12 +37,12 @@ const ButtonLinkWrapper = styled(Link)(({ theme }) => ({
   borderRadius: 8,
   textDecoration: 'none',
   backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
-  padding: '4px 8px 4px 4px',
+  padding: '4px 8px 4px 8px',
   [theme.breakpoints.up('tablet_768')]: {
     padding: '4px 8px 4px 8px',
   },
   ':hover': {
-    backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.slate[500],
+    backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[200] : '#3D4453',
   },
 }));
 
@@ -90,7 +90,7 @@ const Title = styled('div')(({ theme }) => ({
 
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   [theme.breakpoints.up('desktop_1024')]: {
-    maxWidth: 110,
+    maxWidth: 114,
     minWidth: 'revert',
     whiteSpace: 'nowrap',
     overflow: 'hidden',

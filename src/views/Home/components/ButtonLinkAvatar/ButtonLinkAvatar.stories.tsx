@@ -34,67 +34,62 @@ DefaultMode.parameters = {
   figma: {
     component: {
       375: {
-        component:
-          'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=6053:69905&t=tVyUv18uHqI8qqdN-4',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=10522:23184&m=dev',
         options: {
           style: {
             top: 0,
             left: 0,
           },
           componentStyle: {
-            width: 295,
+            width: 311,
           },
         },
       },
       768: {
-        component:
-          'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7682:36698&t=tVyUv18uHqI8qqdN-4',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=10522:14637&m=dev',
         options: {
           style: {
             top: 0,
             left: 0,
           },
           componentStyle: {
-            width: 324,
+            width: 255,
           },
         },
       },
       1024: {
-        component:
-          'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7682:35408&t=tVyUv18uHqI8qqdN-4',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=10493:91962&m=dev',
         options: {
           style: {
             top: 0,
             left: 0,
           },
           componentStyle: {
-            width: 214,
+            width: 220,
           },
         },
       },
       1280: {
-        component:
-          'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7682:34852&t=tVyUv18uHqI8qqdN-4',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=10493:91434&m=dev',
         options: {
           style: {
             top: 0,
             left: 0,
           },
           componentStyle: {
-            width: 220.5,
+            width: 244,
           },
         },
       },
       1440: {
-        component:
-          'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7682:34401&t=tVyUv18uHqI8qqdN-4',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=10493:90386&m=dev',
         options: {
           style: {
             top: 0,
             left: 0,
           },
           componentStyle: {
-            width: 214,
+            width: 244,
           },
         },
       },
