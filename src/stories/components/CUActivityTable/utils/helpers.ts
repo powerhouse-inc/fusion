@@ -6,6 +6,7 @@ export const getCorrectCodeFromActivity = (activityParams: ChangeTrackingEvent) 
   if ('owner' in activityParams.params) {
     return {
       ...activityParams,
+      id: (activityParams.params.owner?.id ?? '')?.toString(),
       code: activityParams.params.owner?.code,
       shortCode: (activityParams.params.owner?.shortCode ?? '').replace('-001', ''),
       type: activityParams.params.owner?.type,
@@ -13,6 +14,7 @@ export const getCorrectCodeFromActivity = (activityParams: ChangeTrackingEvent) 
   } else {
     return {
       ...activityParams,
+      id: (activityParams.params.coreUnit?.id ?? '')?.toString(),
       code: activityParams.params.coreUnit?.code,
       shortCode: activityParams.params.coreUnit?.shortCode,
     };
