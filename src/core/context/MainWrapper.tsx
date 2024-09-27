@@ -1,5 +1,5 @@
 import { styled } from '@mui/material';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import CookiesPolicyBanner from '@/components/CookiesPolicyBanner/CookiesPolicyBanner';
 import { siteRoutes } from '@/config/routes';
@@ -12,7 +12,7 @@ import type { FC, ReactNode } from 'react';
 const MainWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   const { themeMode } = useThemeContext();
   const { lockScroll, unlockScroll } = useScrollLock();
-  const router = useRouter();
+  const pathname = usePathname();
 
   const {
     isShowBanner,
@@ -25,18 +25,18 @@ const MainWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   } = useCookiesContextTracking();
 
   useEffect(() => {
-    if (isShowBanner && !router.pathname.startsWith(siteRoutes.cookiesPolicy)) {
+    if (isShowBanner && !pathname?.startsWith(siteRoutes.cookiesPolicy)) {
       lockScroll();
     }
     return () => {
       unlockScroll();
     };
-  }, [isShowBanner, router.pathname, lockScroll, unlockScroll]);
+  }, [isShowBanner, pathname, lockScroll, unlockScroll]);
 
   return (
     <>
       {children}
-      {isShowBanner && themeMode !== undefined && !router.pathname.startsWith(siteRoutes.cookiesPolicy) && (
+      {isShowBanner && themeMode !== undefined && !pathname?.startsWith(siteRoutes.cookiesPolicy) && (
         <OverlayContainer />
       )}
       {isShowBanner && themeMode !== undefined && (

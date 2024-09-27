@@ -1,3 +1,5 @@
+'use client';
+
 import { styled } from '@mui/material';
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { createContext, useContext } from 'react';
 import type { CookiesInterface } from '@/core/utils/typesHelpers';
 import { useCookiesPolicyBanner } from '@/views/CookiesPolicy/useCookiesPolicyView';

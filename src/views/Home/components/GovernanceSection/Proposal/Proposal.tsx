@@ -1,3 +1,5 @@
+'use client';
+
 import { styled, useMediaQuery } from '@mui/material';
 import { ethers, utils } from 'ethers';
 import { DateTime } from 'luxon';

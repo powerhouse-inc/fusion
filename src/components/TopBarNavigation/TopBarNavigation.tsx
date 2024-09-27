@@ -1,3 +1,5 @@
+'use client';
+
 import { styled, useTheme } from '@mui/material';
 import Link from 'next/link';
 import Activity from 'public/assets/svg/activity.svg';

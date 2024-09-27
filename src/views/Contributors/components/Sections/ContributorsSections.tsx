@@ -1,3 +1,5 @@
+'use client';
+
 import { styled } from '@mui/material';
 import React from 'react';
 import SimpleBar from 'simplebar-react';
@@ -125,7 +127,7 @@ const ContributorInformation = styled(Card)(() => ({
   display: 'flex',
   flexDirection: 'column',
   borderRadius: '0px 12px 12px 12px',
-  overFlow: 'hidden',
+  overflow: 'hidden',
 }));
 
 const CardTabs = styled(Card, {

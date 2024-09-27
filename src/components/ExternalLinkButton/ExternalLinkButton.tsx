@@ -1,3 +1,5 @@
+'use client';
+
 import { styled } from '@mui/material';
 import Link from 'next/link';
 import ExternalLinkIcon from 'public/assets/svg/external_link.svg';

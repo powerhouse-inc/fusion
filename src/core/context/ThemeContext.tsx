@@ -1,4 +1,8 @@
-import { CssBaseline, ThemeProvider as MuiThemeProvider } from '@mui/material';
+'use client';
+
+import { ThemeProvider as MuiThemeProvider } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { createContext, useContext, useMemo } from 'react';
 import { lightTheme, darkTheme } from '../../../styles/theme/themes';
 import { ThemeType } from '../enums/themeEnum';
@@ -36,6 +40,7 @@ const ThemeProvider = ({ children, isLightApp }: Props) => {
 
   const theme = useMemo(() => (isLight ? lightTheme : darkTheme), [isLight]);
   return (
+    // TODO: do we actually need this context?
     <ThemeContext.Provider
       value={{
         themeMode: themeMode as ThemeMode,
@@ -43,10 +48,12 @@ const ThemeProvider = ({ children, isLightApp }: Props) => {
         isLight,
       }}
     >
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        {children}
-      </MuiThemeProvider>
+      <AppRouterCacheProvider>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline />
+          {children}
+        </MuiThemeProvider>
+      </AppRouterCacheProvider>
     </ThemeContext.Provider>
   );
 };

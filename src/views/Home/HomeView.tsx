@@ -1,5 +1,6 @@
+'use client';
+
 import { styled } from '@mui/material';
-import { SEOHead } from '@ses/components/SEOHead/SEOHead';
 import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
 import type { ExtendedExecutiveProposal } from '@/core/models/interfaces/makervote';
@@ -35,11 +36,6 @@ const HomeView: FC<HomeViewProps> = ({
   hatAddress,
 }) => (
   <HomeViewContainer>
-    <SEOHead
-      title="Sky Fusion Dashboard"
-      description="Sky Fusion Dashboard offers key data insights into the Sky Ecosystem's finances, governance, contributors, and roadmaps."
-    />
-
     <Container>
       <section id="home">
         <HeaderCard />

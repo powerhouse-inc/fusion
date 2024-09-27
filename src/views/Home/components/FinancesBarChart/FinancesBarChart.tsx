@@ -1,3 +1,5 @@
+'use client';
+
 import { styled, useMediaQuery, useTheme } from '@mui/material';
 import ReactECharts from 'echarts-for-react';
 import { useMemo } from 'react';

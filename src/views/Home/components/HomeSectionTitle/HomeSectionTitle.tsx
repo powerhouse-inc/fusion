@@ -1,5 +1,7 @@
+'use client';
+
 import { styled } from '@mui/material';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import LinkIcon from 'public/assets/svg/link.svg';
 import { useMemo } from 'react';
 import CopyIcon from '@/components/CopyIcon/CopyIcon';

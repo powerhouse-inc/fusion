@@ -1,6 +1,7 @@
 import type { FeatureFlagsInterface } from './feature-flags.interface';
 
 export const flagsDevelopment: FeatureFlagsInterface = {
+  FEATURE_WEB_VITALS: true,
   FEATURE_SITEMAP: process.env.ENABLE_SITEMAP === 'true',
   FEATURE_AUDIT_REPORTS: false,
   FEATURE_TEMPORARY_ACCOUNTS_SNAPSHOT_PAGE: true,

@@ -1,5 +1,5 @@
 import { useMediaQuery } from '@mui/material';
-import { useRouter } from 'next/router';
+import { usePathname, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 import { siteRoutes } from '@/config/routes';
 import { useAuthContext } from '@/core/context/AuthContext';
@@ -16,6 +16,8 @@ export const useTopBarNavigation = () => {
   const { clearCredentials, permissionManager } = useAuthContext();
   const { themeMode, toggleTheme, isLight } = useThemeContext();
   const router = useRouter();
+  const pathname = usePathname();
+
   const handleGoLogin = () => {
     router.push('/login');
   };
@@ -64,22 +66,22 @@ export const useTopBarNavigation = () => {
   }, [isSelectShow]);
 
   const activeMenuItem: MenuType = useMemo(() => {
-    if (router.pathname.startsWith('/contributors')) {
+    if (pathname?.startsWith('/contributors')) {
       return menuItems.contributors;
-    } else if (router.pathname.startsWith(siteRoutes.finances())) {
+    } else if (pathname?.startsWith(siteRoutes.finances())) {
       return menuItems.finances;
-    } else if (router.pathname.startsWith('/roadmaps')) {
+    } else if (pathname?.startsWith('/roadmaps')) {
       return menuItems.roadmap;
-    } else if (router.pathname.startsWith(siteRoutes.endgame)) {
+    } else if (pathname?.startsWith(siteRoutes.endgame)) {
       return menuItems.endgame;
     } else {
-      if (router.pathname.startsWith('/core-unit') || router.pathname.startsWith('/ecosystem-actors')) {
+      if (pathname?.startsWith('/core-unit') || pathname?.startsWith('/ecosystem-actors')) {
         return menuItems.contributors;
       } else {
         return menuItems.home;
       }
     }
-  }, [router.pathname]);
+  }, [pathname]);
   const filter: SelectItem[] = useMemo(
     () =>
       Object.values(menuItems).map((value) => ({
@@ -99,9 +101,9 @@ export const useTopBarNavigation = () => {
   };
 
   const shouldHaveBlur = useMemo(() => {
-    const path = router.asPath.split('#')[0];
+    const path = pathname?.split('#')[0];
     return path === '/';
-  }, [router.asPath]);
+  }, [pathname]);
 
   return {
     shouldHaveBlur,

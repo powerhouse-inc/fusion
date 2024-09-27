@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { FeatureFlagsContext } from './FeatureFlagsContext';
 import type { FeatureFlagsInterface } from '../../../feature-flags/feature-flags.interface';

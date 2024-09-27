@@ -1,3 +1,5 @@
+'use client';
+
 import { IconButton, styled } from '@mui/material';
 import ArrowUpIcon from 'public/assets/svg/fusion_arrow_up.svg';
 import { zIndexEnum } from '@/core/enums/zIndexEnum';

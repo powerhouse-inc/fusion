@@ -1,3 +1,5 @@
+'use client';
+
 import { styled, useMediaQuery } from '@mui/material';
 import { Fragment } from 'react';
 import { Pagination } from 'swiper/modules';

@@ -1,3 +1,5 @@
+'use client';
+
 import { styled } from '@mui/material';
 import { headerCardData } from '../../staticData';
 import { getYearsForChart } from '../../utils/utils';

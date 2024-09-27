@@ -5,6 +5,7 @@ import { ETH_MAINNET_RPC, GOVERNANCE_CHIEF_CONTRACT_MAINNET } from '../constants
 export const getChiefHat = async (): Promise<string | null> => {
   try {
     const provider = new ethers.providers.JsonRpcProvider(ETH_MAINNET_RPC);
+    await provider.getNetwork();
     const chief = new ethers.Contract(GOVERNANCE_CHIEF_CONTRACT_MAINNET, chiefHatABI, provider);
 
     return chief.hat() as string | null;

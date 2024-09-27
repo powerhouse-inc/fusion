@@ -1,3 +1,5 @@
+'use client';
+
 import { styled } from '@mui/material';
 import { useState } from 'react';
 import useSWRImmutable from 'swr/immutable';

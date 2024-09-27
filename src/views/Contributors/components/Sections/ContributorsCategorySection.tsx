@@ -116,7 +116,7 @@ const ContributorInformation = styled(Card)(() => ({
   display: 'flex',
   flexDirection: 'column',
   borderRadius: '0px 12px 12px 12px',
-  overFlow: 'hidden',
+  overflow: 'hidden',
 }));
 
 const Title = styled('div')(({ theme }) => ({

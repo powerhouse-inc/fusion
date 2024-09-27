@@ -1,3 +1,5 @@
+'use client';
+
 import { GraphQLClient } from 'graphql-request';
 import React, { useLayoutEffect, useCallback } from 'react';
 import { GRAPHQL_ENDPOINT } from '../../config/endpoints';

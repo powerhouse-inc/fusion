@@ -1,4 +1,5 @@
 export interface FeatureFlagsInterface {
+  FEATURE_WEB_VITALS: boolean; // enable web vitals tracking
   FEATURE_SITEMAP: boolean;
   FEATURE_AUDIT_REPORTS: boolean; // disable Audit Reports tab in the expense reports tab
   FEATURE_TEMPORARY_ACCOUNTS_SNAPSHOT_PAGE: boolean; // disable Accounts Snapshot page

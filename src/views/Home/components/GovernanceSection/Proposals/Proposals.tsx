@@ -1,3 +1,5 @@
+'use client';
+
 import { styled } from '@mui/material';
 import Card from '@/components/Card/Card';
 import ExternalLinkButton from '@/components/ExternalLinkButton/ExternalLinkButton';

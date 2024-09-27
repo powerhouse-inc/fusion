@@ -1,3 +1,5 @@
+'use client';
+
 import { styled } from '@mui/material';
 import React from 'react';
 import Footer from '@/components/Footer/Footer';

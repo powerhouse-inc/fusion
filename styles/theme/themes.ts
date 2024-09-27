@@ -1,3 +1,5 @@
+'use client';
+
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { colorPalette } from './colorPalette';
 import shadows from './shadows';
