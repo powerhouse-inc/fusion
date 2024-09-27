@@ -11,7 +11,7 @@ interface Props {
   type: string;
 }
 
-const TeamCard: FC<Props> = ({ type, teams, totalContributors }) => (
+const TeamCard: FC<Props> = ({ teams, totalContributors, type }) => (
   <Card>
     <Title>
       {type} {totalContributors}

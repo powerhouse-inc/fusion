@@ -1,6 +1,6 @@
 import { styled } from '@mui/material';
 import React from 'react';
-import Card from '@/components/Card/Card';
+// import Card from '@/components/Card/Card';
 import type { FancyTabItem } from '@/components/FancyTabs/FancyTabs';
 import FancyTabs from '@/components/FancyTabs/FancyTabs';
 import ShadowWrapper from '@/components/FancyTabs/ShadowWrapper';
@@ -45,6 +45,7 @@ const ContributorsCategorySection: FC<Props> = ({ teams, tabs, activeTab, onTabC
                   title={currentTeams[0].name}
                   totalContributors={currentTeams[0].teams}
                   href={currentTeams[0].href}
+                  type={currentTeams[0].type === 'team' ? 'Teams' : 'Contributors'}
                 />
                 <ContributorsCategoryCard
                   description={currentTeams[1].description}
@@ -52,6 +53,7 @@ const ContributorsCategorySection: FC<Props> = ({ teams, tabs, activeTab, onTabC
                   title={currentTeams[1].name}
                   totalContributors={currentTeams[1].teams}
                   href={currentTeams[1].href}
+                  type={currentTeams[1].type === 'team' ? 'Teams' : 'Contributors'}
                 />
                 <ContributorsCategoryCard
                   description={currentTeams[2].description}
@@ -59,6 +61,7 @@ const ContributorsCategorySection: FC<Props> = ({ teams, tabs, activeTab, onTabC
                   title={currentTeams[2].name}
                   totalContributors={currentTeams[2].teams}
                   href={currentTeams[2].href}
+                  type={currentTeams[2].type === 'team' ? 'Teams' : 'Contributors'}
                 />
               </ContainerContributors>
             )}
@@ -70,6 +73,7 @@ const ContributorsCategorySection: FC<Props> = ({ teams, tabs, activeTab, onTabC
                   title={legacyTeams[0].name}
                   totalContributors={legacyTeams[0].teams}
                   href={legacyTeams[0].href}
+                  type={legacyTeams[0].type === 'team' ? 'Teams' : 'Contributors'}
                 />
                 <ContributorsCategoryCard
                   description={legacyTeams[1].description}
@@ -77,6 +81,7 @@ const ContributorsCategorySection: FC<Props> = ({ teams, tabs, activeTab, onTabC
                   title={legacyTeams[1].name}
                   totalContributors={legacyTeams[1].teams}
                   href={legacyTeams[1].href}
+                  type={legacyTeams[2].type === 'team' ? 'Teams' : 'Contributors'}
                 />
                 <ContributorsCategoryCard
                   description={legacyTeams[2].description}
@@ -84,6 +89,7 @@ const ContributorsCategorySection: FC<Props> = ({ teams, tabs, activeTab, onTabC
                   title={legacyTeams[2].name}
                   totalContributors={legacyTeams[2].teams}
                   href={legacyTeams[2].href}
+                  type={legacyTeams[2].type === 'team' ? 'Teams' : 'Contributors'}
                 />
               </ContainerContributors>
             )}
@@ -111,12 +117,14 @@ const ContainerTabs = styled('div')(({ theme }) => ({
   },
 }));
 
-const ContributorInformation = styled(Card)(() => ({
+const ContributorInformation = styled('div')(({ theme }) => ({
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-  borderRadius: '0px 12px 12px 12px',
-  overFlow: 'hidden',
+
+  [theme.breakpoints.up('desktop_1024')]: {
+    gap: 16,
+  },
 }));
 
 const Title = styled('div')(({ theme }) => ({
