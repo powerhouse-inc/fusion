@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import { styled } from '@mui/material';
 import { tooltipClasses } from '@mui/material/Tooltip';
 import { withThemeContext } from '@ses/core/utils/storybook/decorators';
 import { createThemeModeVariants } from '@ses/core/utils/storybook/factories';
@@ -42,6 +42,7 @@ const meta: Meta<typeof SESTooltipLegacy> = {
     },
   },
 };
+
 export default meta;
 
 const getCustomBtnTemplate: (btnText?: string) => ComponentStory<typeof SESTooltipLegacy> =
@@ -206,7 +207,7 @@ const StyledTooltip = styled(SESTooltipLegacy)(() => ({
   },
 }));
 
-const WideContainer = styled.div(() => ({
+const WideContainer = styled('div')(() => ({
   width: '100vw',
   height: '100vh',
   display: 'flex',
@@ -214,7 +215,7 @@ const WideContainer = styled.div(() => ({
   alignItems: 'center',
 }));
 
-const CenteredContent = styled.div(() => ({
+const CenteredContent = styled('div')(() => ({
   padding: '10px',
   display: 'flex',
   flexDirection: 'column',
@@ -225,7 +226,7 @@ const CenteredContent = styled.div(() => ({
   height: 500,
 }));
 
-const OverflownContainer = styled.div(() => ({
+const OverflownContainer = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -233,7 +234,7 @@ const OverflownContainer = styled.div(() => ({
   minHeight: '200vh',
 }));
 
-const FixedWidthButton = styled.button(() => ({
+const FixedWidthButton = styled('button')(() => ({
   width: 180,
   height: 30,
 }));
