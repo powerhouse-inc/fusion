@@ -129,17 +129,14 @@ const ContributorInformation = styled('div')(({ theme }) => ({
 
 const Title = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
-  padding: '9px 16px',
+  padding: '9px 8px',
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   fontSize: 14,
   fontWeight: 600,
   lineHeight: '22px',
-
-  [theme.breakpoints.up('tablet_768')]: {
-    borderRadius: '0px 12px 0px 0px',
-  },
+  borderRadius: '0px 12px 12px 12px',
   [theme.breakpoints.up('desktop_1024')]: {
-    borderRadius: '0px 12px 12px 12px',
+    padding: '8px 16px',
   },
   [theme.breakpoints.up('desktop_1280')]: {
     fontSize: 16,
