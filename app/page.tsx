@@ -13,8 +13,6 @@ export const metadata: Metadata = {
     "Sky Fusion Dashboard offers key data insights into the Sky Ecosystem's finances, governance, contributors, and roadmaps.",
 };
 
-export const revalidate = 60; // 1 minute
-
 const Page = async () => {
   const [revenueAndSpendingData, financesData, teams, governanceProposals, roadmaps, hatAddress] = await Promise.all([
     getRevenueAndSpendingData(),

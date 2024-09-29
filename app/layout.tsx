@@ -1,7 +1,5 @@
 import { GoogleAnalytics } from '@next/third-parties/google';
-import { getCurrentFeatureFlags } from 'feature-flags/feature-flags';
 import { cookies } from 'next/headers';
-import { WebVitals } from '@/components/WebVitals/WebVitals';
 import type { CookiesInterface } from '@/core/utils/typesHelpers';
 import FusionProviders from '@/providers/FusionProviders';
 import { ContainerNotification } from '@/stories/components/Notification/Notification';
@@ -43,7 +41,8 @@ const RootLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
     <html lang="en">
       <body>
         <main>
-          {getCurrentFeatureFlags().FEATURE_WEB_VITALS && <WebVitals />}
+          {/* TODO: enable web vitals */}
+          {/* {getCurrentFeatureFlags().FEATURE_WEB_VITALS && <WebVitals />} */}
           <FusionProviders isLight={isLight} cookiesObject={cookiesObject}>
             <AppLayout>
               {children}

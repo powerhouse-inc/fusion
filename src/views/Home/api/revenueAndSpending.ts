@@ -78,7 +78,9 @@ const mkrPriceFilter = {
 
 export const getRevenueAndSpendingData = async () => {
   // Fetch data from the Makerburn API
-  const response = await fetch('https://api.makerburn.com/history');
+  const response = await fetch('https://api.makerburn.com/history', {
+    cache: 'no-cache',
+  });
 
   const [data, daiSpentResponse, mkrVestingResponse, mkrPriceResponse] = await Promise.all([
     (await response.json()) as MakerburnHistory[],
