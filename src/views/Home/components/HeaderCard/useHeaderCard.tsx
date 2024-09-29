@@ -1,6 +1,5 @@
 import { useCookiesContextTracking } from '@ses/core/context/CookiesContext';
 import { useEffect, useState } from 'react';
-import { siteRoutes } from '@/config/routes';
 
 const useHeaderCard = () => {
   const { isFunctionalTrackingAccepted } = useCookiesContextTracking();
@@ -65,11 +64,11 @@ const useHeaderCard = () => {
           window.history.replaceState(
             {
               ...window.history.state,
-              url: `${siteRoutes.home}#${e.target.id}`,
-              as: `${siteRoutes.home}#${e.target.id}`,
+              url: `${window.location.pathname}#${e.target.id}`,
+              as: `${window.location.pathname}#${e.target.id}`,
             },
             '',
-            `${siteRoutes.home}#${e.target.id}`
+            `${window.location.pathname}#${e.target.id}`
           );
       });
     }, observerOptions);
