@@ -19,7 +19,9 @@ const tooltipLabels: { [key: string]: string } = {
   psm: 'PSM',
   liquidationIncome: 'Liquidation Income',
   fees: 'Fees',
-  daiSpent: 'DAI Spent',
+  dsr: 'DSR Cost',
+  // eslint-disable-next-line spellcheck/spell-checker
+  daiSpent: 'USDS/DAI Expensed',
   mkrVesting: 'MKR Vesting',
 };
 

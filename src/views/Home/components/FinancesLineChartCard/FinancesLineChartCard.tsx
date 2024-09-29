@@ -271,11 +271,9 @@ const InternalButtonContainer = styled('div')(({ theme }) => ({
   marginTop: 24,
 
   '& > a': {
-    padding: '2px 14px 2px 22px',
-
+    padding: '3px 16px 3px 24px',
     '&:hover': {
-      paddingTop: 2,
-      paddingBottom: 2,
+      padding: '3px 8px 3px 24px',
     },
   },
 
@@ -283,7 +281,7 @@ const InternalButtonContainer = styled('div')(({ theme }) => ({
     marginTop: 16,
   },
   [theme.breakpoints.up('desktop_1280')]: {
-    marginTop: 22,
+    marginTop: 24,
   },
 }));
 
