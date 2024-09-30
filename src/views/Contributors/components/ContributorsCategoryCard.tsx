@@ -67,7 +67,7 @@ const Title = styled('div')(({ theme }) => ({
   fontSize: 14,
   fontWeight: 600,
   lineHeight: '22px',
-  [theme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('desktop_1024')]: {
     fontSize: 16,
     fontWeight: 600,
     lineHeight: '24px',
@@ -140,19 +140,9 @@ const ContainerHeaderLink = styled('div')(() => ({
 
 const LinkDesk = styled('div')(({ theme }) => ({
   display: 'flex',
-  '& div': {
-    color: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.slate[100],
-  },
-  '& path': {
-    fill: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.sky[1000],
-  },
-  ':hover': {
-    '& path': {
-      fill: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.sky[1000],
-    },
-    '& div': {
-      color: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.sky[1000],
-    },
+  marginRight: 14,
+  [theme.breakpoints.up('tablet_768')]: {
+    marginRight: 14,
   },
 }));
 
