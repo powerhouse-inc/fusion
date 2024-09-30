@@ -38,6 +38,9 @@ const ButtonLinkWrapper = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
   backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
   padding: '4px 8px 4px 8px',
+  '& path': {
+    fill: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[300],
+  },
   [theme.breakpoints.up('tablet_768')]: {
     padding: '4px 8px 4px 8px',
   },
