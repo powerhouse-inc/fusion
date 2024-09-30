@@ -1,6 +1,6 @@
 import { styled } from '@mui/material';
 import React from 'react';
-import InternalLinkButton from '@/components/InternalLinkButton/InternalLinkButton';
+import MinimalInternalLinkButton from '@/components/MinimalInternalLinkButton/MinimalInternalLinkButton';
 import type { Team } from '@/core/models/interfaces/team';
 import TeamCard from './TeamCard';
 import type { FC } from 'react';
@@ -20,7 +20,7 @@ const ContributorsCategoryCard: FC<Props> = ({ description, teams, title, totalC
       <Header>
         <Title>{title}</Title>
         <LinkDesk>
-          <InternalLinkButton isLink label="Details" href={href} />
+          <MinimalInternalLinkButton label="Details" href={href} />
         </LinkDesk>
       </Header>
     </ContainerHeaderLink>
