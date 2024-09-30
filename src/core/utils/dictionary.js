@@ -188,6 +188,7 @@ const dictionary = [
   'marcomms',
   'Chatbot',
   'Deviz',
+  'Expensed',
 ];
 
 module.exports = dictionary;
