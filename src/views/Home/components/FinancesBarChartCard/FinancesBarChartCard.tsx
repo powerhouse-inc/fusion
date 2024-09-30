@@ -175,7 +175,7 @@ const Title = styled('h3')(({ theme }) => ({
 const FinancesBarChartContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  marginTop: 16,
+  marginTop: 26,
 
   [theme.breakpoints.up('tablet_768')]: {
     flexDirection: 'row',
