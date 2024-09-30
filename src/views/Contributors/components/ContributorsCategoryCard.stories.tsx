@@ -24,8 +24,9 @@ export default meta;
 
 const variantsArgs = [
   {
-    title: 'Ecosystem Actor',
+    title: 'Ecosystem Actors',
     totalContributors: 24,
+    type: 'Contributors',
     description:
       "Ecosystem Actors undertake key projects like feature development and marketing under guidelines that promote the Sky Ecosystem's growth. They facilitate vital operational activities, ensuring alignment with ecosystem goals.",
     teams: [
@@ -153,31 +154,6 @@ const variantsArgs = [
           discord: '#',
         } as SocialMediaChannels)
         .build(),
-      new EcosystemActorBuilder()
-        .withId('23')
-        .withCode('PH-001')
-        .withShortCode('PH')
-        .withName('Phoenix Labs')
-        .withStatus(TeamStatus.Rejected)
-        .withType(ResourceType.EcosystemActor)
-        .withImage('https://makerdao-ses.github.io/ecosystem-dashboard/ecosystem-actors/POWERHOUSE/POWERHOUSE_logo.png')
-        .addCategory(TeamRole.ScopeFacilitator)
-        .addScope({
-          id: '1',
-          code: 'SUP',
-          name: TeamScopeEnum.SupportScope,
-        })
-        .addScope({
-          id: '3',
-          code: 'ACC',
-          name: TeamScopeEnum.AccessibilityScope,
-        })
-        .withSocials({
-          twitter: '#',
-          github: '#',
-          discord: '#',
-        } as SocialMediaChannels)
-        .build(),
     ],
   },
 ];
@@ -196,62 +172,66 @@ ContributorsCard.parameters = {
   figma: {
     component: {
       375: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=6053:68849&m=dev',
+        component:
+          'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=10522:23165&t=ODh4H7gSKiEYBIt0-4',
         options: {
           style: {
-            left: 0,
-            top: 1,
+            left: -3,
+            top: -3,
           },
           componentStyle: {
-            width: 327,
+            width: 343,
           },
         },
       },
       768: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7682:36682&m=dev',
+        component:
+          'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=10522:14618&t=ODh4H7gSKiEYBIt0-4',
         options: {
           style: {
-            left: 0,
-            top: 0,
+            left: -3,
+            top: -3,
           },
           componentStyle: {
-            width: 688,
+            width: 704,
           },
         },
       },
       1024: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7682:35392&m=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=10493:91943&m=dev',
         options: {
           style: {
-            left: 0,
-            top: 0,
+            left: -3,
+            top: -3,
           },
           componentStyle: {
-            width: 944,
+            width: 960,
           },
         },
       },
       1280: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7682:34836&m=dev',
+        component:
+          'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=10493:91415&t=ODh4H7gSKiEYBIt0-4',
         options: {
           style: {
-            left: 0,
-            top: 0,
+            left: -3,
+            top: -3,
           },
           componentStyle: {
-            width: 1184,
+            width: 1200,
           },
         },
       },
       1440: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=5932:84525&m=dev',
+        component:
+          'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=10493:90367&t=ODh4H7gSKiEYBIt0-4',
         options: {
           style: {
-            left: 0,
-            top: 0,
+            left: -3,
+            top: -3,
           },
           componentStyle: {
-            width: 1296,
+            width: 1312,
           },
         },
       },
