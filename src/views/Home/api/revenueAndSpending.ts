@@ -10,6 +10,7 @@ export interface RevenueAndSpendingData {
   psm: number;
   daiSpent: number;
   mkrVesting: number;
+  dsr: number;
   annualProfit: number;
 }
 export type RevenueAndSpendingRecords = Record<string, RevenueAndSpendingData>;
@@ -143,6 +144,7 @@ export const getRevenueAndSpendingData = async () => {
         liquidationIncome: record.liq_profit_12_mth ?? 0,
         psm: record.psm_swap_fees_12_mth ?? 0,
 
+        dsr: record.annual_interest_dsr ?? 0,
         daiSpent,
         mkrVesting,
         annualProfit: 0, // will be calculated below
