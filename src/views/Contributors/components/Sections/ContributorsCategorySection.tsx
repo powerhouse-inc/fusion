@@ -107,13 +107,10 @@ const ContributorsContainer = styled('div')(() => ({
   gap: 16,
 }));
 
-const ContainerTabs = styled('div')(({ theme }) => ({
+const ContainerTabs = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: 16,
-  [theme.breakpoints.up('desktop_1024')]: {
-    gap: 24,
-  },
+  gap: 24,
 }));
 
 const ContributorInformation = styled('div')(({ theme }) => ({
@@ -146,7 +143,7 @@ const Title = styled('div')(({ theme }) => ({
 const ContainerContributors = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: 16,
+  gap: 14,
   flex: 1,
 }));
 
