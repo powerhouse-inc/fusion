@@ -38,16 +38,16 @@ const Container = styled('div')(({ theme }) => ({
   width: 'fit-content',
   alignItems: 'center',
   gap: 8,
-  color: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[800],
+  color: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.slate[100],
   '& path': {
-    fill: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[800],
+    fill: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.slate[100],
   },
   ':hover': {
     '& div': {
-      color: theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.charcoal[900],
+      color: theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.slate[50],
     },
     '& path': {
-      fill: theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.charcoal[900],
+      fill: theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.slate[50],
     },
   },
 }));
@@ -56,7 +56,7 @@ const Text = styled('div')(({ theme }) => ({
   fontWeight: 600,
   fontSize: 16,
   lineHeight: '24px',
-  color: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[800],
+  color: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.slate[100],
 }));
 
 const IconContainer = styled('div')({
