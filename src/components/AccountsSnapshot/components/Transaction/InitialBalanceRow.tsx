@@ -10,7 +10,7 @@ const InitialBalanceRow: React.FC<InitialBalanceRow> = ({ initialBalance }) => (
     <Title>Initial Balance</Title>
     <Amount>
       {usLocalizedNumber(initialBalance)}
-      <Currency>DAI</Currency>
+      <Currency>USD</Currency>
     </Amount>
   </Wrapper>
 );

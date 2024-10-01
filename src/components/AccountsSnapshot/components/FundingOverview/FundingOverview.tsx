@@ -1,6 +1,7 @@
 import { styled, useMediaQuery } from '@mui/material';
 import { getResourceLabel } from '@ses/core/utils/string';
 import { DateTime } from 'luxon';
+import Notice from '@/components/Notice/Notice';
 import FundChangeCard from '../Cards/FundChangeCard';
 import SimpleStatCard from '../Cards/SimpleStatCard';
 import CurrencyPicker from '../CurrencyPicker/CurrencyPicker';
@@ -61,6 +62,9 @@ const FundingOverview: React.FC<FundingOverviewProps> = ({
           Lifetime Balances.`}
         />
         {enableCurrencyPicker && <CurrencyPicker />}
+        <NoticeContainer>
+          <Notice />
+        </NoticeContainer>
       </HeaderContainer>
 
       <CardsContainer>
@@ -103,23 +107,36 @@ const FundingOverview: React.FC<FundingOverviewProps> = ({
 export default FundingOverview;
 
 const HeaderContainer = styled('div')(({ theme }) => ({
+  position: 'relative',
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'flex-start',
   flexDirection: 'column',
   gap: 16,
+  marginBottom: 16,
 
   [theme.breakpoints.up('tablet_768')]: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 0,
+    marginBottom: 24,
+  },
+}));
+
+const NoticeContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+
+  [theme.breakpoints.up('tablet_768')]: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    // justifyContent: 'flex-end',
   },
 }));
 
 const CardsContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   gap: 8,
-  marginTop: 24,
   flexWrap: 'wrap',
 
   '& > div:nth-of-type(1)': {

@@ -157,7 +157,7 @@ export const buildRowWithoutOffChain = (
 export const formatExpenseMonth = (month: string): string => DateTime.fromFormat(month, 'yyyy/MM').toFormat('MMM-yyyy');
 
 export const formatExpenseWithCurrency = (value: number, currency: Token): string => {
-  const formatted = `${usLocalizedNumber(value, 2)} ${currency}`;
+  const formatted = `${usLocalizedNumber(value, 2)} ${currency === 'DAI' ? 'USD' : currency}`;
   return formatted;
 };
 
