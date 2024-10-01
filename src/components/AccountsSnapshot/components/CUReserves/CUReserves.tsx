@@ -91,7 +91,7 @@ const CUReserves: React.FC<CUReservesProps> = ({
 
       <ReservesCardsContainer>
         {onChainData?.map((account) => (
-          <ReserveCard key={account.id} account={account} />
+          <ReserveCard key={account.id} account={account} currency="USD" />
         ))}
       </ReservesCardsContainer>
     </OnChainSubsection>
@@ -112,7 +112,7 @@ const CUReserves: React.FC<CUReservesProps> = ({
 
         <ReservesCardsContainer>
           {offChainData?.map((account) => (
-            <ReserveCard key={account.id} account={account} />
+            <ReserveCard key={account.id} account={account} currency="USD" />
           ))}
         </ReservesCardsContainer>
       </OffChainSubsection>

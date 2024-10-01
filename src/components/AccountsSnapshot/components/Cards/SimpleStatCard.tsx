@@ -43,7 +43,7 @@ const SimpleStatCard: React.FC<SimpleStatCardProps> = ({
                 ) : (
                   usLocalizedNumber(Math.round(value))
                 )}
-                <span>DAI</span>
+                <span>USD</span>
               </>
             ) : (
               'N/A'
