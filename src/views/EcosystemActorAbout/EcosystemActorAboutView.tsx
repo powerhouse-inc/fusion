@@ -72,7 +72,7 @@ export const EcosystemActorAboutView: React.FC<Props> = ({ actors, actor }) => {
       <Container>
         <ContainerAllData>
           <ContainerResponsive>
-            <MarkdownContainer>
+            <div>
               <ActorMdViewer
                 subTitle={`${actor.name}: Who we are`}
                 code={actor.code}
@@ -86,7 +86,7 @@ export const EcosystemActorAboutView: React.FC<Props> = ({ actors, actor }) => {
                 budgetPath={routeToFinances}
                 auditorTitle={`${actor.name} is working without auditor.`}
               />
-            </MarkdownContainer>
+            </div>
             <WrapperCardSomethingWrongMobile>
               <CardSomethingWrong
                 title="Are you part of this Ecosystem Actor? "
@@ -129,8 +129,6 @@ export const EcosystemActorAboutView: React.FC<Props> = ({ actors, actor }) => {
 };
 
 export default EcosystemActorAboutView;
-
-const MarkdownContainer = styled('div')();
 
 const ContainerResponsive = styled('div')(({ theme }) => ({
   width: '100%',

@@ -136,7 +136,7 @@ const RadioInput = styled(RadioInputSVG)(({ theme }) => ({
     stroke: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   },
 
-  '& > circle:nth-child(2)': {
+  '& > circle:nth-of-type(2)': {
     fill: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   },
 }));

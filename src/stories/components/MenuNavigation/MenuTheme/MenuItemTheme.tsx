@@ -67,7 +67,7 @@ const ItemMenu = styled.div<{ isLight: boolean }>(({ isLight }) => ({
   paddingBottom: 8,
   paddingTop: 8,
   cursor: 'pointer',
-  ':last-child': {
+  ':last-of-type': {
     marginBottom: 0,
   },
   ':hover': {
