@@ -196,9 +196,10 @@ const LogoContainerMobile = styled('div')(({ theme }) => ({
 }));
 const LogoContainerDesk = styled('div')(({ theme }) => ({
   display: 'none',
-
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'flex',
+    width: 119,
+    height: 42,
   },
 }));
 
