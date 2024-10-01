@@ -55,14 +55,14 @@ const FinancesBarChartCard: FC<FinancesBarChartCardProps> = ({ revenueAndSpendin
                   content={
                     <TooltipContent>
                       <div>
-                        <span>USDS/DAI Expensed</span>
+                        <span>USDS/DAI</span>
                         <p>
                           Operational costs such as salaries, services, and other day-to-day expenses necessary for the
                           running of the Sky Ecosystem.
                         </p>
                       </div>
                       <div>
-                        <span>MKR Vesting</span>
+                        <span>MKR</span>
                         <p>Governance tokens are allocated to Sky Ecosystem Contributors as a long-term incentive.</p>
                       </div>
                     </TooltipContent>
@@ -92,13 +92,10 @@ const FinancesBarChartCard: FC<FinancesBarChartCardProps> = ({ revenueAndSpendin
                 <SESTooltip
                   content={
                     <TooltipContent>
-                      <div>
-                        <span>DSR Cost</span>
-                        <p>
-                          Represents the total interest paid to DAI holders for locking their DAI in the Dai Savings
-                          Rate module.
-                        </p>
-                      </div>
+                      <p>
+                        Represents the total interest paid to DAI holders for locking their DAI in the Dai Savings Rate
+                        module.
+                      </p>
                     </TooltipContent>
                   }
                   placement="bottom-start"
