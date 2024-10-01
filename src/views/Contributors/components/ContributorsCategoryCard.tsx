@@ -1,11 +1,7 @@
 import { styled } from '@mui/material';
-
 import React from 'react';
-import Card from '@/components/Card/Card';
-
-import InternalLinkButton from '@/components/InternalLinkButton/InternalLinkButton';
+import MinimalInternalLinkButton from '@/components/MinimalInternalLinkButton/MinimalInternalLinkButton';
 import type { Team } from '@/core/models/interfaces/team';
-
 import TeamCard from './TeamCard';
 import type { FC } from 'react';
 
@@ -15,60 +11,54 @@ interface Props {
   title: string;
   totalContributors: number;
   href: string;
+  type: string;
 }
 
-const ContributorsCategoryCard: FC<Props> = ({ description, teams, title, totalContributors, href }) => (
+const ContributorsCategoryCard: FC<Props> = ({ description, teams, title, totalContributors, href, type }) => (
   <Container>
-    <ContainerHeaderDescription>
+    <ContainerHeaderLink>
       <Header>
         <Title>{title}</Title>
-        <LinkMobile>
-          <InternalLinkButton isLink href={href} />
-        </LinkMobile>
-        <LinkTable>
-          <InternalLinkButton isLink label="View" href={href} />
-        </LinkTable>
+        <LinkDesk>
+          <MinimalInternalLinkButton label="Details" href={href} />
+        </LinkDesk>
       </Header>
-      <Description>{description}</Description>
-      <LinkDesk>
-        <InternalLinkButton isLink label="View" href={href} />
-      </LinkDesk>
-    </ContainerHeaderDescription>
-    <Content>
-      <TeamCard teams={teams} totalContributors={totalContributors} />
-    </Content>
+    </ContainerHeaderLink>
+    <ContainerCardDescriptions>
+      <ContainerDescription>
+        <Description>{description}</Description>
+      </ContainerDescription>
+      <Content>
+        <TeamCard teams={teams} totalContributors={totalContributors} type={type} />
+      </Content>
+    </ContainerCardDescriptions>
   </Container>
 );
 
 export default ContributorsCategoryCard;
 
-const Container = styled(Card)(({ theme }) => ({
-  borderRadius: 12,
-  boxShadow: 'none',
+const Container = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
   flex: 1,
-  padding: 8,
-  border: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.charcoal[800]}`,
-  background: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.charcoal[900],
+  borderRadius: '12px 12px 12px 12px',
+  boxShadow: theme.palette.isLight ? theme.fusionShadows.graphShadow : theme.fusionShadows.darkMode,
+
   [theme.breakpoints.up('tablet_768')]: {
     flexDirection: 'column',
-  },
-  [theme.breakpoints.up('desktop_1024')]: {
-    flexDirection: 'row',
-    gap: 24,
-  },
-  [theme.breakpoints.up('desktop_1280')]: {
-    gap: 32,
   },
 }));
 
 const Header = styled('div')(({ theme }) => ({
   display: 'flex',
+  width: '100%',
   justifyContent: 'space-between',
   alignItems: 'center',
-  height: 32,
-  [theme.breakpoints.up('tablet_768')]: {
-    height: 'revert',
-  },
+  height: 40,
+  overflow: 'hidden',
+  padding: '4px 8px 4px 24px',
+  borderRadius: '12px 12px 0px 0px',
+  background: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
 }));
 
 const Title = styled('div')(({ theme }) => ({
@@ -77,7 +67,7 @@ const Title = styled('div')(({ theme }) => ({
   fontSize: 14,
   fontWeight: 600,
   lineHeight: '22px',
-  [theme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('desktop_1024')]: {
     fontSize: 16,
     fontWeight: 600,
     lineHeight: '24px',
@@ -85,14 +75,12 @@ const Title = styled('div')(({ theme }) => ({
 }));
 
 const Description = styled('div')(({ theme }) => ({
+  display: 'flex',
   color: theme.palette.isLight ? theme.palette.colors.gray[500] : theme.palette.colors.gray[600],
   fontFamily: 'Inter, sans-serif',
-  fontSize: 12,
-  fontWeight: 500,
-  lineHeight: '18px',
-  [theme.breakpoints.up('tablet_768')]: {
-    marginTop: 8,
-  },
+  fontSize: 14,
+  fontWeight: 600,
+  lineHeight: '22px',
   [theme.breakpoints.up('desktop_1024')]: {
     marginTop: 0,
     fontSize: 14,
@@ -103,64 +91,81 @@ const Description = styled('div')(({ theme }) => ({
 
 const Content = styled('div')(({ theme }) => ({
   display: 'flex',
-  marginTop: 16,
-  [theme.breakpoints.up('desktop_1024')]: {
-    marginTop: 0,
-    width: 452,
+  [theme.breakpoints.up('tablet_768')]: {
     flex: 1,
+    width: 271,
+  },
+
+  [theme.breakpoints.up('desktop_1024')]: {
+    flex: 1,
+    width: 464,
   },
   [theme.breakpoints.up('desktop_1280')]: {
-    width: 465,
-  },
-  [theme.breakpoints.up('desktop_1440')]: {
     width: 512,
-    flex: 'revert',
+    flex: 1.3,
   },
 }));
 
-const ContainerHeaderDescription = styled('div')(({ theme }) => ({
+const ContainerDescription = styled('div')(({ theme }) => ({
+  borderRadius: 12,
+  padding: 8,
   display: 'flex',
-  flexDirection: 'column',
-  gap: 4,
-
+  border: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.charcoal[800]}`,
+  background: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.charcoal[900],
   [theme.breakpoints.up('tablet_768')]: {
-    gap: 2,
+    padding: 16,
+    flex: 1.36,
+    width: 401,
   },
   [theme.breakpoints.up('desktop_1024')]: {
-    paddingLeft: 8,
-    gap: 6,
-    paddingTop: 4,
-    width: 444,
-    flex: 1,
+    padding: 16,
+    flex: 0.93,
+    width: 464,
   },
   [theme.breakpoints.up('desktop_1280')]: {
-    width: 679,
-    flex: 1.44,
+    width: 656,
+    flex: 1.6,
   },
   [theme.breakpoints.up('desktop_1440')]: {
-    width: 728,
-    flex: 1,
+    width: 768,
+    flex: 1.87,
   },
+}));
+
+const ContainerHeaderLink = styled('div')(() => ({
+  display: 'flex',
+  flex: 1,
+  flexDirection: 'column',
 }));
 
 const LinkDesk = styled('div')(({ theme }) => ({
-  display: 'none',
-  [theme.breakpoints.up('desktop_1024')]: {
-    display: 'flex',
-    marginTop: 2,
-    marginBottom: 6,
-  },
-}));
-const LinkMobile = styled('div')(({ theme }) => ({
   display: 'flex',
+  marginRight: 14,
   [theme.breakpoints.up('tablet_768')]: {
-    display: 'none',
+    marginRight: 14,
   },
 }));
 
-const LinkTable = styled('div')(({ theme }) => ({
-  display: 'none',
-  [theme.breakpoints.between('tablet_768', 'desktop_1024')]: {
-    display: 'flex',
+const ContainerCardDescriptions = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  padding: 8,
+  gap: 8,
+  borderRadius: '0px 0px 12px 12px',
+
+  backgroundColor: theme.palette.isLight ? '#FFF' : theme.palette.colors.charcoal[900],
+  [theme.breakpoints.up('tablet_768')]: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 16,
+    flex: 1,
+  },
+
+  [theme.breakpoints.up('desktop_1024')]: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+
+    flex: 1,
+    gap: 16,
   },
 }));

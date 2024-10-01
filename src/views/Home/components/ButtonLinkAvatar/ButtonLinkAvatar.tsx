@@ -38,6 +38,9 @@ const ButtonLinkWrapper = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
   backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
   padding: '4px 8px 4px 8px',
+  '& path': {
+    fill: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[300],
+  },
   [theme.breakpoints.up('tablet_768')]: {
     padding: '4px 8px 4px 8px',
   },
@@ -89,6 +92,15 @@ const Title = styled('div')(({ theme }) => ({
   width: '100%',
 
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
+
+  [theme.breakpoints.up('tablet_768')]: {
+    maxWidth: 114,
+    minWidth: 'revert',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+
   [theme.breakpoints.up('desktop_1024')]: {
     maxWidth: 114,
     minWidth: 'revert',

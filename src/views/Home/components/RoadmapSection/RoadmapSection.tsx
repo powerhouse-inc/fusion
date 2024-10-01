@@ -114,7 +114,7 @@ const MobileMilestoneCardsDivider = styled('div')(({ theme }) => ({
 
 const DescriptionContainer = styled('div')(({ theme }) => ({
   padding: '9px 16px 9px 8px',
-  borderRadius: '0px 12px 0px 0px',
+  borderRadius: '0px 12px 12px 12px',
   backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
 
   [theme.breakpoints.up('desktop_1024')]: {

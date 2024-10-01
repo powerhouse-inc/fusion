@@ -75,7 +75,7 @@ export const useGlobalActivity = (teams: Team[], activityFeed: ChangeTrackingEve
 
   const teamMap = useMemo(() => {
     const map = new Map<string, Team>();
-    teams.forEach((team) => map.set(team.shortCode, team));
+    teams.forEach((team) => map.set(team.id, team));
     return map;
   }, [teams]);
 
@@ -84,7 +84,7 @@ export const useGlobalActivity = (teams: Team[], activityFeed: ChangeTrackingEve
       sortBy(
         activityFeed
           .map((activity) => {
-            let team = teamMap.get(getCorrectCodeFromActivity(activity).shortCode ?? '');
+            let team = teamMap.get(getCorrectCodeFromActivity(activity).id ?? '');
 
             // there is not team coming from the API for these resources, so we need to add them manually
             if (!team) {
@@ -105,6 +105,11 @@ export const useGlobalActivity = (teams: Team[], activityFeed: ChangeTrackingEve
                     type: ResourceType.SpecialPurposeFund,
                   } as Team;
                   break;
+                default:
+                  team = {
+                    name: 'Unknown Team',
+                    shortCode: '',
+                  } as Team;
               }
             }
 

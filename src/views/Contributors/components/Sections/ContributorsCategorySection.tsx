@@ -1,6 +1,5 @@
 import { styled } from '@mui/material';
 import React from 'react';
-import Card from '@/components/Card/Card';
 import type { FancyTabItem } from '@/components/FancyTabs/FancyTabs';
 import FancyTabs from '@/components/FancyTabs/FancyTabs';
 import ShadowWrapper from '@/components/FancyTabs/ShadowWrapper';
@@ -45,6 +44,7 @@ const ContributorsCategorySection: FC<Props> = ({ teams, tabs, activeTab, onTabC
                   title={currentTeams[0].name}
                   totalContributors={currentTeams[0].teams}
                   href={currentTeams[0].href}
+                  type={currentTeams[0].type === 'team' ? 'Teams' : 'Contributors'}
                 />
                 <ContributorsCategoryCard
                   description={currentTeams[1].description}
@@ -52,6 +52,7 @@ const ContributorsCategorySection: FC<Props> = ({ teams, tabs, activeTab, onTabC
                   title={currentTeams[1].name}
                   totalContributors={currentTeams[1].teams}
                   href={currentTeams[1].href}
+                  type={currentTeams[1].type === 'team' ? 'Teams' : 'Contributors'}
                 />
                 <ContributorsCategoryCard
                   description={currentTeams[2].description}
@@ -59,6 +60,7 @@ const ContributorsCategorySection: FC<Props> = ({ teams, tabs, activeTab, onTabC
                   title={currentTeams[2].name}
                   totalContributors={currentTeams[2].teams}
                   href={currentTeams[2].href}
+                  type={currentTeams[2].type === 'team' ? 'Teams' : 'Contributors'}
                 />
               </ContainerContributors>
             )}
@@ -70,6 +72,7 @@ const ContributorsCategorySection: FC<Props> = ({ teams, tabs, activeTab, onTabC
                   title={legacyTeams[0].name}
                   totalContributors={legacyTeams[0].teams}
                   href={legacyTeams[0].href}
+                  type={legacyTeams[0].type === 'team' ? 'Teams' : 'Contributors'}
                 />
                 <ContributorsCategoryCard
                   description={legacyTeams[1].description}
@@ -77,6 +80,7 @@ const ContributorsCategorySection: FC<Props> = ({ teams, tabs, activeTab, onTabC
                   title={legacyTeams[1].name}
                   totalContributors={legacyTeams[1].teams}
                   href={legacyTeams[1].href}
+                  type={legacyTeams[2].type === 'team' ? 'Teams' : 'Contributors'}
                 />
                 <ContributorsCategoryCard
                   description={legacyTeams[2].description}
@@ -84,6 +88,7 @@ const ContributorsCategorySection: FC<Props> = ({ teams, tabs, activeTab, onTabC
                   title={legacyTeams[2].name}
                   totalContributors={legacyTeams[2].teams}
                   href={legacyTeams[2].href}
+                  type={legacyTeams[2].type === 'team' ? 'Teams' : 'Contributors'}
                 />
               </ContainerContributors>
             )}
@@ -102,36 +107,32 @@ const ContributorsContainer = styled('div')(() => ({
   gap: 16,
 }));
 
-const ContainerTabs = styled('div')(({ theme }) => ({
+const ContainerTabs = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: 16,
-  [theme.breakpoints.up('desktop_1024')]: {
-    gap: 24,
-  },
+  gap: 24,
 }));
 
-const ContributorInformation = styled(Card)(() => ({
+const ContributorInformation = styled('div')(({ theme }) => ({
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-  borderRadius: '0px 12px 12px 12px',
-  overFlow: 'hidden',
+
+  [theme.breakpoints.up('desktop_1024')]: {
+    gap: 16,
+  },
 }));
 
 const Title = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
-  padding: '9px 16px',
+  padding: '9px 8px',
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
   fontSize: 14,
   fontWeight: 600,
   lineHeight: '22px',
-
-  [theme.breakpoints.up('tablet_768')]: {
-    borderRadius: '0px 12px 0px 0px',
-  },
+  borderRadius: '0px 12px 12px 12px',
   [theme.breakpoints.up('desktop_1024')]: {
-    borderRadius: '0px 12px 12px 12px',
+    padding: '8px 16px',
   },
   [theme.breakpoints.up('desktop_1280')]: {
     fontSize: 16,
@@ -139,28 +140,13 @@ const Title = styled('div')(({ theme }) => ({
   },
 }));
 
-const ContainerContributors = styled('div')(({ theme }) => ({
+const ContainerContributors = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: 8,
-  padding: 8,
+  gap: 14,
   flex: 1,
-  [theme.breakpoints.up('tablet_768')]: {
-    gap: 12,
-  },
-  [theme.breakpoints.up('desktop_1024')]: {
-    gap: 8,
-  },
-  [theme.breakpoints.up('desktop_1280')]: {
-    padding: '6px 8px 8px',
-  },
-  [theme.breakpoints.up('desktop_1440')]: {
-    padding: '6px 8px 8px',
-    gap: 7,
-  },
 }));
 
 const ContainerScroll = styled('div')({
   display: 'flex',
-  marginRight: 4,
 });

@@ -4,7 +4,6 @@ import TextInput from '@ses/components/TextInput/TextInput';
 import { useThemeContext } from '@ses/core/context/ThemeContext';
 import lightTheme from '@ses/styles/theme/themes';
 import Link from 'next/link';
-import MakerDao from 'public/assets/svg/makerdao_connect.svg';
 import SkyLogoDeskDark from 'public/assets/svg/sky-desk-dark.svg';
 import SkyLogoDesk from 'public/assets/svg/sky-desk.svg';
 import React from 'react';
@@ -27,7 +26,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, clearErrors, hasUserInactiv
   return (
     <Container>
       <LinkStyled href="/">
-        <LogoContainerDesk>{isLight ? <MakerDao /> : <MakerDao />}</LogoContainerDesk>
         <LogoContainerDesk>{isLight ? <SkyLogoDeskDark /> : <SkyLogoDesk />}</LogoContainerDesk>
       </LinkStyled>
       <Title>Log In</Title>
@@ -183,6 +181,8 @@ const LinkStyled = styled(Link)({
 
 const LogoContainerDesk = styled('div')(({ theme }) => ({
   display: 'flex',
+  width: 119,
+  height: 42,
   '& path:first-of-type': {
     fill: theme.palette.isLight ? '#050505' : theme.palette.colors.charcoal[100],
   },
