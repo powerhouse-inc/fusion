@@ -130,7 +130,6 @@ const NoticeContainer = styled('div')(({ theme }) => ({
     position: 'absolute',
     top: 0,
     right: 0,
-    // justifyContent: 'flex-end',
   },
 }));
 
