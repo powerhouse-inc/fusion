@@ -59,10 +59,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
   // Values for the grid
   const getHeightGrid = useCallback(() => {
     switch (true) {
-      case isLessMobile:
-        return 198;
-
-      case isMobile:
+      case isLessMobile || isMobile:
         return 170;
 
       case isTablet:
@@ -119,7 +116,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
 
   const getMarginYAxis = useCallback(() => {
     switch (true) {
-      case isMobile:
+      case isLessMobile || isMobile:
         return 5;
 
       case isTablet:
@@ -137,7 +134,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
       default:
         return 36;
     }
-  }, [isDesktop1024, isDesktop1280, isDesktop1440, isMobile, isTablet]);
+  }, [isDesktop1024, isDesktop1280, isDesktop1440, isLessMobile, isMobile, isTablet]);
 
   const getMarginXAxis = useCallback(() => {
     switch (true) {
@@ -515,12 +512,13 @@ const YearXAxis = styled('div', { shouldForwardProp: (prop) => prop !== 'isLessM
 
     return {
       position: 'absolute',
-      bottom: isLessMobile ? 12 : 0,
+      bottom: isLessMobile ? -6 : 0,
       left: isLessMobile ? 30 : 40,
       right: 5,
       height: 11,
       borderLeft: border,
       borderRight: border,
+
       borderBottom: border,
       borderBottomLeftRadius: 3,
       borderBottomRightRadius: 3,
