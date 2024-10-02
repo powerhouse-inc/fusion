@@ -20,7 +20,7 @@ const tooltipLabels: { [key: string]: string } = {
   liquidationIncome: 'Liquidation Income',
   fees: 'Fees',
   dsr: 'DSR Cost',
-  daiSpent: 'USDS/DAI Expensed',
+  daiSpent: 'DAI Spending',
   mkrVesting: 'MKR Vesting',
 };
 

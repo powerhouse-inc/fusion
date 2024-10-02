@@ -55,7 +55,7 @@ const variantsArgs = [
           .build()
       )
       .build(),
-    currency: 'DAI',
+    currency: 'USD',
     defaultExpanded: true,
   },
   {
@@ -149,7 +149,7 @@ const variantsArgs = [
           .build(),
       ],
     },
-    currency: 'DAI',
+    currency: 'USD',
     defaultExpanded: true,
   },
 ];
