@@ -154,7 +154,7 @@ const FilterContainer = styled('div', {
   justifyContent: 'flex-end',
 
   position: 'absolute',
-  right: 32,
+  right: 28,
   marginTop: showTop ? 0 : `${height - 20}px`,
   [theme.breakpoints.up('tablet_768')]: {
     marginBottom: 20,
