@@ -155,7 +155,7 @@ const FinancesBarChart: FC<FinancesBarChartProps> = ({ revenueAndSpendingData })
 
   const options: EChartsOption = {
     tooltip: {
-      show: true,
+      show: !isMobile,
       trigger: 'axis',
       borderRadius: 12,
       backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],

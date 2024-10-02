@@ -18,7 +18,7 @@ interface FinancesLineChartProps {
 const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedMetric, years }) => {
   const { financesLineChartRef } = useFinancesLineChart();
   const theme = useTheme();
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.between('mobile_375', 'tablet_768'));
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
   const isDesk1024 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1024', 'desktop_1280'));
   const isDesk1280 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1280', 'desktop_1440'));
@@ -155,7 +155,7 @@ const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedM
       width: isMobile ? 'calc(100% - 50px)' : isTablet ? 330 : isDesk1024 ? 470 : isDesk1280 ? 595 : 645,
     },
     tooltip: {
-      show: true,
+      show: !isMobile,
       trigger: 'axis',
       borderRadius: 12,
       backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
