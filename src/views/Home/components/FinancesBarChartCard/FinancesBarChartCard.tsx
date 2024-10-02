@@ -468,12 +468,16 @@ const LinkButtons = styled('div')(({ theme }) => ({
   },
 }));
 
-const StyledExternalLinkButton = styled(ExternalLinkButton)(() => ({
+const StyledExternalLinkButton = styled(ExternalLinkButton)(({ theme }) => ({
   padding: '2px 16px 2px 24px',
   fontSize: 16,
   '& > div': {
     width: 21,
     height: 21,
+  },
+
+  [theme.breakpoints.down('mobile_375')]: {
+    padding: '2px 8px 2px 16px',
   },
 }));
 
