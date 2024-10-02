@@ -153,7 +153,7 @@ const FilterContainer = styled('div')<{ height: number }>(({ theme, height }) =>
 
   position: 'absolute',
   right: 32,
-  marginTop: `${height - 24}px`,
+  marginTop: `${height - 20}px`,
   [theme.breakpoints.up('tablet_768')]: {
     marginBottom: 20,
     marginLeft: -12,
