@@ -55,7 +55,8 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
   const isDesktop1440 = useMediaQuery((theme: Theme) => theme.breakpoints.up('desktop_1440'));
 
   const isMobileOrLess = isMobile || isLessMobile;
-  const showLineYear = (isMobile || isLessMobile) && selectedGranularity === 'monthly';
+  const showLineYear =
+    ((isMobile || isLessMobile) && selectedGranularity === 'monthly') || selectedGranularity === 'quarterly';
   // Values for the grid
   const getHeightGrid = useCallback(() => {
     switch (true) {
