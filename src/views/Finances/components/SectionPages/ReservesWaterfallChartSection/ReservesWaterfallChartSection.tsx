@@ -36,7 +36,7 @@ const ReservesWaterfallChartSection: React.FC<Props> = ({
 }) => {
   const filterContainerRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState(0);
-
+  const showTop = title.length < 24;
   const updateHeight = () => {
     if (filterContainerRef.current) {
       setHeight(filterContainerRef.current.clientHeight);
@@ -75,7 +75,7 @@ const ReservesWaterfallChartSection: React.FC<Props> = ({
             }
           />
         </ContainerFilter>
-        <FilterContainer height={height}>
+        <FilterContainer height={height} showTop={showTop}>
           <FiltersBundle
             asPopover={[]}
             heightForScroll
@@ -146,14 +146,16 @@ const TooltipContent = styled('div')({
   },
 });
 
-const FilterContainer = styled('div')<{ height: number }>(({ theme, height }) => ({
+const FilterContainer = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'height' && prop !== 'showTop',
+})<{ height: number; showTop: boolean }>(({ theme, height, showTop }) => ({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'flex-end',
 
   position: 'absolute',
   right: 32,
-  marginTop: `${height - 20}px`,
+  marginTop: showTop ? 0 : `${height - 20}px`,
   [theme.breakpoints.up('tablet_768')]: {
     marginBottom: 20,
     marginLeft: -12,
