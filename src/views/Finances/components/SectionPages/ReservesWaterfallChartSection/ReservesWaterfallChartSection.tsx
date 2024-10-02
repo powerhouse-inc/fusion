@@ -1,5 +1,5 @@
 import { styled } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Card from '@/components/Card/Card';
 import FiltersBundle from '@/components/FiltersBundle/FiltersBundle';
 import type { Filter } from '@/components/FiltersBundle/types';
@@ -33,48 +33,71 @@ const ReservesWaterfallChartSection: React.FC<Props> = ({
   canReset,
   onReset,
   startPoint,
-}) => (
-  <Section>
-    <ContainerTitleFilter>
-      <FinancesTitle
-        year={year}
-        title={title}
-        tooltip={
-          <TooltipContent>
-            <p>Monitor the dynamics of Sky's reserves with precision using this interactive financial chart.</p>
-            <p>
-              It displays detailed inflows, outflows, and net balances, providing a clear picture of fiscal health.
-              Customize the analysis by filtering specific data points and adjusting the timeline to suit your needs.{' '}
-            </p>
-            <p>
-              Utilize this tool to identify trends in reserve movements, evaluate the sustainability of reserves, and
-              guide strategic financial planning.
-            </p>
-          </TooltipContent>
-        }
-      />
-      <FilterContainer>
-        <FiltersBundle
-          asPopover={[]}
-          heightForScroll
-          filters={filters}
-          resetFilters={{
-            canReset,
-            onReset,
-          }}
-          snapPoints={[startPoint, 300, 250, 0]}
-        />
-      </FilterContainer>
-    </ContainerTitleFilter>
-    <ContainerChart>
-      {isLoading ? (
-        <WaterfallSkeleton />
-      ) : (
-        <WaterfallChart legends={legends} year={year} selectedGranularity={selectedGranularity} series={series} />
-      )}
-    </ContainerChart>
-  </Section>
-);
+}) => {
+  const filterContainerRef = useRef<HTMLDivElement | null>(null);
+  const [height, setHeight] = useState(0);
+  const showTop = title.length < 24;
+  const updateHeight = () => {
+    if (filterContainerRef.current) {
+      setHeight(filterContainerRef.current.clientHeight);
+    }
+  };
+
+  useEffect(() => {
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+
+    return () => {
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, [filters]);
+
+  return (
+    <Section>
+      <ContainerTitleFilter ref={filterContainerRef}>
+        <ContainerFilter>
+          <FinancesTitle
+            year={year}
+            title={title}
+            tooltip={
+              <TooltipContent>
+                <p>Monitor the dynamics of Sky's reserves with precision using this interactive financial chart.</p>
+                <p>
+                  It displays detailed inflows, outflows, and net balances, providing a clear picture of fiscal health.
+                  Customize the analysis by filtering specific data points and adjusting the timeline to suit your
+                  needs.
+                </p>
+                <p>
+                  Utilize this tool to identify trends in reserve movements, evaluate the sustainability of reserves,
+                  and guide strategic financial planning.
+                </p>
+              </TooltipContent>
+            }
+          />
+        </ContainerFilter>
+        <FilterContainer height={height} showTop={showTop}>
+          <FiltersBundle
+            asPopover={[]}
+            heightForScroll
+            filters={filters}
+            resetFilters={{
+              canReset,
+              onReset,
+            }}
+            snapPoints={[startPoint, 300, 250, 0]}
+          />
+        </FilterContainer>
+      </ContainerTitleFilter>
+      <ContainerChart>
+        {isLoading ? (
+          <WaterfallSkeleton />
+        ) : (
+          <WaterfallChart legends={legends} year={year} selectedGranularity={selectedGranularity} series={series} />
+        )}
+      </ContainerChart>
+    </Section>
+  );
+};
 
 export default ReservesWaterfallChartSection;
 
@@ -84,6 +107,7 @@ const ContainerTitleFilter = styled('div')(() => ({
   flexWrap: 'wrap',
   justifyContent: 'space-between',
   alignItems: 'flex-start',
+  rowGap: 8,
 }));
 
 const ContainerChart = styled('div')({
@@ -122,18 +146,24 @@ const TooltipContent = styled('div')({
   },
 });
 
-const FilterContainer = styled('div')(({ theme }) => ({
+const FilterContainer = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'height' && prop !== 'showTop',
+})<{ height: number; showTop: boolean }>(({ theme, height, showTop }) => ({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'flex-end',
-  marginBottom: 22,
+
+  position: 'absolute',
+  right: 28,
+  marginTop: showTop ? 0 : `${height - 20}px`,
   [theme.breakpoints.up('tablet_768')]: {
     marginBottom: 20,
     marginLeft: -12,
+    marginTop: 'revert',
+    position: 'revert',
   },
   [theme.breakpoints.up('desktop_1024')]: {
     marginBottom: 26,
-    marginLeft: 'revert',
   },
   [theme.breakpoints.up('desktop_1280')]: {
     marginBottom: 22,
@@ -142,3 +172,7 @@ const FilterContainer = styled('div')(({ theme }) => ({
     marginBottom: 22,
   },
 }));
+
+const ContainerFilter = styled('div')({
+  position: 'relative',
+});
