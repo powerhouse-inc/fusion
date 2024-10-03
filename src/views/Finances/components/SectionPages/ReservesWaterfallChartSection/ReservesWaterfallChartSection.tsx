@@ -1,8 +1,9 @@
 import { styled } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import Card from '@/components/Card/Card';
 import FiltersBundle from '@/components/FiltersBundle/FiltersBundle';
 import type { Filter } from '@/components/FiltersBundle/types';
+import { useRelativePositioning } from '@/core/hooks/useDynamicRelativePosition';
 import type { LegendItemsWaterfall, WaterfallChartSeriesData } from '@/views/Finances/utils/types';
 import FinancesTitle from '../../FinancesTitle/FinancesTitle';
 import WaterfallChart from '../../WaterfallChart/WaterfallChart';
@@ -34,28 +35,12 @@ const ReservesWaterfallChartSection: React.FC<Props> = ({
   onReset,
   startPoint,
 }) => {
-  const filterContainerRef = useRef<HTMLDivElement | null>(null);
-  const [height, setHeight] = useState(0);
-  const showTop = title.length < 24;
-  const updateHeight = () => {
-    if (filterContainerRef.current) {
-      setHeight(filterContainerRef.current.clientHeight);
-    }
-  };
-
-  useEffect(() => {
-    updateHeight();
-    window.addEventListener('resize', updateHeight);
-
-    return () => {
-      window.removeEventListener('resize', updateHeight);
-    };
-  }, [filters]);
+  const { containerRef, titleRef, filterRef, shouldPositionBelow, height } = useRelativePositioning(title, 24);
 
   return (
     <Section>
-      <ContainerTitleFilter ref={filterContainerRef}>
-        <ContainerFilter>
+      <ContainerTitleFilter ref={containerRef}>
+        <ContainerFilter ref={titleRef}>
           <FinancesTitle
             year={year}
             title={title}
@@ -75,7 +60,7 @@ const ReservesWaterfallChartSection: React.FC<Props> = ({
             }
           />
         </ContainerFilter>
-        <FilterContainer height={height} showTop={showTop}>
+        <FilterContainer ref={filterRef} shouldPositionBelow={shouldPositionBelow} height={height || 0}>
           <FiltersBundle
             asPopover={[]}
             heightForScroll
@@ -108,6 +93,8 @@ const ContainerTitleFilter = styled('div')(() => ({
   justifyContent: 'space-between',
   alignItems: 'flex-start',
   rowGap: 8,
+  // border: '2px solid green',
+  position: 'relative',
 }));
 
 const ContainerChart = styled('div')({
@@ -147,15 +134,39 @@ const TooltipContent = styled('div')({
 });
 
 const FilterContainer = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'height' && prop !== 'showTop',
-})<{ height: number; showTop: boolean }>(({ theme, height, showTop }) => ({
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'flex-end',
+  shouldForwardProp: (prop) => prop !== 'shouldPositionBelow' && prop !== 'isShortTitle',
+})<{ shouldPositionBelow: boolean; height: number }>(({ theme, shouldPositionBelow, height }) => ({
+  [theme.breakpoints.down('mobile_375')]: {
+    justifyContent: 'flex-end',
+    transition: 'all 0.3s ease',
+    ...(shouldPositionBelow
+      ? {
+          position: 'absolute',
 
-  position: 'absolute',
-  right: 28,
-  marginTop: showTop ? 0 : `${height - 20}px`,
+          right: 4,
+          bottom: 0,
+          marginTop: `${height - 24}px`,
+        }
+      : {
+          position: 'absolute',
+          right: 0,
+          marginTop: `${height - 24}px`,
+        }),
+  },
+  [theme.breakpoints.up('mobile_375')]: {
+    ...(shouldPositionBelow
+      ? {
+          position: 'absolute',
+          right: 4,
+          bottom: 0,
+          marginTop: `${height - 24}px`,
+        }
+      : {
+          position: 'absolute',
+          right: 0,
+        }),
+  },
+
   [theme.breakpoints.up('tablet_768')]: {
     marginBottom: 20,
     marginLeft: -12,
@@ -173,6 +184,4 @@ const FilterContainer = styled('div', {
   },
 }));
 
-const ContainerFilter = styled('div')({
-  position: 'relative',
-});
+const ContainerFilter = styled('div')(() => ({}));
