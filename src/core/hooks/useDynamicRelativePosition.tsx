@@ -1,3 +1,4 @@
+import { useWindowWidth } from '@react-hook/window-size';
 import { useEffect, useRef, useState } from 'react';
 
 export const useRelativePositioning = (title: string, characterLimit: number) => {
@@ -7,6 +8,7 @@ export const useRelativePositioning = (title: string, characterLimit: number) =>
   const [shouldPositionBelow, setShouldPositionBelow] = useState(false);
   const isShortTitle = title.length < characterLimit;
 
+  const width = useWindowWidth();
   useEffect(() => {
     const updatePosition = () => {
       if (containerRef.current && titleRef.current && filterRef.current) {
@@ -17,14 +19,8 @@ export const useRelativePositioning = (title: string, characterLimit: number) =>
         setShouldPositionBelow(titleWidth + filterWidth > containerWidth);
       }
     };
-
     updatePosition();
-    window.addEventListener('resize', updatePosition);
-
-    return () => {
-      window.removeEventListener('resize', updatePosition);
-    };
-  }, [title]);
+  }, [title, width]);
 
   return {
     containerRef,
