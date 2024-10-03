@@ -35,7 +35,7 @@ export const Wrapper = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   width: '100%',
-  backgroundColor: theme.palette.isLight ? '#FFFFFF' : '#000000',
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.background.dm,
   backgroundAttachment: 'fixed',
   backgroundSize: 'cover',
   paddingTop: 64,
