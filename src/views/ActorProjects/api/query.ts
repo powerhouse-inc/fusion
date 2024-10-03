@@ -121,12 +121,12 @@ export const getProjectsQuery = (teamCode: string) => ({
               id
               ref
             }
-          }
-          supportedKeyResults {
-            link
-            title
-            parentIdRef
-            id
+            supportedKeyResults {
+              link
+              title
+              parentIdRef
+              id
+            }
           }
         }
       }
