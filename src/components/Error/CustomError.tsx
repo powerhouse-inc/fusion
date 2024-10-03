@@ -95,6 +95,8 @@ const Title = styled('div')(({ theme }) => ({
 
 const Description = styled('div')(({ theme }) => ({
   marginBottom: 56,
+  padding: '0px 24px',
+  textAlign: 'center',
   fontFamily: 'Inter, sans-serif',
   fontWeight: 700,
   fontSize: 18,
