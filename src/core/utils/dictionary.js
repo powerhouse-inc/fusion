@@ -189,6 +189,7 @@ const dictionary = [
   'Chatbot',
   'Deviz',
   'Expensed',
+  'Unmount',
 ];
 
 module.exports = dictionary;
