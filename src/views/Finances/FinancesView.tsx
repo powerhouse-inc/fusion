@@ -141,7 +141,7 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
           </ContainerSpace>
           <ContainerSpace>
             <ReservesWaterfallChartSection
-              title={`${levelNumber === 1 ? (isMobile ? 'MakerDAO F.' : 'MakerDAO Finances') : title} Reserves`}
+              title={`${levelNumber === 1 ? (isMobile ? 'Sky F.' : 'Sky Finances') : title} Reserves`}
               legends={reserveChart.legendItems}
               series={reserveChart.series}
               selectedGranularity={reserveChart.selectedGranularity}
@@ -164,7 +164,7 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
           breakdownTable={breakdownTable.tableBody ?? []}
           isLoading={breakdownTable.isLoading}
           headerTable={breakdownTable.tableHeader ?? []}
-          title={levelNumber === 1 ? 'MakerDAO Budget' : title}
+          title={levelNumber === 1 ? 'Sky Budget' : title}
           filters={breakdownTable.filters}
           resetFilters={breakdownTable.resetFilters}
         />
