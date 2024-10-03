@@ -68,13 +68,10 @@ const Container = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   alignItems: 'center',
   paddingTop: '64px',
-
   flex: 1,
-  backgroundColor: theme.palette.isLight ? '#FFFFFF' : '#000000',
-  backgroundAttachment: 'fixed',
   backgroundSize: 'cover',
   paddingBottom: '79px',
-
+  background: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.background.dm,
   [theme.breakpoints.up('tablet_768')]: {
     paddingBottom: '128px',
   },
