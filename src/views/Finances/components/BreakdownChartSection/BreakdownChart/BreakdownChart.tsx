@@ -531,10 +531,10 @@ const YearXAxis = styled('div', { shouldForwardProp: (prop) => prop !== 'isLessM
 const YearText = styled('div')(({ theme }) => ({
   fontSize: 12,
   lineHeight: 'normal',
+  fontFamily: 'Open Sans Condensed, sans-serif',
   color: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700],
   position: 'absolute',
   bottom: -6,
-
   width: 52,
   left: '50%',
   transform: 'translateX(-50%)',

@@ -133,7 +133,7 @@ const TooltipContent = styled('div')({
 });
 
 const FilterContainer = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'shouldPositionBelow' && prop !== 'isShortTitle',
+  shouldForwardProp: (prop) => prop !== 'shouldPositionBelow' && prop !== 'height',
 })<{ shouldPositionBelow: boolean; height: number }>(({ theme, shouldPositionBelow, height }) => ({
   [theme.breakpoints.down('mobile_375')]: {
     justifyContent: 'flex-end',
