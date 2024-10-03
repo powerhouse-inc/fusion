@@ -1,6 +1,6 @@
 import { createThemeModeVariants } from '@ses/core/utils/storybook/factories';
 import { buildExpenseMetricsLineChartSeries } from '@/views/Finances/utils/utils';
-import ExpenseMetrics from './ExpenseMetrics';
+import ExpenseMetrics from './ExpenseMetricsFinances';
 import type { Meta } from '@storybook/react';
 
 const meta: Meta<typeof ExpenseMetrics> = {
