@@ -233,7 +233,7 @@ const ContainerLinks = styled('div')(({ theme }) => ({
   marginLeft: -6,
   transition: 'all .3s ease',
   [theme.breakpoints.up('tablet_768')]: {
-    ' & > div> div:last-child': {
+    ' & > div> div:last-of-type': {
       marginTop: -4,
     },
   },
@@ -248,7 +248,7 @@ const ContainerLinks = styled('div')(({ theme }) => ({
       marginRight: '14px',
       marginTop: '0px!important',
     },
-    ' & > div> div:last-child': {
+    ' & > div> div:last-of-type': {
       marginRight: '0px',
     },
   },

@@ -65,7 +65,7 @@ const ContainerItem = styled.a<{ isLight: boolean }>(({ isLight }) => ({
   height: 40,
   padding: 8,
   cursor: 'pointer',
-  ':last-child': {
+  ':last-of-type': {
     marginBottom: 0,
   },
   ':hover': {

@@ -50,11 +50,8 @@ export const TransparencyCard: React.FC<Props> = ({
         const totalsStyle = header === 'Totals' || titleReactComponent === 'Totals';
 
         return (
-          <ContainerData spacing={cardSpacingSize}>
-            <Row
-              key={header.toString()}
-              hasIcon={header !== 'Target Balance' || (header === 'Target Balance' && itemType === 'total')}
-            >
+          <ContainerData key={`${header.toString()}-${i}`} spacing={cardSpacingSize}>
+            <Row hasIcon={header !== 'Target Balance' || (header === 'Target Balance' && itemType === 'total')}>
               <Label isTotal={totalsStyle}>{header}</Label>
               <div
                 style={{

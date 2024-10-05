@@ -36,7 +36,7 @@ const EssentialWebsites: React.FC<EssentialWebsitesProps> = ({
             background: 'none',
             cursor: 'default',
           },
-          '&:last-child': {
+          '&:last-of-type': {
             paddingBottom: '0px',
           },
         }}
