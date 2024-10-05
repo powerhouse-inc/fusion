@@ -1,5 +1,5 @@
 import type { Filter } from '@/components/FiltersBundle/types';
-import ExpenseMetrics from '@/views/Finances/components/ExpenseMetrics/ExpenseMetrics';
+import ExpenseMetricsFinances from '@/views/Finances/components/ExpenseMetrics/ExpenseMetricsFinances';
 import type { CumulativeType } from '@/views/Finances/components/ExpenseMetrics/useExpenseMetrics';
 import type { LineChartSeriesData } from '@/views/Finances/utils/types';
 import type { AnalyticGranularity } from '@ses/core/models/interfaces/analytic';
@@ -21,6 +21,6 @@ interface Props {
   };
 }
 
-const ExpenseMetricsSection: FC<Props> = ({ expenseMetrics }) => <ExpenseMetrics {...expenseMetrics} />;
+const ExpenseMetricsSection: FC<Props> = ({ expenseMetrics }) => <ExpenseMetricsFinances {...expenseMetrics} />;
 
 export default ExpenseMetricsSection;

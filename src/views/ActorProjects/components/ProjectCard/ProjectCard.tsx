@@ -11,7 +11,7 @@ import {
 import Image from 'next/image';
 import React, { useMemo } from 'react';
 import ProgressWithStatus from '@/components/ProgressWithStatus/ProgressWithStatus';
-import type { Deliverable } from '@/core/models/interfaces/deliverables';
+import type { Deliverable, KeyResult } from '@/core/models/interfaces/deliverables';
 import type { OwnerRef } from '@/core/models/interfaces/roadmaps';
 import type { ProgressStatus } from '@/core/models/interfaces/types';
 import BudgetTypeBadge from '../BudgetTypeBadge/BudgetTypeBadge';
@@ -65,9 +65,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     if (isProject(project)) {
       return deliverable;
     }
+
     return {
       ...deliverable,
-      keyResults: project.supportedKeyResults?.filter((keyResult) => keyResult.parentIdRef === deliverable.id) ?? [],
+      keyResults:
+        // The eslint disable is necessary because the API returns both keyResults and supportedKeyResults
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ((project.supportedDeliverables.find((support) => support.id === deliverable.id) as any)
+          ?.supportedKeyResults as KeyResult[]) || [],
     };
   };
 

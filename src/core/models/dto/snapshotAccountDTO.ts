@@ -1,4 +1,4 @@
-export type Token = 'DAI' | 'ETH' | 'MKR';
+export type Token = 'DAI' | 'ETH' | 'MKR' | 'USD';
 
 export type AccountType = 'singular' | 'group';
 

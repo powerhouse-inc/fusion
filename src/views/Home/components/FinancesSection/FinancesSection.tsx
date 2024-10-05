@@ -1,10 +1,10 @@
 import { styled } from '@mui/material';
+import Notice from '@/components/Notice/Notice';
 import { headerCardData } from '../../staticData';
 import { getYearsForChart } from '../../utils/utils';
 import FinancesBarChartCard from '../FinancesBarChartCard/FinancesBarChartCard';
 import FinancesLineChartCard from '../FinancesLineChartCard/FinancesLineChartCard';
 import HomeSectionTitle from '../HomeSectionTitle/HomeSectionTitle';
-import Notice from './Notice';
 import type { FormattedFinancesData } from '../../api/finances';
 import type { RevenueAndSpendingRecords } from '../../api/revenueAndSpending';
 

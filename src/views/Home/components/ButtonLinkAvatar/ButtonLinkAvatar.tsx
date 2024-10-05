@@ -41,6 +41,7 @@ const ButtonLinkWrapper = styled(Link)(({ theme }) => ({
   '& path': {
     fill: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[300],
   },
+
   [theme.breakpoints.up('tablet_768')]: {
     padding: '4px 8px 4px 8px',
   },
@@ -72,9 +73,8 @@ const ContainerArrow = styled('div')(({ theme }) => ({
   display: 'flex',
   width: 24,
   height: 24,
-  color: theme.palette.colors.sky[1000],
   '& path': {
-    fill: theme.palette.colors.sky[1000],
+    fill: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[300],
   },
 }));
 

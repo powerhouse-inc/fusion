@@ -68,7 +68,7 @@ const NumberWithSignCard: React.FC<NumberWithSignCardProps> = ({
               ) : (
                 usLocalizedNumber(Math.round(value))
               )}
-              <div>DAI</div>
+              <div>USD</div>
             </>
           ) : (
             'N/A'

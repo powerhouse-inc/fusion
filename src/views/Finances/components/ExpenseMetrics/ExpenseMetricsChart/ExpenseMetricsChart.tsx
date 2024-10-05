@@ -358,7 +358,7 @@ const ChartContainer = styled('div')(({ theme }) => ({
 
 const YearXAxis = styled('div')(({ theme }) => {
   const border = `1px solid ${
-    theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[400]
+    theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700]
   }`;
 
   return {
@@ -377,17 +377,18 @@ const YearXAxis = styled('div')(({ theme }) => {
 
 const YearText = styled('div')(({ theme }) => ({
   position: 'absolute',
-  fontFamily: 'OpenSansCondensed, sans-serif',
+  fontFamily: 'Open Sans Condensed, sans-serif',
   fontWeight: 700,
   fontSize: 12,
   lineHeight: '16px',
-  color: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[400],
+  color: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700],
   bottom: -6,
-  width: 36,
+  width: 52,
   left: '50%',
   transform: 'translateX(-50%)',
   backgroundColor: theme.palette.isLight ? 'white' : theme.palette.colors.charcoal[900],
   textAlign: 'center',
+  letterSpacing: '1px',
 }));
 
 const LegendContainer = styled('div')(({ theme }) => ({
