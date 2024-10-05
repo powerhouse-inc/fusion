@@ -283,7 +283,7 @@ const ResponsiveList = styled('ul')(({ theme }) => ({
       marginTop: '2em',
     },
     marginTop: '0.5em',
-    '&:not(:last-of-type) ul': {
+    '&:not(:last-child) ul': {
       marginBottom: '2em',
     },
   },

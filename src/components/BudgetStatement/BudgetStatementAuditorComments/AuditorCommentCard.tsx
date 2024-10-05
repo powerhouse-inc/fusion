@@ -229,11 +229,11 @@ const MarkdownWrapper = styled('div')(({ theme }) => ({
     fontWeight: 600,
   },
 
-  '& > *:not(:nth-of-type(1))': {
+  '& > *:not(:nth-child(1))': {
     marginTop: 8,
   },
 
-  '& > *:nth-of-type(1)': {
+  '& > *:nth-child(1)': {
     marginTop: '0',
   },
 

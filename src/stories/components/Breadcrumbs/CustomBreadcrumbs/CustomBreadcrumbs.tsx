@@ -49,7 +49,7 @@ const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
       marginRight: 6,
       fontWeight: 400,
 
-      ':last-of-type': {
+      ':last-child': {
         letterSpacing: 0,
         marginLeft: 4,
         fontWeight: 600,
@@ -66,7 +66,7 @@ const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
         marginRight: 15,
         marginTop: -2,
 
-        ':last-of-type': {
+        ':last-child': {
           marginLeft: 16,
           lineHeight: '19px',
           fontWeight: 700,
@@ -77,7 +77,7 @@ const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
       [theme.breakpoints.up('desktop_1024')]: {
         border: 'none',
 
-        ':last-of-type': {
+        ':last-child': {
           marginLeft: 16,
           lineHeight: '19px',
           fontWeight: 700,

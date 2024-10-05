@@ -307,7 +307,7 @@ const Container = styled('div')(({ theme }) => ({
     marginRight: 20,
   },
   width: '100%',
-  '& :last-of-type': {
+  '& :last-child': {
     marginRight: 0,
   },
 
