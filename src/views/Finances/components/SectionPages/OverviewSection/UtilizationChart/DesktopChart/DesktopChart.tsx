@@ -438,14 +438,14 @@ const SwiperWrapper = styled('div', {
     display: 'flex',
     position: 'relative',
     ...(numberSliderPerLevel === 12 && {
-      minWidth: 365,
+      minWidth: 360,
     }),
   },
   [theme.breakpoints.up('desktop_1440')]: {
     display: 'flex',
     position: 'relative',
     ...(numberSliderPerLevel === 12 && {
-      minWidth: 440,
+      minWidth: 410,
     }),
   },
 
