@@ -35,7 +35,7 @@ LightMode.parameters = {
   figma: {
     component: {
       375: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7367-70431&m=dev',
+        component: '',
         options: {
           componentStyle: {
             width: 375,
@@ -47,7 +47,7 @@ LightMode.parameters = {
         },
       },
       768: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7367-69879&m=dev',
+        component: '',
         options: {
           componentStyle: {
             width: 768,
@@ -59,7 +59,7 @@ LightMode.parameters = {
         },
       },
       1024: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7367-69434&m=dev',
+        component: '',
         options: {
           componentStyle: {
             width: 1024,
@@ -71,7 +71,7 @@ LightMode.parameters = {
         },
       },
       1280: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7367-69028&m=dev',
+        component: '',
         options: {
           componentStyle: {
             width: 1280,
@@ -83,7 +83,7 @@ LightMode.parameters = {
         },
       },
       1440: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7307-62868&m=dev',
+        component: '',
         options: {
           componentStyle: {
             width: 1440,
