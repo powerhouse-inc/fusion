@@ -284,7 +284,7 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
   }
 
   return (
-    <Container isDeepLevel={isDeepLevel}>
+    <Container isDeepLevel={isDeepLevel} haveMoreThanThreeItems={seriesData.length > 3}>
       <ContainerChart>
         <ReactECharts
           ref={chartRef}
@@ -346,8 +346,8 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
 export default DesktopChart;
 
 const Container = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'isDeepLevel',
-})<{ isDeepLevel: boolean }>(({ theme, isDeepLevel }) => ({
+  shouldForwardProp: (prop) => prop !== 'isDeepLevel' && prop !== 'haveMoreThanThreeItems',
+})<{ isDeepLevel: boolean; haveMoreThanThreeItems: boolean }>(({ theme, isDeepLevel, haveMoreThanThreeItems }) => ({
   display: 'none',
 
   [theme.breakpoints.up('tablet_768')]: {
@@ -362,11 +362,15 @@ const Container = styled('div', {
   },
   [theme.breakpoints.up('desktop_1280')]: {
     gap: isDeepLevel ? 40 : 32,
-    justifyContent: 'flex-start',
-    marginLeft: 16,
+    ...(haveMoreThanThreeItems && {
+      justifyContent: 'flex-start',
+      marginLeft: 16,
+    }),
   },
   [theme.breakpoints.up('desktop_1440')]: {
-    marginLeft: 24,
+    ...(haveMoreThanThreeItems && {
+      marginLeft: 24,
+    }),
   },
 }));
 
