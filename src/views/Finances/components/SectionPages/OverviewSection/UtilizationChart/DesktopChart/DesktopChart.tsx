@@ -369,7 +369,7 @@ const Container = styled('div', {
   },
   [theme.breakpoints.up('desktop_1440')]: {
     ...(haveMoreThanThreeItems && {
-      marginLeft: 24,
+      marginLeft: 40,
     }),
   },
 }));
