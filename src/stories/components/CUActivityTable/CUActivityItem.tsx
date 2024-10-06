@@ -3,7 +3,7 @@ import { siteRoutes } from '@ses/config/routes';
 import { ResourceType } from '@ses/core/models/interfaces/types';
 import { DateTime } from 'luxon';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 import CircleAvatar from '@/components/CircleAvatar/CircleAvatar';
 import { getShortCode } from '@/core/utils/string';

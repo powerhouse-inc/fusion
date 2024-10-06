@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { getLastUpdateForBudgetStatement } from '../businessLogic/coreUnits';
 import { useAuthContext } from '../context/AuthContext';
@@ -22,15 +22,14 @@ const useTransparencyReporting = <TabIds extends string>(
   transparencyElement: Team | CoreUnit,
   options: TransparencyReportingOptions<TabIds> = {}
 ) => {
-  const router = useRouter();
-  const query = router.query;
+  const searchParams = useSearchParams();
   const pagerRef = useRef<HTMLDivElement>(null);
   const { permissionManager } = useAuthContext();
   const [tabsIndex, setTabsIndex] = useState<TabIds>(() => {
     if (options.initTabIndex) {
       return options.initTabIndex();
     }
-    return query?.section as TabIds;
+    return searchParams?.get('section') as TabIds;
   });
   const [lastVisitHandler, setLastVisitHandler] = useState<LastVisitHandler>();
 

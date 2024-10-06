@@ -1,10 +1,10 @@
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 
 // todo: remove this hook after all the legacy headers is replaced
 export const useHeaderSummary = (ref: React.RefObject<HTMLDivElement>, code: string) => {
-  const router = useRouter();
-  const url = router.query.code;
+  const searchParams = useSearchParams();
+  const url = searchParams?.get('code');
   const [actualsUrl, setActualsUrl] = useState(code);
 
   const [position, setPosition] = useState(0);

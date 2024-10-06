@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import CommentsTab from '@/components/Tabs/CommentsTab/CommentsTab';
 import type { InternalTabsProps } from '@/components/Tabs/Tabs';
@@ -8,7 +8,6 @@ import { TRANSPARENCY_IDS_ENUM } from '@/views/CoreUnitBudgetStatement/useCoreUn
 import { AUDITOR_VIEW_STORAGE_COLLECTION_KEY } from '@/views/CoreUnitBudgetStatement/utils/constants';
 import { useAuthContext } from '../context/AuthContext';
 import { useCookiesContextTracking } from '../context/CookiesContext';
-import { removeEmptyProperties } from '../utils/urls';
 import UserActivityManager from '../utils/userActivity';
 import { useFlagsActive } from './useFlagsActive';
 import type { CommentsLastVisitState } from './useBudgetStatementComments';
@@ -37,7 +36,7 @@ const useTransparencyReportingTabs = ({
   const { isTimestampTrackingAccepted } = useCookiesContextTracking();
   const { permissionManager } = useAuthContext();
   const router = useRouter();
-  const query = router.query;
+  const searchParams = useSearchParams();
 
   const accountsSnapshotTab = {
     item: 'Accounts Snapshot',
@@ -135,32 +134,26 @@ const useTransparencyReportingTabs = ({
     const restoreAuditorViewFunction = async () => {
       // restore the auditor view status form the storage/server if needed
       // the auditor view status in the query param has priority over the stored value
-      if (!query.view && handleTabsExpand && isTimestampTrackingAccepted) {
+      if (!searchParams?.get('view') && handleTabsExpand && isTimestampTrackingAccepted) {
         const manager = new UserActivityManager(permissionManager);
         const result = await manager.getLastActivity(AUDITOR_VIEW_STORAGE_COLLECTION_KEY);
         if ((result?.data as AuditorViewStoragePayload)?.isAuditorViewEnabled) {
           // activate the auditor view
           handleTabsExpand(false);
-          router.replace(
-            {
-              pathname: router.pathname,
-              query: {
-                ...removeEmptyProperties(router.query),
-                view: 'auditor',
-              },
-            },
-            undefined,
-            { shallow: true }
-          );
+          const searchParams = new URLSearchParams(window.location.search);
+          searchParams.set('view', 'auditor');
+          const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+          router.replace(newUrl);
+
           // it's coming from default view, but comment is in both views so we can keep it activated
-          if (router.query.section !== TRANSPARENCY_IDS_ENUM.COMMENTS) {
+          if (searchParams?.get('section') !== TRANSPARENCY_IDS_ENUM.COMMENTS) {
             setTabsIndex(TRANSPARENCY_IDS_ENUM.ACCOUNTS_SNAPSHOTS);
           }
         }
       }
     };
     restoreAuditorViewFunction();
-  }, [handleTabsExpand, isTimestampTrackingAccepted, permissionManager, query.view, router, setTabsIndex]);
+  }, [handleTabsExpand, isTimestampTrackingAccepted, permissionManager, router, searchParams, setTabsIndex]);
 
   return {
     tabItems,

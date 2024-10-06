@@ -1,6 +1,6 @@
 import { styled } from '@mui/material';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname, useSearchParams } from 'next/navigation';
 import React, { useMemo } from 'react';
 import { BASE_URL } from '@/config/routes';
 import { BudgetStatus } from '@/core/models/interfaces/types';
@@ -17,14 +17,15 @@ const ExpenseReportStatusIndicator: React.FC<ExpenseReportStatusIndicatorProps> 
   showCTA,
   className,
 }) => {
-  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const url = useMemo(() => {
-    const currentUrl = new URL(router.asPath, BASE_URL);
-    const currentQueryParams = new URLSearchParams(currentUrl.search);
+    const currentUrl = new URL(pathname ?? '', BASE_URL);
+    const currentQueryParams = new URLSearchParams(searchParams ?? '');
     currentQueryParams.set('section', 'comments');
 
     return `${currentUrl.pathname}?${currentQueryParams.toString()}${currentUrl.hash}`;
-  }, [router.asPath]);
+  }, [pathname, searchParams]);
 
   return (
     <IndicatorContainer className={className}>

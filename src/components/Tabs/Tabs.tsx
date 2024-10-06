@@ -1,9 +1,8 @@
 import { styled } from '@mui/material';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 import ArrowCollapse from 'public/assets/svg/arrow_collapse.svg';
 import ArrowExpand from 'public/assets/svg/arrow_expand.svg';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { removeEmptyProperties } from '@/core/utils/urls';
 import Tab from './Tab';
 import TabPopover from './TabPopover';
 import type { CSSProperties } from 'react';
@@ -93,19 +92,19 @@ const Tabs: React.FC<TabsProps> = ({
   isDisablePopover = false,
 }) => {
   const router = useRouter();
-  const query = router.query;
+  const searchParams = useSearchParams();
   const queryValue = useMemo(() => {
-    const value = query[tabQuery];
+    const value = searchParams?.get(tabQuery);
     if (Array.isArray(value) && value.length > 0) {
       return value[0];
     }
     if (typeof value === 'string') {
       return value;
     }
-  }, [query, tabQuery]);
+  }, [searchParams, tabQuery]);
   const [expanded, setExpanded] = useState(() => {
-    if ([viewValues.default, viewValues.compressed].includes(router.query[viewKey] as string)) {
-      return router.query[viewKey] === viewValues.default;
+    if ([viewValues.default, viewValues.compressed].includes(searchParams?.get(viewKey) as string)) {
+      return searchParams?.get(viewKey) === viewValues.default;
     }
     return expandedDefault;
   });
@@ -212,18 +211,11 @@ const Tabs: React.FC<TabsProps> = ({
       onChange?.(expandedActiveId, compressedActiveId);
     }
 
-    router.replace(
-      {
-        pathname: router.pathname,
-        query: {
-          ...removeEmptyProperties(router.query),
-          [viewKey]: view,
-          [tabQuery]: id,
-        },
-      },
-      undefined,
-      { shallow: true }
-    );
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.set(viewKey, view);
+    searchParams.set(tabQuery, id ?? '');
+    const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+    router.replace(newUrl, { scroll: false });
     onExpand?.(!expanded);
     setExpanded(!expanded);
   };

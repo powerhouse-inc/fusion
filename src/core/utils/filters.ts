@@ -1,5 +1,6 @@
 import type { CoreUnit } from '../models/interfaces/coreUnit';
 import type { MultiSelectItem } from '@ses/components/CustomMultiSelect/CustomMultiSelect';
+import type { ReadonlyURLSearchParams } from 'next/navigation';
 import type { ParsedUrlQuery } from 'querystring';
 
 const filterStatus = (lowerCaseStatuses: string[], data: CoreUnit) =>
@@ -62,12 +63,15 @@ export const filterData = ({
   };
 };
 
-export const getArrayParam = (key: string, urlSearchParams: ParsedUrlQuery) => {
+// eslint-disable-next-line spellcheck/spell-checker
+export const getArrayParam = (key: string, urlSearchParams: ParsedUrlQuery | ReadonlyURLSearchParams | null) => {
   if (!urlSearchParams || !key) return [];
   let filters: string[] = [];
 
-  if (urlSearchParams[key]) {
-    filters = (urlSearchParams[`${key}`] as string).split(',');
+  const params = urlSearchParams as ReadonlyURLSearchParams;
+
+  if (params && params.get(key)) {
+    filters = (params.get(key) as string).split(',');
   }
 
   return filters;

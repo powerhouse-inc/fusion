@@ -1,3 +1,5 @@
+'use client';
+
 import { styled, useMediaQuery } from '@mui/material';
 import { useMemo } from 'react';
 import type { PagerArrowsProps } from '@/components/PagerArrows/PagerArrows';

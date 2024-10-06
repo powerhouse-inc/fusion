@@ -1,3 +1,5 @@
+'use client';
+
 import { styled } from '@mui/material';
 import Link from 'next/link';
 import AngleRight from 'public/assets/svg/angle_right.svg';

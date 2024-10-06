@@ -1,3 +1,5 @@
+'use client';
+
 import { styled, useMediaQuery } from '@mui/material';
 import type { TeamRole } from '@/core/enums/teamRole';
 import type { Team } from '@/core/models/interfaces/team';

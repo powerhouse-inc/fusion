@@ -2,9 +2,8 @@ import { useMediaQuery } from '@mui/material';
 import { useFlagsActive } from '@ses/core/hooks/useFlagsActive';
 import useTransparencyReporting from '@ses/core/hooks/useTransparencyReporting';
 import useTransparencyReportingTabs from '@ses/core/hooks/useTransparencyReportingTabs';
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
-import { useBreadcrumbCoreUnitPager } from '../CoreUnitAbout/hooks';
 import type { Theme } from '@mui/material';
 import type { SnapshotLimitPeriods } from '@ses/core/hooks/useBudgetStatementPager';
 import type { CoreUnit } from '@ses/core/models/interfaces/coreUnit';
@@ -21,22 +20,17 @@ export enum TRANSPARENCY_IDS_ENUM {
   EXPENSE_REPORT = 'expense-report',
 }
 
-export const useCoreUnitBudgetStatementView = (
-  coreUnit: CoreUnit,
-  coreUnits: CoreUnit[],
-  snapshotLimitPeriods?: SnapshotLimitPeriods
-) => {
-  const router = useRouter();
-  const query = router.query;
+export const useCoreUnitBudgetStatementView = (coreUnit: CoreUnit, snapshotLimitPeriods?: SnapshotLimitPeriods) => {
+  const searchParams = useSearchParams();
   const [isEnabled] = useFlagsActive();
 
   const isDisablePopoverForMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
 
   const initTabIndex = useCallback(() => {
     // initialize quickly the correct tab to avoid tab flickering
-    const view = query?.view ?? 'default';
+    const view = searchParams?.get('view') ?? 'default';
     if (view === 'auditor') {
-      switch (query?.section) {
+      switch (searchParams?.get('section')) {
         case TRANSPARENCY_IDS_ENUM.ACCOUNTS_SNAPSHOTS:
           return TRANSPARENCY_IDS_ENUM.ACCOUNTS_SNAPSHOTS;
         case TRANSPARENCY_IDS_ENUM.EXPENSE_REPORT:
@@ -48,7 +42,7 @@ export const useCoreUnitBudgetStatementView = (
       }
     } else {
       // default
-      switch (query?.section) {
+      switch (searchParams?.get('section')) {
         case TRANSPARENCY_IDS_ENUM.ACTUALS:
           return TRANSPARENCY_IDS_ENUM.ACTUALS;
         case TRANSPARENCY_IDS_ENUM.FORECAST:
@@ -67,7 +61,7 @@ export const useCoreUnitBudgetStatementView = (
           return TRANSPARENCY_IDS_ENUM.ACCOUNTS_SNAPSHOTS;
       }
     }
-  }, [query?.section, query?.view]);
+  }, [searchParams]);
 
   const {
     pagerRef,
@@ -112,8 +106,6 @@ export const useCoreUnitBudgetStatementView = (
     }
   }, [lastUpdateForBudgetStatement, snapshotCreated, tabsIndex]);
 
-  const pager = useBreadcrumbCoreUnitPager(coreUnit, coreUnits);
-
   return {
     isEnabled,
     pagerRef,
@@ -136,7 +128,6 @@ export const useCoreUnitBudgetStatementView = (
     code: coreUnit.shortCode,
     longCode: coreUnit.code,
     setSnapshotCreated,
-    pager,
     isDisablePopoverForMobile,
   };
 };

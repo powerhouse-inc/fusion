@@ -4,7 +4,7 @@ import { getArrayParam } from '@ses/core/utils/filters';
 import { buildQueryString } from '@ses/core/utils/urls';
 import lightTheme from '@ses/styles/theme/themes';
 import _ from 'lodash';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { forwardRef, useCallback, useMemo } from 'react';
 import { filterDataActors } from '@/views/EcosystemActorsIndex/utils/utils';
 import BreadcrumbNavigation from '../BreadcrumbNavigation/BreadcrumbNavigation';
@@ -23,11 +23,11 @@ interface ActorSummaryProps {
 const ActorSummary = forwardRef<HTMLDivElement, ActorSummaryProps>(
   ({ actors: data = [], breadcrumbTitle, trailingAddress = [], showHeader = true }, ref, className = '') => {
     const router = useRouter();
-    const query = router.query;
-    const code = query.code as string;
+    const searchParams = useSearchParams();
+    const code = searchParams?.get('code');
 
     // This is for the filter in the page of list actors about
-    const filteredCategories = useMemo(() => getArrayParam('filteredCategories', router.query), [router.query]);
+    const filteredCategories = useMemo(() => getArrayParam('filteredCategories', searchParams), [searchParams]);
 
     const actorAbout = data?.find((actor) => actor.shortCode === code) || ({} as Team);
 
@@ -44,7 +44,7 @@ const ActorSummary = forwardRef<HTMLDivElement, ActorSummaryProps>(
     const page = useMemo(() => filteredData?.findIndex((item) => item.shortCode === code) + 1, [code, filteredData]);
 
     const queryStrings = buildQueryString({
-      ...router.query,
+      ...searchParams,
       filteredCategories,
       code: null, // override the Actors Code code to avoid add it to the query string as Core Unit
     });
@@ -54,7 +54,7 @@ const ActorSummary = forwardRef<HTMLDivElement, ActorSummaryProps>(
         const index = filteredData?.findIndex((item) => item.shortCode === code);
         const newIndex = index + direct;
         if (newIndex >= 0 && newIndex < filteredData?.length) {
-          router.push(`${router.route.replace('[code]', filteredData[newIndex].shortCode)}${queryStrings}`);
+          router.push(`${siteRoutes.ecosystemActorAbout(filteredData[newIndex].shortCode)}/${queryStrings}`);
         }
       },
       [code, filteredData, queryStrings, router]
@@ -68,7 +68,7 @@ const ActorSummary = forwardRef<HTMLDivElement, ActorSummaryProps>(
           mainUrl={`${siteRoutes.ecosystemActors}/${queryStrings}`}
           labelFirstItemNavigation={{
             label: buildCULabel(),
-            url: `${siteRoutes.ecosystemActorAbout(code)}/${queryStrings}`,
+            url: `${siteRoutes.ecosystemActorAbout(code || '')}/${queryStrings}`,
           }}
           totalElements={filteredData.length}
           onClickLeft={changeCoreUnitCode(-1)}
@@ -76,7 +76,6 @@ const ActorSummary = forwardRef<HTMLDivElement, ActorSummaryProps>(
           breadcrumbTitleMobile={breadcrumbTitle}
           hasStyleMobileItem={[buildCULabel(), undefined].includes(breadcrumbTitle)}
           trailingAddress={trailingAddress}
-          router={router}
         />
 
         <Collapse in={showHeader} timeout={300} unmountOnExit>

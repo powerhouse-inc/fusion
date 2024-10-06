@@ -1,7 +1,7 @@
 import { styled } from '@mui/material';
 import isEmpty from 'lodash/isEmpty';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 import React, { useMemo } from 'react';
 import SESTooltip from '@/components/SESTooltip/SESTooltip';
 import { siteRoutes } from '@/config/routes';
@@ -23,8 +23,11 @@ interface CuTableColumnExpendituresProps {
 }
 
 export const CuTableColumnExpenditures = ({ isLoading = false, ...props }: CuTableColumnExpendituresProps) => {
-  const router = useRouter();
-  const queryStrings = useMemo(() => buildQueryString(router.query), [router.query]);
+  const searchParams = useSearchParams();
+  const queryStrings = useMemo(
+    () => buildQueryString(searchParams as unknown as { [key: string]: string }),
+    [searchParams]
+  );
   return !isLoading ? (
     <LinkStyle href={`${siteRoutes.coreUnitReports(props?.code || '')}/${queryStrings}`}>
       <Container>

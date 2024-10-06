@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 import { useRef, useState } from 'react';
 import lightTheme from '../../../../styles/theme/themes';
 import { useThemeContext } from '../../../core/context/ThemeContext';
@@ -7,8 +7,8 @@ import type { ActivityTableHeader } from '../../components/CUActivityTable/Activ
 
 export const useCuActivity = () => {
   const { isLight } = useThemeContext();
-  const router = useRouter();
-  const code = router.query.code as string;
+  const searchParams = useSearchParams();
+  const code = searchParams?.get('code') as string;
   const ref = useRef<HTMLDivElement>(null);
   const [columns, setColumns] = useState<ActivityTableHeader[]>([
     {

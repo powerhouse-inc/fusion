@@ -140,7 +140,7 @@ const useCommentForm = (currentBudgetStatus: BudgetStatus, budgetStatementId: st
       // prevent the new comment being marked as unvisited
       await lastVisitHandler?.visit();
 
-      setCurrentTeam(updatedCoreUnit);
+      setCurrentTeam?.(updatedCoreUnit);
       setTextareaValue('');
     } catch (err) {
       triggerToast({

@@ -5,8 +5,8 @@ export interface PagerArrowsProps {
   className?: string;
   hasPrevious: boolean;
   hasNext: boolean;
-  onPrevious: () => void;
-  onNext: () => void;
+  onPrevious?: () => void;
+  onNext?: () => void;
 }
 
 const PagerArrows: React.FC<PagerArrowsProps> = ({ className, hasPrevious, hasNext, onPrevious, onNext }) => (

@@ -1,27 +1,29 @@
 import sortBy from 'lodash/sortBy';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useMemo, useCallback } from 'react';
 import { getRelateMipObjectFromCoreUnit } from '@/core/businessLogic/coreUnitAbout';
 import { TeamStatus } from '@/core/models/interfaces/types';
 import { getArrayParam, getStringParam } from '@/core/utils/filters';
 import { buildQueryString } from '@/core/utils/urls';
-import { useBreadcrumbCoreUnitPager } from './hooks';
 import type { CoreUnit } from '@ses/core/models/interfaces/coreUnit';
 import type { CuMip } from '@ses/core/models/interfaces/cuMip';
 
 interface Props {
   cuAbout: CoreUnit;
-  coreUnits: CoreUnit[];
   code: string;
   setShowThreeMIPs: (value: boolean) => void;
   showThreeMIPs: boolean;
 }
 
-export const useCoreUnitAboutView = ({ cuAbout, coreUnits, code, setShowThreeMIPs, showThreeMIPs }: Props) => {
+export const useCoreUnitAboutView = ({ cuAbout, code, setShowThreeMIPs, showThreeMIPs }: Props) => {
   const router = useRouter();
-  const filteredStatuses = useMemo(() => getArrayParam('filteredStatuses', router.query), [router.query]);
-  const filteredCategories = useMemo(() => getArrayParam('filteredCategories', router.query), [router.query]);
-  const searchText = useMemo(() => getStringParam('searchText', router.query), [router.query]);
+  const searchParams = useSearchParams();
+  const filteredStatuses = useMemo(() => getArrayParam('filteredStatuses', searchParams), [searchParams]);
+  const filteredCategories = useMemo(() => getArrayParam('filteredCategories', searchParams), [searchParams]);
+  const searchText = useMemo(
+    () => getStringParam('searchText', Object.fromEntries((searchParams ?? new Set()).entries())),
+    [searchParams]
+  );
 
   const onClickLessMips = () => {
     setShowThreeMIPs(!showThreeMIPs);
@@ -59,8 +61,6 @@ export const useCoreUnitAboutView = ({ cuAbout, coreUnits, code, setShowThreeMIP
     router.push(`/core-unit/${code}/activity-feed${queryStrings}`);
   }, [router, code, queryStrings]);
 
-  const pager = useBreadcrumbCoreUnitPager(cuAbout, coreUnits);
-
   return {
     onClickLessMips,
     relateMipsOrder,
@@ -70,6 +70,5 @@ export const useCoreUnitAboutView = ({ cuAbout, coreUnits, code, setShowThreeMIP
     setShowThreeMIPs,
     onClickActivity,
     queryStrings,
-    pager,
   };
 };

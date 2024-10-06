@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getLastMonthWithActualOrForecast } from '../businessLogic/coreUnits';
 import { API_MONTH_TO_FORMAT } from '../utils/date';
@@ -20,7 +20,9 @@ export interface BudgetStatementPagerOptions {
 
 const useBudgetStatementPager = (element: WithBudgetStatement, options?: BudgetStatementPagerOptions) => {
   const router = useRouter();
-  const viewMonthStr = router.query.viewMonth;
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const viewMonthStr = searchParams?.get('viewMonth');
   const anchor = useUrlAnchor();
   const [currentMonth, setCurrentMonth] = useState(DateTime.utc());
 
@@ -72,25 +74,16 @@ const useBudgetStatementPager = (element: WithBudgetStatement, options?: BudgetS
         setCurrentMonth(month);
       }
     }
-  }, [router.route, router.query, viewMonthStr, element.budgetStatements, options?.latestSnapshotPeriod]);
+  }, [pathname, searchParams, viewMonthStr, element.budgetStatements, options?.latestSnapshotPeriod]);
 
   const replaceViewMonthRoute = useCallback(
     (viewMonth: string) => {
-      router.replace(
-        {
-          hash: anchor,
-          query: {
-            ...router.query,
-            viewMonth,
-          },
-        },
-        undefined,
-        {
-          shallow: true,
-        }
-      );
+      const newSearchParams = new URLSearchParams(searchParams ?? '');
+      newSearchParams.set('viewMonth', viewMonth);
+      const url = `${pathname}?${newSearchParams.toString()}${anchor ? `#${anchor}` : ''}`;
+      router.replace(url, { scroll: false });
     },
-    [anchor, router]
+    [anchor, pathname, router, searchParams]
   );
 
   const hasPreviousMonth = useCallback(() => {

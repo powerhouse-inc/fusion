@@ -1,7 +1,7 @@
 import { styled } from '@mui/material';
 import { BASE_URL } from '@ses/config/routes';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname, useSearchParams } from 'next/navigation';
 import React, { useMemo } from 'react';
 
 interface TabProps extends React.PropsWithChildren {
@@ -14,18 +14,20 @@ interface TabProps extends React.PropsWithChildren {
 }
 
 const Tab: React.FC<TabProps> = ({ children, id, href, tabQuery, active = false, onClick, className }) => {
-  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const url = useMemo(() => {
     if (href) return href;
 
-    const currentUrl = new URL(router.asPath, BASE_URL);
-    const currentQueryParams = new URLSearchParams(currentUrl.search);
+    const currentUrl = new URL(pathname ?? '', BASE_URL);
+    const currentQueryParams = new URLSearchParams(searchParams ?? '');
     currentQueryParams.set(tabQuery || 'tab', id || '');
 
     const updatedUrl = `${currentUrl.pathname}?${currentQueryParams.toString()}${currentUrl.hash}`;
 
     return updatedUrl;
-  }, [href, id, router.asPath, tabQuery]);
+  }, [href, id, pathname, searchParams, tabQuery]);
 
   const content = (
     <StyledTab active={active} onClick={onClick} className={className}>

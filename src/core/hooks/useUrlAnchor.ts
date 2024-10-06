@@ -1,18 +1,18 @@
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export const useUrlAnchor = () => {
-  const router = useRouter();
+  const pathname = usePathname();
   const [anchor, setAnchor] = useState<string | undefined>();
 
   useEffect(() => {
-    if (router.asPath.lastIndexOf('#') !== -1) {
-      const _anchor = router.asPath.substring(router.asPath.lastIndexOf('#') + 1);
+    if (pathname && pathname.lastIndexOf('#') !== -1) {
+      const _anchor = pathname.substring(pathname.lastIndexOf('#') + 1);
       setAnchor(_anchor);
     } else {
       setAnchor('');
     }
-  }, [router.asPath]);
+  }, [pathname]);
 
   return anchor;
 };

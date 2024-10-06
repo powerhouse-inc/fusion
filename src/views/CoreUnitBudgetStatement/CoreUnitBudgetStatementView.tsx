@@ -1,10 +1,10 @@
+'use client';
+
 import { styled } from '@mui/material';
-import { siteRoutes } from '@ses/config/routes';
 import { ModalCategoriesProvider } from '@ses/core/context/CategoryModalContext';
 import { ResourceType } from '@ses/core/models/interfaces/types';
+import { DateTime } from 'luxon';
 import AccountsSnapshotTabContainer from '@/components/AccountsSnapshot/AccountsSnapshotTabContainer';
-import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
-import TeamBreadcrumbContent from '@/components/Breadcrumb/CustomContents/TeamBreadcrumbContent';
 import { BudgetStatementActuals } from '@/components/BudgetStatement/BudgetStatementActuals/BudgetStatementActuals';
 import { TransparencyAudit } from '@/components/BudgetStatement/BudgetStatementAudit/BudgetStatementAudit';
 import AuditorCommentsContainer from '@/components/BudgetStatement/BudgetStatementAuditorComments/AuditorCommentsContainer/AuditorCommentsContainer';
@@ -14,21 +14,16 @@ import BudgetStatementPager from '@/components/BudgetStatement/BudgetStatementPa
 import { BudgetStatementTransferRequest } from '@/components/BudgetStatement/BudgetStatementTransferRequest/BudgetStatementTransferRequest';
 import ExpenseReport from '@/components/BudgetStatement/ExpenseReport/ExpenseReport';
 import Container from '@/components/Container/Container';
-import PageContainer from '@/components/Container/PageContainer';
 import Tabs from '@/components/Tabs/Tabs';
-import TeamHeader from '@/components/TeamHeader/TeamHeader';
-import type { Team } from '@/core/models/interfaces/team';
 import AdditionalNotesSection from '../../components/AdditionalNotesSection/AdditionalNotesSection';
 import CuHeadlineText from '../../components/CuHeadlineText/CuHeadlineText';
 import { CommentActivityContext } from '../../core/context/CommentActivityContext';
-import { SEOHead } from '../../stories/components/SEOHead/SEOHead';
 import { TRANSPARENCY_IDS_ENUM, useCoreUnitBudgetStatementView } from './useCoreUnitBudgetStatementView';
 import type { SnapshotLimitPeriods } from '@ses/core/hooks/useBudgetStatementPager';
 import type { ExpenseCategory } from '@ses/core/models/dto/expenseCategoriesDTO';
 import type { CoreUnit } from '@ses/core/models/interfaces/coreUnit';
 
 interface CoreUnitBudgetStatementViewProps {
-  coreUnits: CoreUnit[];
   coreUnit: CoreUnit;
   expenseCategories: ExpenseCategory[];
   snapshotLimitPeriods?: SnapshotLimitPeriods;
@@ -39,7 +34,6 @@ export type TableItems = {
 };
 
 const CoreUnitBudgetStatementView = ({
-  coreUnits,
   coreUnit,
   expenseCategories,
   snapshotLimitPeriods,
@@ -66,172 +60,139 @@ const CoreUnitBudgetStatementView = ({
     onTabsExpand,
     compressedTabItems,
     setSnapshotCreated,
-    pager,
     isDisablePopoverForMobile,
-  } = useCoreUnitBudgetStatementView(coreUnit, coreUnits, snapshotLimitPeriods);
+  } = useCoreUnitBudgetStatementView(
+    coreUnit,
+    snapshotLimitPeriods
+      ? {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          earliest: DateTime.fromISO(snapshotLimitPeriods.earliest),
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          latest: DateTime.fromISO(snapshotLimitPeriods.latest),
+        }
+      : undefined
+  );
 
   const headline = <CuHeadlineText cuLongCode={longCode} shortCode={coreUnit.shortCode} />;
   return (
-    <PageContainer>
-      <SEOHead
-        title={`Sky Fusion - ${coreUnit.name} Budget Statements`}
-        description={`Learn about ${coreUnit.name}'s Budget Statements: their total funding overview from reported expenses to accessible reserves.`}
-        canonicalURL={siteRoutes.coreUnitReports(coreUnit.shortCode)}
-      />
+    <PageSeparator>
+      <Container>
+        <BudgetStatementPager
+          currentMonth={currentMonth}
+          handleNext={handleNextMonth}
+          handlePrevious={handlePreviousMonth}
+          hasNext={hasNextMonth()}
+          hasPrevious={hasPreviousMonth()}
+          budgetStatus={currentBudgetStatement?.status}
+          showExpenseReportStatusCTA={showExpenseReportStatusCTA}
+          lastUpdate={lastUpdate}
+          ref={pagerRef}
+        />
 
-      <Breadcrumb
-        items={[
-          {
-            label: 'Contributors',
-            href: siteRoutes.contributors,
-          },
-          {
-            label: 'Core Units',
-            href: siteRoutes.coreUnitsOverview,
-            number: coreUnits.length,
-          },
-          {
-            label: coreUnit.name,
-            href: siteRoutes.coreUnitAbout(coreUnit.shortCode),
-          },
-          {
-            label: 'Budget Statements',
-            href: '#',
-          },
-        ]}
-        rightContent={
-          <TeamBreadcrumbContent
-            team={ResourceType.CoreUnit}
-            currentPage={pager.currentPage}
-            totalPages={pager.totalPages}
-            pagerProps={{
-              hasNext: pager.hasNext,
-              hasPrevious: pager.hasPrevious,
-              onNext: pager.onNext,
-              onPrevious: pager.onPrevious,
+        <TabsContainer>
+          <TabsStyled
+            isDisablePopover={isDisablePopoverForMobile}
+            tabs={tabItems}
+            expandable
+            compressedTabs={compressedTabItems}
+            onInit={onTabsInit}
+            onChange={onTabChange}
+            onExpand={onTabsExpand}
+            expandToolTip={{
+              default: 'Default View',
+              compressed: 'Auditor View',
+            }}
+            tabQuery={'section'}
+            viewValues={{
+              default: 'default',
+              compressed: 'auditor',
             }}
           />
-        }
-      />
-      <TeamHeader team={coreUnit as unknown as Team} withDescription={false} />
-
-      <PageSeparator>
+        </TabsContainer>
+      </Container>
+      <ModalCategoriesProvider expenseCategories={expenseCategories}>
         <Container>
-          <BudgetStatementPager
-            currentMonth={currentMonth}
-            handleNext={handleNextMonth}
-            handlePrevious={handlePreviousMonth}
-            hasNext={hasNextMonth()}
-            hasPrevious={hasPreviousMonth()}
-            budgetStatus={currentBudgetStatement?.status}
-            showExpenseReportStatusCTA={showExpenseReportStatusCTA}
-            lastUpdate={lastUpdate}
-            ref={pagerRef}
-          />
-
-          <TabsContainer>
-            <TabsStyled
-              isDisablePopover={isDisablePopoverForMobile}
-              tabs={tabItems}
-              expandable
-              compressedTabs={compressedTabItems}
-              onInit={onTabsInit}
-              onChange={onTabChange}
-              onExpand={onTabsExpand}
-              expandToolTip={{
-                default: 'Default View',
-                compressed: 'Auditor View',
-              }}
-              tabQuery={'section'}
-              viewValues={{
-                default: 'default',
-                compressed: 'auditor',
-              }}
-            />
-          </TabsContainer>
-        </Container>
-        <ModalCategoriesProvider expenseCategories={expenseCategories}>
-          <Container>
-            {tabsIndex === TRANSPARENCY_IDS_ENUM.ACTUALS && (
-              <BudgetStatementActuals
-                currentMonth={currentMonth}
-                budgetStatements={coreUnit?.budgetStatements}
-                longCode={longCode}
-                shortCode={coreUnit.shortCode}
-                headline={headline}
-                resource={ResourceType.CoreUnit}
-              />
-            )}
-            {tabsIndex === TRANSPARENCY_IDS_ENUM.FORECAST && (
-              <BudgetStatementForecast
-                currentMonth={currentMonth}
-                budgetStatements={coreUnit?.budgetStatements}
-                longCode={longCode}
-                shortCode={coreUnit.shortCode}
-                headline={headline}
-                resource={ResourceType.CoreUnit}
-              />
-            )}
-            {tabsIndex === TRANSPARENCY_IDS_ENUM.MKR_VESTING && (
-              <BudgetStatementMkrVesting
-                currentMonth={currentMonth}
-                budgetStatements={coreUnit?.budgetStatements}
-                longCode={longCode}
-                shortCode={coreUnit.shortCode}
-                headline={headline}
-                resource={ResourceType.CoreUnit}
-              />
-            )}
-            {tabsIndex === TRANSPARENCY_IDS_ENUM.TRANSFER_REQUESTS && (
-              <BudgetStatementTransferRequest
-                currentMonth={currentMonth}
-                budgetStatements={coreUnit?.budgetStatements}
-                longCode={longCode}
-                shortCode={coreUnit.shortCode}
-                headline={headline}
-                resource={ResourceType.CoreUnit}
-              />
-            )}
-            {tabsIndex === TRANSPARENCY_IDS_ENUM.AUDIT_REPORTS && isEnabled('FEATURE_AUDIT_REPORTS') && (
-              <TransparencyAudit budgetStatement={currentBudgetStatement} />
-            )}
-            {tabsIndex === TRANSPARENCY_IDS_ENUM.ACCOUNTS_SNAPSHOTS && (
-              <AccountsSnapshotTabContainer
-                snapshotOwner={`${code} Core Unit`}
-                currentMonth={currentMonth}
-                ownerId={coreUnit.id}
-                longCode={coreUnit.code}
-                shortCode={coreUnit.shortCode}
-                resource={ResourceType.CoreUnit}
-                setSnapshotCreated={setSnapshotCreated}
-              />
-            )}
-
-            {tabsIndex === TRANSPARENCY_IDS_ENUM.COMMENTS && (
-              <CommentActivityContext.Provider value={{ lastVisitHandler }}>
-                <AuditorCommentsContainer
-                  budgetStatement={currentBudgetStatement}
-                  comments={comments}
-                  resource={ResourceType.CoreUnit}
-                />
-              </CommentActivityContext.Provider>
-            )}
-          </Container>
-
-          {tabsIndex === TRANSPARENCY_IDS_ENUM.EXPENSE_REPORT && (
-            <ExpenseReport
-              code={coreUnit.shortCode}
+          {tabsIndex === TRANSPARENCY_IDS_ENUM.ACTUALS && (
+            <BudgetStatementActuals
               currentMonth={currentMonth}
               budgetStatements={coreUnit?.budgetStatements}
               longCode={longCode}
+              shortCode={coreUnit.shortCode}
+              headline={headline}
               resource={ResourceType.CoreUnit}
             />
           )}
+          {tabsIndex === TRANSPARENCY_IDS_ENUM.FORECAST && (
+            <BudgetStatementForecast
+              currentMonth={currentMonth}
+              budgetStatements={coreUnit?.budgetStatements}
+              longCode={longCode}
+              shortCode={coreUnit.shortCode}
+              headline={headline}
+              resource={ResourceType.CoreUnit}
+            />
+          )}
+          {tabsIndex === TRANSPARENCY_IDS_ENUM.MKR_VESTING && (
+            <BudgetStatementMkrVesting
+              currentMonth={currentMonth}
+              budgetStatements={coreUnit?.budgetStatements}
+              longCode={longCode}
+              shortCode={coreUnit.shortCode}
+              headline={headline}
+              resource={ResourceType.CoreUnit}
+            />
+          )}
+          {tabsIndex === TRANSPARENCY_IDS_ENUM.TRANSFER_REQUESTS && (
+            <BudgetStatementTransferRequest
+              currentMonth={currentMonth}
+              budgetStatements={coreUnit?.budgetStatements}
+              longCode={longCode}
+              shortCode={coreUnit.shortCode}
+              headline={headline}
+              resource={ResourceType.CoreUnit}
+            />
+          )}
+          {tabsIndex === TRANSPARENCY_IDS_ENUM.AUDIT_REPORTS && isEnabled('FEATURE_AUDIT_REPORTS') && (
+            <TransparencyAudit budgetStatement={currentBudgetStatement} />
+          )}
+          {tabsIndex === TRANSPARENCY_IDS_ENUM.ACCOUNTS_SNAPSHOTS && (
+            <AccountsSnapshotTabContainer
+              snapshotOwner={`${code} Core Unit`}
+              currentMonth={currentMonth}
+              ownerId={coreUnit.id}
+              longCode={coreUnit.code}
+              shortCode={coreUnit.shortCode}
+              resource={ResourceType.CoreUnit}
+              setSnapshotCreated={setSnapshotCreated}
+            />
+          )}
 
-          <AdditionalNotesSection coreUnit={coreUnit} />
-        </ModalCategoriesProvider>
-      </PageSeparator>
-    </PageContainer>
+          {tabsIndex === TRANSPARENCY_IDS_ENUM.COMMENTS && (
+            <CommentActivityContext.Provider value={{ lastVisitHandler }}>
+              <AuditorCommentsContainer
+                budgetStatement={currentBudgetStatement}
+                comments={comments}
+                resource={ResourceType.CoreUnit}
+              />
+            </CommentActivityContext.Provider>
+          )}
+        </Container>
+
+        {tabsIndex === TRANSPARENCY_IDS_ENUM.EXPENSE_REPORT && (
+          <ExpenseReport
+            code={coreUnit.shortCode}
+            currentMonth={currentMonth}
+            budgetStatements={coreUnit?.budgetStatements}
+            longCode={longCode}
+            resource={ResourceType.CoreUnit}
+          />
+        )}
+
+        <AdditionalNotesSection coreUnit={coreUnit} />
+      </ModalCategoriesProvider>
+    </PageSeparator>
   );
 };
 

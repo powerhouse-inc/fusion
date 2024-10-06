@@ -1,10 +1,9 @@
-import { stringify } from 'querystring';
 import { useMediaQuery, useTheme } from '@mui/material';
 import { siteRoutes } from '@ses/config/routes';
 import groupBy from 'lodash/groupBy';
 import orderBy from 'lodash/orderBy';
 import { DateTime } from 'luxon';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
 import CategoryChip from '@/components/CategoryChip/CategoryChip';
 import type { Filter, SelectOption } from '@/components/FiltersBundle/types';
@@ -36,13 +35,14 @@ const categories = Object.values(CuCategoryEnum) as string[];
 
 export const useCoreUnitsTableView = (coreUnits: CoreUnit[]) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const theme = useTheme();
   const [searchText, setSearchText] = useState('');
   const deferredSearchText = useDeferredValue(searchText);
   const previousSearchTextRef = useRef<string | null>('');
 
-  const filteredStatuses = useMemo(() => getArrayParam('filteredStatuses', router.query), [router.query]);
-  const filteredCategories = useMemo(() => getArrayParam('filteredCategories', router.query), [router.query]);
+  const filteredStatuses = useMemo(() => getArrayParam('filteredStatuses', searchParams), [searchParams]);
+  const filteredCategories = useMemo(() => getArrayParam('filteredCategories', searchParams), [searchParams]);
 
   const desktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('desktop_1440'));
   const isDesk1024 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1024', 'desktop_1280'));
@@ -80,10 +80,7 @@ export const useCoreUnitsTableView = (coreUnits: CoreUnit[]) => {
     });
     // Avoid re-render
     if (deferredSearchText !== previousSearchTextRef.current) {
-      router.replace({
-        pathname: siteRoutes.coreUnitsOverview,
-        search: queryStrings,
-      });
+      router.replace(`${siteRoutes.coreUnitsOverview}?${queryStrings}`);
       previousSearchTextRef.current = deferredSearchText;
     }
   }, [deferredSearchText, filteredStatuses, filteredCategories, router]);
@@ -348,13 +345,11 @@ export const useCoreUnitsTableView = (coreUnits: CoreUnit[]) => {
 
   const handleChangeUrl = useCallback(
     (key: string) => (value: string[] | string) => {
-      const search = router.query;
+      const searchParams = new URLSearchParams(window.location.search);
       const formattedValue = Array.isArray(value) ? value.map((val) => val.replace(/\s+/g, '')).join(',') : value || '';
-      search[key] = formattedValue;
-      router.push({
-        pathname: siteRoutes.coreUnitsOverview,
-        search: stringify(search),
-      });
+      searchParams.set(key, formattedValue);
+      const newUrl = `${siteRoutes.coreUnitsOverview}?${searchParams.toString()}`;
+      router.push(newUrl);
     },
     [router]
   );
@@ -425,15 +420,12 @@ export const useCoreUnitsTableView = (coreUnits: CoreUnit[]) => {
   ];
   const canReset = searchText !== '' || filteredCategories.length > 0 || filteredStatuses.length > 0;
   const onReset = () => {
-    const newQuery = { ...router.query };
-    delete newQuery.searchText;
-    delete newQuery.filteredStatuses;
-    delete newQuery.filteredCategories;
+    const newSearchParams = new URLSearchParams(searchParams ?? {});
+    newSearchParams.delete('searchText');
+    newSearchParams.delete('filteredStatuses');
+    newSearchParams.delete('filteredCategories');
 
-    router.push({
-      pathname: siteRoutes.coreUnitsOverview,
-      search: stringify(newQuery),
-    });
+    router.push(`${siteRoutes.coreUnitsOverview}?${newSearchParams.toString()}`);
     setSearchText('');
   };
 

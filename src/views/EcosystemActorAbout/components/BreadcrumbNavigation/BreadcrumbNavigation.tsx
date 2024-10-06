@@ -4,10 +4,10 @@ import BreadcrumbMobile from '@ses/components/Pagination/BreadcrumbMobile';
 import InsidePagination from '@ses/components/Pagination/InsidePagination';
 import { useThemeContext } from '@ses/core/context/ThemeContext';
 import lightTheme from '@ses/styles/theme/themes';
+import { usePathname } from 'next/navigation';
 import React from 'react';
 import { siteRoutes } from '@/config/routes';
 import type { NavigationBreadcrumb } from '@ses/components/Breadcrumbs/Breadcrumbs';
-import type { NextRouter } from 'next/router';
 
 interface Props {
   totalElements: number;
@@ -21,7 +21,6 @@ interface Props {
   breadcrumbTitleMobile?: string;
   hasStyleMobileItem: boolean;
   descriptionTextPagination?: string;
-  router: NextRouter;
   className?: string;
 }
 
@@ -37,10 +36,10 @@ const BreadcrumbNavigation: React.FC<Props> = ({
   breadcrumbTitleMobile,
   hasStyleMobileItem,
   descriptionTextPagination,
-  router,
   className,
 }) => {
   const { isLight } = useThemeContext();
+  const pathname = usePathname();
   return (
     <div className={className}>
       <WrapperContainerDesk>
@@ -64,7 +63,7 @@ const BreadcrumbNavigation: React.FC<Props> = ({
             },
             ...trailingAddress.map((adr) => ({
               label: adr,
-              url: router.asPath,
+              url: pathname ?? '',
             })),
           ]}
         />
@@ -86,7 +85,7 @@ const BreadcrumbNavigation: React.FC<Props> = ({
             ...trailingAddress.map((adr) => ({
               style: breadcrumbTitleMobile === adr ? { color: isLight ? '#25273D' : '#D2D4EF' } : undefined,
               label: adr,
-              url: router.asPath,
+              url: pathname ?? '',
             })),
             {
               style: hasStyleMobileItem ? { color: isLight ? '#25273D' : '#D2D4EF' } : undefined,

@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 import type { CoreUnit } from '@/core/models/interfaces/coreUnit';
 import { getArrayParam } from '@/core/utils/filters';
@@ -6,8 +6,10 @@ import { buildQueryString } from '@/core/utils/urls';
 
 export const useBreadcrumbCoreUnitPager = (coreUnit: CoreUnit, coreUnits: CoreUnit[]) => {
   const router = useRouter();
-  const filteredStatuses = useMemo(() => getArrayParam('filteredStatuses', router.query), [router.query]);
-  const filteredCategories = useMemo(() => getArrayParam('filteredCategories', router.query), [router.query]);
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const filteredStatuses = useMemo(() => getArrayParam('filteredStatuses', searchParams), [searchParams]);
+  const filteredCategories = useMemo(() => getArrayParam('filteredCategories', searchParams), [searchParams]);
 
   const filteredData = useMemo(
     // apply filters coming from the index page to the pagination
@@ -20,15 +22,15 @@ export const useBreadcrumbCoreUnitPager = (coreUnit: CoreUnit, coreUnits: CoreUn
           return false;
         }
         if (
-          !!router.query.searchText &&
-          !cu.name.toLowerCase().includes((router.query.searchText as string).toLowerCase())
+          !!searchParams?.get('searchText') &&
+          !cu.name.toLowerCase().includes((searchParams?.get('searchText') as string).toLowerCase())
         ) {
           return false;
         }
 
         return true;
       }),
-    [coreUnits, filteredCategories, filteredStatuses, router.query.searchText]
+    [coreUnits, filteredCategories, filteredStatuses, searchParams]
   );
 
   const currentPage = filteredData.findIndex((item) => item.shortCode === coreUnit.shortCode) + 1;
@@ -42,15 +44,15 @@ export const useBreadcrumbCoreUnitPager = (coreUnit: CoreUnit, coreUnits: CoreUn
       const newIndex = index + direction;
       if (newIndex >= 0 && newIndex < filteredData?.length) {
         const queryStrings = buildQueryString({
-          ...router.query,
+          ...searchParams,
           filteredCategories,
           code: null, // override the Actors code to avoid add it to the query string
         });
 
-        router.push(`${router.route.replace('[code]', filteredData[newIndex].shortCode)}${queryStrings}`);
+        router.push(`${pathname?.replace('[code]', filteredData[newIndex].shortCode)}${queryStrings}`);
       }
     },
-    [coreUnit.shortCode, filteredCategories, filteredData, router]
+    [coreUnit.shortCode, filteredCategories, filteredData, router, searchParams, pathname]
   );
 
   return {

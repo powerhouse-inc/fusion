@@ -1,7 +1,7 @@
 import { Collapse, Typography, styled, useMediaQuery } from '@mui/material';
 import { siteRoutes } from '@ses/config/routes';
 import _ from 'lodash';
-import { useRouter } from 'next/router';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { forwardRef, useCallback, useMemo } from 'react';
 import { useCoreUnitsTableView } from '@/views/CoreUnitsIndex/useCoreUnitsTableView';
 import { useThemeContext } from '../../../core/context/ThemeContext';
@@ -41,12 +41,16 @@ export const CoreUnitSummary = forwardRef<HTMLDivElement, CoreUnitSummaryProps>(
     const lessThanPhone = useMediaQuery((theme: Theme) => theme.breakpoints.down('mobile_375'));
 
     const router = useRouter();
-    const query = router.query;
-    const code = query.code as string;
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const code = searchParams?.get('code') as string;
 
-    const filteredStatuses = useMemo(() => getArrayParam('filteredStatuses', router.query), [router.query]);
-    const filteredCategories = useMemo(() => getArrayParam('filteredCategories', router.query), [router.query]);
-    const searchText = useMemo(() => getStringParam('searchText', router.query), [router.query]);
+    const filteredStatuses = useMemo(() => getArrayParam('filteredStatuses', searchParams), [searchParams]);
+    const filteredCategories = useMemo(() => getArrayParam('filteredCategories', searchParams), [searchParams]);
+    const searchText = useMemo(
+      () => getStringParam('searchText', Object.fromEntries((searchParams ?? new Set()).entries())),
+      [searchParams]
+    );
 
     const cu = data?.find((cu) => cu.shortCode === code);
     const buildCULabel = () => (!_.isEmpty(cu) ? `${cu?.shortCode ?? ''} - ${cu?.name}` : '');
@@ -64,7 +68,7 @@ export const CoreUnitSummary = forwardRef<HTMLDivElement, CoreUnitSummaryProps>(
     const page = useMemo(() => filteredData?.findIndex((item) => item.shortCode === code) + 1, [code, filteredData]);
 
     const queryStrings = buildQueryString({
-      ...router.query,
+      ...Object.fromEntries((searchParams ?? new Set()).entries()),
       filteredStatuses,
       filteredCategories,
       searchText,
@@ -76,10 +80,10 @@ export const CoreUnitSummary = forwardRef<HTMLDivElement, CoreUnitSummaryProps>(
         const index = filteredData?.findIndex((item) => item.shortCode === code);
         const newIndex = index + direct;
         if (newIndex >= 0 && newIndex < filteredData?.length) {
-          router.push(`${router.route.replace('[code]', filteredData[newIndex].shortCode)}${queryStrings}`);
+          router.push(`${pathname?.replace('[code]', filteredData[newIndex].shortCode)}${queryStrings}`);
         }
       },
-      [code, filteredData, queryStrings, router]
+      [code, filteredData, pathname, queryStrings, router]
     );
 
     return (
@@ -106,7 +110,7 @@ export const CoreUnitSummary = forwardRef<HTMLDivElement, CoreUnitSummaryProps>(
                 },
                 ...trailingAddress.map((adr) => ({
                   label: adr,
-                  url: router.asPath,
+                  url: pathname ?? '',
                 })),
               ]}
             />
@@ -126,7 +130,7 @@ export const CoreUnitSummary = forwardRef<HTMLDivElement, CoreUnitSummaryProps>(
                   ...trailingAddress.map((adr) => ({
                     style: breadcrumbTitle === adr ? { color: isLight ? '#25273D' : '#D2D4EF' } : undefined,
                     label: adr,
-                    url: router.asPath,
+                    url: pathname ?? '',
                   })),
                   {
                     style: [buildCULabel(), undefined].includes(breadcrumbTitle)

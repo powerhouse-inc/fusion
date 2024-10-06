@@ -1,16 +1,12 @@
+'use client';
+
 import { Divider, styled, useMediaQuery } from '@mui/material';
-import { siteRoutes } from '@ses/config/routes';
 import { removeAtlasFromPath } from '@ses/core/utils/string';
 import React, { useState } from 'react';
-import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
-import TeamBreadcrumbContent from '@/components/Breadcrumb/CustomContents/TeamBreadcrumbContent';
 import ExternalLinkButton from '@/components/ExternalLinkButton/ExternalLinkButton';
-import TeamHeader from '@/components/TeamHeader/TeamHeader';
 import { getMarkdownInformation } from '@/core/businessLogic/coreUnitAbout';
 import { getFTEsFromCoreUnit } from '@/core/businessLogic/coreUnits';
-import type { Team } from '@/core/models/interfaces/team';
 import { ResourceType } from '@/core/models/interfaces/types';
-import { SEOHead } from '@/stories/components/SEOHead/SEOHead';
 import TeamMember from '@/views/CoreUnitAbout/components/TeamMember/TeamMember';
 import BigButton from './components/Button/BigButton/BigButton';
 import CardInfoMember from './components/CardInfoMember/CardInfoMember';
@@ -25,21 +21,19 @@ import type { CoreUnit } from '@ses/core/models/interfaces/coreUnit';
 import type { CuMip } from '@ses/core/models/interfaces/cuMip';
 
 interface Props {
-  coreUnits: CoreUnit[];
   cuAbout: CoreUnit;
   code: string;
 }
 
-const CoreUnitAboutView = ({ code, coreUnits, cuAbout }: Props) => {
+const CoreUnitAboutView = ({ code, cuAbout }: Props) => {
   const [showThreeMIPs, setShowThreeMIPs] = useState<boolean>(true);
   const table768 = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
   const phone = useMediaQuery((theme: Theme) => theme.breakpoints.between('mobile_375', 'tablet_768'));
   const LessPhone = useMediaQuery((theme: Theme) => theme.breakpoints.down('mobile_375'));
   const lessDesktop1024 = useMediaQuery((theme: Theme) => theme.breakpoints.down('desktop_1024'));
 
-  const { onClickLessMips, relateMipsOrder, hasMipsNotAccepted, queryStrings, pager } = useCoreUnitAboutView({
+  const { onClickLessMips, relateMipsOrder, hasMipsNotAccepted, queryStrings } = useCoreUnitAboutView({
     cuAbout,
-    coreUnits,
     code,
     showThreeMIPs,
     setShowThreeMIPs,
@@ -47,205 +41,148 @@ const CoreUnitAboutView = ({ code, coreUnits, cuAbout }: Props) => {
   const routeToFinances = removeAtlasFromPath(cuAbout.budgetPath);
 
   return (
-    <ContainerAbout>
-      <SEOHead
-        title={`Sky Fusion - ${cuAbout.name} Ecosystem Contributor`}
-        description={`Learn about the ${cuAbout.name} Ecosystem Contributor at Sky: their mandate, vision, mission, strategy, and more.`}
-        canonicalURL={siteRoutes.coreUnitAbout(code)}
-      />
-
-      <Breadcrumb
-        items={[
-          {
-            label: 'Contributors',
-            href: siteRoutes.contributors,
-          },
-          {
-            label: 'Core Units',
-            href: siteRoutes.coreUnitsOverview,
-            number: coreUnits.length,
-          },
-          {
-            label: cuAbout.name,
-            href: siteRoutes.ecosystemActorAbout(cuAbout.shortCode),
-          },
-        ]}
-        rightContent={
-          <TeamBreadcrumbContent
-            team={ResourceType.CoreUnit}
-            currentPage={pager.currentPage}
-            totalPages={pager.totalPages}
-            pagerProps={{
-              hasNext: pager.hasNext,
-              hasPrevious: pager.hasPrevious,
-              onNext: pager.onNext,
-              onPrevious: pager.onPrevious,
-            }}
-          />
-        }
-      />
-      <TeamHeaderStyled team={cuAbout as unknown as Team} />
-
-      <Wrapper>
-        <ContainerAllData>
-          <ContainerResponsive>
-            <MarkdownContainer>
-              <MdViewerContainer
-                type={ResourceType.CoreUnit}
-                code={cuAbout.code}
-                shortCode={cuAbout.shortCode}
-                auditors={cuAbout.auditors}
-                showButton={table768 || phone || LessPhone}
-                sentenceDescription={getMarkdownInformation(cuAbout.sentenceDescription)}
-                paragraphDescription={getMarkdownInformation(cuAbout.paragraphDescription)}
-                paragraphImage={getMarkdownInformation(cuAbout.paragraphImage)}
-                queryStrings={queryStrings}
-                budgetPath={routeToFinances}
-              />
-            </MarkdownContainer>
-            <ContainerNoShowTable>
-              <TeamMemberContainer>
-                <TeamMemberTitle>Team Size</TeamMemberTitle>
-                <TeamMember ftes={getFTEsFromCoreUnit(cuAbout)} />
-              </TeamMemberContainer>
-            </ContainerNoShowTable>
-            <ContainerNoShowTable>
-              {cuAbout.contributorCommitment.length > 0 && (
-                <ContactInfoContainer>
-                  <ContactInfoTitle>Contact Information</ContactInfoTitle>
-                  <ContainerCards>
-                    {cuAbout &&
-                      cuAbout.contributorCommitment?.map((contributor: ContributorCommitment, index: number) => (
-                        <CardInfoContainer key={index}>
-                          <CardInfoMember contributorCommitment={contributor} />
-                        </CardInfoContainer>
-                      ))}
-                  </ContainerCards>
-                </ContactInfoContainer>
-              )}
-            </ContainerNoShowTable>
-            <ContainerNoShowTable>
-              <DividerSections hasMarginTop={!(cuAbout.contributorCommitment.length > 0)} />
-            </ContainerNoShowTable>
-
-            <ContainerNoShowTable>
-              <CardRelateMipsContainer>
-                <TitleRelateMips>Related MIPs (Maker Improvement Proposals)</TitleRelateMips>
-                <RelateMipCards>
-                  {relateMipsOrder.map((mip: unknown, index: number) => (
-                    <RelateMips relateMips={mip as CuMip} key={index} />
-                  ))}
-                  {cuAbout?.cuMip?.length === 0 && (
-                    <ContainerNoRelateMIps>There are not related MIPs</ContainerNoRelateMIps>
-                  )}
-                </RelateMipCards>
-              </CardRelateMipsContainer>
-
-              {hasMipsNotAccepted && (
-                <ButtonContainer>
-                  <LineStyledBorder />
-                  <BigButton
-                    title={showThreeMIPs ? 'See more related MIPs' : 'See fewer MIPs'}
-                    onClick={onClickLessMips}
-                  />
-                  <LineStyledBorder />
-                </ButtonContainer>
-              )}
-              {!hasMipsNotAccepted && lessDesktop1024 && (
-                <ButtonContainer>
-                  <DividerStyle
-                    sx={{
-                      bgcolor: (theme: Theme) => (theme.palette.isLight ? '#D4D9E1' : '#405361'),
-                    }}
-                  />
-                </ButtonContainer>
-              )}
-            </ContainerNoShowTable>
-          </ContainerResponsive>
-
-          {!(table768 || phone || LessPhone) && (
-            <ContainerCardTableDesk>
-              <ContainerScroll>
-                <ContainerCard>
-                  <CardExpenses
-                    queryStrings={queryStrings}
-                    code={cuAbout.code}
-                    shortCode={cuAbout.shortCode}
-                    auditors={cuAbout.auditors}
-                    budgetPath={routeToFinances}
-                  />
-                </ContainerCard>
-                {!(phone || LessPhone) && (
-                  <ContainerCardHiddenTableSomeWrong>
-                    <CardSomethingWrong />
-                  </ContainerCardHiddenTableSomeWrong>
-                )}
-              </ContainerScroll>
-            </ContainerCardTableDesk>
-          )}
-        </ContainerAllData>
-
-        <ContainerShowTable>
-          <TeamMemberContainer>
-            <TeamMemberTitle>Team Size</TeamMemberTitle>
-            <TeamMember ftes={getFTEsFromCoreUnit(cuAbout)} />
-          </TeamMemberContainer>
-          <CardRelateMipsContainer>
+    <Wrapper>
+      <ContainerAllData>
+        <ContainerResponsive>
+          <MarkdownContainer>
+            <MdViewerContainer
+              type={ResourceType.CoreUnit}
+              code={cuAbout.code}
+              shortCode={cuAbout.shortCode}
+              auditors={cuAbout.auditors}
+              showButton={table768 || phone || LessPhone}
+              sentenceDescription={getMarkdownInformation(cuAbout.sentenceDescription)}
+              paragraphDescription={getMarkdownInformation(cuAbout.paragraphDescription)}
+              paragraphImage={getMarkdownInformation(cuAbout.paragraphImage)}
+              queryStrings={queryStrings}
+              budgetPath={routeToFinances}
+            />
+          </MarkdownContainer>
+          <ContainerNoShowTable>
+            <TeamMemberContainer>
+              <TeamMemberTitle>Team Size</TeamMemberTitle>
+              <TeamMember ftes={getFTEsFromCoreUnit(cuAbout)} />
+            </TeamMemberContainer>
+          </ContainerNoShowTable>
+          <ContainerNoShowTable>
+            {cuAbout.contributorCommitment.length > 0 && (
+              <ContactInfoContainer>
+                <ContactInfoTitle>Contact Information</ContactInfoTitle>
+                <ContainerCards>
+                  {cuAbout &&
+                    cuAbout.contributorCommitment?.map((contributor: ContributorCommitment, index: number) => (
+                      <CardInfoContainer key={index}>
+                        <CardInfoMember contributorCommitment={contributor} />
+                      </CardInfoContainer>
+                    ))}
+                </ContainerCards>
+              </ContactInfoContainer>
+            )}
+          </ContainerNoShowTable>
+          <ContainerNoShowTable>
             <DividerSections hasMarginTop={!(cuAbout.contributorCommitment.length > 0)} />
-            <TitleRelateMips>Related MIPs (Maker Improvement Proposals)</TitleRelateMips>
-            <RelateMipCards>
-              {relateMipsOrder.map((mip: unknown, index: number) => (
-                <RelateMips relateMips={mip as CuMip} key={index} />
-              ))}
-              {cuAbout?.cuMip?.length === 0 && (
-                <ContainerNoRelateMIps>There are not related MIPs</ContainerNoRelateMIps>
-              )}
-            </RelateMipCards>
-          </CardRelateMipsContainer>
+          </ContainerNoShowTable>
 
-          {hasMipsNotAccepted && (
-            <ButtonContainer>
-              <LineStyledBorder />
-              <BigButton title={showThreeMIPs ? 'See more related MIPs' : 'See fewer MIPs'} onClick={onClickLessMips} />
-              <LineStyledBorder />
-            </ButtonContainer>
-          )}
-          {!hasMipsNotAccepted && lessDesktop1024 && (
-            <ButtonContainer>
-              <DividerStyle
-                sx={{
-                  bgcolor: (theme: Theme) => (theme.palette.isLight ? '#D4D9E1' : '#405361'),
-                }}
-              />
-            </ButtonContainer>
-          )}
-        </ContainerShowTable>
-        {(table768 || phone || LessPhone) && (
-          <ContainerCardSomethingWrong>
-            <CardSomethingWrong />
-          </ContainerCardSomethingWrong>
+          <ContainerNoShowTable>
+            <CardRelateMipsContainer>
+              <TitleRelateMips>Related MIPs (Maker Improvement Proposals)</TitleRelateMips>
+              <RelateMipCards>
+                {relateMipsOrder.map((mip: unknown, index: number) => (
+                  <RelateMips relateMips={mip as CuMip} key={index} />
+                ))}
+                {cuAbout?.cuMip?.length === 0 && (
+                  <ContainerNoRelateMIps>There are not related MIPs</ContainerNoRelateMIps>
+                )}
+              </RelateMipCards>
+            </CardRelateMipsContainer>
+
+            {hasMipsNotAccepted && (
+              <ButtonContainer>
+                <LineStyledBorder />
+                <BigButton
+                  title={showThreeMIPs ? 'See more related MIPs' : 'See fewer MIPs'}
+                  onClick={onClickLessMips}
+                />
+                <LineStyledBorder />
+              </ButtonContainer>
+            )}
+            {!hasMipsNotAccepted && lessDesktop1024 && (
+              <ButtonContainer>
+                <DividerStyle
+                  sx={{
+                    bgcolor: (theme: Theme) => (theme.palette.isLight ? '#D4D9E1' : '#405361'),
+                  }}
+                />
+              </ButtonContainer>
+            )}
+          </ContainerNoShowTable>
+        </ContainerResponsive>
+
+        {!(table768 || phone || LessPhone) && (
+          <ContainerCardTableDesk>
+            <ContainerScroll>
+              <ContainerCard>
+                <CardExpenses
+                  queryStrings={queryStrings}
+                  code={cuAbout.code}
+                  shortCode={cuAbout.shortCode}
+                  auditors={cuAbout.auditors}
+                  budgetPath={routeToFinances}
+                />
+              </ContainerCard>
+              {!(phone || LessPhone) && (
+                <ContainerCardHiddenTableSomeWrong>
+                  <CardSomethingWrong />
+                </ContainerCardHiddenTableSomeWrong>
+              )}
+            </ContainerScroll>
+          </ContainerCardTableDesk>
         )}
-      </Wrapper>
-    </ContainerAbout>
+      </ContainerAllData>
+
+      <ContainerShowTable>
+        <TeamMemberContainer>
+          <TeamMemberTitle>Team Size</TeamMemberTitle>
+          <TeamMember ftes={getFTEsFromCoreUnit(cuAbout)} />
+        </TeamMemberContainer>
+        <CardRelateMipsContainer>
+          <DividerSections hasMarginTop={!(cuAbout.contributorCommitment.length > 0)} />
+          <TitleRelateMips>Related MIPs (Maker Improvement Proposals)</TitleRelateMips>
+          <RelateMipCards>
+            {relateMipsOrder.map((mip: unknown, index: number) => (
+              <RelateMips relateMips={mip as CuMip} key={index} />
+            ))}
+            {cuAbout?.cuMip?.length === 0 && <ContainerNoRelateMIps>There are not related MIPs</ContainerNoRelateMIps>}
+          </RelateMipCards>
+        </CardRelateMipsContainer>
+
+        {hasMipsNotAccepted && (
+          <ButtonContainer>
+            <LineStyledBorder />
+            <BigButton title={showThreeMIPs ? 'See more related MIPs' : 'See fewer MIPs'} onClick={onClickLessMips} />
+            <LineStyledBorder />
+          </ButtonContainer>
+        )}
+        {!hasMipsNotAccepted && lessDesktop1024 && (
+          <ButtonContainer>
+            <DividerStyle
+              sx={{
+                bgcolor: (theme: Theme) => (theme.palette.isLight ? '#D4D9E1' : '#405361'),
+              }}
+            />
+          </ButtonContainer>
+        )}
+      </ContainerShowTable>
+      {(table768 || phone || LessPhone) && (
+        <ContainerCardSomethingWrong>
+          <CardSomethingWrong />
+        </ContainerCardSomethingWrong>
+      )}
+    </Wrapper>
   );
 };
 
 export default CoreUnitAboutView;
-
-const ContainerAbout = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  paddingTop: '64px',
-  width: '100%',
-  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.background.dm,
-  backgroundAttachment: 'fixed',
-  backgroundSize: 'cover',
-  paddingBottom: '128px',
-  [theme.breakpoints.down('mobile_375')]: {
-    width: '100%',
-    minWidth: '360px',
-  },
-}));
 
 const ContainerCard = styled('div')(({ theme }) => ({
   marginBottom: 24,
@@ -635,10 +572,4 @@ const DividerSections = styled('div')<{ hasMarginTop: boolean }>(({ theme, hasMa
   borderTop: `1px solid ${theme.palette.isLight ? '#D8E0E3' : theme.palette.colors.charcoal[800]}`,
   marginTop: hasMarginTop ? '32px' : '0px',
   width: '100%',
-}));
-
-const TeamHeaderStyled = styled(TeamHeader)(({ theme }) => ({
-  [theme.breakpoints.up('tablet_768')]: {
-    marginTop: 78,
-  },
 }));

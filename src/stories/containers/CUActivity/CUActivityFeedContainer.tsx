@@ -1,40 +1,24 @@
+'use client';
+
 import { styled } from '@mui/material';
-import { siteRoutes } from '@ses/config/routes';
-import { useHeaderSummary } from '@ses/core/hooks/useHeaderSummary';
 import React from 'react';
 import ActivityTable from '../../components/CUActivityTable/ActivityTable';
-import { CoreUnitSummary } from '../../components/CoreUnitSummary/CoreUnitSummary';
-import { SEOHead } from '../../components/SEOHead/SEOHead';
 import { useCuActivity } from './useCuActivity';
 import type { ChangeTrackingEvent } from '@ses/core/models/interfaces/activity';
 import type { CoreUnit } from '@ses/core/models/interfaces/coreUnit';
 
 interface CUActivityContainerProps {
-  coreUnits: CoreUnit[];
   coreUnit: CoreUnit;
   activities: ChangeTrackingEvent[];
 }
 
-const CUActivityFeedContainer: React.FC<CUActivityContainerProps> = ({ coreUnit, coreUnits, activities }) => {
-  const { columns, onSortClick, code, ref } = useCuActivity();
+const CUActivityFeedContainer: React.FC<CUActivityContainerProps> = ({ coreUnit, activities }) => {
+  const { columns, onSortClick } = useCuActivity();
 
-  const { height, showHeader } = useHeaderSummary(ref, code);
   return (
     <Wrapper>
-      <SEOHead
-        title={`Sky Fusion - ${coreUnit.name} Activity Feed`}
-        description={`Learn about ${coreUnit.name}'s Activity Feed: including previous modifications that the Core Unit has made to their Expense Reports, FTEs, and more.`}
-        canonicalURL={siteRoutes.coreUnitActivityFeed(coreUnit.shortCode)}
-      />
-      <CoreUnitSummary
-        coreUnits={coreUnits}
-        trailingAddress={['Activity Feed']}
-        breadcrumbTitle="Activity Feed"
-        ref={ref}
-        showHeader={showHeader}
-      />
       <Container>
-        <InnerPage marginTop={height}>
+        <InnerPage>
           <TableWrapper>
             <ActivityTable
               columns={columns}
@@ -80,13 +64,12 @@ const Container = styled('div')(({ theme }) => ({
   },
 }));
 
-const InnerPage = styled('div')<{ marginTop: number }>(({ marginTop, theme }) => ({
+const InnerPage = styled('div')(({ theme }) => ({
   display: 'block',
   textAlign: 'left',
   width: '100%',
   maxWidth: '1440px',
   margin: '0 auto',
-  marginTop,
   paddingTop: 24,
   paddingRight: '64px',
   paddingLeft: '64px',
@@ -96,7 +79,6 @@ const InnerPage = styled('div')<{ marginTop: number }>(({ marginTop, theme }) =>
   },
   [theme.breakpoints.up('tablet_768')]: {
     paddingTop: 32,
-    marginTop: 61 + marginTop,
   },
   [theme.breakpoints.between('tablet_768', 'desktop_1280')]: {
     paddingRight: '32px',

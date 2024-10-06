@@ -1,7 +1,6 @@
+'use client';
+
 import { styled } from '@mui/material';
-import { SEOHead } from '@ses/components/SEOHead/SEOHead';
-import { siteRoutes } from '@ses/config/routes';
-import React from 'react';
 import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
 import type { CoreUnit } from '@/core/models/interfaces/coreUnit';
@@ -29,11 +28,6 @@ const CoreUnitsIndexView: React.FC<Props> = ({ coreUnits }) => {
 
   return (
     <PageContainer>
-      <SEOHead
-        title="Sky Fusion - Core Units Legacy Ecosystem Contributors"
-        description="Learn about Core Units as legacy contributor teams: their key information, activity, expenditures, FTE numbers, and more."
-        canonicalURL={siteRoutes.coreUnitsOverview}
-      />
       <Container>
         <Header>
           <CuFilters

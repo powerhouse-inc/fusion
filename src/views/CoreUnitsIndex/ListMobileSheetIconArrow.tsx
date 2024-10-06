@@ -1,5 +1,5 @@
 import { styled } from '@mui/material';
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 import React, { useMemo } from 'react';
 import SocialMediaLinksButton from '@/components/ButtonLink/SocialMediaLinksButton';
 import InternalLinkButton from '@/components/InternalLinkButton/InternalLinkButton';
@@ -13,8 +13,14 @@ interface Props {
 }
 
 const ListMobileSheetIconArrow: React.FC<Props> = ({ coreUnit, className }) => {
-  const router = useRouter();
-  const queryStrings = useMemo(() => buildQueryString(router.query), [router.query]);
+  const searchParams = useSearchParams();
+  const queryStrings = useMemo(() => {
+    if (searchParams) {
+      return buildQueryString(Object.fromEntries(searchParams.entries()));
+    }
+    return '';
+  }, [searchParams]);
+
   return (
     <ContainerLinksArrowsMobile className={className}>
       <SocialMediaLinksButton socialMedia={coreUnit.socialMediaChannels?.[0]} hideLabelIn={['desktop_1024']} />
