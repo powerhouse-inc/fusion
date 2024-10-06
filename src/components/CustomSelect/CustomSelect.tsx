@@ -53,6 +53,18 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
         IconComponent={ExpandMore}
         className={className}
         MenuProps={combinedMenuProps as unknown as Partial<MenuProps>}
+        onOpen={() => {
+          setTimeout(() => {
+            const menuPaper = document.getElementById('custom-select-menu-paper');
+            menuPaper !== null &&
+              menuPaper.scrollTop > 0 &&
+              menuPaper.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'instant' as ScrollBehavior,
+              });
+          }, 100);
+        }}
       >
         {notShowDescription && (
           <MenuItemLabel disabled>
@@ -204,6 +216,7 @@ const CheckIcon = styled(Check)(() => ({
 
 const StyledMenuProps = (theme: Theme, width: number, height: string | number) => ({
   PaperProps: {
+    id: 'custom-select-menu-paper',
     sx: {
       height,
       width: `${width}px`,
