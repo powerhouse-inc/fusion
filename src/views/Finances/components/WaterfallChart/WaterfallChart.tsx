@@ -19,6 +19,7 @@ interface Props {
 }
 
 const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, series }) => {
+  const showBiggerMarginX = series.some((itemSeries) => itemSeries.data.some((data) => Number(data) < 0));
   const theme = useTheme();
   const refWaterfallChart = useRef<EChartsOption | null>(null);
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
@@ -104,7 +105,19 @@ const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, s
           show: false,
         },
         axisLabel: {
-          margin: isMobile ? 14 : isTablet ? 14 : isDesktop1024 ? 18 : isDesktop1280 ? 18 : isDesktop1440 ? 18 : 18,
+          margin: showBiggerMarginX
+            ? 36
+            : isMobile
+            ? 14
+            : isTablet
+            ? 14
+            : isDesktop1024
+            ? 18
+            : isDesktop1280
+            ? 18
+            : isDesktop1440
+            ? 18
+            : 18,
           color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[300],
           align: 'center',
 
@@ -176,6 +189,7 @@ const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, s
       isTablet,
       selectedGranularity,
       series,
+      showBiggerMarginX,
       startFinishMobile,
       startStyles,
       startYearStyles,
@@ -198,7 +212,7 @@ const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, s
 
   return (
     <Wrapper>
-      <ChartContainer>
+      <ChartContainer showBiggerMarginX={showBiggerMarginX}>
         <ReactECharts
           ref={refWaterfallChart}
           option={options}
@@ -230,12 +244,14 @@ const Wrapper = styled('div')({
   alignItems: 'center',
 });
 
-const ChartContainer = styled('div')(({ theme }) => ({
+const ChartContainer = styled('div', { shouldForwardProp: (prop) => prop !== 'showBiggerMarginX' })<{
+  showBiggerMarginX: boolean;
+}>(({ theme, showBiggerMarginX }) => ({
   display: 'flex',
   flexDirection: 'column',
   position: 'relative',
   width: '100%',
-  height: 275,
+  height: !showBiggerMarginX ? 275 : 295,
 
   [theme.breakpoints.up('tablet_768')]: {
     height: 312,
