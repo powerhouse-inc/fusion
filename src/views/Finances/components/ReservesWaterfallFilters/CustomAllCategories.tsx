@@ -13,6 +13,9 @@ export default CustomAllCategories;
 const Title = styled('div')<{ isActive?: boolean }>(({ theme, isActive = true }) => ({
   display: 'flex',
   flexDirection: 'row',
+  fontWeight: 600,
+  fontSize: 14,
+  lineHeight: '22px',
   color: theme.palette.isLight
     ? isActive
       ? theme.palette.colors.gray[900]

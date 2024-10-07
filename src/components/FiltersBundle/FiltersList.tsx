@@ -16,19 +16,19 @@ interface FilterListProps {
 const FilterList: React.FC<FilterListProps> = ({ filters, handleClose, heightForScroll = false }) => (
   <SimpleBarStyled heightForScroll={heightForScroll}>
     <Container>
-      {filters.map((filter) => {
+      {filters.map((filter, index) => {
         switch (filter.type) {
           case 'select': {
-            return <SelectAsList filter={filter} onClose={handleClose} />;
+            return <SelectAsList key={`SelectAsList-${index}`} filter={filter} onClose={handleClose} />;
           }
           case 'radio': {
-            return <RadioAsList filter={filter} />;
+            return <RadioAsList key={`RadioAsList-${index}`} filter={filter} />;
           }
           case 'checkbox': {
-            return <CustomCheckbox filter={filter} />;
+            return <CustomCheckbox key={`CustomCheckbox-${index}`} filter={filter} />;
           }
           case 'cumulative': {
-            return <CumulativeAsList filter={filter} />;
+            return <CumulativeAsList key={`CumulativeAsList-${index}`} filter={filter} />;
           }
           default: {
             throw new Error('Unknown filter type');
@@ -48,7 +48,9 @@ const Container = styled('div')(() => ({
   padding: '0 16px',
 }));
 
-const SimpleBarStyled = styled(SimpleBar)<{ heightForScroll?: boolean }>(({ theme, heightForScroll }) => ({
+const SimpleBarStyled = styled(SimpleBar, {
+  shouldForwardProp: (prop) => prop !== 'heightForScroll',
+})<{ heightForScroll?: boolean }>(({ theme, heightForScroll }) => ({
   overflowY: 'auto',
   maxHeight: '100%',
   '.simplebar-scrollbar::before': {
