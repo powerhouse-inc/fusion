@@ -3,6 +3,7 @@ import Link from 'next/link';
 import CheckBox from '@/components/CheckBox/CheckBox';
 import SecondaryButton from '@/components/SecondaryButton/SecondaryButton';
 import SkyButton from '@/components/SkyButton/SkyButton';
+import { siteRoutes } from '@/config/routes';
 import type { FC } from 'react';
 
 interface CookiesPolicyBannerProps {
@@ -37,7 +38,7 @@ const CookiesPolicyBanner: FC<CookiesPolicyBannerProps> = ({
           <LineBreak>
             <br />
           </LineBreak>
-          <CookiesPolicyLink href="/cookies-policy">cookies policy.</CookiesPolicyLink>
+          <CookiesPolicyLink href={siteRoutes.cookiesPolicy}>cookies policy.</CookiesPolicyLink>
         </StyledParagraph>
         <CheckBoxContainer>
           <CheckBox
@@ -55,6 +56,7 @@ const CookiesPolicyBanner: FC<CookiesPolicyBannerProps> = ({
           <SkyButton title="Accept configured cookies" onClick={handleAcceptCookies} />
           <SecondaryButton title="Reject all cookies" onClick={handleRejectCookies} />
         </ButtonContainer>
+        <DisclaimerLink href={siteRoutes.disclaimer}>Go to Disclaimer</DisclaimerLink>
       </DataContainer>
     </Container>
   );
@@ -67,19 +69,20 @@ const Container = styled('div')(({ theme }) => ({
   boxShadow: '0px -4px 15px 0px rgba(74, 88, 115, 0.15)',
 
   [theme.breakpoints.up('tablet_768')]: {
-    height: 304,
+    height: 358,
     padding: '40px 64px 58px',
   },
   [theme.breakpoints.up('desktop_1024')]: {
-    height: 312,
+    height: 368,
     padding: '40px 120px 58px',
   },
   [theme.breakpoints.up('desktop_1280')]: {
-    padding: '40px 163px 58px',
+    height: 374,
+    padding: '40px 163px 64px',
   },
   [theme.breakpoints.up('desktop_1440')]: {
-    height: 294,
-    padding: '40px 184px 64px',
+    height: 350,
+    padding: '40px 174px 64px',
   },
 }));
 
@@ -100,7 +103,7 @@ const DataContainer = styled('div')(({ theme }) => ({
     maxWidth: 954,
   },
   [theme.breakpoints.up('desktop_1440')]: {
-    maxWidth: 1072,
+    maxWidth: 1092,
   },
 }));
 
@@ -180,6 +183,21 @@ const ButtonContainer = styled('div')(({ theme }) => ({
     '& > button:last-of-type': {
       width: 256,
     },
+  },
+}));
+
+const DisclaimerLink = styled(Link)(({ theme }) => ({
+  margin: '32px auto 0px',
+  fontFamily: 'Inter, sans-serif',
+  fontWeight: 600,
+  fontSize: 14,
+  lineHeight: '22px',
+  color: theme.palette.colors.sky[1000],
+  textDecoration: 'none',
+
+  [theme.breakpoints.up('desktop_1024')]: {
+    fontSize: 16,
+    lineHeight: '24px',
   },
 }));
 
