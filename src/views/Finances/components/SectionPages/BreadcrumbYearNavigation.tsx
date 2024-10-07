@@ -72,6 +72,7 @@ const BudgetButton = styled('button')(({ theme }) => ({
     [theme.breakpoints.up('tablet_768')]: {
       display: 'inline',
       whiteSpace: 'nowrap',
+      fontFamily: 'Inter, sans-serif',
     },
   },
 
