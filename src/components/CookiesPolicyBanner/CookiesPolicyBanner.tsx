@@ -63,25 +63,26 @@ const CookiesPolicyBanner: FC<CookiesPolicyBannerProps> = ({
 };
 
 const Container = styled('div')(({ theme }) => ({
-  padding: '16px 16px 36px',
+  padding: '16px 16px 40px',
   borderRadius: '6px 6px 0px 0px',
   background: theme.palette.isLight ? '#FFFFFF' : theme.palette.colors.charcoal[900],
   boxShadow: '0px -4px 15px 0px rgba(74, 88, 115, 0.15)',
 
   [theme.breakpoints.up('tablet_768')]: {
-    height: 340,
-    padding: '44px 64px 36px',
+    height: 358,
+    padding: '40px 64px 58px',
   },
   [theme.breakpoints.up('desktop_1024')]: {
-    height: 350,
-    padding: '44px 120px 36px',
+    height: 368,
+    padding: '40px 120px 58px',
   },
   [theme.breakpoints.up('desktop_1280')]: {
-    padding: '44px 163px 36px',
+    height: 374,
+    padding: '40px 163px 64px',
   },
   [theme.breakpoints.up('desktop_1440')]: {
-    height: 326,
-    padding: '44px 184px 36px',
+    height: 350,
+    padding: '40px 174px 64px',
   },
 }));
 
@@ -102,7 +103,7 @@ const DataContainer = styled('div')(({ theme }) => ({
     maxWidth: 954,
   },
   [theme.breakpoints.up('desktop_1440')]: {
-    maxWidth: 1072,
+    maxWidth: 1092,
   },
 }));
 
