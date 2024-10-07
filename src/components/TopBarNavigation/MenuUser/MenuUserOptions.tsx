@@ -66,7 +66,7 @@ const MenuUserOptions = ({ username, isAdmin, onClickLogOut, hrefAccountManager,
               background: 'none',
               cursor: 'default',
             },
-            '&:last-child': {
+            '&:last-of-type': {
               paddingBottom: '0px',
             },
           }}

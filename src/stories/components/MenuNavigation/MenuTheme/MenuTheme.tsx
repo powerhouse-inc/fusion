@@ -69,7 +69,7 @@ const MenuTheme = ({ themeMode, toggleTheme }: Props) => {
               background: 'none',
               cursor: 'default',
             },
-            '&:last-child': {
+            '&:last-of-type': {
               paddingBottom: '0px',
             },
           }}

@@ -27,7 +27,7 @@ const Breadcrumb = ({ isCoreUnit = false, count, breadcrumbs }: Props) => (
 
 const BreadcrumbsStyle = styled(Breadcrumbs)({
   '& .MuiBreadcrumbs-li': {
-    '&:last-child p': {
+    '&:last-of-type p': {
       color: '#231536',
       fontStyle: 'normal',
       fontWeight: 500,
