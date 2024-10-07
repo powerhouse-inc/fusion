@@ -35,62 +35,62 @@ LightMode.parameters = {
   figma: {
     component: {
       375: {
-        component: '',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7367-70431&m=dev',
         options: {
           componentStyle: {
             width: 375,
           },
           style: {
-            top: -34,
-            left: -31,
+            top: -35,
+            left: -30,
           },
         },
       },
       768: {
-        component: '',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=10966-10272&m=dev',
         options: {
           componentStyle: {
             width: 768,
           },
           style: {
-            top: -34,
-            left: -31,
+            top: -35,
+            left: -30,
           },
         },
       },
       1024: {
-        component: '',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=10966-10246&m=dev',
         options: {
           componentStyle: {
             width: 1024,
           },
           style: {
-            top: -34,
-            left: -31,
+            top: -35,
+            left: -30,
           },
         },
       },
       1280: {
-        component: '',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7367-69030&m=dev',
         options: {
           componentStyle: {
             width: 1280,
           },
           style: {
-            top: -34,
-            left: -31,
+            top: -35,
+            left: -30,
           },
         },
       },
       1440: {
-        component: '',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7307-62870&m=dev',
         options: {
           componentStyle: {
             width: 1440,
           },
           style: {
-            top: -34,
-            left: -31,
+            top: -35,
+            left: -30,
           },
         },
       },
