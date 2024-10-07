@@ -62,7 +62,7 @@ const DeliverableCard: React.FC<DeliverableCardProps> = ({
       {(viewMode === 'detailed' || expanded) && (
         <Description>
           {deliverable.description?.split('\n').map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
+            <p key={`deliverable-description-${index}`}>{paragraph}</p>
           ))}
         </Description>
       )}

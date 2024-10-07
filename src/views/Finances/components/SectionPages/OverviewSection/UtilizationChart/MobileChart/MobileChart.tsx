@@ -21,7 +21,7 @@ const MobileChart: React.FC<MobileChartProps> = ({ seriesData }) => {
     <Wrapper>
       <BarContainer>
         {series.map((item) => (
-          <Bar key={item.name} color={item.color} height={item.percentage ?? 0} />
+          <Bar key={item.name} color={item.color} height={isNaN(item.percentage) ? 0 : item.percentage} />
         ))}
       </BarContainer>
       <LegendsWrapper>

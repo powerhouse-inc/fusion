@@ -301,9 +301,9 @@ const ImageContainer = styled('div')(({ theme }) => ({
 
 const Description = styled('p')(({ theme }) => ({
   display: '-webkit-box',
-  '-webkit-box-orient': 'vertical',
-  '-webkit-line-clamp': '8',
-  lineClamp: '8',
+  WebkitBoxOrient: 'vertical',
+  WebkitLineClamp: 8,
+  lineClamp: 8,
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   alignSelf: 'stretch',

@@ -42,7 +42,9 @@ const Accordion = styled((props: AccordionProps) => <MuiAccordion disableGutters
   })
 );
 
-const AccordionSummary = styled(MuiAccordionSummary)<{ expanded: boolean }>(({ theme, expanded }) => ({
+const AccordionSummary = styled(MuiAccordionSummary, {
+  shouldForwardProp: (prop) => prop !== 'expanded',
+})<{ expanded: boolean }>(({ theme, expanded }) => ({
   minHeight: 'auto',
   backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[900],
   padding: 16,
