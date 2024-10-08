@@ -125,7 +125,7 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
           <ContainerSpace>
             <ExpenseMetricsSection
               expenseMetrics={{
-                title: levelNumber === 1 ? 'Sky Expense Metrics' : title,
+                title: levelNumber === 1 ? 'Sky Expense Metrics' : `${title} Expense Metrics`,
                 selectedGranularity: expensesMetrics.selectedGranularity,
                 isCumulative: expensesMetrics.isCumulative,
                 cumulativeType: expensesMetrics.cumulativeType,
