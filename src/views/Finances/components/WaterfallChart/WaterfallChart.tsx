@@ -106,7 +106,7 @@ const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, s
         },
         axisLabel: {
           margin: showBiggerMarginX
-            ? 36
+            ? 30
             : isMobile
             ? 14
             : isTablet
