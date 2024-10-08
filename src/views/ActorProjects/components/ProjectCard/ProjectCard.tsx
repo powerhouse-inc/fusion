@@ -1,13 +1,5 @@
 import { styled, useMediaQuery } from '@mui/material';
-import { LinkButton } from '@ses/components/LinkButton/LinkButton';
-import { siteRoutes } from '@ses/config/routes';
-import { ButtonType } from '@ses/core/enums/buttonTypeEnum';
-import {
-  isProject,
-  isSupportedProjects,
-  type Project,
-  type SupportedProjects,
-} from '@ses/core/models/interfaces/projects';
+import { isProject, type Project, type SupportedProjects } from '@ses/core/models/interfaces/projects';
 import Image from 'next/image';
 import React, { useMemo } from 'react';
 import ProgressWithStatus from '@/components/ProgressWithStatus/ProgressWithStatus';
@@ -105,13 +97,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                     status={project.status as unknown as ProgressStatus}
                   />
 
-                  {isSupportedProjects(project) && (
-                    <ViewEcosystem
-                      href={siteRoutes.ecosystemActorAbout(project.projectOwner.code ?? '')}
-                      buttonType={ButtonType.Default}
-                      label="View Ecosystem Actor"
-                    />
-                  )}
                   <ProjectParticipants project={project} supporters={supporters} isShowName={isUpDesktop1280} />
                 </ContainerStatusRole>
               </ContainerStatusRoleDescription>
@@ -358,29 +343,6 @@ const DeliverablesContainer = styled('div')(({ theme }) => ({
     '& > *': {
       maxWidth: 'calc(33% - 18px)',
     },
-  },
-}));
-
-const ViewEcosystem = styled(LinkButton)(({ theme }) => ({
-  borderColor: theme.palette.isLight ? '#D4D9E1' : '#708390',
-  borderRadius: '22px',
-  fontFamily: 'Inter, sans serif',
-  fontStyle: 'normal',
-  padding: '7px 23px',
-
-  '& > div': {
-    color: theme.palette.isLight ? '#31424E' : '#ADAFD4',
-    fontWeight: 500,
-    fontSize: 14,
-    lineHeight: '18px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  '&:hover': {
-    background: theme.palette.isLight ? '#F6F8F9' : '#10191F',
-    border: `1px solid ${theme.palette.isLight ? '#ECF1F3' : '#1E2C37'}`,
   },
 }));
 
