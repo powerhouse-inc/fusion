@@ -14,6 +14,8 @@ const DeliverableStatusChip: React.FC<DeliverableStatusChipProps> = ({ status })
         return 'In Progress';
       case DeliverableStatus.DELIVERED:
         return 'Delivered';
+      case DeliverableStatus.BLOCKED:
+        return 'Blocked';
       default:
         return 'To do';
     }
@@ -43,6 +45,9 @@ const StatusChip = styled(Chip)<{ status: DeliverableStatus }>(({ theme, status 
   ...((status === DeliverableStatus.DRAFT || status === DeliverableStatus.TODO) && {
     backgroundColor: theme.palette.isLight ? theme.palette.colors.orange[100] : 'rgba(255, 138, 0, 0.40)',
   }),
+  ...(status === DeliverableStatus.BLOCKED && {
+    backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : 'rgba(72, 82, 101, 0.40)',
+  }),
 
   '.MuiChip-label': {
     fontWeight: 600,
@@ -60,6 +65,9 @@ const StatusChip = styled(Chip)<{ status: DeliverableStatus }>(({ theme, status 
 
     ...((status === DeliverableStatus.DRAFT || status === DeliverableStatus.TODO) && {
       color: theme.palette.isLight ? theme.palette.colors.orange[800] : theme.palette.colors.orange[100],
+    }),
+    ...(status === DeliverableStatus.BLOCKED && {
+      color: theme.palette.isLight ? theme.palette.colors.gray[500] : theme.palette.colors.gray[50],
     }),
   },
 }));
