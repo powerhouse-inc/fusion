@@ -38,38 +38,39 @@ const ExpenseMetricsFinances: FC<Props> = ({
   canReset,
   onReset,
 }) => {
-  const { containerRef, height, shouldPositionBelow } = useRelativePositioning(title, 24);
+  const { containerRef, height, shouldPositionBelow, titleRef, filterRef } = useRelativePositioning(title, 24);
 
   return (
     <Container>
       <Header ref={containerRef}>
-        <FinancesTitle
-          year={year}
-          title={title}
-          tooltip={
-            <TooltipContent>
-              <p>
-                Explore Sky's financial evolution in detail with this advanced line chart, which offers both cumulative
-                and flat perspectives on expenses.
-              </p>
-              <p>
-                Select the 'Absolute Cumulative' mode for a continuous tally from inception, providing a comprehensive
-                overview of long-term financial movements.
-              </p>
-              <p>
-                Use the 'Relative Cumulative' mode, which resets at the start of each chosen period, to analyze expenses
-                within specific intervals.
-              </p>
-              <p>
-                Effortlessly switch between these views to discern overarching fiscal trends or to pinpoint financial
-                developments specific to a quarter or year, aiding in strategic decision-making and performance
-                assessment.
-              </p>
-            </TooltipContent>
-          }
-        />
-
-        <FilterContainer height={height || 0} shouldPositionBelow={shouldPositionBelow}>
+        <ContainerFilter ref={titleRef}>
+          <FinancesTitle
+            year={year}
+            title={title}
+            tooltip={
+              <TooltipContent>
+                <p>
+                  Explore Sky's financial evolution in detail with this advanced line chart, which offers both
+                  cumulative and flat perspectives on expenses.
+                </p>
+                <p>
+                  Select the 'Absolute Cumulative' mode for a continuous tally from inception, providing a comprehensive
+                  overview of long-term financial movements.
+                </p>
+                <p>
+                  Use the 'Relative Cumulative' mode, which resets at the start of each chosen period, to analyze
+                  expenses within specific intervals.
+                </p>
+                <p>
+                  Effortlessly switch between these views to discern overarching fiscal trends or to pinpoint financial
+                  developments specific to a quarter or year, aiding in strategic decision-making and performance
+                  assessment.
+                </p>
+              </TooltipContent>
+            }
+          />
+        </ContainerFilter>
+        <FilterContainer ref={filterRef} shouldPositionBelow={shouldPositionBelow} height={height || 0}>
           <FiltersBundle
             asPopover={[]}
             filters={filters}
@@ -163,13 +164,14 @@ const FilterContainer = styled('div', {
       : {
           position: 'absolute',
           right: 0,
+          paddingLeft: 8,
         }),
   },
 
   [theme.breakpoints.up('tablet_768')]: {
     position: 'revert',
     marginTop: 'revert',
-
+    marginLeft: -12,
     marginBottom: 20,
   },
   [theme.breakpoints.up('desktop_1024')]: {
@@ -179,3 +181,5 @@ const FilterContainer = styled('div', {
     marginBottom: 26,
   },
 }));
+
+const ContainerFilter = styled('div')(() => ({}));
