@@ -368,8 +368,8 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
         },
         splitLine: {
           lineStyle: {
+            color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[300],
             width: 0.25,
-            color: theme.palette.isLight ? theme.palette.colors.gray[400] : theme.palette.colors.charcoal[800],
           },
         },
       },
