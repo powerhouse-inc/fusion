@@ -174,7 +174,7 @@ const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, s
         splitNumber: 9,
         splitLine: {
           lineStyle: {
-            color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.charcoal[800],
+            color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[300],
             width: 0.25,
           },
         },
@@ -193,7 +193,6 @@ const WaterfallChart: React.FC<Props> = ({ legends, year, selectedGranularity, s
       startFinishMobile,
       startStyles,
       startYearStyles,
-      theme.palette.colors.charcoal,
       theme.palette.colors.gray,
       theme.palette.colors.slate,
       theme.palette.isLight,
