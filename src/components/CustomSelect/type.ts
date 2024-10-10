@@ -29,4 +29,5 @@ export interface CustomSelectProps {
   notShowDescription?: boolean;
   className?: string;
   menuProps?: Partial<MenuProps>;
+  isFixed?: boolean;
 }
