@@ -19,16 +19,16 @@ const FilterList: React.FC<FilterListProps> = ({ filters, handleClose, heightFor
       {filters.map((filter, index) => {
         switch (filter.type) {
           case 'select': {
-            return <SelectAsList key={`SelectAsList-${index}`} filter={filter} onClose={handleClose} />;
+            return <SelectAsList key={`filter-SelectAsList-${index}`} filter={filter} onClose={handleClose} />;
           }
           case 'radio': {
-            return <RadioAsList key={`RadioAsList-${index}`} filter={filter} />;
+            return <RadioAsList key={`filter-RadioAsList-${index}`} filter={filter} />;
           }
           case 'checkbox': {
-            return <CustomCheckbox key={`CustomCheckbox-${index}`} filter={filter} />;
+            return <CustomCheckbox key={`filter-CustomCheckbox-${index}`} filter={filter} />;
           }
           case 'cumulative': {
-            return <CumulativeAsList key={`CumulativeAsList-${index}`} filter={filter} />;
+            return <CumulativeAsList key={`filter-CumulativeAsList-${index}`} filter={filter} />;
           }
           default: {
             throw new Error('Unknown filter type');

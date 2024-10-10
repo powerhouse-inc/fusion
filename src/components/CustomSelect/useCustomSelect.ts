@@ -1,4 +1,5 @@
 import { useTheme } from '@mui/material';
+import { useRef } from 'react';
 import type { CustomSelectProps, OptionItem } from './type';
 import type { SelectChangeEvent } from '@mui/material';
 import type { ReactNode } from 'react';
@@ -25,6 +26,7 @@ export default function useCustomSelect({
   let isHandlingAll = false;
   const theme = useTheme();
   const isAllSelected = multiple && withAll && Array.isArray(selected) && selected.length === options.length;
+  const selectRef = useRef<HTMLDivElement>(null);
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
     if (!isHandlingAll) {
@@ -56,6 +58,7 @@ export default function useCustomSelect({
   return {
     theme,
     isAllSelected,
+    selectRef,
     handleChange,
     handleChangeAll,
     renderValue,

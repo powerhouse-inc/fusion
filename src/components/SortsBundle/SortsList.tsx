@@ -12,10 +12,10 @@ interface SortListProps {
 const SortsList: FC<SortListProps> = ({ sorts, handleClose }) => (
   <SimpleBarStyled>
     <Container>
-      {sorts.map((s) => {
+      {sorts.map((s, i) => {
         switch (s.type) {
           case 'column': {
-            return <CustomSelect sort={s} onClose={handleClose} />;
+            return <CustomSelect key={`sort-CustomSelect-${i}`} sort={s} onClose={handleClose} />;
           }
           default: {
             throw new Error('Unknown sort type');

@@ -57,7 +57,11 @@ const TopBarNavigation: React.FC = () => {
                   menuWidth: 263,
                   width: 'fit-content',
                 }}
-                menuProps={{ ...StyledMenuProps(theme) }}
+                menuProps={{
+                  disableScrollLock: true,
+                  ...StyledMenuProps(theme),
+                }}
+                isFixed={true}
               />
             </SelectContainer>
           </LeftSection>
@@ -126,6 +130,7 @@ const ContainerWrapper = styled('div')<{ shouldHaveBlur: boolean }>(({ theme, sh
 
   zIndex: zIndexEnum.HEADER_PAGE,
 }));
+
 const Container = styled('nav')(({ theme }) => ({
   display: 'flex',
   backgroundColor: theme.palette.isLight ? 'rgba(243, 245, 247, 0.5)' : 'rgba(32, 39, 47, 0.5)',
@@ -158,6 +163,7 @@ const Container = styled('nav')(({ theme }) => ({
     margin: '0 auto',
   },
 }));
+
 const NavContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   backgroundColor: theme.palette.isLight ? '#FFFFFF' : '#1B1E24',
@@ -194,6 +200,7 @@ const LogoContainerMobile = styled('div')(({ theme }) => ({
     display: 'none',
   },
 }));
+
 const LogoContainerDesk = styled('div')(({ theme }) => ({
   display: 'none',
   [theme.breakpoints.up('desktop_1024')]: {
