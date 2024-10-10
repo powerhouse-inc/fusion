@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { CookiesProvider } from 'react-cookie';
 import { Provider } from 'react-redux';
+import ErrorBoundary from '@/components/Error/ErrorBoundary';
 import { featureFlags } from '../feature-flags/feature-flags';
 import { CURRENT_ENVIRONMENT } from '../src/config/endpoints';
 import { AuthContextProvider } from '../src/core/context/AuthContext';
@@ -95,7 +96,9 @@ function MyApp(props: MyAppProps) {
               />
               <FeatureFlagsProvider enabledFeatures={featureFlags[CURRENT_ENVIRONMENT]}>
                 <AppLayout>
-                  <Component {...pageProps} />
+                  <ErrorBoundary>
+                    <Component {...pageProps} />
+                  </ErrorBoundary>
                 </AppLayout>
                 <ContainerNotification limit={3} />
               </FeatureFlagsProvider>

@@ -42,7 +42,7 @@ const FundChangeCard: React.FC<FundChangeCardProps> = ({
               ) : (
                 usLocalizedNumber(Math.round(netChange))
               )}
-              <div>DAI</div>
+              <div>USD</div>
             </>
           ) : (
             'N/A'

@@ -5,6 +5,7 @@ import { BudgetMetricsModalProvider } from '@ses/core/context/BudgetMetricsModal
 import React from 'react';
 import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
+import Notice from '@/components/Notice/Notice';
 import BreakdownChartSection from './components/BreakdownChartSection/BreakdownChartSection';
 import ConditionalWrapper from './components/ConditionalWrapper/ConditionalWrapper';
 import BreadcrumbYearNavigation from './components/SectionPages/BreadcrumbYearNavigation';
@@ -82,6 +83,9 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
               )}
             </TitleDescription>
           </TitleContainer>
+          <NoticeContainer>
+            <Notice />
+          </NoticeContainer>
 
           <ContainerSections>
             <OverviewSection
@@ -193,15 +197,20 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
 
 export default FinancesView;
 
-const TitleContainer = styled('div')(({ theme }) => ({
+const TitleContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
   marginTop: 72,
-  marginBottom: 24,
+  marginBottom: 16,
+}));
 
-  [theme.breakpoints.up('desktop_1280')]: {
-    marginBottom: 32,
+const NoticeContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  marginBottom: 16,
+
+  [theme.breakpoints.up('tablet_768')]: {
+    justifyContent: 'flex-end',
   },
 }));
 

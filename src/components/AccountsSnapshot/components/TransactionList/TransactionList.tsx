@@ -38,7 +38,9 @@ const TransactionList: React.FC<TransactionListProps> = ({ items, highlightPosit
                 inflow={item.snapshotAccountBalance?.[0]?.inflow}
                 outflow={item.snapshotAccountBalance?.[0]?.outflow}
                 newBalance={item.snapshotAccountBalance?.[0]?.newBalance}
-                currency={item.snapshotAccountBalance?.[0]?.token}
+                currency={
+                  item.snapshotAccountBalance?.[0]?.token === 'DAI' ? 'USD' : item.snapshotAccountBalance?.[0]?.token
+                }
               />
               {item.snapshotAccountTransaction.map((transaction) => renderTransaction(transaction))}
               <InitialBalanceRow initialBalance={item.snapshotAccountBalance?.[0]?.initialBalance} />

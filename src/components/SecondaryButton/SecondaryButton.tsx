@@ -18,13 +18,13 @@ export default SecondaryButton;
 
 const Button = styled('button')(({ theme }) => ({
   fontFamily: 'Inter, sans-serif',
-  padding: '4px 24px ',
+  padding: '3px 24px ',
   border: '1px solid transparent',
   borderRadius: 8,
   textAlign: 'center',
   fontWeight: 600,
   fontSize: 16,
-  lineHeight: '24px',
+  lineHeight: '24.4px',
   letterSpacing: -0.32,
   cursor: 'pointer',
   color: theme.palette.isLight ? theme.palette.colors.gray[600] : theme.palette.colors.slate[100],
