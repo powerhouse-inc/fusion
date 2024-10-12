@@ -165,10 +165,9 @@ const FilterContainer = styled('div', {
           right: 0,
         }),
   },
-
   [theme.breakpoints.up('tablet_768')]: {
     marginBottom: 20,
-    marginLeft: -12,
+    marginLeft: 'auto',
     marginTop: 'revert',
     position: 'revert',
   },
