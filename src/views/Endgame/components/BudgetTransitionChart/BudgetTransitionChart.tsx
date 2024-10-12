@@ -108,6 +108,33 @@ const BudgetTransitionChart: React.FC<BudgetTransitionChartProps> = ({ data, sel
       },
       padding: 0,
       borderColor: isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
+      position: (
+        point: [number, number],
+        params: EChartsOption,
+        dom: EChartsOption,
+        rect: EChartsOption,
+        size: EChartsOption
+      ) => {
+        const MORE_WITH = 10;
+        const withTooltip = size.contentSize[0];
+        const heightTooltip = size.contentSize[0];
+
+        let xPos = point[0];
+        let yPos = point[1];
+
+        const tooltipWidth = withTooltip;
+        const tooltipHeight = heightTooltip;
+
+        if (xPos + tooltipWidth + MORE_WITH > window.innerWidth) {
+          xPos -= tooltipWidth;
+        }
+
+        if (yPos + tooltipHeight + MORE_WITH > window.innerHeight) {
+          yPos -= tooltipHeight;
+        }
+
+        return [xPos, yPos];
+      },
       formatter: function (params: BarChartSeries[]) {
         const shortAmount = params.length > 10;
         const flexDirection = shortAmount ? 'row' : 'column';
