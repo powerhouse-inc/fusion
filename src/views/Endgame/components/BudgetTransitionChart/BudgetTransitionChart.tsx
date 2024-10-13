@@ -40,8 +40,8 @@ const BudgetTransitionChart: React.FC<BudgetTransitionChartProps> = ({ data, sel
     : isDesktop1280
     ? 40
     : isDesktop1440
-    ? 48
-    : 48;
+    ? 44
+    : 44;
 
   const { series, legendsLabels } = useMemo(() => {
     const legacySeries = {
@@ -107,8 +107,34 @@ const BudgetTransitionChart: React.FC<BudgetTransitionChartProps> = ({ data, sel
         },
       },
       padding: 0,
-      // borderWidth: 1,
       borderColor: isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
+      position: (
+        point: [number, number],
+        params: EChartsOption,
+        dom: EChartsOption,
+        rect: EChartsOption,
+        size: EChartsOption
+      ) => {
+        const MORE_WITH = 10;
+        const withTooltip = size.contentSize[0];
+        const heightTooltip = size.contentSize[0];
+
+        let xPos = point[0];
+        let yPos = point[1];
+
+        const tooltipWidth = withTooltip;
+        const tooltipHeight = heightTooltip;
+
+        if (xPos + tooltipWidth + MORE_WITH > window.innerWidth) {
+          xPos -= tooltipWidth;
+        }
+
+        if (yPos + tooltipHeight + MORE_WITH > window.innerHeight) {
+          yPos -= tooltipHeight;
+        }
+
+        return [xPos, yPos];
+      },
       formatter: function (params: BarChartSeries[]) {
         const shortAmount = params.length > 10;
         const flexDirection = shortAmount ? 'row' : 'column';
@@ -281,7 +307,7 @@ const BudgetTransitionChart: React.FC<BudgetTransitionChartProps> = ({ data, sel
 
   return (
     <Wrapper>
-      <ChartContainer hasMoreThanTwelveItems={hasMoreThanTwelveItems}>
+      <ChartContainer>
         <ReactECharts
           option={options}
           style={{
@@ -297,11 +323,11 @@ const BudgetTransitionChart: React.FC<BudgetTransitionChartProps> = ({ data, sel
         </YearsContainer>
       </ChartContainer>
       <LegendContainer>
-        <LegendItem variant="blue">
+        <LegendItem>
           <Circle variant="blue" />
           Endgame-{selected === 'Budget' ? 'Budget Cap' : `Net ${!isMobile ? 'Expenses' : ''} On-chain`}
         </LegendItem>
-        <LegendItemStyled variant="gray">
+        <LegendItemStyled>
           <Circle variant="gray" />
           Legacy-{selected === 'Budget' ? 'Budget Cap' : `Net ${!isMobile ? 'Expenses' : ''} On-chain`}
         </LegendItemStyled>
@@ -325,7 +351,7 @@ const Wrapper = styled('div')(({ theme }) => ({
   },
 }));
 
-const ChartContainer = styled('div')<{ hasMoreThanTwelveItems: boolean }>(({ theme }) => ({
+const ChartContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -334,18 +360,17 @@ const ChartContainer = styled('div')<{ hasMoreThanTwelveItems: boolean }>(({ the
   maxWidth: 327,
   height: 271,
   margin: '-12px auto 0',
+
   [theme.breakpoints.up('tablet_768')]: {
     margin: '12px 0 0',
     maxWidth: 390,
     height: 306,
   },
-
   [theme.breakpoints.up('desktop_1024')]: {
     maxWidth: 532,
     height: 280,
     margin: '12px 0 0',
   },
-
   [theme.breakpoints.up('desktop_1280')]: {
     maxWidth: 764,
     height: 367,
@@ -357,7 +382,9 @@ const ChartContainer = styled('div')<{ hasMoreThanTwelveItems: boolean }>(({ the
   },
 }));
 
-const YearsContainer = styled('div')<{ barsAmount: number }>(({ barsAmount }) => ({
+const YearsContainer = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'barsAmount',
+})<{ barsAmount: number }>(({ barsAmount }) => ({
   position: 'absolute',
   display: 'flex',
   flexDirection: 'row',
@@ -370,6 +397,7 @@ const YearsContainer = styled('div')<{ barsAmount: number }>(({ barsAmount }) =>
   'div:nth-of-type(n+3)': {
     marginLeft: -2,
   },
+
   [theme.breakpoints.up('tablet_768')]: {
     bottom: 6,
     left: 50,
@@ -392,6 +420,7 @@ const Year = styled('div')(({ theme }) => ({
   fontFamily: 'OpenSansCondensed, sans-serif',
   lineHeight: '22px',
   fontWeight: 700,
+
   [theme.breakpoints.up('tablet_768')]: {
     fontSize: 14,
   },
@@ -403,6 +432,7 @@ const LegendContainer = styled('div')(({ theme }) => ({
   gap: 10,
   margin: '-6px auto 0',
   borderRadius: 12,
+
   [theme.breakpoints.up('tablet_768')]: {
     margin: '6px 0 0',
     alignItems: 'center',
@@ -431,7 +461,7 @@ const LegendContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const LegendItem = styled('div')<{ variant: 'blue' | 'gray' }>(({ theme }) => ({
+const LegendItem = styled('div')(({ theme }) => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'row',
@@ -440,7 +470,6 @@ const LegendItem = styled('div')<{ variant: 'blue' | 'gray' }>(({ theme }) => ({
   gap: 8,
   lineHeight: 'normal',
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.slate[50],
-
   fontWeight: 600,
   marginLeft: -4,
 
@@ -460,7 +489,9 @@ const LegendItemStyled = styled(LegendItem)({
   },
 });
 
-const Circle = styled('div')<{ variant: 'blue' | 'gray' }>(({ variant }) => ({
+const Circle = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'variant',
+})<{ variant: 'blue' | 'gray' }>(({ variant }) => ({
   width: 8,
   height: 8,
   borderRadius: 12,
