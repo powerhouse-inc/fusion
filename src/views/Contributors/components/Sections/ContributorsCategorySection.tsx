@@ -18,15 +18,8 @@ interface Props {
 }
 
 const ContributorsCategorySection: FC<Props> = ({ teams, tabs, activeTab, onTabChange, subtitleContributors }) => {
-  const {
-    ecosystemActors,
-
-    alignedDelegates,
-    keepers,
-    coreUnits,
-    delegates,
-    spfs,
-  } = useContributorsCategorySection(teams);
+  const { ecosystemActors, alignedDelegates, keepers, coreUnits, delegates, spfs } =
+    useContributorsCategorySection(teams);
   return (
     <ContributorsContainer>
       <ContainerTabs>
