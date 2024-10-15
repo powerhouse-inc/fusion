@@ -1,15 +1,13 @@
-import { useRouter } from 'next/router';
-import { useRef, useState } from 'react';
-import lightTheme from '../../../../styles/theme/themes';
-import { useThemeContext } from '../../../core/context/ThemeContext';
-import { SortEnum } from '../../../core/enums/sortEnum';
-import type { ActivityTableHeader } from '../../components/CUActivityTable/ActivityTable';
+import lightTheme from '@ses/styles/theme/themes';
+import { useState } from 'react';
+import { useThemeContext } from '@/core/context/ThemeContext';
+import { SortEnum } from '@/core/enums/sortEnum';
+import type { CoreUnit } from '@/core/models/interfaces/coreUnit';
+import { useBreadcrumbCoreUnitPager } from '@/views/CoreUnitAbout/hooks';
+import type { ActivityTableHeader } from '@ses/components/CUActivityTable/ActivityTable';
 
-export const useCuActivity = () => {
+export const useCuActivity = (coreUnit: CoreUnit, coreUnits: CoreUnit[]) => {
   const { isLight } = useThemeContext();
-  const router = useRouter();
-  const code = router.query.code as string;
-  const ref = useRef<HTMLDivElement>(null);
   const [columns, setColumns] = useState<ActivityTableHeader[]>([
     {
       header: 'Timestamp',
@@ -39,11 +37,12 @@ export const useCuActivity = () => {
     setColumns(temp);
   };
 
+  const pager = useBreadcrumbCoreUnitPager(coreUnit, coreUnits);
+
   return {
     isLight,
     columns,
     onSortClick,
-    code,
-    ref,
+    pager,
   };
 };
