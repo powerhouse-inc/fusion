@@ -74,7 +74,7 @@ export default NavigationTabs;
 const Sticky = styled('div')(({ theme }) => ({
   position: 'sticky',
   top: 64,
-  zIndex: 2,
+  zIndex: 8,
   [theme.breakpoints.up('tablet_768')]: {
     top: 98,
   },
