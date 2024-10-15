@@ -1,3 +1,5 @@
+import orderBy from 'lodash/orderBy';
+
 import { useState } from 'react';
 import type { Team } from '@/core/models/interfaces/team';
 import { ResourceType } from '@/core/models/interfaces/types';
@@ -7,30 +9,36 @@ export const useContributorsCategorySection = (teams: Team[]) => {
 
   const handleActiveCategoryTab = (id: string) => setActiveCategoryTab(id);
 
+  const orderedTeams = orderBy(
+    teams,
+    [(team) => team.lastActivity?.created_at ?? '', (team) => team.lastActivity?.update_at ?? ''],
+    ['desc', 'desc']
+  );
+
   const ecosystemActors =
-    teams?.filter((team) => team.type === ResourceType.EcosystemActor).length > 4
-      ? teams.filter((team) => team.type === ResourceType.EcosystemActor).slice(0, 4)
-      : teams.filter((team) => team.type === ResourceType.EcosystemActor);
+    orderedTeams?.filter((team) => team.type === ResourceType.EcosystemActor).length > 4
+      ? orderedTeams.filter((team) => team.type === ResourceType.EcosystemActor).slice(0, 4)
+      : orderedTeams.filter((team) => team.type === ResourceType.EcosystemActor);
   const alignedDelegates =
-    teams?.filter((team) => team.type === ResourceType.AlignedDelegates).length > 4
-      ? teams.filter((team) => team.type === ResourceType.AlignedDelegates).slice(0, 4)
-      : teams.filter((team) => team.type === ResourceType.AlignedDelegates);
+    orderedTeams?.filter((team) => team.type === ResourceType.AlignedDelegates).length > 4
+      ? orderedTeams.filter((team) => team.type === ResourceType.AlignedDelegates).slice(0, 4)
+      : orderedTeams.filter((team) => team.type === ResourceType.AlignedDelegates);
   const keepers =
-    teams?.filter((team) => team.type === ResourceType.Keepers).length > 4
-      ? teams.filter((team) => team.type === ResourceType.Keepers).slice(0, 4)
-      : teams.filter((team) => team.type === ResourceType.Keepers);
+    orderedTeams?.filter((team) => team.type === ResourceType.Keepers).length > 4
+      ? orderedTeams.filter((team) => team.type === ResourceType.Keepers).slice(0, 4)
+      : orderedTeams.filter((team) => team.type === ResourceType.Keepers);
   const coreUnits =
-    teams?.filter((team) => team.type === ResourceType.CoreUnit).length > 4
-      ? teams.filter((team) => team.type === ResourceType.CoreUnit).slice(0, 4)
-      : teams.filter((team) => team.type === ResourceType.CoreUnit);
+    orderedTeams?.filter((team) => team.type === ResourceType.CoreUnit).length > 4
+      ? orderedTeams.filter((team) => team.type === ResourceType.CoreUnit).slice(0, 4)
+      : orderedTeams.filter((team) => team.type === ResourceType.CoreUnit);
   const delegates =
-    teams?.filter((team) => team.type === ResourceType.Delegates).length > 4
-      ? teams.filter((team) => team.type === ResourceType.Delegates).slice(0, 4)
-      : teams.filter((team) => team.type === ResourceType.Delegates);
+    orderedTeams?.filter((team) => team.type === ResourceType.Delegates).length > 4
+      ? orderedTeams.filter((team) => team.type === ResourceType.Delegates).slice(0, 4)
+      : orderedTeams.filter((team) => team.type === ResourceType.Delegates);
   const spfs =
-    teams?.filter((team) => team.type === ResourceType.SpecialPurposeFund).length > 4
-      ? teams.filter((team) => team.type === ResourceType.SpecialPurposeFund).slice(0, 4)
-      : teams.filter((team) => team.type === ResourceType.SpecialPurposeFund);
+    orderedTeams?.filter((team) => team.type === ResourceType.SpecialPurposeFund).length > 4
+      ? orderedTeams.filter((team) => team.type === ResourceType.SpecialPurposeFund).slice(0, 4)
+      : orderedTeams.filter((team) => team.type === ResourceType.SpecialPurposeFund);
 
   const teamCategoriesTabs = [
     {

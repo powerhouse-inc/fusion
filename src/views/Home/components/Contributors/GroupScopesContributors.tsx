@@ -14,7 +14,7 @@ interface GroupedScopesProps {
 }
 
 const GroupScopesContributors: React.FC<GroupedScopesProps> = ({ items }) => {
-  const isDesktop1280Plus = useMediaQuery((theme: Theme) => theme.breakpoints.up('desktop_1280'));
+  const isDesktop1024plus = useMediaQuery((theme: Theme) => theme.breakpoints.up('desktop_1024'));
 
   // Function to check if an object is of type Scope
   const isScope = (item: Scope | TeamCategory): item is Scope => (item as Scope).name !== undefined;
@@ -36,7 +36,7 @@ const GroupScopesContributors: React.FC<GroupedScopesProps> = ({ items }) => {
     >
       <Group columns={1}>
         {isScope(items[0]) ? (
-          <ScopeChip scope={items[0]} size={isDesktop1280Plus ? 'medium' : 'small'} />
+          <ScopeChip scope={items[0]} size={isDesktop1024plus ? 'medium' : 'small'} />
         ) : (
           <ContainerCategory>
             <CategoryChip category={items[0]} />
