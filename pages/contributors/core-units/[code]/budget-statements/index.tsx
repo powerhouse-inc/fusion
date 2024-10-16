@@ -13,7 +13,7 @@ import type { CoreUnit } from '@ses/core/models/interfaces/coreUnit';
 import type { Team } from '@ses/core/models/interfaces/team';
 import type { GetServerSidePropsContext } from 'next';
 
-interface TransparencyProps {
+interface CoreUnitBudgetStatementPageProps {
   coreUnits: CoreUnit[];
   cu: CoreUnit;
   expenseCategories: ExpenseCategory[];
@@ -23,7 +23,12 @@ interface TransparencyProps {
   } | null;
 }
 
-const Transparency = ({ coreUnits, cu, expenseCategories, snapshotLimitPeriods }: TransparencyProps) => {
+const CoreUnitBudgetStatementPage = ({
+  coreUnits,
+  cu,
+  expenseCategories,
+  snapshotLimitPeriods,
+}: CoreUnitBudgetStatementPageProps) => {
   const [currentCoreUnit, setCurrentCoreUnit] = useState<CoreUnit>(cu);
   useEffect(() => {
     setCurrentCoreUnit(cu);
@@ -55,7 +60,7 @@ const Transparency = ({ coreUnits, cu, expenseCategories, snapshotLimitPeriods }
   );
 };
 
-export default Transparency;
+export default CoreUnitBudgetStatementPage;
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const { query } = context;

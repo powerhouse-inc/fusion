@@ -1,40 +1,70 @@
 import { styled } from '@mui/material';
-import { siteRoutes } from '@ses/config/routes';
-import { useHeaderSummary } from '@ses/core/hooks/useHeaderSummary';
-import React from 'react';
-import ActivityTable from '../../components/CUActivityTable/ActivityTable';
-import { CoreUnitSummary } from '../../components/CoreUnitSummary/CoreUnitSummary';
-import { SEOHead } from '../../components/SEOHead/SEOHead';
+import ActivityTable from '@ses/components/CUActivityTable/ActivityTable';
+import { SEOHead } from '@ses/components/SEOHead/SEOHead';
+import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
+import TeamBreadcrumbContent from '@/components/Breadcrumb/CustomContents/TeamBreadcrumbContent';
+import PageContainer from '@/components/Container/PageContainer';
+import TeamHeader from '@/components/TeamHeader/TeamHeader';
+import { siteRoutes } from '@/config/routes';
+import type { ChangeTrackingEvent } from '@/core/models/interfaces/activity';
+import type { CoreUnit } from '@/core/models/interfaces/coreUnit';
+import type { Team } from '@/core/models/interfaces/team';
+import { ResourceType } from '@/core/models/interfaces/types';
 import { useCuActivity } from './useCuActivity';
-import type { ChangeTrackingEvent } from '@ses/core/models/interfaces/activity';
-import type { CoreUnit } from '@ses/core/models/interfaces/coreUnit';
 
 interface CUActivityContainerProps {
-  coreUnits: CoreUnit[];
   coreUnit: CoreUnit;
+  coreUnits: CoreUnit[];
   activities: ChangeTrackingEvent[];
 }
 
 const CUActivityFeedContainer: React.FC<CUActivityContainerProps> = ({ coreUnit, coreUnits, activities }) => {
-  const { columns, onSortClick, code, ref } = useCuActivity();
+  const { columns, onSortClick, pager } = useCuActivity(coreUnit, coreUnits);
 
-  const { height, showHeader } = useHeaderSummary(ref, code);
   return (
-    <Wrapper>
+    <PageContainer>
       <SEOHead
         title={`Sky Fusion - ${coreUnit.name} Activity Feed`}
         description={`Learn about ${coreUnit.name}'s Activity Feed: including previous modifications that the Core Unit has made to their Expense Reports, FTEs, and more.`}
         canonicalURL={siteRoutes.coreUnitActivityFeed(coreUnit.shortCode)}
       />
-      <CoreUnitSummary
-        coreUnits={coreUnits}
-        trailingAddress={['Activity Feed']}
-        breadcrumbTitle="Activity Feed"
-        ref={ref}
-        showHeader={showHeader}
+      <Breadcrumb
+        items={[
+          {
+            label: 'Contributors',
+            href: siteRoutes.contributors,
+          },
+          {
+            label: 'Core Units',
+            href: siteRoutes.coreUnitsOverview,
+            number: coreUnits.length,
+          },
+          {
+            label: coreUnit.name,
+            href: siteRoutes.coreUnitAbout(coreUnit.shortCode),
+          },
+          {
+            label: 'Activity Feed',
+            href: '#',
+          },
+        ]}
+        rightContent={
+          <TeamBreadcrumbContent
+            team={ResourceType.CoreUnit}
+            currentPage={pager.currentPage}
+            totalPages={pager.totalPages}
+            pagerProps={{
+              hasNext: pager.hasNext,
+              hasPrevious: pager.hasPrevious,
+              onNext: pager.onNext,
+              onPrevious: pager.onPrevious,
+            }}
+          />
+        }
       />
+      <TeamHeader team={coreUnit as unknown as Team} withDescription={false} />
       <Container>
-        <InnerPage marginTop={height}>
+        <InnerPage>
           <TableWrapper>
             <ActivityTable
               columns={columns}
@@ -52,77 +82,56 @@ const CUActivityFeedContainer: React.FC<CUActivityContainerProps> = ({ coreUnit,
           </Paragraph>
         </InnerPage>
       </Container>
-    </Wrapper>
+    </PageContainer>
   );
 };
 
 export default CUActivityFeedContainer;
 
-const Wrapper = styled('div')({
+const Container = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  width: '100%',
-});
-
-const Container = styled('div')(({ theme }) => ({
-  flexDirection: 'column',
   alignItems: 'center',
-  paddingTop: '64px',
-
-  flex: 1,
-  backgroundColor: theme.palette.isLight ? '#FFFFFF' : '#000000',
-  backgroundAttachment: 'fixed',
-  backgroundSize: 'cover',
-  paddingBottom: '79px',
-
-  [theme.breakpoints.up('tablet_768')]: {
-    paddingBottom: '128px',
-  },
-}));
-
-const InnerPage = styled('div')<{ marginTop: number }>(({ marginTop, theme }) => ({
-  display: 'block',
-  textAlign: 'left',
   width: '100%',
-  maxWidth: '1440px',
-  margin: '0 auto',
-  marginTop,
   paddingTop: 24,
-  paddingRight: '64px',
-  paddingLeft: '64px',
-  [theme.breakpoints.down('tablet_768')]: {
-    paddingRight: '16px',
-    paddingLeft: '16px',
-  },
+  paddingBottom: 24,
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.background.dm,
+
   [theme.breakpoints.up('tablet_768')]: {
     paddingTop: 32,
-    marginTop: 61 + marginTop,
-  },
-  [theme.breakpoints.between('tablet_768', 'desktop_1280')]: {
-    paddingRight: '32px',
-    paddingLeft: '32px',
-  },
-  [theme.breakpoints.between('desktop_1280', 'desktop_1440')]: {
-    paddingRight: '48px',
-    paddingLeft: '48px',
-  },
-
-  [theme.breakpoints.up('desktop_1920')]: {
-    maxWidth: '1312px',
-    paddingRight: '0px',
-    paddingLeft: '0px',
   },
 }));
 
-export const Title = styled('div')<{
-  marginBottom?: number;
+const InnerPage = styled('div')(({ theme }) => ({
+  width: '100%',
+  margin: '0px auto',
+  paddingRight: 16,
+  paddingLeft: 16,
 
+  [theme.breakpoints.up('tablet_768')]: {
+    paddingRight: 32,
+    paddingLeft: 32,
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    paddingRight: 48,
+    paddingLeft: 48,
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    maxWidth: 1312,
+    paddingRight: 0,
+    paddingLeft: 0,
+  },
+}));
+
+export const Title = styled('div', {
+  shouldForwardProp: (prop) => !['marginBottom', 'fontSize', 'responsiveMarginBottom'].includes(prop as string),
+})<{
+  marginBottom?: number;
   fontSize?: string;
   responsiveMarginBottom?: number;
-}>(({ marginBottom = 16, fontSize = '20px', responsiveMarginBottom, theme }) => ({
+}>(({ marginBottom = 16, fontSize = 20, responsiveMarginBottom, theme }) => ({
   fontFamily: 'Inter, sans-serif',
   fontWeight: 700,
-  fontStyle: 'normal',
   fontSize,
   lineHeight: '19px',
   letterSpacing: '0.4px',
@@ -131,7 +140,7 @@ export const Title = styled('div')<{
   marginTop: 64,
 
   [theme.breakpoints.up('tablet_768')]: {
-    fontSize: '24px',
+    fontSize: 24,
     fontWeight: 600,
     lineHeight: '24px',
     marginBottom: `${responsiveMarginBottom || marginBottom}px`,
@@ -139,21 +148,19 @@ export const Title = styled('div')<{
 }));
 
 export const Paragraph = styled('p')(({ theme }) => ({
+  marginBottom: 0,
   fontFamily: 'Inter, sans-serif',
-  fontStyle: 'normal',
-  fontWeight: 400,
-  fontSize: '14px',
+  fontSize: 14,
   lineHeight: '22px',
   color: theme.palette.isLight ? '#231536' : '#D2D4EF',
-  marginBottom: 0,
 
   [theme.breakpoints.up('tablet_768')]: {
-    fontSize: '16px',
+    fontSize: 16,
   },
 }));
 
 const TableWrapper = styled('div')({
-  maxWidth: '928px',
+  maxWidth: 928,
   width: '100%',
   margin: '0px auto',
 });
