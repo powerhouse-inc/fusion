@@ -130,7 +130,7 @@ const DelegateExpenseTrendItem: FC<Props> = ({ budget, selectedMetric, now = Dat
         </ReportingMonth>
         <TotalActualsTable>
           <LabelDescription>{metricLabel}</LabelDescription>
-          <TotalNumber>{usLocalizedNumber(value)} DAI</TotalNumber>
+          <TotalNumber>{usLocalizedNumber(value)} USD</TotalNumber>
         </TotalActualsTable>
         <ContainerStatusTable>
           {budget.status && (
@@ -160,7 +160,7 @@ const DelegateExpenseTrendItem: FC<Props> = ({ budget, selectedMetric, now = Dat
         </ContainerReportingMobile>
         <TotalContainerMobile>
           <Total>{metricLabel}</Total>
-          <TotalNumber>{usLocalizedNumber(value)} DAI</TotalNumber>
+          <TotalNumber>{usLocalizedNumber(value)} USD</TotalNumber>
         </TotalContainerMobile>
       </ContainerCardMobile>
     </ContainerInside>
