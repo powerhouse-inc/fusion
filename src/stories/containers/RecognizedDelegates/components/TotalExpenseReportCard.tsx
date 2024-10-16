@@ -28,7 +28,7 @@ const TotalExpenseReportCard: React.FC<Props> = ({ start, end, totalDAI }) => {
       </ContainerRangeText>
       <Annual isLight={isLight}>
         {`${formatted}`}
-        <Coin isLight={isLight}>DAI</Coin>
+        <Coin isLight={isLight}>USD</Coin>
       </Annual>
     </ExtendedGenericDelegate>
   );

@@ -52,10 +52,10 @@ const DelegateExpenseBreakdownCard: React.FC<Props> = ({ delegateCard, relativeV
             </PercentBarContainer>
           </ContainerBar>
           <ContainerTotal>
-            <TotalTitle>Total DAI Comp</TotalTitle>
+            <TotalTitle>Total USD Comp</TotalTitle>
             <Total>
               {humanizeTotal ?? 0}
-              <span>DAI</span>
+              <span>USD</span>
             </Total>
           </ContainerTotal>
         </DescriptionSection>

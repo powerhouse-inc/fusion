@@ -29,7 +29,7 @@ const TotalBudgetContent: React.FC<TotalBudgetContentProps> = ({
     <Content>
       <BudgetCapNumber>
         {usLocalizedNumber(totalBudgetCap)}
-        <Currency>DAI</Currency>
+        <Currency>USD</Currency>
       </BudgetCapNumber>
       <AvgBudgetCapUtilization>
         Avg Budget Cap Utilization: <AvgPercentage>{usLocalizedNumber(averageCapUtilization, 1)}%</AvgPercentage>
