@@ -3,7 +3,7 @@ import { isProject, type Project, type SupportedProjects } from '@ses/core/model
 import Image from 'next/image';
 import React, { useMemo } from 'react';
 import ProgressWithStatus from '@/components/ProgressWithStatus/ProgressWithStatus';
-import type { Deliverable, KeyResult } from '@/core/models/interfaces/deliverables';
+import type { Deliverable } from '@/core/models/interfaces/deliverables';
 import type { OwnerRef } from '@/core/models/interfaces/roadmaps';
 import type { ProgressStatus } from '@/core/models/interfaces/types';
 import BudgetTypeBadge from '../BudgetTypeBadge/BudgetTypeBadge';
@@ -61,10 +61,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     return {
       ...deliverable,
       keyResults:
-        // The eslint disable is necessary because the API returns both keyResults and supportedKeyResults
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ((project.supportedDeliverables.find((support) => support.id === deliverable.id) as any)
-          ?.supportedKeyResults as KeyResult[]) || [],
+        project.supportedDeliverables.find((support) => support.id === deliverable.id)?.supportedKeyResults || [],
     };
   };
 
@@ -116,8 +113,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                   deliverable={getDeliverableWithKeyResults(deliverable)}
                   viewMode={'detailed'}
                   maxKeyResultsOnRow={
-                    // supported projects doesn't have key results in the deliverables
-                    isProject(project) ? row.map((d) => d.keyResults.length).reduce((a, b) => Math.max(a, b), 0) : 0
+                    isProject(project)
+                      ? row.map((d) => d.keyResults.length).reduce((a, b) => Math.max(a, b), 0)
+                      : row.map((d) => d.supportedKeyResults.length).reduce((a, b) => Math.max(a, b), 0)
                   }
                 />
               ))
@@ -286,9 +284,9 @@ const ImageContainer = styled('div')(({ theme }) => ({
 
 const Description = styled('p')(({ theme }) => ({
   display: '-webkit-box',
-  '-webkit-box-orient': 'vertical',
-  '-webkit-line-clamp': '8',
-  lineClamp: '8',
+  WebkitBoxOrient: 'vertical',
+  WebkitLineClamp: 8,
+  lineClamp: 8,
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   alignSelf: 'stretch',

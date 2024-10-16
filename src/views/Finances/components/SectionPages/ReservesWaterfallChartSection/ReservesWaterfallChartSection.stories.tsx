@@ -231,8 +231,8 @@ LightModeMobile.parameters = {
             width: 343,
           },
           style: {
-            top: 0,
-            left: 0,
+            top: -12,
+            left: -14,
           },
         },
       },

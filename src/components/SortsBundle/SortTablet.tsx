@@ -16,7 +16,13 @@ const SortTablet: FC<SortTabletProps> = ({ isOpen, handleClose, sorts, anchorEl,
   const theme = useTheme();
 
   return (
-    <Popover open={isOpen} anchorEl={anchorEl.current} onClose={handleClose} {...(StyledMenuProps(theme) as object)}>
+    <Popover
+      open={isOpen}
+      anchorEl={anchorEl.current}
+      onClose={handleClose}
+      {...(StyledMenuProps(theme) as object)}
+      disableScrollLock
+    >
       <Container>
         {!!resetSorts && (
           <SortHeader>

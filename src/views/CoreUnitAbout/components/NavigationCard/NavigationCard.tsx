@@ -139,7 +139,7 @@ const ListItemStyle = styled.li({
   '&:first-of-type': {
     marginTop: '24px',
   },
-  '&:last-child': {
+  '&:last-of-type': {
     marginBottom: '24px',
   },
 });

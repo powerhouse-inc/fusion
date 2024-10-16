@@ -37,7 +37,13 @@ const BreadcrumbYearNavigation: React.FC<BreadcrumbYearNavigationProps> = ({
             }))}
             onChange={(value) => handleChange(value as string)}
             selected={selectedValue}
-            menuProps={{ disableScrollLock: true }}
+            menuProps={{
+              disablePortal: true,
+              disableScrollLock: true,
+              style: {
+                zIndex: 10,
+              },
+            }}
           />
         </RightContentContainer>
       }
@@ -72,6 +78,7 @@ const BudgetButton = styled('button')(({ theme }) => ({
     [theme.breakpoints.up('tablet_768')]: {
       display: 'inline',
       whiteSpace: 'nowrap',
+      fontFamily: 'Inter, sans-serif',
     },
   },
 

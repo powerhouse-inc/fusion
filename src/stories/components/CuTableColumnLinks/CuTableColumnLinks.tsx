@@ -102,7 +102,7 @@ const Container = styled('div')<{ spacings?: number; align: string; isIndex?: bo
   '* + *': {
     marginRight: '16px',
   },
-  ' & > div:last-child': {
+  ' & > div:last-of-type': {
     marginRight: '0px',
   },
   '@media (min-width: 1194px)': props.isIndex
@@ -113,7 +113,7 @@ const Container = styled('div')<{ spacings?: number; align: string; isIndex?: bo
           marginRight: '8px',
           marginTop: '0px',
         },
-        ' & > div:last-child': {
+        ' & > div:last-of-type': {
           marginRight: '8px',
           [lightTheme.breakpoints.up('desktop_1194')]: {
             marginRight: '16px',
@@ -134,7 +134,7 @@ const Container = styled('div')<{ spacings?: number; align: string; isIndex?: bo
       marginRight: '16px',
       marginTop: '10px',
     },
-    ' & > div:last-child': {
+    ' & > div:last-of-type': {
       marginRight: '6px',
     },
   },
@@ -164,10 +164,10 @@ const LinkImage = styled('a')(
   })
 );
 
-const StyleBox = styled(Box, { shouldForwardProp: (prop) => prop !== 'isLight' })<{
+const StyleBox = styled(Box, { shouldForwardProp: (prop) => prop !== 'isLight' && prop !== 'lastChild' })<{
   lastChild?: boolean;
 }>((props) => ({
-  '&:last-child': props.lastChild && {
+  '&:last-of-type': props.lastChild && {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

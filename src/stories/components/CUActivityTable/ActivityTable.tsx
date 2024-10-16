@@ -305,7 +305,7 @@ const ButtonContainer = styled('div')({
   marginTop: '64px',
 });
 
-const StyledBigButton = styled(Button)<{
+const StyledBigButton = styled(Button, { shouldForwardProp: (prop) => prop !== 'isLight' && prop !== 'isGlobal' })<{
   isLight: boolean;
   isGlobal?: boolean;
 }>(({ isLight, isGlobal }) => ({

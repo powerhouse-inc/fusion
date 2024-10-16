@@ -160,7 +160,7 @@ const UserRole = styled.p({
   textAlign: 'center',
   marginTop: 0,
   marginBottom: 4,
-  ':last-child': {
+  ':last-of-type': {
     marginBottom: 0,
   },
 });

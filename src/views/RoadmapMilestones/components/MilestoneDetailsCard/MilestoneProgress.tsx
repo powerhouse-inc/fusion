@@ -49,11 +49,11 @@ const TextProgress = styled('div')(({ theme }) => ({
   lineHeight: '22px',
   color: theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50],
 
-  '& span:nth-child(1)': {
+  '& span:nth-of-type(1)': {
     color: theme.palette.isLight ? theme.palette.colors.blue[700] : theme.palette.colors.blue[900],
   },
 
-  '& span:nth-child(2)': {
+  '& span:nth-of-type(2)': {
     color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[200],
     fontWeight: 700,
   },
