@@ -32,22 +32,9 @@ export const LinkDescription = styled('div')(() => ({
 const ExternalLinkButtonStyled = styled(ExternalLinkButton)(({ theme }) => ({
   fontSize: 14,
   fontWeight: 500,
-  hover: {
-    borderWidth: 1.5,
-    padding: '0px 6px 0px 8px',
-  },
-  '& div': {
-    width: 16,
-    height: 16,
-  },
-
   [theme.breakpoints.up('tablet_768')]: {
     fontSize: 16,
     fontWeight: 600,
     padding: '2px 16px 2px 24px',
-    hover: {
-      borderWidth: 1.5,
-      padding: '2px 16px 2px 24px',
-    },
   },
 }));
