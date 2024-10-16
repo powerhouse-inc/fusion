@@ -1,6 +1,5 @@
 import { ExpandMore, Check } from '@mui/icons-material';
 import { Select, MenuItem, FormControl, styled, Box, Typography } from '@mui/material';
-
 import deepmerge from '@mui/utils/deepmerge';
 import useCustomSelect from './useCustomSelect';
 import type { CustomSelectProps } from './type';
@@ -32,9 +31,27 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
     withAll,
     onChange,
   });
+
+  const onEntered = () => {
+    if (selectRef.current !== null) {
+      const menu = selectRef.current.querySelector('.MuiMenu-paper');
+      if (menu !== null) {
+        menu.scrollTop > 0 &&
+          menu.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'instant' as ScrollBehavior,
+          });
+      }
+    }
+  };
+
   const combinedMenuProps = deepmerge(
     StyledMenuProps(theme, style?.menuWidth || 200, style?.height || 'fit-content', selectRef.current, isFixed),
-    menuProps
+    {
+      TransitionProps: { onEntered },
+      ...menuProps,
+    }
   );
 
   return (
@@ -56,21 +73,6 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
           IconComponent={ExpandMore}
           className={className}
           MenuProps={combinedMenuProps as unknown as Partial<MenuProps>}
-          onOpen={() => {
-            setTimeout(() => {
-              if (selectRef.current !== null) {
-                const menu = selectRef.current.querySelector('.MuiMenu-paper');
-                if (menu !== null) {
-                  menu.scrollTop > 0 &&
-                    menu.scrollTo({
-                      top: 0,
-                      left: 0,
-                      behavior: 'instant' as ScrollBehavior,
-                    });
-                }
-              }
-            }, 100);
-          }}
         >
           {notShowDescription && (
             <MenuItemLabel disabled>
@@ -302,6 +304,11 @@ const StyledMenuProps = (
   transformOrigin: {
     vertical: 'top',
     horizontal: 'right',
+  },
+  /* Prevent jumps when open/close the dropdown. This has accessibility implications that are recommended to be addressed in the future. */
+  disableAutoFocus: true,
+  MenuListProps: {
+    autoFocusItem: false,
   },
   sx: {
     ...(!isFixed && {
