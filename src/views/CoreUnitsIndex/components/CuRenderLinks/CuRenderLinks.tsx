@@ -63,10 +63,4 @@ const VerticalLine = styled('div')(({ theme }) => ({
   },
 }));
 
-const InternalLinkButtonStyled = styled(InternalLinkButton)({
-  borderRadius: 8,
-  padding: '2px 8px 2px 8px',
-  ':hover': {
-    padding: '2px 8px 2px 8px',
-  },
-});
+const InternalLinkButtonStyled = styled(InternalLinkButton)({});
