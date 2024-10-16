@@ -7,7 +7,9 @@ import type { NavigationBreadcrumb } from '@ses/components/Breadcrumbs/Breadcrum
 interface BreadcrumbProps {
   items: NavigationBreadcrumb[];
 }
-
+/**
+ * @deprecated instead  use Breadcrumb from component.
+ */
 const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => (
   <BreadcrumbNavigationStyled>
     <WrapperContainerDesk>

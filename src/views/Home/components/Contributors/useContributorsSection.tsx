@@ -1,6 +1,6 @@
 import { useMediaQuery, useTheme } from '@mui/material';
 
-import sortBy from 'lodash/sortBy';
+import orderBy from 'lodash/orderBy';
 import { useState } from 'react';
 import BulletIcon from '@/components/FancyTabs/BulletIcon';
 
@@ -28,14 +28,26 @@ export const useContributorsSection = (teams: Team[]) => {
   const coreUnits = teams?.filter((team) => team.type === ResourceType.CoreUnit);
   const ecosystemActors = teams?.filter((team) => team.type === ResourceType.EcosystemActor);
 
-  // Alphabetically sort by name
-  const sortedCoreUnits = sortBy(coreUnits, 'name');
-  const sortedEcosystemActors = sortBy(ecosystemActors, 'name');
+  // Order by lastActivity
+  const sortedCoreUnits = orderBy(
+    coreUnits,
+    [(team) => team.lastActivity?.created_at ?? '', (team) => team.lastActivity?.update_at ?? ''],
+    ['desc', 'desc']
+  );
+  const sortedEcosystemActors = orderBy(
+    ecosystemActors,
+    [(team) => team.lastActivity?.created_at ?? '', (team) => team.lastActivity?.update_at ?? ''],
+    ['desc', 'desc']
+  );
 
   // Combine and sort based on the active tab
   const contributors =
     activeDetailTab === '1'
-      ? sortBy([...sortedEcosystemActors, ...sortedCoreUnits], 'name') // Alphabetically sort after combining
+      ? orderBy(
+          [...sortedEcosystemActors, ...sortedCoreUnits],
+          [(team) => team.lastActivity?.created_at ?? '', (team) => team.lastActivity?.update_at ?? ''],
+          ['desc', 'desc']
+        )
       : activeDetailTab === '2'
       ? sortedEcosystemActors
       : sortedCoreUnits;
