@@ -78,7 +78,9 @@ const ActorProjectsView: React.FC<ActorProjectsViewProps> = ({ actor, actors, pr
           />
         }
       />
-      <TeamHeader team={actor} withDescription={false} />
+      <TeamHeaderContainer>
+        <TeamHeader team={actor} withDescription={false} />
+      </TeamHeaderContainer>
       <Container>
         <ContainerAllData>
           <ContainerResponsive>
@@ -224,5 +226,12 @@ const TextNotFound = styled('p')(({ theme }) => ({
   [theme.breakpoints.up('desktop_1024')]: {
     fontSize: 32,
     lineHeight: '38.4px',
+  },
+}));
+
+const TeamHeaderContainer = styled('div')(({ theme }) => ({
+  marginTop: 104,
+  [theme.breakpoints.up('tablet_768')]: {
+    marginTop: 0,
   },
 }));
