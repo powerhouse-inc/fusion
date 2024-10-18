@@ -48,13 +48,13 @@ const CardExpenses = ({
 
         <ContainerButton resource={resource}>
           {resource === ResourceType.CoreUnit && (
-            <ButtonLinkStyledCard
+            <InternalLinkButton
               href={`${siteRoutes.coreUnitActivityFeed(shortCode)}/${queryStrings}`}
               label="Activity Feed"
               showIcon
             />
           )}
-          <StyledBudgetButton
+          <InternalLinkButton
             href={`${
               resource === ResourceType.CoreUnit
                 ? siteRoutes.coreUnitReports(shortCode)
@@ -63,7 +63,7 @@ const CardExpenses = ({
             label="Budget Statements"
             showIcon
           />
-          <ButtonLinkStyledCard href={`${siteRoutes.finances(budgetPath)}/${queryStrings}`} label="Finances" showIcon />
+          <InternalLinkButton href={`${siteRoutes.finances(budgetPath)}/${queryStrings}`} label="Finances" showIcon />
         </ContainerButton>
       </ContainerData>
       {resource === ResourceType.CoreUnit ? <Line /> : <DivSpacer />}
@@ -177,34 +177,5 @@ const ContainerAuditors = styled('div')(({ theme }) => ({
   },
   [theme.breakpoints.up('desktop_1440')]: {
     padding: '0px 16px 16px 16px',
-  },
-}));
-
-const ButtonLinkStyledCard = styled(InternalLinkButton)(({ theme }) => ({
-  padding: '4px 15.5px 4px 15.5px',
-  height: 32,
-  '& > div': {
-    letterSpacing: '-0.32px',
-  },
-  ':hover': {
-    padding: '4px 15.5px 4px 15.5px',
-    [theme.breakpoints.between('desktop_1280', 'desktop_1440')]: {
-      padding: '4px 14px 4px 14px',
-    },
-  },
-}));
-
-const StyledBudgetButton = styled(InternalLinkButton)(({ theme }) => ({
-  padding: '4px 15.7px 4px 15.7px',
-
-  height: 32,
-  '& > div': {
-    letterSpacing: '-0.32px',
-  },
-  ':hover': {
-    padding: '4px 16px 4px 16px',
-    [theme.breakpoints.between('desktop_1280', 'desktop_1440')]: {
-      padding: '4px 14px 4px 14px',
-    },
   },
 }));

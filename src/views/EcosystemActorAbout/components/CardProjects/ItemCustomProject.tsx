@@ -15,7 +15,7 @@ const ItemCustomProject: FC<Props> = ({ shortCode }) => (
     description={`View all the of the projects ${shortCode} is involved in and there status.`}
   >
     <ContainerChildren>
-      <InternalLinkButtonStyled href={siteRoutes.ecosystemActorProjects(shortCode)} label="View Projects" showIcon />
+      <InternalLinkButton href={siteRoutes.ecosystemActorProjects(shortCode)} label="View Projects" showIcon />
     </ContainerChildren>
   </CardSheetMobile>
 );
@@ -27,7 +27,3 @@ const ContainerChildren = styled('div')({
   flexDirection: 'column',
   gap: 8,
 });
-
-const InternalLinkButtonStyled = styled(InternalLinkButton)(() => ({
-  padding: '4px 13.5px 4px 13.5px',
-}));
