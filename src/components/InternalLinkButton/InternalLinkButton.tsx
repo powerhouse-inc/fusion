@@ -63,7 +63,7 @@ const ContainerLink = styled(Link, {
     minHeight: 32,
     display: 'flex',
     borderRadius: 8,
-    padding: '4px 16px 4px 24px',
+    padding: '4px 16px 4px 16px',
     width: 'fit-content',
     alignItems: 'center',
     background: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
@@ -76,7 +76,7 @@ const ContainerLink = styled(Link, {
 
     ':hover': {
       gap: 16,
-      padding: '4px 8px 4px 24px',
+      padding: '4px 8px 4px 16px',
       border: '1px solid transparent',
       '& div': {
         color: theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.charcoal[100],
@@ -86,7 +86,7 @@ const ContainerLink = styled(Link, {
       },
     },
     ':active': {
-      padding: '4px 16px 4px 24px',
+      padding: '4px 16px 4px 16px',
       border: theme.palette.isLight
         ? `1px solid ${theme.palette.colors.sky[400]}`
         : `1px solid ${theme.palette.colors.charcoal[700]}`,
@@ -109,7 +109,7 @@ const ContainerLink = styled(Link, {
         fill: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[300],
       },
       ':hover': {
-        padding: '4px 8px 4px 24px',
+        padding: '4px 8px 4px 16px',
         background: theme.palette.isLight ? theme.palette.colors.gray[800] : theme.palette.colors.charcoal[800],
         border: theme.palette.isLight
           ? `1px solid ${theme.palette.colors.sky[900]}`
@@ -137,6 +137,7 @@ const ContainerLink = styled(Link, {
     }),
     ...(!label &&
       showIcon && {
+        display: 'flex',
         width: 56,
         height: 32,
         padding: '4px 16px 4px 16px',
@@ -169,7 +170,7 @@ const ContainerDiv = styled('div', {
     minHeight: 32,
     display: 'flex',
     borderRadius: 8,
-    padding: '4px 16px 4px 24px',
+    padding: '4px 16px 4px 16px',
     width: 'fit-content',
     alignItems: 'center',
     background: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
@@ -181,7 +182,7 @@ const ContainerDiv = styled('div', {
 
     ':hover': {
       gap: 16,
-      padding: '4px 8px 4px 24px',
+      padding: '4px 8px 4px 16px',
       border: '1px solid transparent',
       '& div': {
         color: theme.palette.isLight ? theme.palette.colors.sky['+100'] : theme.palette.colors.charcoal[100],
@@ -191,7 +192,7 @@ const ContainerDiv = styled('div', {
       },
     },
     ':active': {
-      padding: '4px 16px 4px 24px',
+      padding: '4px 16px 4px 16px',
       border: theme.palette.isLight
         ? `1px solid ${theme.palette.colors.sky[400]}`
         : `1px solid ${theme.palette.colors.charcoal[700]}`,
@@ -214,7 +215,7 @@ const ContainerDiv = styled('div', {
         fill: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[300],
       },
       ':hover': {
-        padding: '4px 8px 4px 24px',
+        padding: '4px 8px 4px 16px',
         background: theme.palette.isLight ? theme.palette.colors.gray[800] : theme.palette.colors.charcoal[800],
         border: theme.palette.isLight
           ? `1px solid ${theme.palette.colors.sky[900]}`
@@ -242,8 +243,10 @@ const ContainerDiv = styled('div', {
     }),
     ...(!label &&
       showIcon && {
+        display: 'flex',
         width: 56,
         height: 32,
+
         padding: '4px 16px 4px 16px',
         backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
         ':hover': {

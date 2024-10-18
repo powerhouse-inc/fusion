@@ -263,7 +263,14 @@ const Line = styled('div')(({ theme }) => ({
   },
 }));
 
-const InternalLinkButtonStyled = styled(InternalLinkButton)({});
+const InternalLinkButtonStyled = styled(InternalLinkButton)({
+  padding: '2px 8px 2px 8px',
+  width: 40,
+  height: 32,
+  ':hover': {
+    padding: '2px 8px 2px 8px',
+  },
+});
 
 const ProfileArrow = styled('div')({
   display: 'flex',

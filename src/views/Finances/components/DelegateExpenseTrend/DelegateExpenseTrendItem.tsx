@@ -564,10 +564,8 @@ const ViewContainer = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('desktop_1024')]: {
     display: 'block',
     alignSelf: 'center',
-    height: 'fit-content',
-    '& > div': {
-      padding: '4px 16px 4px 24px',
-    },
+    width: 102,
+    height: 32,
   },
 }));
 
@@ -598,13 +596,7 @@ const ContainerArrow = styled('div')(({ theme }) => ({
   display: 'none',
 
   [theme.breakpoints.between('tablet_768', 'desktop_1024')]: {
-    display: 'block',
-    '& > div': {
-      padding: '4px 16px',
-      '&:hover': {
-        padding: '4px 16px',
-      },
-    },
+    display: 'flex',
   },
 }));
 
@@ -612,9 +604,11 @@ const ArrowMobile = styled('div')(({ theme }) => ({
   display: 'flex',
   alignSelf: 'flex-start',
   '& > div': {
-    padding: '4px 8px',
-    '&:hover': {
-      padding: '4px 8px',
+    padding: '2px 8px 2px 8px',
+    width: 40,
+    height: 32,
+    ':hover': {
+      padding: '2px 8px 2px 8px',
     },
   },
 
