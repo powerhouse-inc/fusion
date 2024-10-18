@@ -26,7 +26,7 @@ const CardNavigationFinance: React.FC<Props> = ({ image, title, description, hre
             <Image src={image} alt="Budget logo" fill unoptimized />
           </ImageWrapper>
 
-          {isMobile && <InternalLinkButton href={href} />}
+          {isMobile && <InternalLinkButtonStyled href={href} />}
         </ImageContainer>
 
         <Code isCompact={isCompact}>{code}</Code>
@@ -163,3 +163,12 @@ const ButtonContainer = styled('div')<{ isCentered: boolean }>(({ theme, isCente
     }),
   },
 }));
+
+const InternalLinkButtonStyled = styled(InternalLinkButton)({
+  padding: '2px 8px 2px 8px',
+  width: 40,
+  height: 32,
+  ':hover': {
+    padding: '2px 8px 2px 8px',
+  },
+});
