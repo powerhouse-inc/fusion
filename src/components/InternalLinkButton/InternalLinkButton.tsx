@@ -275,6 +275,7 @@ const Text = styled('div')(({ theme }) => ({
   size: 16,
   flexDirection: 'row',
   lineHeight: '24px',
+  letterSpacing: '-0.32px',
   color: theme.palette.isLight ? theme.palette.colors.sky[1000] : theme.palette.colors.charcoal[300],
 }));
 
