@@ -96,6 +96,6 @@ export const GETCoreUnits = gql`
 `;
 
 export const fetchCoreUnits = async () => {
-  const result = await request<{ coreUnits: CoreUnitDto[] }>(GRAPHQL_ENDPOINT, GETCoreUnits);
+  const result: { coreUnits: CoreUnitDto[] } = await request(GRAPHQL_ENDPOINT, GETCoreUnits);
   return result.coreUnits.filter((cu) => cu.shortCode !== 'DEL');
 };
