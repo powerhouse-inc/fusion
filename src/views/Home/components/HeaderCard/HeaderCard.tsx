@@ -1,5 +1,5 @@
-import { ClickAwayListener } from '@mui/base';
 import { Button, IconButton, styled, useMediaQuery } from '@mui/material';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 import BarChartLineIcon from 'public/assets/svg/bar_chart_line.svg';
 import ArrowCollapseIcon from 'public/assets/svg/fusion_arrow_collapse.svg';

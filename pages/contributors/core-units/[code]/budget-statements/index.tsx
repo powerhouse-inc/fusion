@@ -6,6 +6,7 @@ import { ResourceType } from '@ses/core/models/interfaces/types';
 import request from 'graphql-request';
 import { DateTime } from 'luxon';
 import React, { useState, useEffect } from 'react';
+import type { CoreUnitDto } from '@/core/models/dto/coreUnitDTO';
 import { CORE_UNIT_REQUEST, getLastSnapshotPeriod } from '@/views/CoreUnitBudgetStatement/BudgetStatementAPI';
 import CoreUnitBudgetStatementView from '@/views/CoreUnitBudgetStatement/CoreUnitBudgetStatementView';
 import type { ExpenseCategory } from '@ses/core/models/dto/expenseCategoriesDTO';
@@ -68,7 +69,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   const { query: gqlQuery, filter } = CORE_UNIT_REQUEST(code);
 
   const [data, coreUnits, expenseCategories] = await Promise.all([
-    request(GRAPHQL_ENDPOINT, gqlQuery, filter),
+    request<{ coreUnits: CoreUnitDto[] }>(GRAPHQL_ENDPOINT, gqlQuery, filter),
     fetchCoreUnits(),
     fetchExpenseCategories(),
   ]);
