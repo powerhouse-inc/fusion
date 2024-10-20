@@ -75,6 +75,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               alt={project.title}
               layout="fill"
               unoptimized
+              priority
             />
           </ImageContainer>
 
