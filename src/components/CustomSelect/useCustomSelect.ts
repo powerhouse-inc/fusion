@@ -1,5 +1,5 @@
 import { useTheme } from '@mui/material';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import type { CustomSelectProps, OptionItem } from './type';
 import type { SelectChangeEvent } from '@mui/material';
 import type { ReactNode } from 'react';
@@ -11,6 +11,7 @@ export interface Props {
   alwaysNumberedLabel?: CustomSelectProps['alwaysNumberedLabel'];
   selected: CustomSelectProps['selected'];
   withAll?: CustomSelectProps['withAll'];
+  isFixed: boolean;
   onChange: CustomSelectProps['onChange'];
 }
 
@@ -21,6 +22,7 @@ export default function useCustomSelect({
   alwaysNumberedLabel,
   selected,
   withAll,
+  isFixed,
   onChange,
 }: Props) {
   let isHandlingAll = false;
@@ -55,6 +57,45 @@ export default function useCustomSelect({
   const isActive = (option: OptionItem) =>
     multiple ? (selected as (string | number)[]).includes(option.value) : selected === option.value;
 
+  const onEnter = () => {
+    if (selectRef.current !== null) {
+      const menu = selectRef.current.querySelector('.MuiMenu-paper');
+      if (menu !== null) {
+        if (!isFixed && menu.parentElement !== null) {
+          const diff =
+            menu.parentElement.getBoundingClientRect().width - selectRef.current.getBoundingClientRect().width;
+          menu.parentElement.style.left = `${-diff}px`;
+        }
+        menu.scrollTop > 0 &&
+          menu.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'instant' as ScrollBehavior,
+          });
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (!isFixed && selectRef.current !== null) {
+      const divRef = selectRef.current;
+
+      const observer = new ResizeObserver(() => {
+        const menu = divRef.querySelector('.MuiMenu-paper');
+        if (menu !== null && menu.parentElement !== null) {
+          const diff = menu.parentElement.getBoundingClientRect().width - divRef.getBoundingClientRect().width;
+          menu.parentElement.style.left = `${-diff}px`;
+        }
+      });
+
+      observer.observe(divRef);
+
+      return () => {
+        observer.unobserve(divRef);
+      };
+    }
+  }, [isFixed]);
+
   return {
     theme,
     isAllSelected,
@@ -63,5 +104,6 @@ export default function useCustomSelect({
     handleChangeAll,
     renderValue,
     isActive,
+    onEnter,
   };
 }

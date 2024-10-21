@@ -22,34 +22,22 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   className,
   isFixed = false,
 }) => {
-  const { theme, isAllSelected, selectRef, handleChange, handleChangeAll, renderValue, isActive } = useCustomSelect({
-    label,
-    options,
-    multiple,
-    alwaysNumberedLabel,
-    selected,
-    withAll,
-    onChange,
-  });
-
-  const onEntered = () => {
-    if (selectRef.current !== null) {
-      const menu = selectRef.current.querySelector('.MuiMenu-paper');
-      if (menu !== null) {
-        menu.scrollTop > 0 &&
-          menu.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'instant' as ScrollBehavior,
-          });
-      }
-    }
-  };
+  const { theme, isAllSelected, selectRef, handleChange, handleChangeAll, renderValue, isActive, onEnter } =
+    useCustomSelect({
+      label,
+      options,
+      multiple,
+      alwaysNumberedLabel,
+      selected,
+      withAll,
+      isFixed,
+      onChange,
+    });
 
   const combinedMenuProps = deepmerge(
-    StyledMenuProps(theme, style?.menuWidth || 200, style?.height || 'fit-content', selectRef.current, isFixed),
+    StyledMenuProps(theme, style?.menuWidth ?? 200, style?.height || 'fit-content', isFixed),
     {
-      TransitionProps: { onEntered },
+      TransitionProps: { onEnter },
       ...menuProps,
     }
   );
@@ -227,13 +215,7 @@ const CheckIcon = styled(Check)(() => ({
   height: 16,
 }));
 
-const StyledMenuProps = (
-  theme: Theme,
-  width: number,
-  height: string | number,
-  refDiv: HTMLDivElement | null,
-  isFixed: boolean
-) => ({
+const StyledMenuProps = (theme: Theme, width: number, height: string | number, isFixed: boolean) => ({
   PaperProps: {
     sx: {
       ...(!isFixed && {
@@ -296,7 +278,6 @@ const StyledMenuProps = (
       },
     },
   },
-  anchorEl: refDiv,
   anchorOrigin: {
     vertical: 'bottom',
     horizontal: 'right',
@@ -314,7 +295,6 @@ const StyledMenuProps = (
     ...(!isFixed && {
       position: 'absolute',
       top: 32,
-      left: -(width - (refDiv?.getBoundingClientRect()?.width ?? 0)),
       width: 'fit-content',
       height: 'fit-content',
     }),
