@@ -3,7 +3,7 @@ import type { InnerTableColumn, InnerTableRow } from '@/components/AdvancedInner
 import { InnerTableColumnBuilder } from '@/core/businessLogic/tableBuilderColumns';
 import { InnerTableRowBuilder } from '@/core/businessLogic/tableBuilderRow';
 import { createThemeModeVariants } from '@/core/utils/storybook/factories';
-import { renderWallet } from '@/views/CoreUnitBudgetStatement/BudgetStatementtUtils';
+import { renderWallet } from '@/views/CoreUnitBudgetStatement/BudgetStatementUtils';
 import TotalWalletSections from './TotalActualSection';
 import type { Meta } from '@storybook/react';
 const mainTableColumns = [

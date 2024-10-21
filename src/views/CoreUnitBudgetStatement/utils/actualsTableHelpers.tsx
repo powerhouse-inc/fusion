@@ -1,6 +1,6 @@
 import groupBy from 'lodash/groupBy';
 import type { InnerTableColumn, InnerTableRow, RowType } from '@/components/AdvancedInnerTable/types';
-import { OpenModalTransparency } from '../BudgetStatementtUtils';
+import { OpenModalTransparency } from '../BudgetStatementUtils';
 import {
   getCommentsFromCategory,
   getGroupActual,

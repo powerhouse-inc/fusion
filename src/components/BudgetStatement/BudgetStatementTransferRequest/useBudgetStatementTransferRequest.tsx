@@ -3,7 +3,7 @@ import { formatNumber } from '@ses/core/utils/string';
 import { DateTime } from 'luxon';
 import { useCallback, useMemo } from 'react';
 import type { InnerTableColumn, InnerTableRow } from '@/components/AdvancedInnerTable/types';
-import { TotalTargetBalance, renderWallet } from '@/views/CoreUnitBudgetStatement/BudgetStatementtUtils';
+import { TotalTargetBalance, renderWallet } from '@/views/CoreUnitBudgetStatement/BudgetStatementUtils';
 import { useBudgetStatementForecast } from '../BudgetStatementForecast/useBudgetStatementForecast';
 
 import { TargetValueThreeMonths } from './components/TargetValueThreeMonths/TargetValueThreeMonths';

@@ -4,9 +4,9 @@ import type { InnerTableColumn, InnerTableRow } from '@/components/AdvancedInner
 import { InnerTableRowBuilder } from '@/core/businessLogic/tableBuilderRow';
 import { createThemeModeVariants } from '@/core/utils/storybook/factories';
 
-import { renderWallet } from '@/views/CoreUnitBudgetStatement/BudgetStatementtUtils';
+import { renderWallet } from '@/views/CoreUnitBudgetStatement/BudgetStatementUtils';
 import HeaderWithIcon from '../HeaderWithIcon/HeaderWithIcon';
-import ProgressiveIndicator from '../ProgresiveIndicator';
+import ProgressiveIndicator from '../ProgressiveIndicator';
 import TotalForecastSection from './TotalForecastSection';
 import type { Meta } from '@storybook/react';
 

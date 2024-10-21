@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import { createThemeModeVariants } from '@/core/utils/storybook/factories';
-import { renderWallet } from '@/views/CoreUnitBudgetStatement/BudgetStatementtUtils';
+import { renderWallet } from '@/views/CoreUnitBudgetStatement/BudgetStatementUtils';
 import BreakdownSection from './BreakdownActualsSection';
 import type { Meta } from '@storybook/react';
 

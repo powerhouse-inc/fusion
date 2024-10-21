@@ -7,7 +7,7 @@ import type { BudgetStatementLineItem } from '@/core/models/interfaces/budgetSta
 import { API_MONTH_TO_FORMAT } from '@/core/utils/date';
 import { getAllWallets } from '@/core/utils/finances';
 import { getWalletWidthForWallets } from '@/core/utils/string';
-import { renderWallet } from '@/views/CoreUnitBudgetStatement/BudgetStatementtUtils';
+import { renderWallet } from '@/views/CoreUnitBudgetStatement/BudgetStatementUtils';
 import type { DateTime } from 'luxon';
 
 export const useDelegatesForecast = (currentMonth: DateTime, propBudgetStatements: BudgetStatement[]) => {

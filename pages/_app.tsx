@@ -1,28 +1,30 @@
 import isEmpty from 'lodash/isEmpty';
-import '../styles/globals.scss';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { CookiesProvider } from 'react-cookie';
 import { Provider } from 'react-redux';
 import ErrorBoundary from '@/components/Error/ErrorBoundary';
+import { CURRENT_ENVIRONMENT } from '@/config/endpoints';
+import { siteRoutes } from '@/config/routes';
+import { AuthContextProvider } from '@/core/context/AuthContext';
+import { CookiesProviderTracking } from '@/core/context/CookiesContext';
+import { FeatureFlagsProvider } from '@/core/context/FeatureFlagsProvider';
+import { ThemeProvider } from '@/core/context/ThemeContext';
+import { store } from '@/core/store/store';
+import { getAuthFromStorage } from '@/core/utils/authStorage';
+import { parseCookie } from '@/core/utils/cookieHelpers';
+import * as gtag from '@/core/utils/gtag';
+import type { CookiesInterface } from '@/core/utils/typesHelpers';
+import { ContainerNotification } from '@/stories/components/Notification/Notification';
+import { SEOHead } from '@/stories/components/SEOHead/SEOHead';
+import AppLayout from '@/stories/containers/AppLayout/AppLayout';
 import { featureFlags } from '../feature-flags/feature-flags';
-import { CURRENT_ENVIRONMENT } from '../src/config/endpoints';
-import { AuthContextProvider } from '../src/core/context/AuthContext';
-import { CookiesProviderTracking } from '../src/core/context/CookiesContext';
-import { FeatureFlagsProvider } from '../src/core/context/FeatureFlagsProvider';
-import { ThemeProvider } from '../src/core/context/ThemeContext';
-import { store } from '../src/core/store/store';
-import { getAuthFromStorage } from '../src/core/utils/authStorage';
-import { parseCookie } from '../src/core/utils/cookieHelpers';
-import * as gtag from '../src/core/utils/gtag';
-import { ContainerNotification } from '../src/stories/components/Notification/Notification';
-import { SEOHead } from '../src/stories/components/SEOHead/SEOHead';
-import AppLayout from '../src/stories/containers/AppLayout/AppLayout';
-import type { CookiesInterface } from '../src/core/utils/typesHelpers';
 import type { EmotionCache } from '@emotion/react';
 import type { NextPage, NextPageContext } from 'next';
 import type { AppProps } from 'next/app';
 import type { ReactElement, ReactNode } from 'react';
+
+import '../styles/globals.scss';
 
 // disable useLayoutEffect SSR warnings to avoid log spamming the console
 // https://gist.github.com/gaearon/e7d97cdf38a2907924ea12e4ebdf3c85
@@ -59,7 +61,7 @@ function MyApp(props: MyAppProps) {
   useEffect(() => {
     const authData = getAuthFromStorage();
     if (props.pageProps?.protected && (isEmpty(authData) || !authData?.authToken)) {
-      router.push('/login');
+      router.push(siteRoutes.login);
     }
   }, [props.pageProps?.protected, router]);
 
