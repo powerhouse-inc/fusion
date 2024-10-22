@@ -1,4 +1,5 @@
 import isEmpty from 'lodash/isEmpty';
+import '../styles/globals.scss';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { CookiesProvider } from 'react-cookie';
@@ -23,8 +24,6 @@ import type { EmotionCache } from '@emotion/react';
 import type { NextPage, NextPageContext } from 'next';
 import type { AppProps } from 'next/app';
 import type { ReactElement, ReactNode } from 'react';
-
-import '../styles/globals.scss';
 
 // disable useLayoutEffect SSR warnings to avoid log spamming the console
 // https://gist.github.com/gaearon/e7d97cdf38a2907924ea12e4ebdf3c85
