@@ -15,7 +15,6 @@ const ContainerStyled = styled('div')(({ theme }) => ({
   paddingRight: 16,
   width: '100%',
   maxWidth: '100%',
-  overflow: 'hidden',
 
   [theme.breakpoints.up('tablet_768')]: {
     paddingLeft: 32,
