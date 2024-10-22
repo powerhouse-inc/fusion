@@ -97,9 +97,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
                 {customOptionsRender ? (
                   customOptionsRender(option, isActive(option), theme)
                 ) : (
-                  <MenuItemTypography theme={theme} active={isActive(option)}>
-                    {option.label}
-                  </MenuItemTypography>
+                  <MenuItemTypography active={isActive(option)}>{option.label}</MenuItemTypography>
                 )}
               </Box>
               {multiple && <CheckIcon className={`check ${isActive(option) ? 'active' : ''}`} />}
