@@ -1,4 +1,6 @@
-import _ from 'lodash';
+import groupBy from 'lodash/groupBy';
+import isEmpty from 'lodash/isEmpty';
+import sumBy from 'lodash/sumBy';
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import type { InnerTableColumn, InnerTableRow, RowType } from '@/components/AdvancedInnerTable/types';
 import { useUrlAnchor } from '@/core/hooks/useUrlAnchor';
@@ -37,7 +39,7 @@ export const useDelegatesForecast = (currentMonth: DateTime, propBudgetStatement
 
     if (!wallet) return 0;
 
-    return _.sumBy(
+    return sumBy(
       wallet?.budgetStatementLineItem.filter((item) => item.month === month.toFormat(API_MONTH_TO_FORMAT)),
       (i) => i.forecast ?? 0
     );
@@ -60,7 +62,7 @@ export const useDelegatesForecast = (currentMonth: DateTime, propBudgetStatement
 
     if (!wallet) return 0;
 
-    return _.sumBy(
+    return sumBy(
       wallet?.budgetStatementLineItem.filter((item) => item.month === month?.toFormat(API_MONTH_TO_FORMAT)),
       (i) => i.budgetCap ?? 0
     );
@@ -110,8 +112,8 @@ export const useDelegatesForecast = (currentMonth: DateTime, propBudgetStatement
     const budgetStatement =
       budgetStatements?.find((x) => x.month === currentMonth.toFormat(API_MONTH_TO_FORMAT)) ?? null;
 
-    return _.sumBy(budgetStatement?.budgetStatementWallet, (wallet) =>
-      _.sumBy(
+    return sumBy(budgetStatement?.budgetStatementWallet, (wallet) =>
+      sumBy(
         wallet?.budgetStatementLineItem?.filter((item) => item.month === month.toFormat(API_MONTH_TO_FORMAT)),
         (item) => item.forecast ?? 0
       )
@@ -139,8 +141,8 @@ export const useDelegatesForecast = (currentMonth: DateTime, propBudgetStatement
     const budgetStatement =
       budgetStatements?.find((x) => x.month === currentMonth.toFormat(API_MONTH_TO_FORMAT)) ?? null;
 
-    return _.sumBy(budgetStatement?.budgetStatementWallet, (wallet) =>
-      _.sumBy(
+    return sumBy(budgetStatement?.budgetStatementWallet, (wallet) =>
+      sumBy(
         wallet?.budgetStatementLineItem?.filter((item) => item.month === month.toFormat(API_MONTH_TO_FORMAT)),
         (item) => item.budgetCap ?? 0
       )
@@ -188,28 +190,28 @@ export const useDelegatesForecast = (currentMonth: DateTime, propBudgetStatement
   };
 
   const getLineItemForecastSumForMonth = (items: BudgetStatementLineItem[], month: DateTime) =>
-    _.sumBy(
+    sumBy(
       items.filter((item) => item.month === month.toFormat(API_MONTH_TO_FORMAT)),
       (item) => item.forecast ?? 0
     );
 
   const getLineItemForecastSumForMonths = (items: BudgetStatementLineItem[], months: DateTime[]) => {
     const formattedMonths = months.map((x) => x.toFormat(API_MONTH_TO_FORMAT));
-    return _.sumBy(
+    return sumBy(
       items.filter((item) => formattedMonths.indexOf(item.month ?? '') > -1),
       (item) => item.forecast ?? 0
     );
   };
 
   const getBudgetCapForMonthOnLineItem = (items: BudgetStatementLineItem[], month: DateTime) =>
-    _.sumBy(
+    sumBy(
       items.filter((item) => item.month === month.toFormat(API_MONTH_TO_FORMAT)),
       (item) => item.budgetCap ?? 0
     );
 
   const getTotalQuarterlyBudgetCapOnLineItem = (items: BudgetStatementLineItem[], months: DateTime[]) => {
     const formattedMonths = months.map((x) => x.toFormat(API_MONTH_TO_FORMAT));
-    return _.sumBy(
+    return sumBy(
       items.filter((item) => formattedMonths.indexOf(item.month ?? '') > -1),
       (item) => item.budgetCap ?? 0
     );
@@ -230,7 +232,7 @@ export const useDelegatesForecast = (currentMonth: DateTime, propBudgetStatement
   const [scrolled, setScrolled] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!scrolled && anchor && !_.isEmpty(headerIdsForecast) && headerIdsForecast.includes(anchor)) {
+    if (!scrolled && anchor && !isEmpty(headerIdsForecast) && headerIdsForecast.includes(anchor)) {
       setScrolled(true);
       let offset = (breakdownTitleRefForecast?.current?.offsetTop || 0) - 260;
       const windowsWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
@@ -245,7 +247,7 @@ export const useDelegatesForecast = (currentMonth: DateTime, propBudgetStatement
   }, [anchor, headerIdsForecast, scrolled]);
 
   useEffect(() => {
-    if (anchor && !_.isEmpty(headerIdsForecast)) {
+    if (anchor && !isEmpty(headerIdsForecast)) {
       setThirdIndexForecast(Math.max(headerIdsForecast.indexOf(anchor), 0));
     }
   }, [anchor, headerIdsForecast]);
@@ -527,7 +529,7 @@ export const useDelegatesForecast = (currentMonth: DateTime, propBudgetStatement
       };
 
       for (const groupedKey in grouped) {
-        const groupedCategory = _.groupBy(grouped[groupedKey], (item) => item.budgetCategory);
+        const groupedCategory = groupBy(grouped[groupedKey], (item) => item.budgetCategory);
 
         let i = 1;
         for (const groupedCatKey in groupedCategory) {
@@ -703,7 +705,7 @@ export const useDelegatesForecast = (currentMonth: DateTime, propBudgetStatement
       ],
     });
 
-    const groupedHeadCount = _.groupBy(
+    const groupedHeadCount = groupBy(
       ungrouped.filter((x) => x.headcountExpense),
       (item) => item.group
     );
@@ -724,7 +726,7 @@ export const useDelegatesForecast = (currentMonth: DateTime, propBudgetStatement
       ],
     });
 
-    const groupedNonHeadCount = _.groupBy(
+    const groupedNonHeadCount = groupBy(
       ungrouped.filter((x) => !x.headcountExpense),
       (item) => item.group
     );

@@ -1,7 +1,8 @@
 import { styled } from '@mui/material';
 import { API_MONTH_TO_FORMAT } from '@ses/core/utils/date';
 import { capitalizeSentence, getWalletWidthForWallets, toKebabCase } from '@ses/core/utils/string';
-import _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import sortBy from 'lodash/sortBy';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { InnerTableColumn, InnerTableRow } from '@/components/AdvancedInnerTable/types';
@@ -56,7 +57,7 @@ export const useBudgetStatementForecast = (currentMonth: DateTime, budgetStateme
       }
     });
 
-    return _.sortBy(Object.values(dict), 'id');
+    return sortBy(Object.values(dict), 'id');
   }, [currentMonth, budgetStatements]);
 
   const breakdownTabs = useMemo(() => {
@@ -76,7 +77,7 @@ export const useBudgetStatementForecast = (currentMonth: DateTime, budgetStateme
   const breakdownTitleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (selectedBreakdown && !_.isEmpty(headerIds)) {
+    if (selectedBreakdown && !isEmpty(headerIds)) {
       setThirdIndex(Math.max(headerIds.indexOf(selectedBreakdown), 0));
     }
   }, [selectedBreakdown, headerIds]);
