@@ -115,7 +115,6 @@
     ],
     "*.{ts,tsx,css,json}": "prettier --write"
   },
-  "sideEffects": false,
   "readme": "ERROR: No README data found!",
   "_id": "makerdao-ses-typescript@0.1.0",
   "resolutions": {
