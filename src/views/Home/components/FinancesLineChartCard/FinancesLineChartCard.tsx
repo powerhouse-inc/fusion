@@ -104,6 +104,7 @@ export default FinancesLineChartCard;
 const Container = styled(Card)(({ theme }) => ({
   width: '100%',
   padding: '0px 0px 16px',
+  overflow: 'hidden',
 
   [theme.breakpoints.up('tablet_768')]: {
     padding: 16,
