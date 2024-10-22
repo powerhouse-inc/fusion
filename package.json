@@ -47,7 +47,7 @@
     "react-modal-sheet": "^3.1.0",
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.3.0",
-    "react-toastify": "^9.1.1",
+    "react-toastify": "^10.0.6",
     "sharp": "^0.33.4",
     "simplebar": "^6.2.5",
     "simplebar-react": "3.2.4",

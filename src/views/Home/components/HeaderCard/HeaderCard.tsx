@@ -1,6 +1,8 @@
-import { Button, IconButton, styled, useMediaQuery } from '@mui/material';
+import { styled, type ButtonProps } from '@mui/material';
+import Button from '@mui/material/Button';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-
+import Collapse from '@mui/material/Collapse';
+import IconButton from '@mui/material/IconButton';
 import BarChartLineIcon from 'public/assets/svg/bar_chart_line.svg';
 import ArrowCollapseIcon from 'public/assets/svg/fusion_arrow_collapse.svg';
 import ArrowExpandIcon from 'public/assets/svg/fusion_arrow_expand.svg';
@@ -9,12 +11,7 @@ import ArrowSelectUpIcon from 'public/assets/svg/fusion_arrow_select_up.svg';
 import MapIcon from 'public/assets/svg/map.svg';
 import MegaphoneIcon from 'public/assets/svg/megaphone.svg';
 import PersonSquareIcon from 'public/assets/svg/person_square.svg';
-
-import { headerCardData } from '@/views/Home/staticData';
 import useHeaderCard from './useHeaderCard';
-
-import type { Theme, ButtonProps } from '@mui/material';
-import type { FC } from 'react';
 
 interface StyledContainerProps {
   isExpanded: boolean | undefined;
@@ -24,127 +21,108 @@ interface StyledButtonProps extends ButtonProps {
   index: number;
 }
 
-const HeaderCard: FC = () => {
-  const { isExpanded, handleIsExpanded, isMobileMenuExpanded, handleIsMobileMenuExpanded } = useHeaderCard();
+const buttonShadows = [
+  '1px 4px 15px 0px rgba(19, 83, 36, 0.5)',
+  '1px 4px 15px 0px rgba(19, 83, 36, 0.5)',
+  '1px 4px 15px 0px rgba(188, 153, 242, 0.2)',
+  '1px 4px 15px 0px rgba(188, 153, 242, 0.5)',
+  '1px 4px 15px 0px rgba(25, 144, 255, 0.2)',
+  '1px 4px 15px 0px rgba(25, 144, 255, 0.5)',
+  '1px 4px 15px 0px rgba(234, 67, 53, 0.2)',
+  '1px 4px 15px 0px rgba(234, 67, 53, 0.5)',
+];
+const buttonLinks = ['', '#governance', '#contributors', '#roadmap'];
+const BUTTON_DATA = [
+  { label: 'Finances', icon: BarChartLineIcon },
+  { label: 'Governance', icon: MegaphoneIcon },
+  { label: 'Contributors', icon: PersonSquareIcon },
+  { label: 'Roadmap', icon: MapIcon },
+];
 
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
+const HeaderCard: React.FC = () => {
+  const { isMobile, isExpanded, handleIsExpanded, isMobileMenuExpanded, handleIsMobileMenuExpanded } = useHeaderCard();
 
   return (
-    <Container isExpanded={isExpanded}>
-      <ToggleButton
-        aria-label={isExpanded ? 'Collapse' : 'Expand'}
-        disableRipple
-        onClick={() => {
-          handleIsExpanded(!isExpanded);
-        }}
-      >
-        {isExpanded ? <ArrowCollapseIcon /> : <ArrowExpandIcon />}
-      </ToggleButton>
-      {isExpanded && <Title>{headerCardData.title}</Title>}
-      {isExpanded && <Description>{headerCardData.description}</Description>}
-      {isExpanded !== undefined && isMobile && (
-        <ClickAwayListener
-          onClickAway={() => {
-            handleIsMobileMenuExpanded(false);
+    <section id="home">
+      <Container isExpanded={isExpanded}>
+        <ToggleButton
+          aria-label={isExpanded ? 'Collapse' : 'Expand'}
+          disableRipple
+          onClick={() => {
+            handleIsExpanded(!isExpanded);
           }}
         >
-          <MobileMenu
-            isExpanded={isExpanded}
-            isMobileMenuExpanded={isMobileMenuExpanded}
-            onClick={() => {
-              if (!isMobileMenuExpanded) {
-                handleIsMobileMenuExpanded(true);
-              }
+          {isExpanded ? <ArrowCollapseIcon /> : <ArrowExpandIcon />}
+        </ToggleButton>
+
+        <Collapse in={isExpanded}>
+          <Title>Sky Fusion Dashboard</Title>
+          <Description>
+            Welcome to the Sky Fusion Dashboard, your hub for key insights into Sky Ecosystem's finances, governance,
+            teams, and roadmaps. Get up-to-date data and explore strategic developments to stay informed about Sky’s
+            progress and plans.
+          </Description>
+        </Collapse>
+
+        {isExpanded !== undefined && isMobile && (
+          <ClickAwayListener
+            onClickAway={() => {
+              handleIsMobileMenuExpanded(false);
             }}
           >
-            <MobileHeaderButtonContainer
+            <MobileMenu
+              isExpanded={isExpanded}
+              isMobileMenuExpanded={isMobileMenuExpanded}
               onClick={() => {
-                if (isMobileMenuExpanded) {
-                  handleIsMobileMenuExpanded(false);
+                if (!isMobileMenuExpanded) {
+                  handleIsMobileMenuExpanded(true);
                 }
               }}
             >
-              <MobileHeaderButton disableRipple>{headerCardData.buttonTexts[0]}</MobileHeaderButton>
-              {isMobileMenuExpanded ? <ArrowSelectUpIcon /> : <ArrowSelectDownIcon />}
-            </MobileHeaderButtonContainer>
-            {isMobileMenuExpanded && (
-              <>
-                <MobileHeaderButtonContainer>
-                  <MobileHeaderButton
-                    disableRipple
-                    onClick={() => {
-                      handleIsMobileMenuExpanded(false);
-                      document.querySelector(headerCardData.buttonLinks[1])?.scrollIntoView();
-                    }}
-                  >
-                    {headerCardData.buttonTexts[1]}
-                  </MobileHeaderButton>
-                </MobileHeaderButtonContainer>
-                <MobileHeaderButtonContainer>
-                  <MobileHeaderButton
-                    disableRipple
-                    onClick={() => {
-                      handleIsMobileMenuExpanded(false);
-                      document.querySelector(headerCardData.buttonLinks[2])?.scrollIntoView();
-                    }}
-                  >
-                    {headerCardData.buttonTexts[2]}
-                  </MobileHeaderButton>
-                </MobileHeaderButtonContainer>
-                <MobileHeaderButtonContainer>
-                  <MobileHeaderButton
-                    disableRipple
-                    onClick={() => {
-                      handleIsMobileMenuExpanded(false);
-                      document.querySelector(headerCardData.buttonLinks[3])?.scrollIntoView();
-                    }}
-                  >
-                    {headerCardData.buttonTexts[3]}
-                  </MobileHeaderButton>
-                </MobileHeaderButtonContainer>
-              </>
-            )}
-          </MobileMenu>
-        </ClickAwayListener>
-      )}
-      {isExpanded !== undefined && !isMobile && (
-        <Buttons isExpanded={isExpanded}>
-          <HeaderButton index={0} endIcon={<BarChartLineIcon />} disableRipple>
-            {headerCardData.buttonTexts[0]}
-          </HeaderButton>
-          <HeaderButton
-            index={1}
-            onClick={() => {
-              document.querySelector(headerCardData.buttonLinks[1])?.scrollIntoView();
-            }}
-            endIcon={<MegaphoneIcon />}
-            disableRipple
-          >
-            {headerCardData.buttonTexts[1]}
-          </HeaderButton>
-          <HeaderButton
-            index={2}
-            onClick={() => {
-              document.querySelector(headerCardData.buttonLinks[2])?.scrollIntoView();
-            }}
-            endIcon={<PersonSquareIcon />}
-            disableRipple
-          >
-            {headerCardData.buttonTexts[2]}
-          </HeaderButton>
-          <HeaderButton
-            index={3}
-            onClick={() => {
-              document.querySelector(headerCardData.buttonLinks[3])?.scrollIntoView();
-            }}
-            endIcon={<MapIcon />}
-            disableRipple
-          >
-            {headerCardData.buttonTexts[3]}
-          </HeaderButton>
-        </Buttons>
-      )}
-    </Container>
+              <MobileHeaderButtonContainer
+                onClick={() => {
+                  if (isMobileMenuExpanded) {
+                    handleIsMobileMenuExpanded(false);
+                  }
+                }}
+              >
+                <MobileHeaderButton disableRipple>Finances</MobileHeaderButton>
+                {isMobileMenuExpanded ? <ArrowSelectUpIcon /> : <ArrowSelectDownIcon />}
+              </MobileHeaderButtonContainer>
+              {isMobileMenuExpanded &&
+                ['Governance', 'Contributors', 'Roadmap'].map((text, index) => (
+                  <MobileHeaderButtonContainer>
+                    <MobileHeaderButton
+                      disableRipple
+                      onClick={() => {
+                        handleIsMobileMenuExpanded(false);
+                        document.querySelector(buttonLinks[index + 1])?.scrollIntoView();
+                      }}
+                    >
+                      {text}
+                    </MobileHeaderButton>
+                  </MobileHeaderButtonContainer>
+                ))}
+            </MobileMenu>
+          </ClickAwayListener>
+        )}
+        {!isMobile && (
+          <Buttons isExpanded={isExpanded}>
+            {BUTTON_DATA.map(({ label, icon: Icon }, index) => (
+              <HeaderButton
+                key={label}
+                index={index}
+                onClick={index > 0 ? () => document.querySelector(buttonLinks[index])?.scrollIntoView() : undefined}
+                endIcon={<Icon />}
+                disableRipple
+              >
+                {label}
+              </HeaderButton>
+            ))}
+          </Buttons>
+        )}
+      </Container>
+    </section>
   );
 };
 
@@ -158,6 +136,7 @@ const Container = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   padding: `${isExpanded ? 32 : 48}px 24px 112px`,
+  transition: 'padding 250ms ease-in',
   borderRadius: 12,
   backgroundPosition: '50% 50%',
   backgroundRepeat: 'no-repeat',
@@ -241,7 +220,7 @@ const MobileMenu = styled('div', {
   border: `1px solid ${theme.palette.colors.green[200]}`,
   borderRadius: 12,
   backgroundColor: theme.palette.colors.gray[200],
-  boxShadow: headerCardData.buttonShadows[0],
+  boxShadow: buttonShadows[0],
 }));
 
 const MobileHeaderButtonContainer = styled('div')(({ theme }) => ({
@@ -307,7 +286,7 @@ const HeaderButton = styled(Button, {
   borderRadius: 12,
   color: theme.palette.colors.gray[index === 0 ? 900 : 500],
   backgroundColor: index === 0 ? theme.palette.colors.gray[200] : theme.palette.colors.slate[50],
-  boxShadow: headerCardData.buttonShadows[index * 2],
+  boxShadow: buttonShadows[index * 2],
 
   '& .MuiButton-endIcon': {
     width: 24,
@@ -323,7 +302,7 @@ const HeaderButton = styled(Button, {
   '&:hover': {
     color: theme.palette.colors.gray[900],
     backgroundColor: index === 0 ? theme.palette.colors.gray[200] : theme.palette.colors.slate[50],
-    boxShadow: headerCardData.buttonShadows[index * 2 + 1],
+    boxShadow: buttonShadows[index * 2 + 1],
 
     '& .MuiButton-endIcon > svg path': {
       fill: theme.palette.colors.gray[900],

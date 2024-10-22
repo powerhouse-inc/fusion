@@ -21,7 +21,7 @@ const BulletIcon: React.FC<BulletIconProps> = ({ color }) => <Bullet color={colo
 
 export default BulletIcon;
 
-const Bullet = styled('div')<{ color: string }>(({ color }) => ({
+const Bullet = styled('div', { shouldForwardProp: (prop) => prop !== 'color' })<{ color: string }>(({ color }) => ({
   width: 12,
   height: 12,
   borderRadius: '50%',

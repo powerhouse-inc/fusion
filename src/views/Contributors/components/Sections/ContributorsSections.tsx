@@ -8,6 +8,8 @@ import type { Team } from '@/core/models/interfaces/team';
 import ContributorsItem from '@/views/Home/components/Contributors/ContributorsItem';
 import TabDescriptions from '@/views/Home/components/Contributors/TabDescriptions';
 import { useContributorsSection } from '@/views/Home/components/Contributors/useContributorsSection';
+import HomeSectionTitle from '@/views/Home/components/HomeSectionTitle/HomeSectionTitle';
+import Section from '@/views/Home/components/Section/Section';
 import type { FC } from 'react';
 
 interface Props {
@@ -32,58 +34,67 @@ const ContributorsSection: FC<Props> = ({ teams }) => {
   } = useContributorsSection(teams);
 
   return (
-    <Container>
-      <TabsDescriptions>
-        <ShadowWrapperStyled>
-          <FancyTabs
-            tabs={teamCategoriesTabs}
-            activeTab={activeCategoryTab}
-            onTabChange={(tab: string) => {
-              handleActiveCategoryTab(tab);
-            }}
-          />
+    <Section id="contributors">
+      <HomeSectionTitle hash="contributors">Contributors</HomeSectionTitle>
+      <ContainerMargin>
+        <Container>
+          <TabsDescriptions>
+            <ShadowWrapperStyled>
+              <FancyTabs
+                tabs={teamCategoriesTabs}
+                activeTab={activeCategoryTab}
+                onTabChange={(tab: string) => {
+                  handleActiveCategoryTab(tab);
+                }}
+              />
 
-          <CardTabs isLegacy={isLegacy}>
-            <TabDescriptions contributorsDescription={teamCategoryDataMock} isLegacy={isLegacy} />
-          </CardTabs>
-        </ShadowWrapperStyled>
-      </TabsDescriptions>
-      <ContainerTabs>
-        <ShadowWrapper>
-          <FancyTabs
-            tabs={teamDetailsTabs}
-            activeTab={activeDetailTab}
-            onTabChange={(tab: string) => {
-              handleActiveDetailTab(tab);
-            }}
-          />
+              <CardTabs isLegacy={isLegacy}>
+                <TabDescriptions contributorsDescription={teamCategoryDataMock} isLegacy={isLegacy} />
+              </CardTabs>
+            </ShadowWrapperStyled>
+          </TabsDescriptions>
+          <ContainerTabs>
+            <ShadowWrapper>
+              <FancyTabs
+                tabs={teamDetailsTabs}
+                activeTab={activeDetailTab}
+                onTabChange={(tab: string) => {
+                  handleActiveDetailTab(tab);
+                }}
+              />
 
-          <ContributorInformation>
-            <Title>{subTitle}</Title>
-            <ContainerScroll>
-              <SimpleBarStyled>
-                <ContainerContributors>
-                  {contributors.map((contributor) => (
-                    <ContributorsItem
-                      key={contributor.shortCode}
-                      contributor={contributor}
-                      hasDefaultColors={hasDefaultColors}
-                      textDefault={textDefault}
-                      sizeScope={sizeScopeMediumSmall}
-                      customStyles={customStylesHomeView}
-                    />
-                  ))}
-                </ContainerContributors>
-              </SimpleBarStyled>
-            </ContainerScroll>
-          </ContributorInformation>
-        </ShadowWrapper>
-      </ContainerTabs>
-    </Container>
+              <ContributorInformation>
+                <Title>{subTitle}</Title>
+                <ContainerScroll>
+                  <SimpleBarStyled>
+                    <ContainerContributors>
+                      {contributors.map((contributor) => (
+                        <ContributorsItem
+                          key={contributor.shortCode}
+                          contributor={contributor}
+                          hasDefaultColors={hasDefaultColors}
+                          textDefault={textDefault}
+                          sizeScope={sizeScopeMediumSmall}
+                          customStyles={customStylesHomeView}
+                        />
+                      ))}
+                    </ContainerContributors>
+                  </SimpleBarStyled>
+                </ContainerScroll>
+              </ContributorInformation>
+            </ShadowWrapper>
+          </ContainerTabs>
+        </Container>
+      </ContainerMargin>
+    </Section>
   );
 };
 
 export default ContributorsSection;
+
+const ContainerMargin = styled('div')({
+  marginTop: 24,
+});
 
 const Container = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -100,6 +111,7 @@ const Container = styled('div')(({ theme }) => ({
     gap: 32,
   },
 }));
+
 const ContainerTabs = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',

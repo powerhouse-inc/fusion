@@ -10,7 +10,7 @@ import type { RevenueAndSpendingRecords } from '@/views/Home/api/revenueAndSpend
 import { getRevenueAndSpendingData } from '@/views/Home/api/revenueAndSpending';
 import { getScopeOfWorkState } from '@/views/RoadmapMilestones/api/queries';
 import { getChiefHat } from '@/web3/api/governance';
-import type { GetServerSideProps, NextPage } from 'next';
+import type { GetStaticProps, NextPage } from 'next';
 
 interface HomePageProps {
   revenueAndSpendingData: RevenueAndSpendingRecords;
@@ -41,7 +41,7 @@ const HomePage: NextPage<HomePageProps> = ({
 
 export default HomePage;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const [revenueAndSpendingData, financesData, teams, governanceProposals, roadmaps, hatAddress] = await Promise.all([
     getRevenueAndSpendingData(),
     getFinancesData(),
@@ -60,5 +60,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
       roadmaps,
       hatAddress,
     },
+    revalidate: 1800, // Revalidate every 30 minutes (1800 seconds)
   };
 };
