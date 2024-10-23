@@ -152,11 +152,6 @@ const Container = styled('div', {
   padding: `${isExpanded ? 32 : 48}px 24px 112px`,
   transition: 'padding 250ms ease-in',
 
-  // backgroundPosition: '50% 50%',
-  // backgroundRepeat: 'no-repeat',
-  // backgroundSize: 'cover',
-  // backgroundImage: 'url(/assets/img/home/header-card-background.jpg)',
-
   [theme.breakpoints.up('tablet_768')]: {
     padding: '32px 24px',
   },
