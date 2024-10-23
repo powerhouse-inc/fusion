@@ -21,7 +21,7 @@ jobs:
           yarn
       - name: Configure environment variables
         run: |
-          echo -e "NEXT_PUBLIC_ENVIRONMENT=development" >> .env
+          echo -e "NEXT_PUBLIC_ENVIRONMENT=development\nNEXT_PUBLIC_GRAPHQL_ENDPOINT=${{ secrets.GRAPHQL_API_URL }}" >> .env
       - name: Validate
         run: |
           yarn run eslint src/**/*{.ts,.tsx}
