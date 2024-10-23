@@ -9,6 +9,7 @@ on:
 jobs:
   validate-pr:
     runs-on: ubuntu-latest
+    environment: development
     strategy:
       matrix:
         node-version: [ v20.9.0 ]
@@ -21,7 +22,7 @@ jobs:
           yarn
       - name: Configure environment variables
         run: |
-          echo -e "NEXT_PUBLIC_ENVIRONMENT=development\nNEXT_PUBLIC_GRAPHQL_ENDPOINT=${{ secrets.GRAPHQL_API_URL }}" >> .env
+          echo -e "NEXT_PUBLIC_ENVIRONMENT=development\nNEXT_PUBLIC_GRAPHQL_ENDPOINT=${{ secrets.GRAPHQL_API_URL }}\nNEXT_PUBLIC_BASE_URL=https://dev.fusion.phd" >> .env
       - name: Validate
         run: |
           yarn run eslint src/**/*{.ts,.tsx}
