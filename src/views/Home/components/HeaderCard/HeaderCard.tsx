@@ -3,6 +3,8 @@ import Button from '@mui/material/Button';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
+import Image from 'next/image';
+import HeaderImage from 'public/assets/img/home/header-card-background.jpg';
 import BarChartLineIcon from 'public/assets/svg/bar_chart_line.svg';
 import ArrowCollapseIcon from 'public/assets/svg/fusion_arrow_collapse.svg';
 import ArrowExpandIcon from 'public/assets/svg/fusion_arrow_expand.svg';
@@ -43,7 +45,8 @@ const HeaderCard: React.FC = () => {
   const { isMobile, isExpanded, handleIsExpanded, isMobileMenuExpanded, handleIsMobileMenuExpanded } = useHeaderCard();
 
   return (
-    <section id="home">
+    <Section id="home">
+      <BackgroundImage src={HeaderImage} alt="Header card background" fill priority quality={50} />
       <Container isExpanded={isExpanded}>
         <ToggleButton
           aria-label={isExpanded ? 'Collapse' : 'Expand'}
@@ -122,11 +125,22 @@ const HeaderCard: React.FC = () => {
           </Buttons>
         )}
       </Container>
-    </section>
+    </Section>
   );
 };
 
 export default HeaderCard;
+
+const Section = styled('section')(() => ({
+  position: 'relative',
+  borderRadius: 12,
+  overflow: 'hidden',
+}));
+
+const BackgroundImage = styled(Image)({
+  objectFit: 'cover',
+  zIndex: 0,
+});
 
 const Container = styled('div', {
   shouldForwardProp: (prop) => prop !== 'isExpanded',
@@ -137,11 +151,11 @@ const Container = styled('div', {
   flexDirection: 'column',
   padding: `${isExpanded ? 32 : 48}px 24px 112px`,
   transition: 'padding 250ms ease-in',
-  borderRadius: 12,
-  backgroundPosition: '50% 50%',
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover',
-  backgroundImage: 'url(/assets/img/home/header-card-background.jpg)',
+
+  // backgroundPosition: '50% 50%',
+  // backgroundRepeat: 'no-repeat',
+  // backgroundSize: 'cover',
+  // backgroundImage: 'url(/assets/img/home/header-card-background.jpg)',
 
   [theme.breakpoints.up('tablet_768')]: {
     padding: '32px 24px',
