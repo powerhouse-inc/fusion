@@ -33,7 +33,7 @@ export const CircleAvatar: React.FC<CircleAvatarProps> = ({
     <Container className={className} name={name} {...htmlAttributes}>
       {imageSource ? (
         <ImageWrapper>
-          <Image src={imageSource} alt={name} fill quality={50} />
+          <Image src={imageSource} alt={name} fill quality={85} />
         </ImageWrapper>
       ) : (
         getTwoInitials(name)
