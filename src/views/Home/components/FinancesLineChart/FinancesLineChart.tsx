@@ -18,7 +18,7 @@ interface FinancesLineChartProps {
 const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedMetric, years }) => {
   const { financesLineChartRef } = useFinancesLineChart();
   const theme = useTheme();
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.between('mobile_375', 'tablet_768'));
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.between('tablet_768', 'desktop_1024'));
   const isDesk1024 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1024', 'desktop_1280'));
   const isDesk1280 = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1280', 'desktop_1440'));
@@ -155,7 +155,7 @@ const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedM
       width: isMobile ? 'calc(100% - 50px)' : isTablet ? 330 : isDesk1024 ? 470 : isDesk1280 ? 595 : 645,
     },
     tooltip: {
-      show: true,
+      show: !isMobile,
       trigger: 'axis',
       borderRadius: 12,
       backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
@@ -169,6 +169,32 @@ const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedM
       },
       padding: 0,
       borderColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
+      position: (
+        point: [number, number],
+        params: EChartsOption,
+        dom: EChartsOption,
+        rect: EChartsOption,
+        size: EChartsOption
+      ) => {
+        const tooltipWidth = size.contentSize[0];
+        const containerWidth = size.viewSize[0];
+        const margin = isTablet ? 0 : 8;
+
+        let xPos = point[0];
+        const yPos = point[1] + margin;
+
+        if (isDesk1280 || isDesk1440) {
+          if (xPos + tooltipWidth + margin > containerWidth) {
+            xPos -= tooltipWidth + margin / 4;
+          } else {
+            xPos += margin;
+          }
+        } else {
+          xPos += margin;
+        }
+
+        return [xPos, yPos];
+      },
       formatter: function (params: BarChartSeries[]) {
         const shortAmount = params.length > 10;
         const flexDirection = shortAmount ? 'row' : 'column';
@@ -427,8 +453,9 @@ const LegendContainer = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('desktop_1280')]: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    marginTop: 16,
-    padding: '16px 24px',
+    marginTop: 12,
+    padding: '28px 24px',
+    height: 144,
   },
 }));
 

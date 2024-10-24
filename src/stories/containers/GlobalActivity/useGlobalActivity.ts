@@ -2,6 +2,7 @@ import { getCorrectCodeFromActivity } from '@ses/components/CUActivityTable/util
 import sortBy from 'lodash/sortBy';
 import { DateTime } from 'luxon';
 import { useMemo, useRef, useState } from 'react';
+import { ResourceType } from '@/core/models/interfaces/types';
 import lightTheme from '../../../../styles/theme/themes';
 import { SortEnum } from '../../../core/enums/sortEnum';
 import type { Activity, ActivityTableHeader } from '../../components/CUActivityTable/ActivityTable';
@@ -74,7 +75,7 @@ export const useGlobalActivity = (teams: Team[], activityFeed: ChangeTrackingEve
 
   const teamMap = useMemo(() => {
     const map = new Map<string, Team>();
-    teams.forEach((team) => map.set(team.shortCode, team));
+    teams.forEach((team) => map.set(team.id, team));
     return map;
   }, [teams]);
 
@@ -82,13 +83,41 @@ export const useGlobalActivity = (teams: Team[], activityFeed: ChangeTrackingEve
     () =>
       sortBy(
         activityFeed
-          .map(
-            (activity) =>
-              ({
-                activityFeed: activity,
-                team: teamMap.get(getCorrectCodeFromActivity(activity).shortCode ?? ''),
-              } as Activity)
-          )
+          .map((activity) => {
+            let team = teamMap.get(getCorrectCodeFromActivity(activity).id ?? '');
+
+            // there is not team coming from the API for these resources, so we need to add them manually
+            if (!team) {
+              switch (activity.params?.owner?.type) {
+                case ResourceType.Keepers:
+                  team = {
+                    name: 'Keepers',
+                    shortCode: 'KEEPERS',
+                    image: '/assets/img/mk-logo.png',
+                    type: ResourceType.Keepers,
+                  } as Team;
+                  break;
+                case ResourceType.SpecialPurposeFund:
+                  team = {
+                    name: 'Special Purpose Funds',
+                    shortCode: 'SPFs',
+                    image: '/assets/img/mk-logo.png',
+                    type: ResourceType.SpecialPurposeFund,
+                  } as Team;
+                  break;
+                default:
+                  team = {
+                    name: 'Unknown Team',
+                    shortCode: '',
+                  } as Team;
+              }
+            }
+
+            return {
+              activityFeed: activity,
+              team,
+            } as Activity;
+          })
           .filter(
             (activity) =>
               (!activeElements.length || activeElements.includes(activity.team?.shortCode || '')) &&

@@ -4,7 +4,7 @@ import type { TargetBalanceTooltipInformation } from '@ses/core/utils/typesHelpe
 import type { Meta } from '@storybook/react';
 
 const meta: Meta<typeof ModalSheetValueContent> = {
-  title: 'Components/General/ModalSheetValueContent',
+  title: 'Fusion/Components/Budget Statements/ModalSheetValueContent',
   component: ModalSheetValueContent,
   parameters: {
     chromatic: {

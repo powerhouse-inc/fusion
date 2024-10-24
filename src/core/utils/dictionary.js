@@ -186,7 +186,10 @@ const dictionary = [
   'chatbot',
   'intergration',
   'marcomms',
-  'Chatbot'
+  'Chatbot',
+  'Deviz',
+  'Expensed',
+  'Unmount',
 ];
 
 module.exports = dictionary;

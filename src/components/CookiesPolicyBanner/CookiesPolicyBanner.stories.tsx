@@ -41,56 +41,56 @@ LightMode.parameters = {
             width: 375,
           },
           style: {
-            top: -34,
-            left: -31,
+            top: -35,
+            left: -30,
           },
         },
       },
       768: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7367-69879&m=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=10966-10272&m=dev',
         options: {
           componentStyle: {
             width: 768,
           },
           style: {
-            top: -34,
-            left: -31,
+            top: -35,
+            left: -30,
           },
         },
       },
       1024: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7367-69434&m=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=10966-10246&m=dev',
         options: {
           componentStyle: {
             width: 1024,
           },
           style: {
-            top: -34,
-            left: -31,
+            top: -35,
+            left: -30,
           },
         },
       },
       1280: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7367-69028&m=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7367-69030&m=dev',
         options: {
           componentStyle: {
             width: 1280,
           },
           style: {
-            top: -34,
-            left: -31,
+            top: -35,
+            left: -30,
           },
         },
       },
       1440: {
-        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7307-62868&m=dev',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=7307-62870&m=dev',
         options: {
           componentStyle: {
             width: 1440,
           },
           style: {
-            top: -34,
-            left: -31,
+            top: -35,
+            left: -30,
           },
         },
       },

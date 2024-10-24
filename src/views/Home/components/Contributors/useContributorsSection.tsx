@@ -1,15 +1,21 @@
-import { useTheme } from '@mui/material';
+import { useMediaQuery, useTheme } from '@mui/material';
 
-import sortBy from 'lodash/sortBy';
+import orderBy from 'lodash/orderBy';
 import { useState } from 'react';
 import BulletIcon from '@/components/FancyTabs/BulletIcon';
 
+import type { ScopeSizeVariant } from '@/components/ScopeChip/ScopeChip';
 import type { Team } from '@/core/models/interfaces/team';
 import { ResourceType } from '@/core/models/interfaces/types';
 import { currentTeams, legacyTeams } from '@/views/Contributors/staticData';
-
+import type { Theme } from '@mui/material';
 export const useContributorsSection = (teams: Team[]) => {
   const theme = useTheme();
+  const isDesktop1024Plus = useMediaQuery((theme: Theme) => theme.breakpoints.up('desktop_1024'));
+  const isDesktop1280Plus = useMediaQuery((theme: Theme) => theme.breakpoints.up('desktop_1280'));
+
+  const sizeScopeMediumSmall: ScopeSizeVariant = isDesktop1280Plus ? 'medium' : 'small';
+  const sizeScopeLargeSmall: ScopeSizeVariant = isDesktop1024Plus ? 'medium' : 'small';
 
   const [activeCategoryTab, setActiveCategoryTab] = useState('1');
   const [activeDetailTab, setActiveDetailTab] = useState('1');
@@ -22,14 +28,26 @@ export const useContributorsSection = (teams: Team[]) => {
   const coreUnits = teams?.filter((team) => team.type === ResourceType.CoreUnit);
   const ecosystemActors = teams?.filter((team) => team.type === ResourceType.EcosystemActor);
 
-  // Alphabetically sort by name
-  const sortedCoreUnits = sortBy(coreUnits, 'name');
-  const sortedEcosystemActors = sortBy(ecosystemActors, 'name');
+  // Order by lastActivity
+  const sortedCoreUnits = orderBy(
+    coreUnits,
+    [(team) => team.lastActivity?.created_at ?? '', (team) => team.lastActivity?.update_at ?? ''],
+    ['desc', 'desc']
+  );
+  const sortedEcosystemActors = orderBy(
+    ecosystemActors,
+    [(team) => team.lastActivity?.created_at ?? '', (team) => team.lastActivity?.update_at ?? ''],
+    ['desc', 'desc']
+  );
 
   // Combine and sort based on the active tab
   const contributors =
     activeDetailTab === '1'
-      ? sortBy([...sortedEcosystemActors, ...sortedCoreUnits], 'name') // Alphabetically sort after combining
+      ? orderBy(
+          [...sortedEcosystemActors, ...sortedCoreUnits],
+          [(team) => team.lastActivity?.created_at ?? '', (team) => team.lastActivity?.update_at ?? ''],
+          ['desc', 'desc']
+        )
       : activeDetailTab === '2'
       ? sortedEcosystemActors
       : sortedCoreUnits;
@@ -73,6 +91,143 @@ export const useContributorsSection = (teams: Team[]) => {
   const hasDefaultColors = activeDetailTab === '1';
   const textDefault = activeDetailTab === '1';
 
+  // Custom Styles for each column in the component
+  const customStyles = {
+    profile: {
+      [theme.breakpoints.up('desktop_1024')]: {
+        width: 245,
+        '& .profile-name': {
+          width: 180,
+        },
+      },
+      [theme.breakpoints.up('desktop_1280')]: {
+        width: 250,
+        '& .profile-name': {
+          width: 180,
+        },
+      },
+      [theme.breakpoints.up('desktop_1440')]: {
+        width: 248,
+        '& .profile-name': {
+          width: 180,
+        },
+      },
+    },
+    scopes: {
+      [theme.breakpoints.up('desktop_1024')]: {
+        display: 'flex',
+        width: 163,
+      },
+      [theme.breakpoints.up('desktop_1440')]: {
+        display: 'flex',
+        width: 145,
+      },
+    },
+    role: {
+      [theme.breakpoints.up('desktop_1024')]: {
+        display: 'flex',
+        width: 180,
+        justifyContent: 'center',
+        '& div > div': {
+          fontSize: 14,
+          lineHeight: '22px',
+        },
+      },
+    },
+    category: {
+      [theme.breakpoints.up('desktop_1024')]: {
+        display: 'flex',
+        flexDirection: 'column',
+        minWidth: 168,
+      },
+    },
+    lastModified: {
+      justifyContent: 'center',
+      [theme.breakpoints.up('desktop_1280')]: {
+        minWidth: 138,
+        justifyContent: 'end',
+      },
+      [theme.breakpoints.up('desktop_1440')]: {
+        minWidth: 138,
+        '& > div': {
+          padding: '0px 16px',
+        },
+      },
+    },
+  };
+
+  // Custom Styles Contributors HomePage
+  const customStylesHomeView = {
+    profile: {
+      [theme.breakpoints.up('desktop_1024')]: {
+        width: 165,
+        '& .profile-name': {
+          width: 80,
+        },
+      },
+      [theme.breakpoints.up('desktop_1280')]: {
+        width: 250,
+        '& .profile-name': {
+          width: 180,
+        },
+      },
+      [theme.breakpoints.up('desktop_1440')]: {
+        width: 248,
+        '& .profile-name': {
+          width: 180,
+        },
+      },
+    },
+    scopes: {
+      [theme.breakpoints.up('desktop_1024')]: {
+        display: 'flex',
+        width: 90,
+      },
+      [theme.breakpoints.up('desktop_1440')]: {
+        display: 'flex',
+        width: 145,
+      },
+    },
+    role: {
+      [theme.breakpoints.up('desktop_1024')]: {
+        display: 'flex',
+        width: 180,
+        justifyContent: 'center',
+        '& div > div': {
+          fontSize: 14,
+          lineHeight: '22px',
+        },
+      },
+    },
+    category: {
+      [theme.breakpoints.up('desktop_1024')]: {
+        display: 'flex',
+        flexDirection: 'column',
+        minWidth: 168,
+      },
+    },
+    lastModified: {
+      justifyContent: 'center',
+      [theme.breakpoints.up('desktop_1280')]: {
+        minWidth: 138,
+        justifyContent: 'end',
+      },
+      [theme.breakpoints.up('desktop_1440')]: {
+        minWidth: 138,
+        '& > div': {
+          padding: '0px 16px',
+        },
+      },
+    },
+  };
+
+  // Contributors Home Page
+  const subtitleContributors = `These are the  ${
+    activeCategoryTab === '1' ? 'Current' : 'Legacy'
+  } Contributors in the Sky Ecosystem.`;
+
+  const EAContributors = ecosystemActors.slice(0, 6);
+
   return {
     hasDefaultColors,
     teamCategoriesTabs,
@@ -86,5 +241,11 @@ export const useContributorsSection = (teams: Team[]) => {
     teamCategoryDataMock,
     contributors,
     textDefault,
+    customStyles,
+    sizeScopeMediumSmall,
+    sizeScopeLargeSmall,
+    subtitleContributors,
+    EAContributors,
+    customStylesHomeView,
   };
 };

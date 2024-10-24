@@ -11,10 +11,11 @@ interface Props {
 
 const ProfileUpdated: FC<Props> = ({ date, type }) => {
   const labelText = type === ResourceType.CoreUnit ? 'Expense Report' : 'Profile Updated';
+
   return (
     <Container>
       <Label>{labelText}</Label>
-      <DateContainer>{date?.toFormat('dd.MM.yyyy') ?? 'No data'}</DateContainer>
+      <DateContainer>{date?.isValid ? date.toUTC().toFormat('dd.MM.yyyy') : 'No data'}</DateContainer>
     </Container>
   );
 };
@@ -25,10 +26,11 @@ const Container = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
+  alignItems: 'center',
   borderRadius: '0px 0px 12px 12px',
   borderTop: `1px solid ${theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[900]}`,
   background: theme.palette.isLight ? theme.palette.colors.gray[50] : 'rgba(55, 62, 77, 0.20);',
-  padding: '4px 20px',
+  padding: '4px 16px',
 
   [theme.breakpoints.up('tablet_768')]: {
     padding: '4px 20px 2px 16px',
@@ -38,6 +40,7 @@ const Container = styled('div')(({ theme }) => ({
     background: 'revert',
     borderTop: 'revert',
     borderRadius: 'revert',
+    alignItems: 'revert',
     padding: '4px 8px 4px 0px',
   },
   [theme.breakpoints.up('desktop_1280')]: {

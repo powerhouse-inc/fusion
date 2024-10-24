@@ -1,21 +1,19 @@
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { siteRoutes } from '@ses/config/routes';
-import { getLastUpdateForBudgetStatement } from '@ses/core/businessLogic/coreUnits';
-import { useAuthContext } from '@ses/core/context/AuthContext';
-import { useCookiesContextTracking } from '@ses/core/context/CookiesContext';
-import useBudgetStatementComments from '@ses/core/hooks/useBudgetStatementComments';
-import useBudgetStatementPager from '@ses/core/hooks/useBudgetStatementPager';
-import { budgetStatementCommentsCollectionId } from '@ses/core/utils/collectionsIds';
-import { LastVisitHandler } from '@ses/core/utils/lastVisitHandler';
-import lightTheme from '@ses/styles/theme/themes';
 import { DateTime } from 'luxon';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import CommentsTab from '@/components/Tabs/CommentsTab/CommentsTab';
+import { siteRoutes } from '@/config/routes';
+import { getLastUpdateForBudgetStatement } from '@/core/businessLogic/coreUnits';
+import { useAuthContext } from '@/core/context/AuthContext';
+import { useCookiesContextTracking } from '@/core/context/CookiesContext';
+import useBudgetStatementComments from '@/core/hooks/useBudgetStatementComments';
+import useBudgetStatementPager from '@/core/hooks/useBudgetStatementPager';
+import type { DelegatesDto } from '@/core/models/dto/delegatesDTO';
 import type { Snapshots } from '@/core/models/dto/snapshotAccountDTO';
 import type { Team } from '@/core/models/interfaces/team';
 import { BudgetStatus, ResourceType } from '@/core/models/interfaces/types';
-import CommentsTab from '../../components/Tabs/CommentsTab/CommentsTab';
+import { budgetStatementCommentsCollectionId } from '@/core/utils/collectionsIds';
+import { LastVisitHandler } from '@/core/utils/lastVisitHandler';
 import type { TableItems } from '../CoreUnitBudgetStatement/CoreUnitBudgetStatementView';
-import type { DelegatesDto } from '@ses/core/models/dto/delegatesDTO';
 
 export enum DELEGATES_REPORT_IDS_ENUM {
   ACTUALS = 'actuals',
@@ -39,7 +37,6 @@ const useRecognizedDelegatesReport = (delegates: DelegatesDto, snapshots: Snapsh
   const [lastVisitHandler, setLastVisitHandler] = useState<LastVisitHandler>();
   const { permissionManager } = useAuthContext();
   const { isTimestampTrackingAccepted } = useCookiesContextTracking();
-  const isMobile = useMediaQuery(lightTheme.breakpoints.down('table_834'));
   const allBudgetStatement = delegates?.budgetStatements || [];
 
   const onPrevious = useCallback(() => {
@@ -133,7 +130,7 @@ const useRecognizedDelegatesReport = (delegates: DelegatesDto, snapshots: Snapsh
         shortCode: 'DEL',
         name: 'Recognized Delegates',
         type: ResourceType.Delegates,
-        image: '/assets/img/mk-logo.png',
+        image: '/assets/img/recognized-delegates.svg',
         socialMediaChannels: [
           {
             website: 'https://vote.makerdao.com/delegates',
@@ -158,7 +155,6 @@ const useRecognizedDelegatesReport = (delegates: DelegatesDto, snapshots: Snapsh
 
   return {
     itemsBreadcrumb,
-    isMobile,
     tabItems,
     showExpenseReportStatusCTA,
     lastUpdateForBudgetStatement,

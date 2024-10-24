@@ -175,7 +175,6 @@ Actors.parameters = {
           style: {
             left: -14,
             top: -12,
-            // top: 90,
           },
           componentStyle: {
             width: 1312,

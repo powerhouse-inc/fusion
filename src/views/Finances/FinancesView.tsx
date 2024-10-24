@@ -5,6 +5,7 @@ import { BudgetMetricsModalProvider } from '@ses/core/context/BudgetMetricsModal
 import React from 'react';
 import Container from '@/components/Container/Container';
 import PageContainer from '@/components/Container/PageContainer';
+import Notice from '@/components/Notice/Notice';
 import BreakdownChartSection from './components/BreakdownChartSection/BreakdownChartSection';
 import ConditionalWrapper from './components/ConditionalWrapper/ConditionalWrapper';
 import BreadcrumbYearNavigation from './components/SectionPages/BreadcrumbYearNavigation';
@@ -82,6 +83,9 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
               )}
             </TitleDescription>
           </TitleContainer>
+          <NoticeContainer>
+            <Notice />
+          </NoticeContainer>
 
           <ContainerSections>
             <OverviewSection
@@ -121,7 +125,7 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
           <ContainerSpace>
             <ExpenseMetricsSection
               expenseMetrics={{
-                title: levelNumber === 1 ? 'Sky Expense Metrics' : 'Expense Metrics',
+                title: levelNumber === 1 ? 'Sky Expense Metrics' : `${title} Expense Metrics`,
                 selectedGranularity: expensesMetrics.selectedGranularity,
                 isCumulative: expensesMetrics.isCumulative,
                 cumulativeType: expensesMetrics.cumulativeType,
@@ -137,7 +141,7 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
           </ContainerSpace>
           <ContainerSpace>
             <ReservesWaterfallChartSection
-              title={`${levelNumber === 1 ? (isMobile ? 'MakerDAO F.' : 'MakerDAO Finances') : title} Reserves`}
+              title={`${levelNumber === 1 ? (isMobile ? 'Sky F.' : 'Sky Finances') : title} Reserves`}
               legends={reserveChart.legendItems}
               series={reserveChart.series}
               selectedGranularity={reserveChart.selectedGranularity}
@@ -160,7 +164,7 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
           breakdownTable={breakdownTable.tableBody ?? []}
           isLoading={breakdownTable.isLoading}
           headerTable={breakdownTable.tableHeader ?? []}
-          title={levelNumber === 1 ? 'MakerDAO Budget' : title}
+          title={levelNumber === 1 ? 'Sky Budget' : title}
           filters={breakdownTable.filters}
           resetFilters={breakdownTable.resetFilters}
         />
@@ -193,15 +197,20 @@ const FinancesView: React.FC<Props> = ({ budgets, allBudgets, yearsRange, initia
 
 export default FinancesView;
 
-const TitleContainer = styled('div')(({ theme }) => ({
+const TitleContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
   marginTop: 72,
-  marginBottom: 24,
+  marginBottom: 16,
+}));
 
-  [theme.breakpoints.up('desktop_1280')]: {
-    marginBottom: 32,
+const NoticeContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  marginBottom: 16,
+
+  [theme.breakpoints.up('tablet_768')]: {
+    justifyContent: 'flex-end',
   },
 }));
 

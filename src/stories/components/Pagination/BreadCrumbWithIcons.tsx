@@ -98,7 +98,7 @@ const BreadCrumbWithIcons = ({ title, items = [], className, hasIcon = true }: P
               letterSpacing: '0.4px',
               color: isLight ? '#708390' : '#48495F',
               marginBottom: '32px',
-              '&:last-child': {
+              '&:last-of-type': {
                 marginBottom: '0px',
               },
             }}

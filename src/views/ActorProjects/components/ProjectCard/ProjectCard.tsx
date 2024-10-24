@@ -78,6 +78,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               alt={project.title}
               layout="fill"
               unoptimized
+              priority
             />
           </ImageContainer>
 
@@ -116,8 +117,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                   deliverable={getDeliverableWithKeyResults(deliverable)}
                   viewMode={'detailed'}
                   maxKeyResultsOnRow={
-                    // supported projects doesn't have key results in the deliverables
-                    isProject(project) ? row.map((d) => d.keyResults.length).reduce((a, b) => Math.max(a, b), 0) : 0
+                    isProject(project)
+                      ? row.map((d) => d.keyResults.length).reduce((a, b) => Math.max(a, b), 0)
+                      : row.map((d) => d.supportedKeyResults.length).reduce((a, b) => Math.max(a, b), 0)
                   }
                 />
               ))
@@ -286,9 +288,9 @@ const ImageContainer = styled('div')(({ theme }) => ({
 
 const Description = styled('p')(({ theme }) => ({
   display: '-webkit-box',
-  '-webkit-box-orient': 'vertical',
-  '-webkit-line-clamp': '8',
-  lineClamp: '8',
+  WebkitBoxOrient: 'vertical',
+  WebkitLineClamp: 8,
+  lineClamp: 8,
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   alignSelf: 'stretch',

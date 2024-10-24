@@ -1,13 +1,15 @@
-import { Button, styled } from '@mui/material';
+import { Button, styled, useMediaQuery } from '@mui/material';
 import CircleIcon from 'public/assets/svg/circle.svg';
+import Information from 'public/assets/svg/info_outlined.svg';
 import Card from '@/components/Card/Card';
 import ExternalLinkButton from '@/components/ExternalLinkButton/ExternalLinkButton';
 import InternalLinkButton from '@/components/InternalLinkButton/InternalLinkButton';
+import SESTooltip from '@/components/SESTooltip/SESTooltip';
 import { MAKERBURN_URL } from '@/config/externalUrls';
 import { siteRoutes } from '@/config/routes';
 import FinancesBarChart from '@/views/Home/components/FinancesBarChart/FinancesBarChart';
 import type { RevenueAndSpendingRecords } from '../../api/revenueAndSpending';
-import type { ButtonProps } from '@mui/material';
+import type { ButtonProps, Theme } from '@mui/material';
 import type { FC } from 'react';
 
 interface StyledButtonProps extends ButtonProps {
@@ -19,49 +21,111 @@ interface FinancesBarChartCardProps {
   years: string[];
 }
 
-const FinancesBarChartCard: FC<FinancesBarChartCardProps> = ({ revenueAndSpendingData, years }) => (
-  <Container>
-    <Title>Sky Ecosystem Finances</Title>
-    <FinancesBarChartContainer>
-      <div>
-        <FinancesBarChart revenueAndSpendingData={revenueAndSpendingData} years={years} />
-      </div>
-      <Legends>
-        <RevenueLegend>
-          <LegendTitle>Revenue</LegendTitle>
-          <RevenueLegendButtons>
-            <LegendButton index={0} startIcon={<CircleIcon />} disableRipple>
-              Fees
-            </LegendButton>
-            <LegendButton index={1} startIcon={<CircleIcon />} disableRipple>
-              Liquidation Income
-            </LegendButton>
-            <LegendButton index={2} startIcon={<CircleIcon />} disableRipple>
-              PSM
-            </LegendButton>
-          </RevenueLegendButtons>
-        </RevenueLegend>
-        <SpendingLegend>
-          <LegendTitle>Operational Spending</LegendTitle>
-          <SpendingLegendButtons>
-            <LegendButton index={3} startIcon={<CircleIcon />} disableRipple>
-              USDS/DAI Expensed
-            </LegendButton>
-            <LegendButton index={4} startIcon={<CircleIcon />} disableRipple>
-              MKR Vesting
-            </LegendButton>
-          </SpendingLegendButtons>
-        </SpendingLegend>
-      </Legends>
-    </FinancesBarChartContainer>
-    <LinkButtons>
-      <StyledExternalLinkButton href={MAKERBURN_URL} wrapText={false}>
-        makerburn.com
-      </StyledExternalLinkButton>
-      <InternalLinkButton href={siteRoutes.finances()} buttonType="primary" label="Details" />
-    </LinkButtons>
-  </Container>
-);
+const FinancesBarChartCard: FC<FinancesBarChartCardProps> = ({ revenueAndSpendingData, years }) => {
+  const isSmallDesk = useMediaQuery((theme: Theme) => theme.breakpoints.between('desktop_1024', 'desktop_1280'));
+
+  return (
+    <Container>
+      <Title>Sky Ecosystem Finances</Title>
+      <FinancesBarChartContainer>
+        <div>
+          <FinancesBarChart revenueAndSpendingData={revenueAndSpendingData} years={years} />
+        </div>
+        <Legends>
+          <RevenueLegend>
+            <LegendTitle>Revenue</LegendTitle>
+            <LegendButtonsContainer>
+              <LegendButton index={0} startIcon={<CircleIcon />} disableRipple>
+                Fees
+              </LegendButton>
+              <LegendButton index={1} startIcon={<CircleIcon />} disableRipple>
+                Liquidation Income
+              </LegendButton>
+              <LegendButton index={2} startIcon={<CircleIcon />} disableRipple>
+                PSM
+              </LegendButton>
+            </LegendButtonsContainer>
+          </RevenueLegend>
+          <SpendingLegend>
+            <LegendTitle>Spending</LegendTitle>
+            <SpendingLegendFirstSection>
+              <LegendSectionTitle>
+                <span>{isSmallDesk ? 'Opr Expenses' : 'Operational Expenses'}</span>
+                <SESTooltip
+                  content={
+                    <TooltipContent>
+                      <div>
+                        <span>USDS/DAI</span>
+                        <p>
+                          Operational costs such as salaries, services, and other day-to-day expenses necessary for the
+                          running of the Sky Ecosystem.
+                        </p>
+                      </div>
+                      <div>
+                        <span>MKR</span>
+                        <p>Governance tokens are allocated to Sky Ecosystem Contributors as a long-term incentive.</p>
+                      </div>
+                    </TooltipContent>
+                  }
+                  placement="bottom-start"
+                  enterTouchDelay={0}
+                  leaveTouchDelay={15000}
+                  showAsModal
+                >
+                  <IconWrapper>
+                    <Information />
+                  </IconWrapper>
+                </SESTooltip>
+              </LegendSectionTitle>
+              <LegendButtonsContainer>
+                <LegendButton index={3} startIcon={<CircleIcon />} disableRipple>
+                  USDS/DAI Expensed
+                </LegendButton>
+                <LegendButton index={4} startIcon={<CircleIcon />} disableRipple>
+                  MKR Vesting
+                </LegendButton>
+              </LegendButtonsContainer>
+            </SpendingLegendFirstSection>
+            <SpendingLegendSecondSection>
+              <LegendSectionTitle>
+                <span>Protocol Costs</span>
+                <SESTooltip
+                  content={
+                    <TooltipContent>
+                      <p>
+                        Represents the total interest paid to DAI holders for locking their DAI in the Dai Savings Rate
+                        module.
+                      </p>
+                    </TooltipContent>
+                  }
+                  placement="bottom-start"
+                  enterTouchDelay={0}
+                  leaveTouchDelay={15000}
+                  showAsModal
+                >
+                  <IconWrapper>
+                    <Information />
+                  </IconWrapper>
+                </SESTooltip>
+              </LegendSectionTitle>
+              <LegendButtonsContainer>
+                <LegendButton index={5} startIcon={<CircleIcon />} disableRipple>
+                  DSR Cost
+                </LegendButton>
+              </LegendButtonsContainer>
+            </SpendingLegendSecondSection>
+          </SpendingLegend>
+        </Legends>
+      </FinancesBarChartContainer>
+      <LinkButtons>
+        <StyledExternalLinkButton href={MAKERBURN_URL} wrapText={false}>
+          makerburn.com
+        </StyledExternalLinkButton>
+        <InternalLinkButton href={siteRoutes.finances()} buttonType="primary" label="Details" />
+      </LinkButtons>
+    </Container>
+  );
+};
 
 export default FinancesBarChartCard;
 
@@ -108,7 +172,7 @@ const Title = styled('h3')(({ theme }) => ({
 const FinancesBarChartContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  marginTop: 16,
+  marginTop: 26,
 
   [theme.breakpoints.up('tablet_768')]: {
     flexDirection: 'row',
@@ -146,22 +210,26 @@ const RevenueLegend = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  padding: '4px 8px',
-  border: `1px solid ${theme.palette.colors.gray[200]}`,
+  padding: '3.2px 8px',
+  border: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.charcoal[700]}`,
   borderRadius: 12,
 
   [theme.breakpoints.up('tablet_768')]: {
-    height: 129,
+    height: 108,
     justifyContent: 'center',
     alignItems: 'flex-start',
-    padding: '16px 16px 16px 32px',
+    padding: '13px 16px 13px 32px',
     backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
     border: 'none',
 
+    [theme.breakpoints.up('desktop_1024')]: {
+      height: 129,
+      padding: '23.5px 16px 23.5px 32px',
+    },
     [theme.breakpoints.up('desktop_1280')]: {
-      height: 120,
+      height: 144,
       flex: '1 0 0',
-      padding: '16px 24px',
+      padding: '28px 24px',
     },
   },
 }));
@@ -171,28 +239,27 @@ const SpendingLegend = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  padding: '4px 8px',
-  border: `1px solid ${theme.palette.colors.gray[200]}`,
-  borderRadius: 12,
+  gap: 18,
 
   [theme.breakpoints.up('tablet_768')]: {
-    height: 129,
-    justifyContent: 'center',
+    height: 150,
     alignItems: 'flex-start',
-    padding: '24px 16px 24px 32px',
+    padding: '26px 8px 8px',
     backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
-    border: 'none',
+    borderRadius: 12,
   },
-
+  [theme.breakpoints.up('desktop_1024')]: {
+    height: 129,
+    flexDirection: 'row',
+    gap: 8,
+    padding: '34px 8px 8px',
+  },
   [theme.breakpoints.up('desktop_1280')]: {
-    height: 120,
+    height: 144,
+    flexDirection: 'column',
+    gap: 18,
     flex: '1 0 0',
-    padding: '16px  15.112px 16px 24px',
-  },
-  [theme.breakpoints.up('desktop_1440')]: {
-    height: 120,
-    flex: '1 0 0',
-    padding: '16px 24px',
+    padding: '22px 9px 8px',
   },
 }));
 
@@ -223,7 +290,93 @@ const LegendTitle = styled('span')(({ theme }) => ({
   },
 }));
 
-const RevenueLegendButtons = styled('div')(({ theme }) => ({
+const SpendingLegendFirstSection = styled('div')(({ theme }) => ({
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  width: '100%',
+  padding: '11.2px 16px 7.2px',
+  border: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.charcoal[700]}`,
+  borderRadius: 12,
+
+  [theme.breakpoints.up('tablet_768')]: {
+    height: 64,
+    alignItems: 'flex-start',
+    padding: '5.2px 8px',
+    border: `1px solid ${
+      theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700]
+    }`,
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
+    height: 87,
+    padding: '16.7px 8px',
+    minWidth: 'fit-content',
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    height: 64,
+    padding: '3.2px 8px',
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    padding: '3.2px 16px',
+  },
+}));
+
+const SpendingLegendSecondSection = styled('div')(({ theme }) => ({
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  width: '100%',
+  padding: '11.2px 8px 7.2px 23px',
+  border: `1px solid ${theme.palette.isLight ? theme.palette.colors.gray[200] : theme.palette.colors.charcoal[700]}`,
+  borderRadius: 12,
+
+  [theme.breakpoints.up('tablet_768')]: {
+    height: 34,
+    alignItems: 'flex-start',
+    padding: '5.2px 8px',
+    border: `1px solid ${
+      theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700]
+    }`,
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
+    height: 87,
+    padding: '3.2px 8px',
+    justifyContent: 'center',
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    height: 32,
+    padding: '3.2px 8px',
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    padding: '3.2px 16px',
+  },
+}));
+
+const LegendSectionTitle = styled('div')(({ theme }) => ({
+  position: 'absolute',
+  left: 16,
+  top: -10,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '0px 4px',
+  backgroundColor: theme.palette.isLight ? '#FFF' : theme.palette.colors.charcoal[900],
+
+  '& > span': {
+    fontWeight: 500,
+    fontSize: 12,
+    lineHeight: '18px',
+    color: theme.palette.colors.gray[500],
+  },
+
+  [theme.breakpoints.up('tablet_768')]: {
+    backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
+  },
+}));
+
+const LegendButtonsContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   gap: 24,
 
@@ -233,27 +386,12 @@ const RevenueLegendButtons = styled('div')(({ theme }) => ({
   },
 }));
 
-const SpendingLegendButtons = styled('div')(({ theme }) => ({
-  display: 'flex',
-  gap: 24,
-
-  [theme.breakpoints.up('tablet_768')]: {
-    flexDirection: 'column',
-    gap: 16,
-  },
-
-  [theme.breakpoints.up('desktop_1280')]: {
-    gap: 24,
-  },
-}));
-
 const LegendButton = styled(Button, {
   shouldForwardProp: (prop) => prop !== 'index',
 })<StyledButtonProps>(({ theme, index }) => ({
   minWidth: 'auto',
   height: 18,
   display: 'flex',
-
   alignItems: 'center',
   padding: 0,
   fontWeight: 600,
@@ -287,6 +425,9 @@ const LegendButton = styled(Button, {
       }),
       ...(index === 4 && {
         fill: theme.palette.isLight ? theme.palette.colors.red[700] : theme.palette.colors.red[900],
+      }),
+      ...(index === 5 && {
+        fill: theme.palette.isLight ? theme.palette.colors.orange[700] : theme.palette.colors.orange[900],
       }),
     },
   },
@@ -327,7 +468,61 @@ const LinkButtons = styled('div')(({ theme }) => ({
   },
 }));
 
-const StyledExternalLinkButton = styled(ExternalLinkButton)(() => ({
-  padding: '4px 16px 4px 24px',
+const StyledExternalLinkButton = styled(ExternalLinkButton)(({ theme }) => ({
+  padding: '2px 16px 2px 24px',
   fontSize: 16,
+  '& > div': {
+    width: 21,
+    height: 21,
+  },
+
+  [theme.breakpoints.down('mobile_375')]: {
+    padding: '2px 8px 2px 16px',
+  },
+}));
+
+const TooltipContent = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 8,
+
+  span: {
+    fontWeight: 700,
+    fontSize: 16,
+    lineHeight: '21.6px',
+  },
+  p: {
+    margin: 0,
+    fontWeight: 500,
+    fontSize: 16,
+    lineHeight: '24px',
+  },
+}));
+
+const IconWrapper = styled('div')(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  cursor: 'pointer',
+  width: 12,
+  height: 12,
+  marginLeft: 7,
+  marginRight: 3,
+
+  '& svg': {
+    width: 12,
+    height: 12,
+  },
+  '& path': {
+    fill: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[200],
+  },
+  '&:hover': {
+    '& path': {
+      fill: theme.palette.isLight ? theme.palette.colors.slate[200] : theme.palette.colors.slate[100],
+    },
+  },
+
+  [theme.breakpoints.up('tablet_768')]: {
+    alignItems: 'center',
+  },
 }));

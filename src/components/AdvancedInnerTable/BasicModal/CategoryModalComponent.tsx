@@ -4,7 +4,7 @@ import { useThemeContext } from '@ses/core/context/ThemeContext';
 import lightTheme from '@ses/styles/theme/themes';
 import React from 'react';
 import BasicModal from './BasicModal';
-import ContainerModal from './ContainerModal';
+import ContainerModal from './CategoryContainerModal';
 
 const CategoryModalComponent: React.FC = () => {
   const {

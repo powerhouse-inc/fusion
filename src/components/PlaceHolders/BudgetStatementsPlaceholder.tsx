@@ -195,11 +195,6 @@ const ExternalLinkButtonStyled = styled(ExternalLinkButton)({
   fontWeight: 600,
   lineHeight: '24px',
   letterSpacing: -0.02,
-
-  '& div': {
-    width: 20,
-    height: 20,
-  },
 });
 
 const ImageWrapperMobile = styled('div')(({ theme }) => ({

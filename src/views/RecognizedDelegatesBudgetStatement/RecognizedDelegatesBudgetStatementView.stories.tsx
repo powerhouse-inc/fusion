@@ -1,8 +1,10 @@
-import { BudgetStatementBuilder } from '@ses/core/businessLogic/builders/budgetStatementBuilder';
-import { RecognizedDelegatesBuilder } from '@ses/core/businessLogic/builders/delegatesBuilder';
-import { withoutSBPadding } from '@ses/core/utils/storybook/decorators';
-import { createThemeModeVariants } from '@ses/core/utils/storybook/factories';
-import AppLayout from '../../stories/containers/AppLayout/AppLayout';
+import { featureFlags } from 'feature-flags/feature-flags';
+import { CURRENT_ENVIRONMENT } from '@/config/endpoints';
+import { BudgetStatementBuilder } from '@/core/businessLogic/builders/budgetStatementBuilder';
+import { RecognizedDelegatesBuilder } from '@/core/businessLogic/builders/delegatesBuilder';
+import { FeatureFlagsProvider } from '@/core/context/FeatureFlagsProvider';
+import { createThemeModeVariants } from '@/core/utils/storybook/factories';
+import AppLayout from '@/stories/containers/AppLayout/AppLayout';
 import RecognizedDelegatesBudgetStatementView from './RecognizedDelegatesBudgetStatementView';
 import type { Meta } from '@storybook/react';
 import type { FigmaParams } from 'sb-figma-comparator';
@@ -10,10 +12,10 @@ import type { FigmaParams } from 'sb-figma-comparator';
 const meta: Meta<typeof RecognizedDelegatesBudgetStatementView> = {
   title: 'Fusion/Pages/Recognized Delegates Budget Statement',
   component: RecognizedDelegatesBudgetStatementView,
-  decorators: [withoutSBPadding],
   parameters: {
+    layout: 'fullscreen',
     chromatic: {
-      viewports: [375, 768, 1024, 1440, 1920],
+      viewports: [375, 768, 1024, 1280, 1440],
       pauseAnimationAtEnd: true,
     },
     date: '2023-02-23T04:02:02Z',
@@ -31,27 +33,30 @@ const variantsArgs = [
 
 const [[LightMode, DarkMode]] = createThemeModeVariants(
   (props) => (
-    <AppLayout>
-      <RecognizedDelegatesBudgetStatementView {...props} />
-    </AppLayout>
+    <FeatureFlagsProvider enabledFeatures={featureFlags[CURRENT_ENVIRONMENT]}>
+      <AppLayout>
+        <RecognizedDelegatesBudgetStatementView {...props} />
+      </AppLayout>
+    </FeatureFlagsProvider>
   ),
-  variantsArgs
+  variantsArgs,
+  false
 );
 
 export { LightMode, DarkMode };
 
 const optionStyles = {
   style: {
-    top: -16,
+    top: -32,
     left: -16,
   },
 };
+
 LightMode.parameters = {
   figma: {
     component: {
       375: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?node-id=14373%3A152908&t=nnlMhBVyl5KbS8g1-4',
+        component: '',
         options: {
           componentStyle: {
             width: 375,
@@ -60,52 +65,37 @@ LightMode.parameters = {
         },
       },
       768: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?node-id=14539%3A156480&t=nnlMhBVyl5KbS8g1-4',
+        component: '',
         options: {
           componentStyle: {
-            width: 802,
+            width: 768,
           },
           ...optionStyles,
         },
       },
       1024: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?node-id=14373%3A164183&t=nnlMhBVyl5KbS8g1-4',
+        component: '',
         options: {
           componentStyle: {
-            width: 1162,
+            width: 1024,
           },
           ...optionStyles,
         },
       },
       1280: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?node-id=14373%3A158198&t=nnlMhBVyl5KbS8g1-4',
+        component: '',
         options: {
           componentStyle: {
-            width: 1248,
+            width: 1280,
           },
           ...optionStyles,
         },
       },
-
       1440: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?node-id=14373%3A152093&t=nnlMhBVyl5KbS8g1-4',
+        component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=3376-35509&m=dev',
         options: {
           componentStyle: {
-            width: 1407,
-          },
-          ...optionStyles,
-        },
-      },
-      1920: {
-        component:
-          'https://www.figma.com/file/pyaYEjcwF2b5uf9y0vIfIy/SES-Dashboard?node-id=14373%3A154395&t=nnlMhBVyl5KbS8g1-4',
-        options: {
-          componentStyle: {
-            width: 1888,
+            width: 1440,
           },
           ...optionStyles,
         },

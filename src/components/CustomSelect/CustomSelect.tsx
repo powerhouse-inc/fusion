@@ -1,6 +1,5 @@
 import { ExpandMore, Check } from '@mui/icons-material';
 import { Select, MenuItem, FormControl, styled, Box, Typography } from '@mui/material';
-
 import deepmerge from '@mui/utils/deepmerge';
 import useCustomSelect from './useCustomSelect';
 import type { CustomSelectProps } from './type';
@@ -21,88 +20,100 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   notShowDescription = true,
   menuProps,
   className,
+  isFixed = false,
 }) => {
-  const { theme, isAllSelected, handleChange, handleChangeAll, renderValue, isActive } = useCustomSelect({
-    label,
-    options,
-    multiple,
-    alwaysNumberedLabel,
-    selected,
-    withAll,
-    onChange,
-  });
+  const { theme, isAllSelected, selectRef, handleChange, handleChangeAll, renderValue, isActive, onEnter } =
+    useCustomSelect({
+      label,
+      options,
+      multiple,
+      alwaysNumberedLabel,
+      selected,
+      withAll,
+      isFixed,
+      onChange,
+    });
+
   const combinedMenuProps = deepmerge(
-    StyledMenuProps(theme, style?.menuWidth || 200, style?.height || 'fit-content'),
-    menuProps
+    StyledMenuProps(theme, style?.menuWidth ?? 200, style?.height || 'fit-content', isFixed),
+    {
+      TransitionProps: { onEnter },
+      ...menuProps,
+    }
   );
 
   return (
-    <StyledFormControl
-      variant="outlined"
-      fullWidth={style?.fullWidth || false}
-      width={style?.width || 97}
-      maxWidth={style?.maxWidth}
-      className={className}
-    >
-      <StyledSelect
-        displayEmpty
-        multiple={multiple}
-        value={selected}
-        onChange={handleChange}
-        renderValue={renderValue}
-        IconComponent={ExpandMore}
+    <Container>
+      <StyledFormControl
+        variant="outlined"
+        fullWidth={style?.fullWidth || false}
+        width={style?.width || 97}
+        maxWidth={style?.maxWidth}
         className={className}
-        MenuProps={combinedMenuProps as unknown as Partial<MenuProps>}
       >
-        {notShowDescription && (
-          <MenuItemLabel disabled>
-            <MenuItemLabelTypography>{typeof label === 'string' ? label : label()}</MenuItemLabelTypography>
-          </MenuItemLabel>
-        )}
+        <StyledSelect
+          ref={selectRef}
+          displayEmpty
+          multiple={multiple}
+          value={selected}
+          onChange={handleChange}
+          renderValue={renderValue}
+          IconComponent={ExpandMore}
+          className={className}
+          MenuProps={combinedMenuProps as unknown as Partial<MenuProps>}
+        >
+          {notShowDescription && (
+            <MenuItemLabel disabled>
+              <MenuItemLabelTypography>{typeof label === 'string' ? label : label()}</MenuItemLabelTypography>
+            </MenuItemLabel>
+          )}
 
-        {withAll && (
-          <MenuItemDefault
-            borderTop={true}
-            borderBottom={false}
-            onClick={handleChangeAll}
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
-          >
-            {(customOptionsRenderAll && customOptionsRenderAll(isAllSelected || false, theme)) || 'Select All'}
-            {multiple && <CheckIcon className={`check ${isAllSelected ? 'active' : ''}`} />}
-          </MenuItemDefault>
-        )}
-        {options.map((option, index) => (
-          <MenuItemDefault
-            borderTop={!withAll && index === 0}
-            borderBottom={index === options.length - 1}
-            key={option.value}
-            value={option.value}
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
-          >
-            <Box display="flex" alignItems="center">
-              {customOptionsRender ? (
-                customOptionsRender(option, isActive(option), theme)
-              ) : (
-                <MenuItemTypography theme={theme} active={isActive(option)}>
-                  {option.label}
-                </MenuItemTypography>
-              )}
-            </Box>
-            {multiple && <CheckIcon className={`check ${isActive(option) ? 'active' : ''}`} />}
-          </MenuItemDefault>
-        ))}
-      </StyledSelect>
-    </StyledFormControl>
+          {withAll && (
+            <MenuItemDefault
+              borderTop={true}
+              borderBottom={false}
+              onClick={handleChangeAll}
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
+            >
+              {(customOptionsRenderAll && customOptionsRenderAll(isAllSelected || false, theme)) || 'Select All'}
+              {multiple && <CheckIcon className={`check ${isAllSelected ? 'active' : ''}`} />}
+            </MenuItemDefault>
+          )}
+          {options.map((option, index) => (
+            <MenuItemDefault
+              borderTop={!withAll && index === 0}
+              borderBottom={index === options.length - 1}
+              key={option.value}
+              value={option.value}
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Box display="flex" alignItems="center">
+                {customOptionsRender ? (
+                  customOptionsRender(option, isActive(option), theme)
+                ) : (
+                  <MenuItemTypography active={isActive(option)}>{option.label}</MenuItemTypography>
+                )}
+              </Box>
+              {multiple && <CheckIcon className={`check ${isActive(option) ? 'active' : ''}`} />}
+            </MenuItemDefault>
+          ))}
+        </StyledSelect>
+      </StyledFormControl>
+    </Container>
   );
 };
 
 export default CustomSelect;
+
+const Container = styled('div')({
+  position: 'relative',
+});
 
 const StyledFormControl = styled(FormControl, {
   shouldForwardProp: (prop) => !['maxWidth', 'fullWidth', 'width'].includes(prop as string),
@@ -164,7 +175,7 @@ const MenuItemDefault = styled(MenuItem, {
   borderTopRightRadius: borderTop ? 12 : 0,
   borderBottomLeftRadius: borderBottom ? 12 : 0,
   borderBottomRightRadius: borderBottom ? 12 : 0,
-  backgroundColor: 'transparent!important',
+  backgroundColor: 'transparent !important',
   minHeight: 32,
   margin: '4px 0',
 
@@ -202,9 +213,15 @@ const CheckIcon = styled(Check)(() => ({
   height: 16,
 }));
 
-const StyledMenuProps = (theme: Theme, width: number, height: string | number) => ({
+const StyledMenuProps = (theme: Theme, width: number, height: string | number, isFixed: boolean) => ({
   PaperProps: {
     sx: {
+      ...(!isFixed && {
+        position: 'static',
+        maxWidth: '100%',
+        maxHeight: '100%',
+        minHeight: height,
+      }),
       height,
       width: `${width}px`,
       color: '#000',
@@ -213,7 +230,7 @@ const StyledMenuProps = (theme: Theme, width: number, height: string | number) =
       boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
 
       '&.MuiPaper-elevation.MuiPaper-rounded': {
-        borderRadius: '12px',
+        borderRadius: '12px !important',
       },
 
       '& .MuiMenu-list': {
@@ -259,18 +276,26 @@ const StyledMenuProps = (theme: Theme, width: number, height: string | number) =
       },
     },
   },
-
   anchorOrigin: {
     vertical: 'bottom',
     horizontal: 'right',
   },
-
   transformOrigin: {
     vertical: 'top',
     horizontal: 'right',
   },
-
+  /* Prevent jumps when open/close the dropdown. This has accessibility implications that are recommended to be addressed in the future. */
+  disableAutoFocus: true,
+  MenuListProps: {
+    autoFocusItem: false,
+  },
   sx: {
-    mt: 0.5,
+    ...(!isFixed && {
+      position: 'absolute',
+      top: 32,
+      width: 'fit-content',
+      height: 'fit-content',
+    }),
+    cursor: 'default',
   },
 });

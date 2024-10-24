@@ -19,7 +19,8 @@ const tooltipLabels: { [key: string]: string } = {
   psm: 'PSM',
   liquidationIncome: 'Liquidation Income',
   fees: 'Fees',
-  daiSpent: 'DAI Spent',
+  dsr: 'DSR Cost',
+  daiSpent: 'USDS/DAI Spending',
   mkrVesting: 'MKR Vesting',
 };
 

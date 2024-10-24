@@ -61,30 +61,10 @@ const ExpenseMetricsChart: FC<ExpenseMetricsChartProps> = ({
       padding: 0,
       borderColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
       borderWidth: 1,
-      position: (
-        point: [number, number],
-        params: EChartsOption,
-        dom: EChartsOption,
-        rect: EChartsOption,
-        size: EChartsOption
-      ) => {
-        const MORE_WITH = 10;
-        const withTooltip = size.contentSize[0];
-        const heightTooltip = size.contentSize[0];
-
-        let xPos = point[0];
-        let yPos = point[1];
-
-        const tooltipWidth = withTooltip;
-        const tooltipHeight = heightTooltip;
-
-        if (xPos + tooltipWidth + MORE_WITH > window.innerWidth) {
-          xPos -= tooltipWidth;
-        }
-
-        if (yPos + tooltipHeight + MORE_WITH > window.innerHeight) {
-          yPos -= tooltipHeight;
-        }
+      position: (point: [number, number]) => {
+        const margin = isTablet ? 0 : 8;
+        const xPos = point[0] + margin;
+        const yPos = point[1] + margin;
 
         return [xPos, yPos];
       },
@@ -358,7 +338,7 @@ const ChartContainer = styled('div')(({ theme }) => ({
 
 const YearXAxis = styled('div')(({ theme }) => {
   const border = `1px solid ${
-    theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[400]
+    theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700]
   }`;
 
   return {
@@ -377,17 +357,18 @@ const YearXAxis = styled('div')(({ theme }) => {
 
 const YearText = styled('div')(({ theme }) => ({
   position: 'absolute',
-  fontFamily: 'OpenSansCondensed, sans-serif',
+  fontFamily: 'Open Sans Condensed, sans-serif',
   fontWeight: 700,
   fontSize: 12,
   lineHeight: '16px',
-  color: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[400],
+  color: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700],
   bottom: -6,
-  width: 36,
+  width: 52,
   left: '50%',
   transform: 'translateX(-50%)',
   backgroundColor: theme.palette.isLight ? 'white' : theme.palette.colors.charcoal[900],
   textAlign: 'center',
+  letterSpacing: '1px',
 }));
 
 const LegendContainer = styled('div')(({ theme }) => ({

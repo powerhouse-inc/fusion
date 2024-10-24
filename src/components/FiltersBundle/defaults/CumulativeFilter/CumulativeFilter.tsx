@@ -34,7 +34,7 @@ const CumulativeFilterComponent: React.FC<CumulativeFilterProps> = ({ filter }) 
   };
   return (
     <Container>
-      <SelectBtn>
+      <SelectBtn ref={anchorRef}>
         <CheckBtn onClick={filter.handleToggleCumulative}>
           {filter.isCumulative ? (
             <CheckOnComponent fill="#343839" fillDark="#D7D8D9" width={12} height={12} />
@@ -43,7 +43,7 @@ const CumulativeFilterComponent: React.FC<CumulativeFilterProps> = ({ filter }) 
           )}
         </CheckBtn>
         {getButtonText()}
-        <MenuBtn isActive={filter.isCumulative} onClick={handleOpenMenu} ref={anchorRef}>
+        <MenuBtn isActive={filter.isCumulative} onClick={handleOpenMenu}>
           <StyledSelectChevronDown
             isOpen={open}
             fill={isLight ? (filter.isCumulative ? '#25273D' : '#BEBFC5') : filter.isCumulative ? '#D7D8D9' : '#48495F'}
@@ -57,7 +57,7 @@ const CumulativeFilterComponent: React.FC<CumulativeFilterProps> = ({ filter }) 
         placement="bottom-end"
         transition
         disablePortal
-        style={{ zIndex: 1 }}
+        style={{ zIndex: 7 }}
       >
         {({ TransitionProps, placement }) => (
           <Grow

@@ -91,7 +91,7 @@ const CUReserves: React.FC<CUReservesProps> = ({
 
       <ReservesCardsContainer>
         {onChainData?.map((account) => (
-          <ReserveCard key={account.id} account={account} />
+          <ReserveCard key={account.id} account={account} currency="USD" />
         ))}
       </ReservesCardsContainer>
     </OnChainSubsection>
@@ -112,7 +112,7 @@ const CUReserves: React.FC<CUReservesProps> = ({
 
         <ReservesCardsContainer>
           {offChainData?.map((account) => (
-            <ReserveCard key={account.id} account={account} />
+            <ReserveCard key={account.id} account={account} currency="USD" />
           ))}
         </ReservesCardsContainer>
       </OffChainSubsection>
@@ -218,7 +218,9 @@ const OnChainSubsection = styled('div')(({ theme }) => ({
   },
 }));
 
-const OffChainSubsection = styled('div')<{ isDisabled?: boolean }>(({ isDisabled = false }) => ({
+const OffChainSubsection = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'isDisabled',
+})<{ isDisabled?: boolean }>(({ isDisabled = false }) => ({
   marginTop: 24,
   opacity: isDisabled ? 0.3 : 1,
 }));

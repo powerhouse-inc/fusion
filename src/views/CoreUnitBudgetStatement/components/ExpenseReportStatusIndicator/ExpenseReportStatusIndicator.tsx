@@ -1,8 +1,8 @@
 import { styled } from '@mui/material';
-import { BASE_URL } from '@ses/config/routes';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
+import { BASE_URL } from '@/config/routes';
 import { BudgetStatus } from '@/core/models/interfaces/types';
 import ExpenseReportStatus from '../ExpenseReportStatus/ExpenseReportStatus';
 
@@ -60,7 +60,7 @@ const StyledLink = styled('a')(({ theme }) => ({
   cursor: 'pointer',
   minWidth: 'fit-content',
 
-  [theme.breakpoints.up('table_834')]: {
+  [theme.breakpoints.up('tablet_768')]: {
     fontSize: 16,
   },
 }));

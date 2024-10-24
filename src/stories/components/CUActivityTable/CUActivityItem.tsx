@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import CircleAvatar from '@/components/CircleAvatar/CircleAvatar';
 import { getShortCode } from '@/core/utils/string';
+import { AllowedOwnerType } from '@/views/BudgetStatement/types';
 import { ButtonType } from '../../../core/enums/buttonTypeEnum';
 import { CustomButton } from '../CustomButton/CustomButton';
 import { getCorrectCodeFromActivity, getResourceType } from './utils/helpers';
@@ -39,25 +40,30 @@ export default function CUActivityItem({ activity, isNew }: CUActivityItemProps)
     }
 
     const month = DateTime.fromFormat(activity.activityFeed.params?.month ?? '', 'y-M').toFormat('LLLy');
-    let url = '';
-    if (resourceType === ResourceType.Delegates) {
-      // it is a delegate
-      url = `${siteRoutes.recognizedDelegateReport}?viewMonth=${month}`;
-    } else if (resourceType === ResourceType.CoreUnit) {
-      // it is a core unit
-      url = `${siteRoutes.coreUnitReports(getShortCode(activityCode?.shortCode ?? '') ?? '')}?viewMonth=${month}`;
-    } else {
-      // it is an ecosystem actor
-      url = `${siteRoutes.ecosystemActorReports(getShortCode(activityCode?.shortCode ?? ''))}?viewMonth=${month}`;
-    }
+    const getUrlForResourceType = () => {
+      const baseUrl = siteRoutes.budgetStatements;
+      const shortCode = getShortCode(activityCode?.shortCode ?? '') ?? '';
 
-    if (goToComments) {
-      url += '&section=comments';
-    } else {
-      url += '&section=actuals';
-    }
+      switch (resourceType) {
+        case ResourceType.Delegates:
+          return siteRoutes.recognizedDelegateReport;
+        case ResourceType.Keepers:
+          return baseUrl(AllowedOwnerType.KEEPERS);
+        case ResourceType.AlignedDelegates:
+          return baseUrl(AllowedOwnerType.ALIGNED_DELEGATES);
+        case ResourceType.SpecialPurposeFund:
+          return baseUrl(AllowedOwnerType.SPFS);
+        case ResourceType.CoreUnit:
+          return siteRoutes.coreUnitReports(shortCode);
+        default:
+          return siteRoutes.ecosystemActorReports(shortCode);
+      }
+    };
 
-    return url;
+    const baseUrl = getUrlForResourceType();
+    const section = goToComments ? 'comments' : 'actuals';
+
+    return `${baseUrl}?viewMonth=${month}&section=${section}`;
   }, [activity.activityFeed.event, activity.activityFeed.params?.month, activityCode?.shortCode, resourceType]);
 
   const goToDetails = () => {
@@ -75,13 +81,11 @@ export default function CUActivityItem({ activity, isNew }: CUActivityItemProps)
                 <CoreUnitName style={{ marginLeft: 16 }}>Recognized Delegates</CoreUnitName>
               </TeamData>
             ) : (
-              [ResourceType.CoreUnit, ResourceType.EcosystemActor].includes(resourceType) && (
-                <TeamData isGlobal={isGlobal}>
-                  <CircleAvatarExtended image={activity?.team?.image} name={activity?.team?.name || ''} />
-                  <CoreUnitCode>{activity?.team?.shortCode}</CoreUnitCode>
-                  <CoreUnitName>{activity?.team?.name}</CoreUnitName>
-                </TeamData>
-              )
+              <TeamData isGlobal={isGlobal}>
+                <CircleAvatarExtended image={activity?.team?.image} name={activity?.team?.name || ''} />
+                <CoreUnitCode>{activity?.team?.shortCode}</CoreUnitCode>
+                <CoreUnitName>{activity?.team?.name}</CoreUnitName>
+              </TeamData>
             ))}
           <Timestamp isGlobal={isGlobal}>
             <UTCDate isGlobal={isGlobal}>

@@ -1,3 +1,10 @@
+import _ from 'lodash';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { InnerTableColumn, InnerTableRow, RowType } from '@/components/AdvancedInnerTable/types';
+import { useUrlAnchor } from '@/core/hooks/useUrlAnchor';
+import type { BudgetStatement } from '@/core/models/interfaces/budgetStatement';
+import type { BudgetStatementLineItem } from '@/core/models/interfaces/budgetStatementWallet';
+import { API_MONTH_TO_FORMAT } from '@/core/utils/date';
 import {
   budgetTotalActual,
   budgetTotalDifference,
@@ -11,16 +18,9 @@ import {
   getWalletDifference,
   getWalletForecast,
   getWalletPayment,
-} from '@ses/core/utils/finances';
-import _ from 'lodash';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { InnerTableColumn, InnerTableRow, RowType } from '@/components/AdvancedInnerTable/types';
+} from '@/core/utils/finances';
+import { getWalletWidthForWallets } from '@/core/utils/string';
 import { renderWallet } from '@/views/CoreUnitBudgetStatement/BudgetStatementtUtils';
-import { useUrlAnchor } from '../../../../core/hooks/useUrlAnchor';
-import { API_MONTH_TO_FORMAT } from '../../../../core/utils/date';
-import { getWalletWidthForWallets } from '../../../../core/utils/string';
-import type { BudgetStatement } from '@ses/core/models/interfaces/budgetStatement';
-import type { BudgetStatementLineItem } from '@ses/core/models/interfaces/budgetStatementWallet';
 import type { DateTime } from 'luxon';
 
 export const useDelegatesActuals = (propsCurrentMonth: DateTime, budgetStatements: BudgetStatement[] | undefined) => {
@@ -99,7 +99,7 @@ export const useDelegatesActuals = (propsCurrentMonth: DateTime, budgetStatement
       setScrolled(true);
       let offset = (breakdownTitleRef?.current?.offsetTop || 0) - 260;
       const windowsWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-      if (windowsWidth < 834) {
+      if (windowsWidth < 768) {
         offset += 90;
       }
       if ('scrollRestoration' in window.history) {
@@ -112,7 +112,7 @@ export const useDelegatesActuals = (propsCurrentMonth: DateTime, budgetStatement
   const mainTableColumnsActuals = useMemo(() => {
     const mainTableColumnsActuals: InnerTableColumn[] = [
       {
-        header: 'Budget',
+        header: 'Wallet',
         align: 'left',
         type: 'custom',
         cellRender: renderWallet,
@@ -124,16 +124,19 @@ export const useDelegatesActuals = (propsCurrentMonth: DateTime, budgetStatement
         header: 'Forecast',
         align: 'right',
         type: 'incomeNumber',
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Actuals',
         align: 'right',
         type: 'incomeNumber',
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Difference',
         align: 'right',
         type: 'number',
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Payments',
@@ -221,7 +224,7 @@ export const useDelegatesActuals = (propsCurrentMonth: DateTime, budgetStatement
   const breakdownColumnsActuals = useMemo(() => {
     const breakdownColumns: InnerTableColumn[] = [
       {
-        header: 'Recognized delegates',
+        header: 'Recognized Delegates',
         align: 'left',
         type: 'text',
         hidden: !hasGroups,
@@ -235,27 +238,32 @@ export const useDelegatesActuals = (propsCurrentMonth: DateTime, budgetStatement
         isCardHeader: true,
         width: hasGroups ? '220px' : '240px',
         hidden: true,
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Forecast',
         align: 'right',
         type: 'incomeNumber',
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Actuals',
         align: 'right',
         type: 'incomeNumber',
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Difference',
         align: 'right',
         type: 'number',
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Comments',
         align: 'left',
         type: 'text',
         width: '300px',
+        hasBorderBottomOnCard: true,
       },
       {
         header: 'Payments',
@@ -294,6 +302,7 @@ export const useDelegatesActuals = (propsCurrentMonth: DateTime, budgetStatement
 
           result.push({
             type: type || 'normal',
+            borderBottom: true,
             items: [
               {
                 column: breakdownColumnsActuals[0],

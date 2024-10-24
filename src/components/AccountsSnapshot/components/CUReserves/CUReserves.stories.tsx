@@ -11,6 +11,7 @@ const meta: Meta<typeof CUReserves> = {
   parameters: {
     chromatic: {
       viewports: [375, 768, 1024, 1280, 1440],
+      pauseAnimationAtEnd: true,
     },
   },
 };

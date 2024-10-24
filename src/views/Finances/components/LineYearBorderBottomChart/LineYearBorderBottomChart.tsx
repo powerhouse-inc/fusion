@@ -33,9 +33,10 @@ const YearXAxis = styled('div')(({ theme }) => {
 });
 
 const YearText = styled('div')(({ theme }) => ({
-  fontSize: 11,
+  fontSize: 12,
   lineHeight: 'normal',
-  color: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[800],
+  fontFamily: 'Open Sans Condensed, sans-serif',
+  color: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700],
   position: 'absolute',
   bottom: -6,
   width: 52,
@@ -43,4 +44,5 @@ const YearText = styled('div')(({ theme }) => ({
   transform: 'translateX(-50%)',
   backgroundColor: theme.palette.isLight ? '#FFFFFF' : theme.palette.colors.charcoal[900],
   textAlign: 'center',
+  letterSpacing: '1px',
 }));

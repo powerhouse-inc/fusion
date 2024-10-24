@@ -38,7 +38,13 @@ const FilterDesktop: React.FC<FilterDesktopProps> = ({ filters, searchFilter, re
                   withAll={filter.withAll}
                   customOptionsRenderAll={filter.customOptionsRenderAll as CustomSelectProps['customOptionsRenderAll']}
                   style={filter.widthStyles}
-                  menuProps={{ disableScrollLock: true }}
+                  menuProps={{
+                    disablePortal: true,
+                    disableScrollLock: true,
+                    style: {
+                      zIndex: 7,
+                    },
+                  }}
                 />
               );
             }

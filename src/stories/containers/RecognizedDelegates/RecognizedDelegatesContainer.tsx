@@ -116,7 +116,7 @@ const Title = styled('h1')(({ theme }) => ({
 }));
 
 const ExtendedPageContainer = styled(PageContainer)(({ theme }) => ({
-  background: theme.palette.isLight ? '#FFFFFF' : '#000000',
+  background: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.background.dm,
   backgroundImage: theme.palette.isLight ? '#FFFFFF' : 'linear-gradient(180deg, #001020 0%, #000000 63.95%)',
 }));
 

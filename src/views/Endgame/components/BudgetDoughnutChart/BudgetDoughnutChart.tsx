@@ -107,7 +107,7 @@ const BudgetDoughnutChart: React.FC<Props> = ({ doughnutSeriesData }) => {
           >
             <LegendName>{data.name}</LegendName>
             <LegendValues>
-              {usLocalizedNumber(data.value)} DAI ({usLocalizedNumber(data.percent, 1)}%)
+              {usLocalizedNumber(data.value)} USD ({usLocalizedNumber(data.percent, 1)}%)
             </LegendValues>
           </LegendItem>
         ))}
