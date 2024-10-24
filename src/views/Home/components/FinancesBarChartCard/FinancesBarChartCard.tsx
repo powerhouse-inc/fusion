@@ -121,7 +121,7 @@ const FinancesBarChartCard: FC<FinancesBarChartCardProps> = ({ revenueAndSpendin
         <StyledExternalLinkButton href={MAKERBURN_URL} wrapText={false}>
           makerburn.com
         </StyledExternalLinkButton>
-        <StyledInternalLinkButton href={siteRoutes.finances()} buttonType="primary" label="Details" />
+        <InternalLinkButton href={siteRoutes.finances()} buttonType="primary" label="Details" />
       </LinkButtons>
     </Container>
   );
@@ -478,13 +478,6 @@ const StyledExternalLinkButton = styled(ExternalLinkButton)(({ theme }) => ({
 
   [theme.breakpoints.down('mobile_375')]: {
     padding: '2px 8px 2px 16px',
-  },
-}));
-
-const StyledInternalLinkButton = styled(InternalLinkButton)(() => ({
-  padding: '3px 16px 3px 24px',
-  '&:hover': {
-    padding: '3px 8px 3px 24px',
   },
 }));
 

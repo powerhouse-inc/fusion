@@ -61,30 +61,10 @@ const ExpenseMetricsChart: FC<ExpenseMetricsChartProps> = ({
       padding: 0,
       borderColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
       borderWidth: 1,
-      position: (
-        point: [number, number],
-        params: EChartsOption,
-        dom: EChartsOption,
-        rect: EChartsOption,
-        size: EChartsOption
-      ) => {
-        const MORE_WITH = 10;
-        const withTooltip = size.contentSize[0];
-        const heightTooltip = size.contentSize[0];
-
-        let xPos = point[0];
-        let yPos = point[1];
-
-        const tooltipWidth = withTooltip;
-        const tooltipHeight = heightTooltip;
-
-        if (xPos + tooltipWidth + MORE_WITH > window.innerWidth) {
-          xPos -= tooltipWidth;
-        }
-
-        if (yPos + tooltipHeight + MORE_WITH > window.innerHeight) {
-          yPos -= tooltipHeight;
-        }
+      position: (point: [number, number]) => {
+        const margin = isTablet ? 0 : 8;
+        const xPos = point[0] + margin;
+        const yPos = point[1] + margin;
 
         return [xPos, yPos];
       },

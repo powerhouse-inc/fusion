@@ -15,6 +15,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const response = await fetch(`https://forum.makerdao.com/c/${slug}/${id}/l/latest.json`);
     const data = await response.json();
 
+    // Set Cache-Control header to enable caching for 1 hour (3600 seconds)
+    res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=3600');
+
     // Send the data as a JSON response
     res.status(200).json(data.topic_list.topics);
   } else {

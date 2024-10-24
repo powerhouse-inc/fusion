@@ -176,22 +176,21 @@ const FinancesLineChart: FC<FinancesLineChartProps> = ({ financesData, selectedM
         rect: EChartsOption,
         size: EChartsOption
       ) => {
-        const MORE_WITH = 10;
-        const withTooltip = size.contentSize[0];
-        const heightTooltip = size.contentSize[0];
+        const tooltipWidth = size.contentSize[0];
+        const containerWidth = size.viewSize[0];
+        const margin = isTablet ? 0 : 8;
 
         let xPos = point[0];
-        let yPos = point[1];
+        const yPos = point[1] + margin;
 
-        const tooltipWidth = withTooltip;
-        const tooltipHeight = heightTooltip;
-
-        if (xPos + tooltipWidth + MORE_WITH > window.innerWidth) {
-          xPos -= tooltipWidth;
-        }
-
-        if (yPos + tooltipHeight + MORE_WITH > window.innerHeight) {
-          yPos -= tooltipHeight;
+        if (isDesk1280 || isDesk1440) {
+          if (xPos + tooltipWidth + margin > containerWidth) {
+            xPos -= tooltipWidth + margin / 4;
+          } else {
+            xPos += margin;
+          }
+        } else {
+          xPos += margin;
         }
 
         return [xPos, yPos];

@@ -30,7 +30,7 @@ export const notificationHelper = ({ isSuccess, userName = '' }: Props) => {
         />
       ),
     {
-      position: toast.POSITION.BOTTOM_CENTER,
+      position: 'bottom-center',
       autoClose: 3000,
       hideProgressBar: true,
       closeButton: false,
@@ -63,7 +63,7 @@ export const triggerToast = ({ message, type = 'success', autoClose = 3000, clos
       <Notification icon={icon} borderColor={borderColor} handleClose={closeToast} message={message} />
     ),
     {
-      position: toast.POSITION.BOTTOM_CENTER,
+      position: 'bottom-center',
       autoClose,
       hideProgressBar: true,
       closeButton,

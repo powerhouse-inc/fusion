@@ -18,7 +18,7 @@ const CardProjects: React.FC<CardProjectsProps> = ({ actorName, shortCode, class
 
     <CardProject>
       <CardDescription>View all the of the projects {actorName} is involved in and there status.</CardDescription>
-      <InternalLinkButtonStyled label="View Projects" href={siteRoutes.ecosystemActorProjects(shortCode)} showIcon />
+      <InternalLinkButton label="View Projects" href={siteRoutes.ecosystemActorProjects(shortCode)} showIcon />
     </CardProject>
   </Container>
 );
@@ -67,16 +67,4 @@ const CardDescription = styled('p')(({ theme }) => ({
   fontWeight: 500,
   lineHeight: '24px',
   letterSpacing: 0.4,
-}));
-
-const InternalLinkButtonStyled = styled(InternalLinkButton)(() => ({
-  borderRadius: 6,
-  height: 32,
-  padding: '4px 13.5px 4px 13.5px',
-  ':hover': {
-    padding: '4px 13.5px 4px 13.5px',
-  },
-  '& div': {
-    letterSpacing: '-0.32px',
-  },
 }));

@@ -10,9 +10,7 @@ import FinancesSection from './components/FinancesSection/FinancesSection';
 import GovernanceSection from './components/GovernanceSection/GovernanceSection';
 import HeaderCard from './components/HeaderCard/HeaderCard';
 import HomeButton from './components/HomeButton/HomeButton';
-import HomeSectionTitle from './components/HomeSectionTitle/HomeSectionTitle';
 import RoadmapSection from './components/RoadmapSection/RoadmapSection';
-import { headerCardData, sectionsData } from './staticData';
 import type { FormattedFinancesData } from './api/finances';
 import type { RevenueAndSpendingRecords } from './api/revenueAndSpending';
 import type { FC } from 'react';
@@ -38,28 +36,17 @@ const HomeView: FC<HomeViewProps> = ({
     <SEOHead
       title="Sky Fusion Dashboard"
       description="Sky Fusion Dashboard offers key data insights into the Sky Ecosystem's finances, governance, contributors, and roadmaps."
-    />
+    >
+      <link rel="preconnect" href="https://makerdao-ses.github.io" />
+      <link rel="preconnect" href="https://raw.githubusercontent.com/" />
+    </SEOHead>
 
     <Container>
-      <section id="home">
-        <HeaderCard />
-      </section>
-      <Section id={headerCardData.buttonTexts[0].toLowerCase()}>
-        <FinancesSection revenueAndSpendingData={revenueAndSpendingData} financesData={financesData} />
-      </Section>
-      <Section id={headerCardData.buttonTexts[1].toLowerCase()}>
-        <GovernanceSection governanceProposals={governanceProposals} hatAddress={hatAddress} />
-      </Section>
-      <Section id={headerCardData.buttonTexts[2].toLowerCase()}>
-        <HomeSectionTitle hash={headerCardData.buttonTexts[2].toLowerCase()}>{sectionsData.titles[2]}</HomeSectionTitle>
-        <ContainerMargin>
-          <ContributorsSection teams={teams} />
-        </ContainerMargin>
-      </Section>
-      <Section id={headerCardData.buttonTexts[3].toLowerCase()}>
-        <HomeSectionTitle hash={headerCardData.buttonTexts[3].toLowerCase()}>{sectionsData.titles[3]}</HomeSectionTitle>
-        <RoadmapSection roadmaps={roadmaps} />
-      </Section>
+      <HeaderCard />
+      <FinancesSection revenueAndSpendingData={revenueAndSpendingData} financesData={financesData} />
+      <GovernanceSection governanceProposals={governanceProposals} hatAddress={hatAddress} />
+      <ContributorsSection teams={teams} />
+      <RoadmapSection roadmaps={roadmaps} />
     </Container>
     <HomeButton />
   </HomeViewContainer>
@@ -76,24 +63,3 @@ const HomeViewContainer = styled(PageContainer)(({ theme }) => ({
   backgroundPosition: 'right',
   backgroundSize: 'cover',
 }));
-
-const Section = styled('section')(({ theme }) => ({
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  marginTop: 24,
-  scrollSnapAlign: 'start',
-  scrollMarginTop: 80,
-
-  [theme.breakpoints.up('tablet_768')]: {
-    scrollMarginTop: 110,
-  },
-
-  [theme.breakpoints.up('desktop_1280')]: {
-    marginTop: 32,
-  },
-}));
-
-const ContainerMargin = styled('div')({
-  marginTop: 24,
-});

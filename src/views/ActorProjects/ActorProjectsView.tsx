@@ -38,7 +38,7 @@ const ActorProjectsView: React.FC<ActorProjectsViewProps> = ({ actor, actors, pr
   } = useActorProjectsView(projectsData, actors, actor);
 
   return (
-    <PageWrapper>
+    <PageContainer>
       <SEOHead
         title={`Sky Fusion - ${actor.name} Ecosystem Contributor Projects`}
         description={`Learn about ${actor.name} Ecosystem Contributor's Project work: scope, deliverables, targets, resources, and key results for owned & supported projects.`}
@@ -142,15 +142,11 @@ const ActorProjectsView: React.FC<ActorProjectsViewProps> = ({ actor, actors, pr
           </ContainerResponsive>
         </ContainerAllData>
       </Container>
-    </PageWrapper>
+    </PageContainer>
   );
 };
 
 export default ActorProjectsView;
-
-const PageWrapper = styled(PageContainer)(() => ({
-  paddingTop: 0,
-}));
 
 const ContainerAllData = styled('div')(() => ({
   display: 'flex',
