@@ -1,57 +1,33 @@
-import { useCookiesContextTracking } from '@ses/core/context/CookiesContext';
+import { useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { siteRoutes } from '@/config/routes';
+import type { Theme } from '@mui/material';
+
+const LOCAL_STORAGE_KEY = 'home-header-card-expanded';
 
 const useHeaderCard = () => {
-  const { isFunctionalTrackingAccepted } = useCookiesContextTracking();
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
 
-  const [isExpandedFromLocalStorage] = useState(() => {
-    if (typeof window !== 'undefined') {
-      if (!isFunctionalTrackingAccepted) {
-        window.localStorage.removeItem('home-header-card-expanded');
-        return true;
-      }
-      const homeHeaderCardExpanded = window.localStorage.getItem('home-header-card-expanded');
-      if (homeHeaderCardExpanded === '0') {
-        return false;
-      }
-      return true;
+  const [isExpanded, setIsExpanded] = useState<boolean | undefined>(true);
+
+  useEffect(() => {
+    // restore `isExpanded` from localStorage
+    const storedValue = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (storedValue !== null) {
+      setIsExpanded(storedValue !== '0');
     }
-    return undefined;
-  });
+  }, []);
 
-  const [isExpandedCopy, setIsExpandedCopy] = useState(isExpandedFromLocalStorage);
-  const handleIsExpandedCopy = (expandedCopy: boolean | undefined) => {
-    setIsExpandedCopy(expandedCopy);
-  };
-
-  const [isExpanded, setIsExpanded] = useState<boolean>();
-  const handleIsExpanded = (expanded: boolean | undefined) => {
-    setIsExpanded(expanded);
+  const handleIsExpanded = (value: boolean) => {
+    setIsExpanded(value);
+    localStorage.setItem(LOCAL_STORAGE_KEY, value ? '1' : '0');
   };
 
   const [isMobileMenuExpanded, setIsMobileMenuExpanded] = useState(false);
-  const handleIsMobileMenuExpanded = (mobileMenuExpanded: boolean) => {
-    setIsMobileMenuExpanded(mobileMenuExpanded);
-  };
 
   useEffect(() => {
-    if (
-      isFunctionalTrackingAccepted ||
-      (document.cookie.includes('themeTracking=true') && document.cookie.includes('timestampTracking=true'))
-    ) {
-      window.localStorage.setItem('home-header-card-expanded', isExpandedCopy ? '1' : '0');
-    }
-    handleIsExpanded(isExpandedCopy);
-  }, [isFunctionalTrackingAccepted, isExpandedFromLocalStorage, isExpandedCopy]);
-
-  useEffect(() => {
-    const sections = [
-      document.getElementById('finances'),
-      document.getElementById('governance'),
-      document.getElementById('contributors'),
-      document.getElementById('roadmap'),
-    ];
+    const sectionIds = ['finances', 'governance', 'contributors', 'roadmap'];
+    const sections = sectionIds.map((id) => document.getElementById(id));
 
     const observerOptions = {
       root: null,
@@ -59,23 +35,31 @@ const useHeaderCard = () => {
       threshold: 0.4,
     };
 
+    const updateUrlHash = (sectionId: string) => {
+      const newUrl = sectionId === 'finances' ? siteRoutes.home : `${siteRoutes.home}#${sectionId}`;
+      window.history.replaceState(
+        {
+          ...window.history.state,
+          url: newUrl,
+          as: newUrl,
+        },
+        '',
+        newUrl
+      );
+    };
+
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        e.isIntersecting &&
-          window.history.replaceState(
-            {
-              ...window.history.state,
-              url: `${siteRoutes.home}#${e.target.id}`,
-              as: `${siteRoutes.home}#${e.target.id}`,
-            },
-            '',
-            `${siteRoutes.home}#${e.target.id}`
-          );
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          updateUrlHash(entry.target.id);
+        }
       });
     }, observerOptions);
 
-    sections?.forEach((s) => {
-      s && observer.observe(s);
+    sections.forEach((section) => {
+      if (section) {
+        observer.observe(section);
+      }
     });
 
     return () => {
@@ -84,10 +68,11 @@ const useHeaderCard = () => {
   }, []);
 
   return {
+    isMobile,
     isExpanded,
-    handleIsExpanded: handleIsExpandedCopy,
+    handleIsExpanded,
     isMobileMenuExpanded,
-    handleIsMobileMenuExpanded,
+    handleIsMobileMenuExpanded: setIsMobileMenuExpanded,
   };
 };
 

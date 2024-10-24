@@ -1,10 +1,10 @@
 import { styled } from '@mui/material';
 import Notice from '@/components/Notice/Notice';
-import { headerCardData } from '../../staticData';
 import { getYearsForChart } from '../../utils/utils';
 import FinancesBarChartCard from '../FinancesBarChartCard/FinancesBarChartCard';
 import FinancesLineChartCard from '../FinancesLineChartCard/FinancesLineChartCard';
 import HomeSectionTitle from '../HomeSectionTitle/HomeSectionTitle';
+import Section from '../Section/Section';
 import type { FormattedFinancesData } from '../../api/finances';
 import type { RevenueAndSpendingRecords } from '../../api/revenueAndSpending';
 
@@ -14,9 +14,9 @@ interface FinancesSectionProps {
 }
 
 const FinancesSection: React.FC<FinancesSectionProps> = ({ revenueAndSpendingData, financesData }) => (
-  <>
+  <Section id="finances">
     <TitleContainer>
-      <HomeSectionTitle hash={headerCardData.buttonTexts[0].toLowerCase()}>Finances</HomeSectionTitle>
+      <HomeSectionTitle hash="finances">Finances</HomeSectionTitle>
       <Notice />
     </TitleContainer>
     <Finances>
@@ -26,7 +26,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ revenueAndSpendingDat
       />
       <FinancesLineChartCard financesData={financesData} years={getYearsForChart(revenueAndSpendingData)} />
     </Finances>
-  </>
+  </Section>
 );
 
 export default FinancesSection;

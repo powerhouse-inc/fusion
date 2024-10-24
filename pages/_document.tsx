@@ -33,6 +33,22 @@ export default class MyDocument extends Document<Props> {
           {/* Global Site Tag (gtag.js) - Google Analytics */}
           {GA_TRACKING_ID && this.props.isAnalyticsActive && (
             <>
+              <link rel="preconnect" href="https://fonts.googleapis.com" />
+              <link
+                rel="preconnect"
+                href={(() => {
+                  const url = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT;
+                  if (!url) return '';
+                  try {
+                    const parsedUrl = new URL(url);
+                    return `${parsedUrl.protocol}//${parsedUrl.hostname}`;
+                  } catch (error) {
+                    console.error('Invalid NEXT_PUBLIC_GRAPHQL_ENDPOINT:', error);
+                    return '';
+                  }
+                })()}
+              />
+
               <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} />
               <script
                 dangerouslySetInnerHTML={{

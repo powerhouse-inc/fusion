@@ -1,5 +1,4 @@
 import { createThemeModeVariants } from '@ses/core/utils/storybook/factories';
-import { headerCardData } from '@/views/Home/staticData';
 import HeaderCard from './HeaderCard';
 import type { Meta } from '@storybook/react';
 import type { FigmaParams } from 'sb-figma-comparator';
@@ -17,15 +16,7 @@ const meta: Meta<typeof HeaderCard> = {
 
 export default meta;
 
-const variantsArgs = [
-  {
-    headerCard: {
-      title: headerCardData.title,
-      description: headerCardData.description,
-      buttonTexts: headerCardData.buttonTexts,
-    },
-  },
-];
+const variantsArgs = [{}];
 
 const [[LightMode, DarkMode]] = createThemeModeVariants(HeaderCard, variantsArgs);
 

@@ -1,6 +1,7 @@
 import { styled } from '@mui/material';
 import Identicon from 'identicon.js';
 import padEnd from 'lodash/padEnd';
+import Image from 'next/image';
 import React from 'react';
 import { getColorForString } from '@/core/utils/colors';
 import { getTwoInitials } from '@/core/utils/string';
@@ -26,21 +27,26 @@ export const CircleAvatar: React.FC<CircleAvatarProps> = ({
       margin: 0,
     }).toString();
 
-  const backgroundImage = identIcon ? `data:image/svg+xml;base64,${identIconImage}` : image;
+  const imageSource = identIcon ? `data:image/svg+xml;base64,${identIconImage}` : image;
 
   return (
-    <Container className={className} name={name} backgroundImage={backgroundImage} {...htmlAttributes}>
-      {!backgroundImage && getTwoInitials(name)}
+    <Container className={className} name={name} {...htmlAttributes}>
+      {imageSource ? (
+        <ImageWrapper>
+          <Image src={imageSource} alt={name} fill quality={85} />
+        </ImageWrapper>
+      ) : (
+        getTwoInitials(name)
+      )}
     </Container>
   );
 };
 
 const Container = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'name' && prop !== 'backgroundImage',
+  shouldForwardProp: (prop) => prop !== 'name',
 })<{
   name: string;
-  backgroundImage?: string;
-}>(({ theme, backgroundImage, name }) => ({
+}>(({ theme, name }) => ({
   width: 32,
   height: 32,
   minWidth: 32,
@@ -53,12 +59,16 @@ const Container = styled('div', {
   fontFamily: 'Inter, sans-serif',
   fontWeight: 900,
   borderRadius: '50%',
-  color: backgroundImage ? 'transparent' : 'white',
-  backgroundColor: backgroundImage ? 'white' : getColorForString(name),
-  backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none',
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
+  color: 'white',
+  backgroundColor: getColorForString(name),
   boxShadow: theme.palette.isLight ? theme.fusionShadows.avatars : theme.fusionShadows.reskinShortShadow,
+  overflow: 'hidden',
 }));
+
+const ImageWrapper = styled('div')({
+  width: '100%',
+  height: '100%',
+  position: 'relative',
+});
 
 export default CircleAvatar;
