@@ -20,7 +20,6 @@ const ContainerStyled = styled('div')(({ theme }) => ({
     paddingLeft: 32,
     paddingRight: 32,
   },
-
   [theme.breakpoints.up('desktop_1280')]: {
     marginLeft: 'auto',
     marginRight: 'auto',
@@ -28,7 +27,6 @@ const ContainerStyled = styled('div')(({ theme }) => ({
     paddingRight: 0,
     maxWidth: 1200,
   },
-
   [theme.breakpoints.up('desktop_1440')]: {
     maxWidth: 1312,
   },

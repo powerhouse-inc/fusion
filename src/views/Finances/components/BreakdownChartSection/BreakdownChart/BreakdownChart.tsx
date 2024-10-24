@@ -55,14 +55,13 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
   const isDesktop1440 = useMediaQuery((theme: Theme) => theme.breakpoints.up('desktop_1440'));
 
   const isMobileOrLess = isMobile || isLessMobile;
-  const showLineYear = (isMobile || isLessMobile) && selectedGranularity === 'monthly';
+  const showLineYear =
+    (isMobile || isLessMobile) && (selectedGranularity === 'monthly' || selectedGranularity === 'quarterly');
+
   // Values for the grid
   const getHeightGrid = useCallback(() => {
     switch (true) {
-      case isLessMobile:
-        return 198;
-
-      case isMobile:
+      case isLessMobile || isMobile:
         return 170;
 
       case isTablet:
@@ -119,7 +118,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
 
   const getMarginYAxis = useCallback(() => {
     switch (true) {
-      case isMobile:
+      case isLessMobile || isMobile:
         return 5;
 
       case isTablet:
@@ -137,7 +136,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
       default:
         return 36;
     }
-  }, [isDesktop1024, isDesktop1280, isDesktop1440, isMobile, isTablet]);
+  }, [isDesktop1024, isDesktop1280, isDesktop1440, isLessMobile, isMobile, isTablet]);
 
   const getMarginXAxis = useCallback(() => {
     switch (true) {
@@ -189,33 +188,13 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
         borderColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
 
         borderWidth: 1,
-        position: function (
-          point: [number, number],
-          params: EChartsOption,
-          dom: EChartsOption,
-          rect: EChartsOption,
-          size: EChartsOption
-        ) {
-          const MORE_WITH = 10;
-          const withTooltip = size.contentSize[0];
-          const heightTooltip = size.contentSize[0];
+        position: (point: [number, number]) => {
+          const margin = isTablet ? 0 : 8;
+          const xPos = point[0] + margin;
+          const yPos = point[1] + margin;
 
-          let xPos = point[0];
-          let yPos = point[1];
-
-          const tooltipWidth = withTooltip;
-          const tooltipHeight = heightTooltip;
-
-          if (xPos + tooltipWidth + MORE_WITH > window.innerWidth) {
-            xPos -= tooltipWidth;
-          }
-
-          if (yPos + tooltipHeight + MORE_WITH > window.innerHeight) {
-            yPos -= tooltipHeight;
-          }
           return [xPos, yPos];
         },
-
         formatter: function (params: BarChartSeries[]) {
           // If all values are cero, don't show tooltip
           if (params.every((item) => item.value === 0)) {
@@ -369,8 +348,8 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
         },
         splitLine: {
           lineStyle: {
+            color: theme.palette.isLight ? theme.palette.colors.slate[100] : theme.palette.colors.slate[300],
             width: 0.25,
-            color: theme.palette.isLight ? theme.palette.colors.gray[400] : theme.palette.colors.charcoal[800],
           },
         },
       },
@@ -515,12 +494,13 @@ const YearXAxis = styled('div', { shouldForwardProp: (prop) => prop !== 'isLessM
 
     return {
       position: 'absolute',
-      bottom: isLessMobile ? 12 : 0,
+      bottom: isLessMobile ? -6 : 0,
       left: isLessMobile ? 30 : 40,
       right: 5,
       height: 11,
       borderLeft: border,
       borderRight: border,
+
       borderBottom: border,
       borderBottomLeftRadius: 3,
       borderBottomRightRadius: 3,
@@ -531,10 +511,10 @@ const YearXAxis = styled('div', { shouldForwardProp: (prop) => prop !== 'isLessM
 const YearText = styled('div')(({ theme }) => ({
   fontSize: 12,
   lineHeight: 'normal',
+  fontFamily: 'Open Sans Condensed, sans-serif',
   color: theme.palette.isLight ? theme.palette.colors.charcoal[200] : theme.palette.colors.charcoal[700],
   position: 'absolute',
   bottom: -6,
-
   width: 52,
   left: '50%',
   transform: 'translateX(-50%)',

@@ -122,10 +122,9 @@ const Wrapper = styled('div')({
   flexDirection: 'column',
   width: '100%',
 });
-
 const PageWrapper = styled(PageContainer)(({ theme }) => ({
   paddingTop: 88,
-
+  background: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.background.dm,
   [theme.breakpoints.up('tablet_768')]: {
     paddingTop: 124,
   },

@@ -83,7 +83,7 @@ const useBudgetStatementView = (
                 forumTag: 'https://forum.makerdao.com/t/poll-notice-amend-keeper-networks/20757',
               },
             ],
-            image: '/assets/img/mk-logo.png',
+            image: '/assets/img/default-icon-cards-budget.svg',
           },
           breadcrumbItems: [
             {
@@ -119,7 +119,8 @@ const useBudgetStatementView = (
             sentenceDescription:
               'MakerDAO Ecosystem Actors Special Purpose Funds page provides a comprehensive overview of Special Purpose Funds on-chain activity with monthly account snapshot.',
             socialMediaChannels: [{}],
-            image: '/assets/img/mk-logo.png',
+            image:
+              'https://raw.githubusercontent.com/makerdao-ses/makerdao-ses.github.io/89def08f5e56fba5aef97cca6c011ad067a1ab80/ecosystem-dashboard/budgets/SPFs.svg',
           },
           breadcrumbItems: [
             {
@@ -155,7 +156,7 @@ const useBudgetStatementView = (
                 forumTag: 'https://forum.makerdao.com/t/april-2024-aligned-delegate-compensation/24272',
               },
             ],
-            image: '/assets/img/mk-logo.png',
+            image: '/assets/img/default-icon-cards-budget.svg',
           },
           breadcrumbItems: [
             {

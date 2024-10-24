@@ -51,7 +51,7 @@ const VisualizationCard: React.FC<Props> = ({ delegatesExpenses, otherExpenses, 
             <LegendNumber isLight={isLight}>{humanizedTotalDelegates.value}</LegendNumber>
             <LegendNumberSuffix isLight={isLight}>{humanizedTotalDelegates.suffix}</LegendNumberSuffix>
           </LegendNumberWrapper>
-          <Coin isLight={isLight}>DAI</Coin>
+          <Coin isLight={isLight}>USD</Coin>
         </ContainerDescription>
         <Description>Percentage of Total DAO Expense Nov 2021 - Mar 2023 </Description>
       </BarDescription>

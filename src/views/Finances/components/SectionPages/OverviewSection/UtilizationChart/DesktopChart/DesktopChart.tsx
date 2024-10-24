@@ -148,7 +148,6 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
           return customTooltip;
         },
       },
-
       series: [
         {
           name: 'Overview Card',
@@ -178,7 +177,6 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
 
   const toggleSeriesVisibility = (seriesName: string) => {
     const chartInstance = chartRef.current?.getEchartsInstance();
-
     const newArray = visibleSeries.map((item) => {
       if (item.name === seriesName) {
         chartInstance.dispatchAction({
@@ -210,22 +208,19 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
       return item;
     });
     setLegends(newLegend);
-
     setVisibleSeries(newArray);
   };
+
   const onLegendItemHover = (legendName: string) => {
     const dataIndex = visibleSeries.find((data) => data.name === legendName);
-
     if (dataIndex) {
       if (dataIndex.value !== 0) {
         const chartInstance = chartRef.current.getEchartsInstance();
-
         chartInstance.dispatchAction({
           type: 'highlight',
           name: legendName,
           seriesIndex: 0,
         });
-
         chartInstance.dispatchAction({
           type: 'showTip',
           name: legendName,
@@ -279,6 +274,7 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
   }, [options]);
 
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     setIsLoading(false);
   }, []);
@@ -288,7 +284,7 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
   }
 
   return (
-    <Container isDeepLevel={isDeepLevel}>
+    <Container isDeepLevel={isDeepLevel} haveMoreThanThreeItems={seriesData.length > 3}>
       <ContainerChart>
         <ReactECharts
           ref={chartRef}
@@ -349,7 +345,9 @@ const DesktopChart: React.FC<DesktopChartProps> = ({
 
 export default DesktopChart;
 
-const Container = styled('div')<{ isDeepLevel: boolean }>(({ theme, isDeepLevel }) => ({
+const Container = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'isDeepLevel' && prop !== 'haveMoreThanThreeItems',
+})<{ isDeepLevel: boolean; haveMoreThanThreeItems: boolean }>(({ theme, isDeepLevel, haveMoreThanThreeItems }) => ({
   display: 'none',
 
   [theme.breakpoints.up('tablet_768')]: {
@@ -357,16 +355,22 @@ const Container = styled('div')<{ isDeepLevel: boolean }>(({ theme, isDeepLevel 
     flexDirection: 'row',
     width: '100%',
     gap: 20,
-
     justifyContent: 'center',
   },
-
   [theme.breakpoints.up('desktop_1024')]: {
     gap: 30,
   },
-
   [theme.breakpoints.up('desktop_1280')]: {
     gap: isDeepLevel ? 40 : 32,
+    ...(haveMoreThanThreeItems && {
+      justifyContent: 'flex-start',
+      marginLeft: 16,
+    }),
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    ...(haveMoreThanThreeItems && {
+      marginLeft: 40,
+    }),
   },
 }));
 
@@ -379,14 +383,15 @@ const ContainerChart = styled('div')(({ theme }) => ({
     width: 138,
     minWidth: 138,
   },
-
   [theme.breakpoints.up('desktop_1280')]: {
     width: 158,
     minWidth: 158,
   },
 }));
 
-const ContainerLegend = styled('div')<{ isDeepLevel: boolean; changeAlignment: boolean; numberSlider: number }>(
+const ContainerLegend = styled('div', {
+  shouldForwardProp: (prop) => !['isDeepLevel', 'changeAlignment', 'numberSlider'].includes(prop as string),
+})<{ isDeepLevel: boolean; changeAlignment: boolean; numberSlider: number }>(
   ({ theme, isDeepLevel, changeAlignment, numberSlider }) => ({
     display: 'flex',
     flex: isDeepLevel && numberSlider >= 2 ? 1 : 'none',
@@ -413,68 +418,63 @@ const ContainerLegendNotSwiper = styled('div')(() => ({
   position: 'relative',
 }));
 
-const SwiperWrapper = styled('div')<{ isDeepLevel: boolean; numberSliderPerLevel: number }>(
-  ({ theme, isDeepLevel, numberSliderPerLevel }) => ({
-    display: 'none',
+const SwiperWrapper = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'isDeepLevel' && prop !== 'numberSliderPerLevel',
+})<{ isDeepLevel: boolean; numberSliderPerLevel: number }>(({ theme, isDeepLevel, numberSliderPerLevel }) => ({
+  display: 'none',
 
-    [theme.breakpoints.up('tablet_768')]: {
-      display: 'flex',
-      position: 'relative',
-      width: 200,
-    },
+  [theme.breakpoints.up('tablet_768')]: {
+    display: 'flex',
+    position: 'relative',
+    width: 200,
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
+    marginTop: isDeepLevel ? 0 : 16,
+    display: 'flex',
+    width: 250,
+    minWidth: 250,
+  },
+  [theme.breakpoints.up('desktop_1280')]: {
+    display: 'flex',
+    position: 'relative',
+    ...(numberSliderPerLevel === 12 && {
+      minWidth: 360,
+    }),
+  },
+  [theme.breakpoints.up('desktop_1440')]: {
+    display: 'flex',
+    position: 'relative',
+    ...(numberSliderPerLevel === 12 && {
+      minWidth: 410,
+    }),
+  },
 
-    [theme.breakpoints.up('desktop_1024')]: {
-      marginTop: isDeepLevel ? 0 : 16,
-      display: 'flex',
-      width: 250,
-      minWidth: 250,
+  '& .swiper-pagination-horizontal': {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  '& .swiper-pagination-bullet': {
+    backgroundColor: `${
+      theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[700]
+    } !important`,
+    opacity: 1,
+    width: 8,
+    height: 8,
+    borderRadius: '50%',
+    '&:first-of-type': {
+      borderRadius: '6px 0 0 6px',
     },
-
-    [theme.breakpoints.up('desktop_1280')]: {
-      display: 'flex',
-      position: 'relative',
-      ...(numberSliderPerLevel === 12 && {
-        minWidth: 365,
-      }),
+    '&:last-of-type': {
+      borderRadius: '0 6px 6px 0',
     },
-
-    [theme.breakpoints.up('desktop_1440')]: {
-      display: 'flex',
-      position: 'relative',
-      ...(numberSliderPerLevel === 12 && {
-        minWidth: 440,
-      }),
-    },
-
-    '& .swiper-pagination-horizontal': {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'center',
-    },
-    '& .swiper-pagination-bullet': {
-      backgroundColor: `${
-        theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[700]
-      } !important`,
-      opacity: 1,
-      width: 8,
-      height: 8,
-      borderRadius: '50%',
-
-      '&:first-of-type': {
-        borderRadius: '6px 0 0 6px',
-      },
-
-      '&:last-of-type': {
-        borderRadius: '0 6px 6px 0',
-      },
-    },
-    '& .swiper-pagination-bullet-active': {
-      backgroundColor: `${
-        theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50]
-      } !important`,
-    },
-  })
-);
+  },
+  '& .swiper-pagination-bullet-active': {
+    backgroundColor: `${
+      theme.palette.isLight ? theme.palette.colors.gray[900] : theme.palette.colors.gray[50]
+    } !important`,
+  },
+}));
 
 const ContainerDaiIcon = styled('div')({
   width: 64,

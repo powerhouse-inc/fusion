@@ -114,7 +114,9 @@ const Accordion = styled((props: AccordionProps) => <MuiAccordion disableGutters
   },
 });
 
-const Card = styled(MuiAccordionSummary)<{ hasTransactions: boolean }>(({ theme, hasTransactions }) => ({
+const Card = styled(MuiAccordionSummary, {
+  shouldForwardProp: (prop) => prop !== 'hasTransactions',
+})<{ hasTransactions: boolean }>(({ theme, hasTransactions }) => ({
   padding: '8px 24px 16px',
   background: theme.palette.isLight ? '#ffffff' : theme.palette.colors.charcoal[900],
   boxShadow: theme.palette.isLight ? theme.fusionShadows.modules : theme.fusionShadows.darkMode,
@@ -361,7 +363,9 @@ const ArrowContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const Arrow = styled('svg')<{ hasTransactions?: boolean; isExpanded: boolean; isGroup: boolean }>(
+const Arrow = styled('svg', {
+  shouldForwardProp: (prop) => !['hasTransactions', 'isExpanded', 'isGroup'].includes(prop as string),
+})<{ hasTransactions?: boolean; isExpanded: boolean; isGroup: boolean }>(
   ({ theme, hasTransactions, isExpanded, isGroup }) => ({
     transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
     transition: 'transform 0.2s ease-in-out',

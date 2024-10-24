@@ -27,6 +27,7 @@ const FinancesBarChart: FC<FinancesBarChartProps> = ({ revenueAndSpendingData })
       psm: [],
       liquidationIncome: [],
       fees: [],
+      dsr: [],
       mkrVesting: [],
       daiSpent: [],
     };
@@ -41,6 +42,7 @@ const FinancesBarChart: FC<FinancesBarChartProps> = ({ revenueAndSpendingData })
       series.psm.push(record.psm);
       series.liquidationIncome.push(record.liquidationIncome);
       series.fees.push(record.fees);
+      series.dsr.push(record.dsr);
       series.mkrVesting.push(record.mkrVesting);
       series.daiSpent.push(record.daiSpent);
     });
@@ -102,6 +104,22 @@ const FinancesBarChart: FC<FinancesBarChartProps> = ({ revenueAndSpendingData })
       },
     },
     {
+      data: chartSeries.dsr,
+      type: 'bar',
+      stack: 'spending',
+      name: 'dsr',
+      barWidth,
+      itemStyle: {
+        color: theme.palette.isLight ? theme.palette.colors.orange[700] : theme.palette.colors.orange[900],
+        borderRadius: 0,
+      },
+      emphasis: {
+        itemStyle: {
+          color: 'inherit',
+        },
+      },
+    },
+    {
       data: chartSeries.mkrVesting,
       type: 'bar',
       stack: 'spending',
@@ -137,7 +155,7 @@ const FinancesBarChart: FC<FinancesBarChartProps> = ({ revenueAndSpendingData })
 
   const options: EChartsOption = {
     tooltip: {
-      show: true,
+      show: !isMobile,
       trigger: 'axis',
       borderRadius: 12,
       backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
@@ -150,6 +168,13 @@ const FinancesBarChart: FC<FinancesBarChartProps> = ({ revenueAndSpendingData })
       },
       padding: 0,
       borderColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
+      position: (point: [number, number]) => {
+        const margin = isTablet ? 0 : 8;
+        const xPos = point[0] + margin;
+        const yPos = point[1] + margin;
+
+        return [xPos, yPos];
+      },
       formatter: (value: BarChartSeries) => {
         const toolTipStyle = createTooltipFormatter(theme, isMobile)(value);
         return toolTipStyle;
@@ -246,6 +271,7 @@ const Container = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('tablet_768')]: {
     width: 385,
     height: 253,
+    marginTop: 20,
   },
   [theme.breakpoints.up('desktop_1024')]: {
     width: 526,
@@ -253,6 +279,7 @@ const Container = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('desktop_1280')]: {
     width: 449,
     height: 360,
+    marginTop: 8,
   },
   [theme.breakpoints.up('desktop_1440')]: {
     width: 480,

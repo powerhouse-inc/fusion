@@ -48,8 +48,13 @@ export const useFinancesView = (budgets: Budget[], allBudgets: Budget[], initial
 
   const handleChangeYears = (value: string) => {
     setYear(value);
-    router.push(
-      `${siteRoutes.finances(codePath.split('/').slice(1, levelNumber).join('/'))}?year=${value}`,
+    router.replace(
+      {
+        query: {
+          ...router.query,
+          year: value,
+        },
+      },
       undefined,
       { shallow: true }
     );

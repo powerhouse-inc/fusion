@@ -78,8 +78,8 @@ const LinkList: React.FC<Props> = ({ className, socialMedia }) => {
 
   return (
     <Container className={className}>
-      {links.map((link) => (
-        <ItemLinkList icon={link.icon} title={link.title} href={link.href} onClick={() => null} />
+      {links.map((link, index) => (
+        <ItemLinkList key={`socials-ItemLinkList-${index}`} icon={link.icon} title={link.title} href={link.href} />
       ))}
     </Container>
   );

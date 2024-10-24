@@ -12,7 +12,7 @@ const TransactionAmount: React.FC<TransactionAmountProps> = ({ amount, highlight
     <Amount isGreen={amount > 0 && !!highlightPositiveAmounts}>
       <Sign>{amount < 0 ? '-' : '+'}</Sign>
       {usLocalizedNumber(Math.abs(amount))}
-      <Currency>DAI</Currency>
+      <Currency>USD</Currency>
     </Amount>
   </Wrapper>
 );

@@ -25,7 +25,11 @@ const MainWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   } = useCookiesContextTracking();
 
   useEffect(() => {
-    if (isShowBanner && !router.pathname.startsWith(siteRoutes.cookiesPolicy)) {
+    if (
+      isShowBanner &&
+      !router.pathname.startsWith(siteRoutes.cookiesPolicy) &&
+      !router.pathname.startsWith(siteRoutes.disclaimer)
+    ) {
       lockScroll();
     }
     return () => {
@@ -36,9 +40,10 @@ const MainWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <>
       {children}
-      {isShowBanner && themeMode !== undefined && !router.pathname.startsWith(siteRoutes.cookiesPolicy) && (
-        <OverlayContainer />
-      )}
+      {isShowBanner &&
+        themeMode !== undefined &&
+        !router.pathname.startsWith(siteRoutes.cookiesPolicy) &&
+        !router.pathname.startsWith(siteRoutes.disclaimer) && <OverlayContainer />}
       {isShowBanner && themeMode !== undefined && (
         <PolicyBannerPosition>
           <CookiesPolicyBanner

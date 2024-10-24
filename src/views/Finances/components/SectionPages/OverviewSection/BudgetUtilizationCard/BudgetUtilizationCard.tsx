@@ -26,7 +26,7 @@ const BudgetUtilizationCard: React.FC<QuarterCardProps> = ({ paymentsOnChain, bu
         <TotalActual>
           <PredictionNumber>{humanizedActuals.value}</PredictionNumber>
           <PredictionUnits>
-            <PredictionSymbol>DAI</PredictionSymbol>
+            <PredictionSymbol>USD</PredictionSymbol>
             <NumberSuffix>{humanizedActuals.suffix}</NumberSuffix>
           </PredictionUnits>
         </TotalActual>
@@ -34,7 +34,7 @@ const BudgetUtilizationCard: React.FC<QuarterCardProps> = ({ paymentsOnChain, bu
         <TotalBudgeCap>
           <PredictionNumber>{humanizedBudgetCap.value}</PredictionNumber>
           <PredictionUnits>
-            <PredictionSymbol>DAI</PredictionSymbol>
+            <PredictionSymbol>USD</PredictionSymbol>
             <NumberSuffix>{humanizedBudgetCap.suffix}</NumberSuffix>
           </PredictionUnits>
         </TotalBudgeCap>

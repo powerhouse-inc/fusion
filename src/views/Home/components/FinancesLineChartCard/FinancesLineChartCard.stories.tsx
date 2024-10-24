@@ -34,52 +34,60 @@ LightMode.parameters = {
       375: {
         component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=5617-32011&m=dev',
         options: {
-          componentStyle: {},
+          componentStyle: {
+            width: 343,
+          },
           style: {
-            top: '-1rem',
-            left: '-1rem',
+            top: -16,
+            left: -14,
           },
         },
       },
       768: {
         component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=5617-29764&m=dev',
         options: {
-          componentStyle: {},
+          componentStyle: {
+            width: 704,
+          },
           style: {
-            top: '-1rem',
-            left: '-1rem',
+            top: -11,
+            left: -14,
           },
         },
       },
       1024: {
         component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=5617-27017&m=dev',
         options: {
-          componentStyle: {},
+          componentStyle: {
+            width: 960,
+          },
           style: {
-            top: '-1rem',
-            left: '-1rem',
+            top: -11,
+            left: -14,
           },
         },
       },
       1280: {
         component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=5617-24134&m=dev',
         options: {
-          componentStyle: {},
+          componentStyle: {
+            width: 687,
+          },
           style: {
-            top: '-0.75rem',
-            left: '50%',
-            transform: 'translate(-50%, 0)',
+            top: -13,
+            left: -14,
           },
         },
       },
       1440: {
         component: 'https://www.figma.com/design/iLyzLutlWLu6Yf8tFdlM6T/Fusion%2FPowerhouse?node-id=5617-14137&m=dev',
         options: {
-          componentStyle: {},
+          componentStyle: {
+            width: 752,
+          },
           style: {
-            top: '-0.75rem',
-            left: '50%',
-            transform: 'translate(-50%, 0)',
+            top: -13,
+            left: -14,
           },
         },
       },

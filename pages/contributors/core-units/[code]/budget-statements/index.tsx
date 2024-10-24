@@ -6,6 +6,7 @@ import { ResourceType } from '@ses/core/models/interfaces/types';
 import request from 'graphql-request';
 import { DateTime } from 'luxon';
 import React, { useState, useEffect } from 'react';
+import type { CoreUnitDto } from '@/core/models/dto/coreUnitDTO';
 import { CORE_UNIT_REQUEST, getLastSnapshotPeriod } from '@/views/CoreUnitBudgetStatement/BudgetStatementAPI';
 import CoreUnitBudgetStatementView from '@/views/CoreUnitBudgetStatement/CoreUnitBudgetStatementView';
 import type { ExpenseCategory } from '@ses/core/models/dto/expenseCategoriesDTO';
@@ -13,7 +14,7 @@ import type { CoreUnit } from '@ses/core/models/interfaces/coreUnit';
 import type { Team } from '@ses/core/models/interfaces/team';
 import type { GetServerSidePropsContext } from 'next';
 
-interface TransparencyProps {
+interface CoreUnitBudgetStatementPageProps {
   coreUnits: CoreUnit[];
   cu: CoreUnit;
   expenseCategories: ExpenseCategory[];
@@ -23,7 +24,12 @@ interface TransparencyProps {
   } | null;
 }
 
-const Transparency = ({ coreUnits, cu, expenseCategories, snapshotLimitPeriods }: TransparencyProps) => {
+const CoreUnitBudgetStatementPage = ({
+  coreUnits,
+  cu,
+  expenseCategories,
+  snapshotLimitPeriods,
+}: CoreUnitBudgetStatementPageProps) => {
   const [currentCoreUnit, setCurrentCoreUnit] = useState<CoreUnit>(cu);
   useEffect(() => {
     setCurrentCoreUnit(cu);
@@ -55,7 +61,7 @@ const Transparency = ({ coreUnits, cu, expenseCategories, snapshotLimitPeriods }
   );
 };
 
-export default Transparency;
+export default CoreUnitBudgetStatementPage;
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const { query } = context;
@@ -63,7 +69,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   const { query: gqlQuery, filter } = CORE_UNIT_REQUEST(code);
 
   const [data, coreUnits, expenseCategories] = await Promise.all([
-    request(GRAPHQL_ENDPOINT, gqlQuery, filter),
+    request<{ coreUnits: CoreUnitDto[] }>(GRAPHQL_ENDPOINT, gqlQuery, filter),
     fetchCoreUnits(),
     fetchExpenseCategories(),
   ]);

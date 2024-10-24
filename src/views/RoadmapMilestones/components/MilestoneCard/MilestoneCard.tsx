@@ -37,7 +37,7 @@ const MilestoneCard: FC<MilestoneCardProps> = ({ milestone }) => {
         <ProgressWithStatus progress={percentage} status={milestone.scope?.status} />
       </Progress>
       <ViewContainer>
-        <InternalLinkButton href={`#${milestone.code}`} buttonType="primary" label="View" />
+        <InternalLinkButton href={`#${milestone.code}`} buttonType="primary" label="View" replaceHistory={true} />
       </ViewContainer>
     </Container>
   );

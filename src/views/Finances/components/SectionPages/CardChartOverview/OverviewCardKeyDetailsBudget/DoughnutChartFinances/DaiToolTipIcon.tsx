@@ -7,7 +7,12 @@ import SESTooltip from '@/components/SESTooltip/SESTooltip';
 const DaiToolTipIcon: React.FC = () => (
   <Wrapper>
     <DAIIconStyled />
-    <SESTooltip content={'All amounts are in DAI'} placement="bottom-start" enterTouchDelay={0} leaveTouchDelay={15000}>
+    <SESTooltip
+      content={'All amounts are in USDS/DAI'}
+      placement="bottom-start"
+      enterTouchDelay={0}
+      leaveTouchDelay={15000}
+    >
       <IconWrapper>
         <InfoOutlined height={14} width={14} />
       </IconWrapper>

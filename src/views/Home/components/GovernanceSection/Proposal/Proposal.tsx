@@ -30,18 +30,27 @@ const Proposal: React.FC<ProposalProps> = ({ proposal, isHat }) => {
               <>
                 <span>
                   Passed on{' '}
-                  {DateTime.fromISO(proposal.spellData.datePassed).toFormat("LLL dd yyyy HH:mm 'UTC'").toUpperCase()}
+                  {DateTime.fromISO(proposal.spellData.datePassed)
+                    .toUTC()
+                    .toFormat("LLL dd yyyy HH:mm 'UTC'")
+                    .toUpperCase()}
                 </span>
                 <Separator>-</Separator>
                 <span>
                   Executed on{' '}
-                  {DateTime.fromISO(proposal.spellData.dateExecuted).toFormat("LLL dd yyyy HH:mm 'UTC'").toUpperCase()}
+                  {DateTime.fromISO(proposal.spellData.dateExecuted)
+                    .toUTC()
+                    .toFormat("LLL dd yyyy HH:mm 'UTC'")
+                    .toUpperCase()}
                 </span>
               </>
             ) : (
               <span>
                 Expires at{' '}
-                {DateTime.fromISO(proposal.spellData.expiration).toFormat("LLL dd yyyy HH:mm 'UTC'").toUpperCase()}
+                {DateTime.fromISO(proposal.spellData.expiration)
+                  .toUTC()
+                  .toFormat("LLL dd yyyy HH:mm 'UTC'")
+                  .toUpperCase()}
               </span>
             )}
           </Dates>

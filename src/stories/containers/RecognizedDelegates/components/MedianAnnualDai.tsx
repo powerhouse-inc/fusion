@@ -19,7 +19,7 @@ const MedianAnnualDai: React.FC<Props> = ({ annual }) => {
     <ExtendedGenericDelegate>
       <Annual isLight={isLight}>
         {`${formatted}`}
-        <span>Dai</span>
+        <span>USD</span>
       </Annual>
 
       <DescriptionDelegatesExtended>Median Annual Compensation / Delegate</DescriptionDelegatesExtended>

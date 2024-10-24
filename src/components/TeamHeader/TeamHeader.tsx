@@ -7,7 +7,6 @@ import SocialMediaLinksButton from '../ButtonLink/SocialMediaLinksButton';
 import CategoryChip from '../CategoryChip/CategoryChip';
 import CircleAvatar from '../CircleAvatar/CircleAvatar';
 import Container from '../Container/Container';
-import ExternalLinkButton from '../ExternalLinkButton/ExternalLinkButton';
 import RoleChip from '../RoleChip/RoleChip';
 import ScopeChip from '../ScopeChip/ScopeChip';
 import { StatusChip } from '../StatusChip/StatusChip';
@@ -23,6 +22,7 @@ interface TeamHeaderProps {
 const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className, withDescription = true }) => {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('tablet_768'));
   const chips =
+    // it is an ecosystem actor
     team.type === ResourceType.EcosystemActor ? (
       team.scopes?.length > 0 && (
         <ScopeList>
@@ -32,10 +32,10 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className, withDescriptio
         </ScopeList>
       )
     ) : team.type === ResourceType.Delegates ? (
-      <ExternalLinkButton href="https://makerburn.com/#/expenses/core-units/DELEGATES">
-        Onchain Transactions
-      </ExternalLinkButton>
+      // it is a delegates
+      <CoreUnitSubmissionLink team={team} />
     ) : (
+      // it is a core unit
       team.category?.length > 0 && (
         <CategoryList>
           {team.category?.map((category) => (
@@ -51,10 +51,20 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className, withDescriptio
         <Container>
           <Content>
             <TeamBasicInfo>
-              <Avatar name={team.name} image={team.image} />
+              <Avatar
+                name={team.name}
+                image={team.image}
+                isSmall={[
+                  ResourceType.Keepers,
+                  ResourceType.SpecialPurposeFund,
+                  ResourceType.AlignedDelegates,
+                  ResourceType.Delegates,
+                ].includes(team.type)}
+              />
               <InfoContent>
-                <TeamName>
-                  <Code>{team.shortCode}</Code> {team.name}
+                <TeamName shouldBeCentered={team.type === ResourceType.Delegates}>
+                  <Code>{team.shortCode}</Code>
+                  {team.name}
                 </TeamName>
                 {[ResourceType.EcosystemActor, ResourceType.CoreUnit].includes(team.type) && (
                   <ChipsContainer>
@@ -63,7 +73,6 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className, withDescriptio
                     ) : (
                       <StatusChipForCoreUnit status={team.status as TeamStatus} />
                     )}
-
                     {team.type === ResourceType.EcosystemActor ? (
                       <RoleChip status={(team.category?.[0] ?? '') as TeamRole} />
                     ) : (
@@ -74,8 +83,14 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ team, className, withDescriptio
                 {chips}
               </InfoContent>
             </TeamBasicInfo>
-
-            <LinksContainer>
+            <LinksContainer
+              shouldBeCentered={[
+                ResourceType.Keepers,
+                ResourceType.SpecialPurposeFund,
+                ResourceType.AlignedDelegates,
+                ResourceType.Delegates,
+              ].includes(team.type)}
+            >
               <SocialMediaLinksButton socialMedia={team.socialMediaChannels?.[0]} />
             </LinksContainer>
           </Content>
@@ -90,9 +105,8 @@ export default TeamHeader;
 
 const MainContainer = styled('div')(({ theme }) => ({
   marginTop: 40,
-  zIndex: 3,
   width: '100%',
-  background: theme.palette.isLight ? theme.palette.colors.gray[50] : 'rgba(25, 29, 36, 1)',
+  backgroundColor: theme.palette.isLight ? theme.palette.colors.gray[50] : theme.palette.colors.background.dm,
 }));
 
 const HeaderWrapper = styled('div')(({ theme }) => ({
@@ -116,50 +130,58 @@ const TeamBasicInfo = styled('div')(({ theme }) => ({
   width: '100%',
   maxWidth: 'calc(100% - 40px)',
 
-  [theme.breakpoints.up('tablet_768')]: {
+  [theme.breakpoints.up('desktop_1024')]: {
     gap: 16,
   },
 }));
 
-const Avatar = styled(CircleAvatar)(({ theme }) => ({
-  width: 48,
-  height: 48,
-  minWidth: 48,
-  minHeight: 48,
+const Avatar = styled(CircleAvatar, {
+  shouldForwardProp: (prop) => prop !== 'isSmall',
+})<{ isSmall: boolean }>(({ theme, isSmall }) => ({
+  ...(isSmall
+    ? {
+        width: 40,
+        height: 40,
+        minWidth: 40,
+        minHeight: 40,
+      }
+    : {
+        width: 48,
+        height: 48,
+        minWidth: 48,
+        minHeight: 48,
 
-  [theme.breakpoints.up('tablet_768')]: {
-    width: 56,
-    height: 56,
-    minWidth: 56,
-    minHeight: 56,
-  },
+        [theme.breakpoints.up('tablet_768')]: {
+          width: 56,
+          height: 56,
+          minWidth: 56,
+          minHeight: 56,
+        },
+      }),
 }));
 
 const InfoContent = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignContent: 'center',
+  justifyContent: 'center',
   width: '100%',
   maxWidth: 'calc(100% - 48px)',
 
   [theme.breakpoints.up('tablet_768')]: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    justifyContent: 'normal',
   },
 }));
 
-const ChipsContainer = styled('div')(({ theme }) => ({
+const ChipsContainer = styled('div')(() => ({
   display: 'flex',
   gap: 4,
-
   '& > *': {
     alignSelf: 'center',
     textWrap: 'nowrap',
     height: 24,
-  },
-
-  [theme.breakpoints.up('tablet_768')]: {
-    gap: 8,
   },
 }));
 
@@ -179,7 +201,9 @@ const StatusChipForCoreUnit = styled(StatusChip)(({ theme }) => ({
   },
 }));
 
-const TeamName = styled('div')(({ theme }) => ({
+const TeamName = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'shouldBeCentered',
+})<{ shouldBeCentered: boolean }>(({ theme, shouldBeCentered }) => ({
   fontSize: 16,
   lineHeight: '24px',
   fontWeight: 600,
@@ -189,13 +213,21 @@ const TeamName = styled('div')(({ theme }) => ({
   textOverflow: 'ellipsis',
 
   [theme.breakpoints.up('tablet_768')]: {
+    ...(shouldBeCentered && { alignSelf: 'center' }),
+    marginRight: 8,
+    fontSize: 18,
+    lineHeight: '21.6px',
+    fontWeight: 700,
+  },
+  [theme.breakpoints.up('desktop_1024')]: {
     marginRight: 16,
     fontSize: 20,
-    fontWeight: 700,
+    lineHeight: '24px',
   },
 }));
 
 const Code = styled('span')(({ theme }) => ({
+  marginRight: 4,
   color: theme.palette.isLight ? theme.palette.colors.gray[400] : theme.palette.colors.gray[600],
 }));
 
@@ -221,10 +253,16 @@ const CategoryList = styled('div')(({ theme }) => ({
   },
 }));
 
-const LinksContainer = styled('div')(({ theme }) => ({
-  [theme.breakpoints.between('tablet_768', 'desktop_1024')]: {
+const LinksContainer = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'shouldBeCentered',
+})<{ shouldBeCentered: boolean }>(({ theme, shouldBeCentered }) => ({
+  ...(shouldBeCentered && {
     display: 'flex',
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
+  }),
+
+  [theme.breakpoints.between('tablet_768', 'desktop_1024')]: {
+    alignSelf: shouldBeCentered ? 'center' : 'flex-end',
   },
 }));
 

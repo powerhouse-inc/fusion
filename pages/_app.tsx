@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { CookiesProvider } from 'react-cookie';
 import { Provider } from 'react-redux';
+import ErrorBoundary from '@/components/Error/ErrorBoundary';
 import { featureFlags } from '../feature-flags/feature-flags';
 import { CURRENT_ENVIRONMENT } from '../src/config/endpoints';
 import { AuthContextProvider } from '../src/core/context/AuthContext';
@@ -62,6 +63,27 @@ function MyApp(props: MyAppProps) {
     }
   }, [props.pageProps?.protected, router]);
 
+  useEffect(() => {
+    router.beforePopState((state) => {
+      state.options.scroll = false;
+      return true;
+    });
+    window.history.scrollRestoration = 'manual';
+
+    return () => {
+      router.beforePopState(() => true);
+      window.history.scrollRestoration = 'auto';
+    };
+  }, [router]);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'instant' as ScrollBehavior,
+    });
+  }, [router.pathname]);
+
   return (
     <CookiesProvider>
       <Provider store={store}>
@@ -74,7 +96,9 @@ function MyApp(props: MyAppProps) {
               />
               <FeatureFlagsProvider enabledFeatures={featureFlags[CURRENT_ENVIRONMENT]}>
                 <AppLayout>
-                  <Component {...pageProps} />
+                  <ErrorBoundary>
+                    <Component {...pageProps} />
+                  </ErrorBoundary>
                 </AppLayout>
                 <ContainerNotification limit={3} />
               </FeatureFlagsProvider>

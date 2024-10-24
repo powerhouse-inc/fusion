@@ -56,7 +56,7 @@ const MobileTransaction: React.FC<MobileTransactionProps> = ({
           <Value isGreen={amount > 0 && !!highlightPositiveAmounts}>
             <Sign>{amount < 0 ? '-' : '+'}</Sign>
             {usLocalizedNumber(Math.abs(amount))}
-            <Currency>DAI</Currency>
+            <Currency>USD</Currency>
           </Value>
         </Content>
         <CollapseIndicator>

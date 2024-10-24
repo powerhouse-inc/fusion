@@ -32,7 +32,7 @@ const BudgetStatementPager = forwardRef<HTMLDivElement, BudgetStatementPagerProp
   ) => (
     <PagerBar className="no-select" ref={ref}>
       <PagerBarLeft>
-        <ArrowContainer className={'no-select'}>
+        <ArrowContainer className="no-select">
           <PagerArrowStyled
             hasNext={hasNext}
             hasPrevious={hasPrevious}

@@ -50,6 +50,7 @@ export interface Deliverable {
   code: string;
   description: string;
   keyResults: KeyResult[];
+  supportedKeyResults: KeyResult[];
 
   status: DeliverableStatus;
   progress: Progress;

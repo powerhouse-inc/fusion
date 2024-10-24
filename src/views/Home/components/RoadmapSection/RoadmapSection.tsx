@@ -6,6 +6,8 @@ import FancyTabs from '@/components/FancyTabs/FancyTabs';
 import ShadowWrapper from '@/components/FancyTabs/ShadowWrapper';
 import type { Roadmap } from '@/core/models/interfaces/roadmaps';
 import MilestoneCard from '@/views/Home/components/MilestoneCard/MilestoneCard';
+import HomeSectionTitle from '../HomeSectionTitle/HomeSectionTitle';
+import Section from '../Section/Section';
 import useRoadmapSection from './useRoadmapSection';
 import type { Theme } from '@mui/material';
 import type { FC } from 'react';
@@ -47,42 +49,46 @@ const RoadmapSection: FC<RoadmapSectionProps> = ({ roadmaps }) => {
   };
 
   return (
-    <Container>
-      <ShadowWrapper>
-        <FancyTabs
-          tabs={tabs}
-          activeTab={activeTab}
-          onTabChange={(tab: string) => {
-            handleActiveTab(tab);
-          }}
-        />
-        <DescriptionContainer>
-          <Description>{roadmaps[activeRoadmap]?.description}</Description>
-        </DescriptionContainer>
-      </ShadowWrapper>
-      {isMobile ? (
-        <MobileMilestoneCardsContainer>
-          {roadmaps[activeRoadmap]?.milestones.map((milestoneData, index) => (
-            <Fragment key={milestoneData.id}>
-              <MilestoneCard slug={roadmaps[activeRoadmap]?.slug} milestoneData={milestoneData} />
-              {index !== roadmaps[activeRoadmap]?.milestones.length - 1 && <MobileMilestoneCardsDivider />}
-            </Fragment>
-          ))}
-        </MobileMilestoneCardsContainer>
-      ) : (
-        <SwiperContainer>
-          <Swiper ref={swiperRef} modules={[Pagination]} centerInsufficientSlides {...swiperOptions}>
-            {roadmaps[activeRoadmap]?.milestones.map((milestoneData) => (
-              <SwiperSlide key={milestoneData.id}>
-                <MilestoneCardContainer>
-                  <MilestoneCard slug={roadmaps[activeRoadmap]?.slug} milestoneData={milestoneData} />
-                </MilestoneCardContainer>
-              </SwiperSlide>
+    <Section id="roadmap">
+      <HomeSectionTitle hash="roadmap">Roadmap</HomeSectionTitle>
+
+      <Container>
+        <ShadowWrapper>
+          <FancyTabs
+            tabs={tabs}
+            activeTab={activeTab}
+            onTabChange={(tab: string) => {
+              handleActiveTab(tab);
+            }}
+          />
+          <DescriptionContainer>
+            <Description>{roadmaps[activeRoadmap]?.description}</Description>
+          </DescriptionContainer>
+        </ShadowWrapper>
+        {isMobile ? (
+          <MobileMilestoneCardsContainer>
+            {roadmaps[activeRoadmap]?.milestones.map((milestoneData, index) => (
+              <Fragment key={milestoneData.id}>
+                <MilestoneCard slug={roadmaps[activeRoadmap]?.slug} milestoneData={milestoneData} />
+                {index !== roadmaps[activeRoadmap]?.milestones.length - 1 && <MobileMilestoneCardsDivider />}
+              </Fragment>
             ))}
-          </Swiper>
-        </SwiperContainer>
-      )}
-    </Container>
+          </MobileMilestoneCardsContainer>
+        ) : (
+          <SwiperContainer>
+            <Swiper ref={swiperRef} modules={[Pagination]} centerInsufficientSlides {...swiperOptions}>
+              {roadmaps[activeRoadmap]?.milestones.map((milestoneData) => (
+                <SwiperSlide key={milestoneData.id}>
+                  <MilestoneCardContainer>
+                    <MilestoneCard slug={roadmaps[activeRoadmap]?.slug} milestoneData={milestoneData} />
+                  </MilestoneCardContainer>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </SwiperContainer>
+        )}
+      </Container>
+    </Section>
   );
 };
 
@@ -114,7 +120,7 @@ const MobileMilestoneCardsDivider = styled('div')(({ theme }) => ({
 
 const DescriptionContainer = styled('div')(({ theme }) => ({
   padding: '9px 16px 9px 8px',
-  borderRadius: '0px 12px 0px 0px',
+  borderRadius: '0px 12px 12px 12px',
   backgroundColor: theme.palette.isLight ? theme.palette.colors.slate[50] : theme.palette.colors.charcoal[800],
 
   [theme.breakpoints.up('desktop_1024')]: {
