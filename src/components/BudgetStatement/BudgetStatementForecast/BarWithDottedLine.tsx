@@ -37,21 +37,28 @@ const BarWithDottedLine: React.FC<Props> = ({ value, relativeValue, month, isTot
   };
 
   if (!showComponent) return <ContainerNA>N/A</ContainerNA>;
-  const barColor = getProgressiveBarColor(value, relativeValue, isLight, hover);
-  const percent = getPercentFullBar(value, relativeValue);
-  const displacement = getDisplacementDashLine(value, relativeValue);
-  const borderColor = getBorderColor(value, relativeValue, isLight);
+
+  const valueFixed = Number(value.toFixed(2));
+  const relativeValueFixed = Number(relativeValue.toFixed(2));
+
+  const barColor = getProgressiveBarColor(valueFixed, relativeValueFixed, isLight, hover);
+  const percent = getPercentFullBar(valueFixed, relativeValueFixed);
+  const displacement = getDisplacementDashLine(valueFixed, relativeValueFixed);
+  const borderColor = getBorderColor(valueFixed, relativeValueFixed, isLight);
+
   return (
     <Container>
-      <Forecast isTotal={isTotal} isNegative={value < 0}>
-        {usLocalizedNumber(value, 2)}
+      <Forecast isTotal={isTotal} isNegative={valueFixed < 0}>
+        {usLocalizedNumber(valueFixed, 2)}
       </Forecast>
       <ContainerBar>
         <BudgetBar>{<BarPercent width={percent} color={barColor} />}</BudgetBar>
 
         <SESTooltipStyled
           borderColor={borderColor}
-          content={<PopoverForecastDescription relativeValue={relativeValue} value={value} month={monthFormatted} />}
+          content={
+            <PopoverForecastDescription relativeValue={relativeValueFixed} value={valueFixed} month={monthFormatted} />
+          }
         >
           <ContendBarForSpace
             onMouseEnter={handleMouseOver}
@@ -63,7 +70,7 @@ const BarWithDottedLine: React.FC<Props> = ({ value, relativeValue, month, isTot
           </ContendBarForSpace>
         </SESTooltipStyled>
       </ContainerBar>
-      <BudgetCap>{usLocalizedNumber(relativeValue, 2)}</BudgetCap>
+      <BudgetCap>{usLocalizedNumber(relativeValueFixed, 2)}</BudgetCap>
     </Container>
   );
 };
