@@ -1,7 +1,7 @@
 import { ExpenditureLevel } from '@ses/core/enums/expenditureLevelEnum';
 import { API_MONTH_TO_FORMAT } from '@ses/core/utils/date';
 import { percentageRespectTo } from '@ses/core/utils/math';
-import _ from 'lodash';
+import sumBy from 'lodash/sumBy';
 import type { BudgetStatement } from '@ses/core/models/interfaces/budgetStatement';
 import type {
   BudgetStatementLineItem,
@@ -158,7 +158,7 @@ export const getTransferRequestSource = (wallet: BudgetStatementWallet): Source 
 export const getWalletMonthlyBudgetForeCast = (wallet: BudgetStatementWallet, month: string) => {
   const itemsSum = wallet.budgetStatementLineItem.filter((item) => item.month === month);
   if (itemsSum.length === 0) return 'N/A';
-  return _.sumBy(itemsSum, (i) => i.budgetCap ?? 0);
+  return sumBy(itemsSum, (i) => i.budgetCap ?? 0);
 };
 
 export const getForecastForMonthOnWalletOnBudgetStatementOrNA = (
@@ -180,7 +180,7 @@ export const getForecastForMonthOnWalletOnBudgetStatementOrNA = (
     (item) => item.month === month.toFormat(API_MONTH_TO_FORMAT)
   );
   if (itemsToSum.length === 0) return 'N/A';
-  return _.sumBy(
+  return sumBy(
     wallet?.budgetStatementLineItem.filter((item) => item.month === month.toFormat(API_MONTH_TO_FORMAT)),
     (i) => i.forecast ?? 0
   );
@@ -239,8 +239,8 @@ export const getBudgetCapForMonthOnBudgetStatementForeCast = (
 ) => {
   const budgetStatement = budgetStatements?.find((x) => x.month === currentMonth.toFormat(API_MONTH_TO_FORMAT)) ?? null;
   let countNumber = 0;
-  const sumTotal = _.sumBy(budgetStatement?.budgetStatementWallet, (wallet) =>
-    _.sumBy(
+  const sumTotal = sumBy(budgetStatement?.budgetStatementWallet, (wallet) =>
+    sumBy(
       wallet?.budgetStatementLineItem?.filter((item) => item.month === month.toFormat(API_MONTH_TO_FORMAT)),
       (item) => {
         countNumber++;
@@ -276,7 +276,7 @@ export const getBudgetCapForMonthOnWalletOnBudgetStatementForeCast = (
     (item) => item.month === month?.toFormat(API_MONTH_TO_FORMAT)
   );
   if (arrayItems.length === 0) return 'N/A';
-  const moment = _.sumBy(
+  const moment = sumBy(
     wallet?.budgetStatementLineItem.filter((item) => item.month === month?.toFormat(API_MONTH_TO_FORMAT)),
     (i) => i.budgetCap ?? 9
   );
@@ -291,7 +291,7 @@ export const getBudgetCapForMonthOnLineItemForeCast = (
   let countNumber = 0;
   const itemsSum = items.filter((item) => item.month === month.toFormat(API_MONTH_TO_FORMAT));
   if (itemsSum.length === 0) return 'N/A';
-  const sumTotal = _.sumBy(itemsSum, (item) => {
+  const sumTotal = sumBy(itemsSum, (item) => {
     countNumber++;
     return item.budgetCap ?? 0;
   });

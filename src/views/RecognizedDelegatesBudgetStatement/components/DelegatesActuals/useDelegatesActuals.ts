@@ -1,4 +1,6 @@
-import _ from 'lodash';
+import groupBy from 'lodash/groupBy';
+import isEmpty from 'lodash/isEmpty';
+import sumBy from 'lodash/sumBy';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { InnerTableColumn, InnerTableRow, RowType } from '@/components/AdvancedInnerTable/types';
 import { useUrlAnchor } from '@/core/hooks/useUrlAnchor';
@@ -20,7 +22,7 @@ import {
   getWalletPayment,
 } from '@/core/utils/finances';
 import { getWalletWidthForWallets } from '@/core/utils/string';
-import { renderWallet } from '@/views/CoreUnitBudgetStatement/BudgetStatementtUtils';
+import { renderWallet } from '@/views/CoreUnitBudgetStatement/BudgetStatementUtils';
 import type { DateTime } from 'luxon';
 
 export const useDelegatesActuals = (propsCurrentMonth: DateTime, budgetStatements: BudgetStatement[] | undefined) => {
@@ -52,7 +54,7 @@ export const useDelegatesActuals = (propsCurrentMonth: DateTime, budgetStatement
 
   const getGroupPayment = useCallback(
     (group: BudgetStatementLineItem[]) =>
-      _.sumBy(
+      sumBy(
         group.filter((item) => item.month === currentMonth),
         (item) => item.payment ?? 0
       ),
@@ -95,7 +97,7 @@ export const useDelegatesActuals = (propsCurrentMonth: DateTime, budgetStatement
   }, [breakdownTabsActuals]);
 
   useEffect(() => {
-    if (!scrolled && anchor && !_.isEmpty(headerIdsActuals) && headerIdsActuals.includes(anchor)) {
+    if (!scrolled && anchor && !isEmpty(headerIdsActuals) && headerIdsActuals.includes(anchor)) {
       setScrolled(true);
       let offset = (breakdownTitleRef?.current?.offsetTop || 0) - 260;
       const windowsWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
@@ -277,7 +279,7 @@ export const useDelegatesActuals = (propsCurrentMonth: DateTime, budgetStatement
   const getBreakdownItems = useCallback(
     (items: BudgetStatementLineItem[], type?: RowType) => {
       const result: InnerTableRow[] = [];
-      const grouped = _.groupBy(items, (item) => item.group);
+      const grouped = groupBy(items, (item) => item.group);
 
       for (const groupedKey in grouped) {
         if (
@@ -288,7 +290,7 @@ export const useDelegatesActuals = (propsCurrentMonth: DateTime, budgetStatement
           continue;
         }
 
-        const groupedCategory = _.groupBy(grouped[groupedKey], (item) => item.budgetCategory);
+        const groupedCategory = groupBy(grouped[groupedKey], (item) => item.budgetCategory);
 
         let i = 1;
         for (const groupedCatKey in groupedCategory) {
