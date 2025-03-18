@@ -1,6 +1,6 @@
 # MakerDAO Ecosystem Performance Dashboard
 
-This repository contains the code of the [Fusion platform](https://expenses.makerdao.network/)
+This repository contains the code of the [Fusion platform](https://expenses.makerdao.network/) . It currently focusses on an example use case for the Maker / Sky Ecosystem performance dashboard. 
 
 It is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
