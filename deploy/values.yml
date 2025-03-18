@@ -50,6 +50,10 @@ env:
   ENABLE_SITEMAP:
     type: kv
     value: "true"
+  NEXT_PUBLIC_ETH_MAINNET_RPC:
+    type: parameterStore
+    name: next-public-eth-mainnet-rpc
+    parameter_name: /eks/${CLUSTER_NAME}/${APP_NAME}/next-public-eth-mainnet-rpc
   NEXT_PUBLIC_GRAPHQL_ENDPOINT:
     type: parameterStore
     name: next-public-graphql-endpoint
