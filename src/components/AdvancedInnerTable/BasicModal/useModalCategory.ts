@@ -1,4 +1,5 @@
-import _ from 'lodash';
+import has from 'lodash/has';
+import some from 'lodash/some';
 import { useCallback, useMemo, useState } from 'react';
 import type { ExpenseCategory, ParsedExpenseCategoryWithExpanded } from '@ses/core/models/dto/expenseCategoriesDTO';
 
@@ -50,9 +51,9 @@ export const useModalCategory = (expenseCategories: ExpenseCategory[] = []) => {
     if (category) {
       setAllCategory(category);
     }
-    const hasExpandedElement = _.some(
+    const hasExpandedElement = some(
       allCategory,
-      (element) => _.has(element, 'isExpanded') && element.isExpanded === true
+      (element) => has(element, 'isExpanded') && element.isExpanded === true
     );
 
     if (hasExpandedElement) {

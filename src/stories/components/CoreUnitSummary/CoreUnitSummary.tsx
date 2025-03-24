@@ -1,6 +1,6 @@
 import { Collapse, Typography, styled, useMediaQuery } from '@mui/material';
 import { siteRoutes } from '@ses/config/routes';
-import _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { useRouter } from 'next/router';
 import React, { forwardRef, useCallback, useMemo } from 'react';
 import { useCoreUnitsTableView } from '@/views/CoreUnitsIndex/useCoreUnitsTableView';
@@ -49,7 +49,7 @@ export const CoreUnitSummary = forwardRef<HTMLDivElement, CoreUnitSummaryProps>(
     const searchText = useMemo(() => getStringParam('searchText', router.query), [router.query]);
 
     const cu = data?.find((cu) => cu.shortCode === code);
-    const buildCULabel = () => (!_.isEmpty(cu) ? `${cu?.shortCode ?? ''} - ${cu?.name}` : '');
+    const buildCULabel = () => (!isEmpty(cu) ? `${cu?.shortCode ?? ''} - ${cu?.name}` : '');
 
     const filteredData = useMemo(() => {
       const { filteredData: filtered } = filterData({
