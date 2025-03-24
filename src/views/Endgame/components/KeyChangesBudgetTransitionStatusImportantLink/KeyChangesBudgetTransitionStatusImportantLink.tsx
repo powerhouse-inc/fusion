@@ -11,7 +11,7 @@ const KeyChangesBudgetTransitionStatusImportantLink: React.FC = () => (
 
     <ContainerButton>
       <ExternalLinkButtonStyled href="https://endgame.makerdao.com">endgame.makerdao.com</ExternalLinkButtonStyled>
-      <ExternalLinkButtonStyled href="https://forum.makerdao.com">forum.makerdao.com</ExternalLinkButtonStyled>
+      <ExternalLinkButtonStyled href="https://forum.sky.money">forum.sky.money</ExternalLinkButtonStyled>
     </ContainerButton>
   </CardContainer>
 );
