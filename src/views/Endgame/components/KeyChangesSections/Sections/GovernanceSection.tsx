@@ -14,7 +14,7 @@ const GovernanceSection: React.FC = () => (
         },
         {
           title: 'Overview of recognized delegates legacy budgets',
-          href: 'https://expenses.makerdao.network/delegates',
+          href: 'https://fusion.sky.money/contributors/recognized-delegates',
         },
       ]}
     >
