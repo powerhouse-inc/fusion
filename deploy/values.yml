@@ -38,10 +38,10 @@ podAnnotations:
 
 resources:
   limits:
-    memory: 2Gi
+    memory: 500Mi
   requests:
-    cpu: 200m
-    memory: 300Mi
+    cpu: 132m
+    memory: 220Mi
 
 env:
   NEXT_PUBLIC_ENVIRONMENT:
