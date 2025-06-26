@@ -101,7 +101,7 @@ jobs:
         uses: ./.github/actions/deploy
         with:
           APP_NAME: ${{ vars.APP_NAME }}
-          AUTOSCALING_MAX_REPLICAS: 4
+          AUTOSCALING_MAX_REPLICAS: 5
           AWS_REGION: ${{ secrets.AWS_REGION }}
           CLUSTER_NAME: ${{ vars.CLUSTER_NAME  }}
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY  }}
