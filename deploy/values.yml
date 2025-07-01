@@ -40,7 +40,7 @@ resources:
   limits:
     memory: 500Mi
   requests:
-    cpu: 150m
+    cpu: 200m
     memory: 220Mi
 
 env:
