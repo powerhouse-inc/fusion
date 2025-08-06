@@ -12,7 +12,7 @@ on:
           - 'sky-production'
           - 'sky-staging'
   schedule:
-    - cron: '* * * * *'
+    - cron: '*/30 * * * *'
 
 env:
   UPSTREAM_REPO: 'powerhouse-inc/fusion'
