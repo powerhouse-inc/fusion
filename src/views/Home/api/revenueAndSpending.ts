@@ -78,85 +78,96 @@ const mkrPriceFilter = {
 };
 
 export const getRevenueAndSpendingData = async () => {
-  // Fetch data from the Makerburn API
-  const response = await fetch('https://api.makerburn.com/history');
+  try {
+    // Fetch data from the Makerburn API
+    const response = await fetch('https://api.makerburn.com/history');
 
-  const [data, daiSpentResponse, mkrVestingResponse, mkrPriceResponse] = await Promise.all([
-    (await response.json()) as MakerburnHistory[],
-    // dai spent request
-    await request<{
-      analytics: Analytic;
-    }>(GRAPHQL_ENDPOINT, query, getFilter('DAI')),
-    // mkr vesting request
-    await request<{
-      analytics: Analytic;
-    }>(GRAPHQL_ENDPOINT, query, getFilter('MKR')),
-    // mkr price request
-    await request<{
-      analytics: Analytic;
-    }>(GRAPHQL_ENDPOINT, mkrPriceQuery, mkrPriceFilter),
-  ]);
-
-  // move mkr price to a more efficient to access data structure
-  // { year: {month: { day: price } } }
-  const mkrPriceData: Record<string, Record<string, Record<string, number>>> = {};
-  mkrPriceResponse.analytics.series.forEach((series) => {
-    const date = DateTime.fromFormat(series.period, 'yyyy/MM/dd');
-    if (!mkrPriceData[date.year]) {
-      mkrPriceData[date.year] = {};
-    }
-    if (!mkrPriceData[date.year][date.month]) {
-      mkrPriceData[date.year][date.month] = {};
-    }
-    mkrPriceData[date.year][date.month][date.day] = series.rows[0].sum;
-  });
-
-  // reduce mkr vesting data from daily to annual
-  const mkrVestingData: Record<string, number> = {};
-  mkrVestingResponse.analytics.series.forEach((series) => {
-    const date = DateTime.fromFormat(series.period, 'yyyy/MM/dd');
-    if (!mkrVestingData[date.year]) {
-      mkrVestingData[date.year] = 0;
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Failed to fetch from Makerburn API:', response.status, errorText);
+      return {}; // Return empty object on API failure
     }
 
-    const mkrPrice = mkrPriceData[date.year][date.month][date.day] ?? 1;
-    mkrVestingData[date.year] += series.rows[0].value * mkrPrice;
-  });
+    const [data, daiSpentResponse, mkrVestingResponse, mkrPriceResponse] = await Promise.all([
+      (await response.json()) as MakerburnHistory[],
+      // dai spent request
+      await request<{
+        analytics: Analytic;
+      }>(GRAPHQL_ENDPOINT, query, getFilter('DAI')),
+      // mkr vesting request
+      await request<{
+        analytics: Analytic;
+      }>(GRAPHQL_ENDPOINT, query, getFilter('MKR')),
+      // mkr price request
+      await request<{
+        analytics: Analytic;
+      }>(GRAPHQL_ENDPOINT, mkrPriceQuery, mkrPriceFilter),
+    ]);
 
-  // Process and sanitize the data
-  const revenueAndSpendingData: RevenueAndSpendingRecords = {};
+    // move mkr price to a more efficient to access data structure
+    // { year: {month: { day: price } } }
+    const mkrPriceData: Record<string, Record<string, Record<string, number>>> = {};
+    mkrPriceResponse.analytics.series.forEach((series) => {
+      const date = DateTime.fromFormat(series.period, 'yyyy/MM/dd');
+      if (!mkrPriceData[date.year]) {
+        mkrPriceData[date.year] = {};
+      }
+      if (!mkrPriceData[date.year][date.month]) {
+        mkrPriceData[date.year][date.month] = {};
+      }
+      mkrPriceData[date.year][date.month][date.day] = series.rows[0].sum;
+    });
 
-  data.forEach((record) => {
-    const date = DateTime.fromISO(record.date);
-    // Only consider the last day of the year or iterate till the last day of the current year
-    if ((date.month === 12 && date.day === 31) || date.year === DateTime.now().year) {
-      // calculate the total DAI spent for the year (period)
-      const daiSpent =
-        daiSpentResponse.analytics.series
-          .find((series) => series.period === date.year.toString())
-          ?.rows?.reduce((prev, curr) => prev + curr.value, 0) ?? 0;
+    // reduce mkr vesting data from daily to annual
+    const mkrVestingData: Record<string, number> = {};
+    mkrVestingResponse.analytics.series.forEach((series) => {
+      const date = DateTime.fromFormat(series.period, 'yyyy/MM/dd');
+      if (!mkrVestingData[date.year]) {
+        mkrVestingData[date.year] = 0;
+      }
 
-      // calculate the total MKR spent for the year (period)
-      const mkrVesting = mkrVestingData[date.year] ?? 0;
+      const mkrPrice = mkrPriceData[date.year][date.month][date.day] ?? 1;
+      mkrVestingData[date.year] += series.rows[0].value * mkrPrice;
+    });
 
-      revenueAndSpendingData[date.year] = {
-        fees: record.annual_fees ?? 0,
-        liquidationIncome: record.liq_profit_12_mth ?? 0,
-        psm: record.psm_swap_fees_12_mth ?? 0,
+    // Process and sanitize the data
+    const revenueAndSpendingData: RevenueAndSpendingRecords = {};
 
-        dsr: record.annual_interest_dsr ?? 0,
-        daiSpent,
-        mkrVesting,
-        annualProfit: 0, // will be calculated below
-      };
-    }
-  });
+    data.forEach((record) => {
+      const date = DateTime.fromISO(record.date);
+      // Only consider the last day of the year or iterate till the last day of the current year
+      if ((date.month === 12 && date.day === 31) || date.year === DateTime.now().year) {
+        // calculate the total DAI spent for the year (period)
+        const daiSpent =
+          daiSpentResponse.analytics.series
+            .find((series) => series.period === date.year.toString())
+            ?.rows?.reduce((prev, curr) => prev + curr.value, 0) ?? 0;
 
-  // calculate the annual profit for each year
-  Object.values(revenueAndSpendingData).forEach((record) => {
-    // Revenue - Spending
-    record.annualProfit = record.fees + record.liquidationIncome + record.psm - record.daiSpent - record.mkrVesting;
-  });
+        // calculate the total MKR spent for the year (period)
+        const mkrVesting = mkrVestingData[date.year] ?? 0;
 
-  return revenueAndSpendingData;
+        revenueAndSpendingData[date.year] = {
+          fees: record.annual_fees ?? 0,
+          liquidationIncome: record.liq_profit_12_mth ?? 0,
+          psm: record.psm_swap_fees_12_mth ?? 0,
+
+          dsr: record.annual_interest_dsr ?? 0,
+          daiSpent,
+          mkrVesting,
+          annualProfit: 0, // will be calculated below
+        };
+      }
+    });
+
+    // calculate the annual profit for each year
+    Object.values(revenueAndSpendingData).forEach((record) => {
+      // Revenue - Spending
+      record.annualProfit = record.fees + record.liquidationIncome + record.psm - record.daiSpent - record.mkrVesting;
+    });
+
+    return revenueAndSpendingData;
+  } catch (error) {
+    console.error('Error in getRevenueAndSpendingData:', error);
+    return {}; // Return empty object on any failure
+  }
 };
