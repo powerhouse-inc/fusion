@@ -3,18 +3,16 @@ import type { Roadmap } from '@/core/models/interfaces/roadmaps';
 import type { Team } from '@/core/models/interfaces/team';
 import { fetchActors } from '@/views/EcosystemActorsIndex/api/queries';
 import HomeView from '@/views/Home/HomeView';
-import type { FormattedFinancesData } from '@/views/Home/api/finances';
-import { getFinancesData } from '@/views/Home/api/finances';
 import { getGovernanceProposals } from '@/views/Home/api/makervoteQueries';
-import type { RevenueAndSpendingRecords } from '@/views/Home/api/revenueAndSpending';
-import { getRevenueAndSpendingData } from '@/views/Home/api/revenueAndSpending';
 import { getScopeOfWorkState } from '@/views/RoadmapMilestones/api/queries';
 import { getChiefHat } from '@/web3/api/governance';
 import type { GetServerSideProps, NextPage } from 'next';
 
+// TODO: Re-enable finances data once there's a replacement data source for Makerburn, as it was decommissioned.
+// Ignore commented code, it was left for quick re-enabling of finances data.
 interface HomePageProps {
-  revenueAndSpendingData: RevenueAndSpendingRecords;
-  financesData: FormattedFinancesData;
+  // revenueAndSpendingData: RevenueAndSpendingRecords;
+  // financesData: FormattedFinancesData;
   teams: Team[];
   governanceProposals: ExtendedExecutiveProposal[];
   roadmaps: Roadmap[];
@@ -22,16 +20,16 @@ interface HomePageProps {
 }
 
 const HomePage: NextPage<HomePageProps> = ({
-  revenueAndSpendingData,
-  financesData,
+  // revenueAndSpendingData,
+  // financesData,
   teams,
   governanceProposals,
   roadmaps,
   hatAddress,
 }) => (
   <HomeView
-    revenueAndSpendingData={revenueAndSpendingData}
-    financesData={financesData}
+    // revenueAndSpendingData={revenueAndSpendingData}
+    // financesData={financesData}
     teams={teams}
     governanceProposals={governanceProposals}
     roadmaps={roadmaps}
@@ -42,9 +40,16 @@ const HomePage: NextPage<HomePageProps> = ({
 export default HomePage;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const [revenueAndSpendingData, financesData, teams, governanceProposals, roadmaps, hatAddress] = await Promise.all([
-    getRevenueAndSpendingData(),
-    getFinancesData(),
+  const [
+    // revenueAndSpendingData,
+    // financesData,
+    teams,
+    governanceProposals,
+    roadmaps,
+    hatAddress,
+  ] = await Promise.all([
+    // getRevenueAndSpendingData(),
+    // getFinancesData(),
     fetchActors(),
     getGovernanceProposals(),
     getScopeOfWorkState(),
@@ -53,8 +58,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      revenueAndSpendingData,
-      financesData,
+      // revenueAndSpendingData,
+      // financesData,
       teams,
       governanceProposals,
       roadmaps,
