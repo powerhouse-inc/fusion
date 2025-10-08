@@ -1,6 +1,5 @@
 import { API_MONTH_TO_FORMAT } from '@ses/core/utils/date';
-import _ from 'lodash';
-
+import sumBy from 'lodash/sumBy';
 import type { InnerTableColumn } from '@/components/AdvancedInnerTable/types';
 import type { BudgetStatement } from '@ses/core/models/interfaces/budgetStatement';
 import type {
@@ -19,37 +18,37 @@ export const hasGroupExpenses = (wallet: BudgetStatementWallet, group: string, m
     .some((x) => (x.actual || x.forecast) && x.month === month);
 
 export const getGroupActual = (group: BudgetStatementLineItem[], month: string) =>
-  _.sumBy(
+  sumBy(
     group.filter((item) => item.month === month),
     (item) => item.actual ?? 0
   );
 
 export const getWalletMonthlyBudget = (wallet: BudgetStatementWallet, month: string) =>
-  _.sumBy(
+  sumBy(
     wallet.budgetStatementLineItem.filter((item) => item.month === month),
     (i) => i.budgetCap ?? 0
   );
 
 export const getWalletActual = (wallet: BudgetStatementWallet, month: string) =>
-  _.sumBy(
+  sumBy(
     wallet?.budgetStatementLineItem.filter((item) => item.month === month),
     (i) => i.actual ?? 0
   );
 
 export const getGroupMonthlyBudget = (group: BudgetStatementLineItem[], month: string) =>
-  _.sumBy(
+  sumBy(
     group.filter((item) => item.month === month),
     (item) => item.budgetCap ?? 0
   );
 
 export const getGroupForecast = (group: BudgetStatementLineItem[], month: string) =>
-  _.sumBy(
+  sumBy(
     group.filter((item) => item.month === month),
     (item) => item.forecast ?? 0
   );
 
 export const getWalletForecast = (wallet: BudgetStatementWallet, month: string) =>
-  _.sumBy(
+  sumBy(
     wallet.budgetStatementLineItem.filter((item) => item.month === month),
     (i) => i.forecast ?? 0
   );
@@ -61,13 +60,13 @@ export const getWalletDifference = (wallet: BudgetStatementWallet, month: string
   getWalletForecast(wallet, month) - getWalletActual(wallet, month);
 
 export const getGroupPayment = (group: BudgetStatementLineItem[], month: string) =>
-  _.sumBy(
+  sumBy(
     group.filter((item) => item.month === month),
     (item) => item.payment ?? 0
   );
 
 export const getWalletPayment = (wallet: BudgetStatementWallet, month: string) =>
-  _.sumBy(
+  sumBy(
     wallet?.budgetStatementLineItem.filter((item) => item.month === month),
     (i) => i.payment ?? 0
   );
@@ -128,7 +127,7 @@ export const getForecastForMonthOnWalletOnBudgetStatement = (
 
   if (!wallet) return 0;
 
-  return _.sumBy(
+  return sumBy(
     wallet?.budgetStatementLineItem.filter((item) => item.month === month.toFormat(API_MONTH_TO_FORMAT)),
     (i) => i.forecast ?? 0
   );
@@ -151,7 +150,7 @@ export const getBudgetCapForMonthOnWalletOnBudgetStatement = (
 
   if (!wallet) return 0;
 
-  return _.sumBy(
+  return sumBy(
     wallet?.budgetStatementLineItem.filter((item) => item.month === month?.toFormat(API_MONTH_TO_FORMAT)),
     (i) => i.budgetCap ?? 0
   );
@@ -198,8 +197,8 @@ export const getForecastSumForMonth = (
 ) => {
   const budgetStatement = budgetStatements?.find((x) => x.month === currentMonth.toFormat(API_MONTH_TO_FORMAT)) ?? null;
 
-  return _.sumBy(budgetStatement?.budgetStatementWallet, (wallet) =>
-    _.sumBy(
+  return sumBy(budgetStatement?.budgetStatementWallet, (wallet) =>
+    sumBy(
       wallet?.budgetStatementLineItem?.filter((item) => item.month === month.toFormat(API_MONTH_TO_FORMAT)),
       (item) => item.forecast ?? 0
     )
@@ -227,8 +226,8 @@ export const getBudgetCapForMonthOnBudgetStatement = (
 ) => {
   const budgetStatement = budgetStatements?.find((x) => x.month === currentMonth.toFormat(API_MONTH_TO_FORMAT)) ?? null;
 
-  return _.sumBy(budgetStatement?.budgetStatementWallet, (wallet) =>
-    _.sumBy(
+  return sumBy(budgetStatement?.budgetStatementWallet, (wallet) =>
+    sumBy(
       wallet?.budgetStatementLineItem?.filter((item) => item.month === month.toFormat(API_MONTH_TO_FORMAT)),
       (item) => item.budgetCap ?? 0
     )
@@ -273,28 +272,28 @@ export const getLineItemsForWalletOnMonth = (
 };
 
 export const getLineItemForecastSumForMonth = (items: BudgetStatementLineItem[], month: DateTime) =>
-  _.sumBy(
+  sumBy(
     items.filter((item) => item.month === month.toFormat(API_MONTH_TO_FORMAT)),
     (item) => item.forecast ?? 0
   );
 
 export const getLineItemForecastSumForMonths = (items: BudgetStatementLineItem[], months: DateTime[]) => {
   const formattedMonths = months.map((x) => x.toFormat(API_MONTH_TO_FORMAT));
-  return _.sumBy(
+  return sumBy(
     items.filter((item) => formattedMonths.includes(item.month ?? '')),
     (item) => item.forecast ?? 0
   );
 };
 
 export const getBudgetCapForMonthOnLineItem = (items: BudgetStatementLineItem[], month: DateTime) =>
-  _.sumBy(
+  sumBy(
     items.filter((item) => item.month === month.toFormat(API_MONTH_TO_FORMAT)),
     (item) => item.budgetCap ?? 0
   );
 
 export const getTotalQuarterlyBudgetCapOnLineItem = (items: BudgetStatementLineItem[], months: DateTime[]) => {
   const formattedMonths = months.map((x) => x.toFormat(API_MONTH_TO_FORMAT));
-  return _.sumBy(
+  return sumBy(
     items.filter((item) => formattedMonths.indexOf(item.month ?? '') > -1),
     (item) => item.budgetCap ?? 0
   );

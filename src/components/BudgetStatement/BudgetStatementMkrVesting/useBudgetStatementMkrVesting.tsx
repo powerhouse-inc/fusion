@@ -1,5 +1,7 @@
 import { API_MONTH_TO_FORMAT } from '@ses/core/utils/date';
-import _ from 'lodash';
+import first from 'lodash/first';
+import orderBy from 'lodash/orderBy';
+import sumBy from 'lodash/sumBy';
 import { useMemo } from 'react';
 import type { InnerTableColumn, InnerTableRow } from '@/components/AdvancedInnerTable/types';
 import ToolTipMkrVesting from './ToolTipMkrVesting';
@@ -24,7 +26,7 @@ export const useTransparencyMkrVesting = (currentMonth: DateTime, budgetStatemen
       return [];
     }
 
-    return _.sumBy(currentBudgetStatement?.budgetStatementMKRVest ?? [], (mkr) => mkr.mkrAmount);
+    return sumBy(currentBudgetStatement?.budgetStatementMKRVest ?? [], (mkr) => mkr.mkrAmount);
   }, [currentMonth, budgetStatements, currentBudgetStatement?.budgetStatementMKRVest]);
 
   const totalOldAmount = useMemo(() => {
@@ -32,11 +34,11 @@ export const useTransparencyMkrVesting = (currentMonth: DateTime, budgetStatemen
       return [];
     }
 
-    return _.sumBy(currentBudgetStatement?.budgetStatementMKRVest ?? [], (mkr) => mkr.mkrAmountOld);
+    return sumBy(currentBudgetStatement?.budgetStatementMKRVest ?? [], (mkr) => mkr.mkrAmountOld);
   }, [currentMonth, budgetStatements, currentBudgetStatement?.budgetStatementMKRVest]);
 
   const fTEs = useMemo(
-    () => _.first(currentBudgetStatement?.budgetStatementFTEs)?.ftes ?? 'N/A',
+    () => first(currentBudgetStatement?.budgetStatementFTEs)?.ftes ?? 'N/A',
     [currentBudgetStatement?.budgetStatementFTEs]
   );
 
@@ -76,7 +78,7 @@ export const useTransparencyMkrVesting = (currentMonth: DateTime, budgetStatemen
   const mainTableItems: InnerTableRow[] = useMemo(() => {
     const result: InnerTableRow[] = [];
 
-    const mkrVestingsOrdered = _.orderBy(mkrVestings, 'vestingDate', 'asc');
+    const mkrVestingsOrdered = orderBy(mkrVestings, 'vestingDate', 'asc');
 
     mkrVestingsOrdered.forEach((mkrVesting) => {
       result.push({

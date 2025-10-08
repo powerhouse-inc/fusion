@@ -1,12 +1,12 @@
 import { useCategoriesModalContext } from '@ses/core/context/CategoryModalContext';
 import { API_MONTH_TO_FORMAT } from '@ses/core/utils/date';
 import { capitalizeSentence, getWalletWidthForWallets, toKebabCase } from '@ses/core/utils/string';
-import _ from 'lodash';
+import sortBy from 'lodash/sortBy';
+import sumBy from 'lodash/sumBy';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { InnerTableColumn, InnerTableRow } from '@/components/AdvancedInnerTable/types';
-
-import { renderWallet } from '@/views/CoreUnitBudgetStatement/BudgetStatementtUtils';
+import { renderWallet } from '@/views/CoreUnitBudgetStatement/BudgetStatementUtils';
 import {
   getActualsBreakdownColumns,
   getActualsBreakdownItemsForWallet,
@@ -54,7 +54,7 @@ export const useBudgetStatementActuals = (
       }
     });
 
-    return _.sortBy(Object.values(dict), 'id');
+    return sortBy(Object.values(dict), 'id');
   }, [propsCurrentMonth, budgetStatements]);
 
   const currentBudgetStatement = useMemo(
@@ -66,8 +66,8 @@ export const useBudgetStatementActuals = (
 
   const budgetTotalMonthlyBudget = useMemo(
     () =>
-      _.sumBy(currentBudgetStatement?.budgetStatementWallet, (wallet) =>
-        _.sumBy(
+      sumBy(currentBudgetStatement?.budgetStatementWallet, (wallet) =>
+        sumBy(
           wallet.budgetStatementLineItem.filter((item) => item.month === currentMonth),
           (item) => item?.budgetCap ?? 0
         )
@@ -77,8 +77,8 @@ export const useBudgetStatementActuals = (
 
   const budgetTotalForecast = useMemo(
     () =>
-      _.sumBy(currentBudgetStatement?.budgetStatementWallet, (wallet) =>
-        _.sumBy(
+      sumBy(currentBudgetStatement?.budgetStatementWallet, (wallet) =>
+        sumBy(
           wallet.budgetStatementLineItem.filter((item) => item.month === currentMonth),
           (item) => item?.forecast ?? 0
         )
@@ -88,8 +88,8 @@ export const useBudgetStatementActuals = (
 
   const budgetTotalActual = useMemo(
     () =>
-      _.sumBy(currentBudgetStatement?.budgetStatementWallet, (wallet) =>
-        _.sumBy(
+      sumBy(currentBudgetStatement?.budgetStatementWallet, (wallet) =>
+        sumBy(
           wallet.budgetStatementLineItem.filter((item) => item.month === currentMonth),
           (item) => item?.actual ?? 0
         )
@@ -99,8 +99,8 @@ export const useBudgetStatementActuals = (
 
   const budgetTotalPayment = useMemo(
     () =>
-      _.sumBy(currentBudgetStatement?.budgetStatementWallet, (wallet) =>
-        _.sumBy(
+      sumBy(currentBudgetStatement?.budgetStatementWallet, (wallet) =>
+        sumBy(
           wallet.budgetStatementLineItem.filter((item) => item.month === currentMonth),
           (item) => item?.payment ?? 0
         )

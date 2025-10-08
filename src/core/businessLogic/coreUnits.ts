@@ -1,4 +1,6 @@
-import _ from 'lodash';
+import orderBy from 'lodash/orderBy';
+import sortBy from 'lodash/sortBy';
+import sum from 'lodash/sum';
 import { DateTime, Interval } from 'luxon';
 import { LinkTypeEnum } from '../enums/linkTypeEnum';
 import { BudgetStatus } from '../models/dto/coreUnitDTO';
@@ -126,7 +128,7 @@ const getLatestBudgetStatementWithFTE = (budgetStatements: BudgetStatement[]): B
     });
   });
 
-  const orderBudget = _.orderBy(arrayItemsFts, 'month');
+  const orderBudget = orderBy(arrayItemsFts, 'month');
   return orderBudget.length > 0 ? orderBudget[orderBudget.length - 1] : null;
 };
 
@@ -227,7 +229,7 @@ export const getExpenditureAmountFromCoreUnit = (cu: CoreUnit) => {
 
 export const getPercentFromCoreUnit = (cu: CoreUnit) => {
   const value = getExpenditureValueFromCoreUnit(cu);
-  const budgetCap = _.sum(getBudgetCapsFromCoreUnit(cu));
+  const budgetCap = sum(getBudgetCapsFromCoreUnit(cu));
 
   if (value === 0) return 0;
   if (budgetCap === 0) return 0;
@@ -255,7 +257,7 @@ export const getLast3ExpenditureValuesFromCoreUnit = (cu: CoreUnit) => {
 export const getCurrentOrLastMonthWithData = (budgetStatements: BudgetStatement[]) => {
   const currentMonth = DateTime.now().startOf('month');
 
-  const orderedStatements = _.sortBy(budgetStatements, (bs) => bs.month).reverse();
+  const orderedStatements = sortBy(budgetStatements, (bs) => bs.month).reverse();
 
   for (const bs of orderedStatements) {
     for (const wallet of bs.budgetStatementWallet) {
@@ -278,8 +280,8 @@ export const getLastMonthWithActualOrForecast = (budgetStatements: BudgetStateme
   // The budget statements should be provided in a descending date order but
   // it's better to order it client side to avoid future issues
   const orderedStatements = ascending
-    ? _.sortBy(budgetStatements, (bs) => bs.month)
-    : _.sortBy(budgetStatements, (bs) => bs.month).reverse();
+    ? sortBy(budgetStatements, (bs) => bs.month)
+    : sortBy(budgetStatements, (bs) => bs.month).reverse();
 
   for (const bs of orderedStatements) {
     for (const wallet of bs.budgetStatementWallet) {
@@ -309,7 +311,7 @@ export const getLastUpdateForBudgetStatement = (element: WithActivityFeed, budge
 
   if (!activityFeed?.length) return undefined;
 
-  _.sortBy(activityFeed, (af) => af.created_at).reverse();
+  sortBy(activityFeed, (af) => af.created_at).reverse();
 
   return DateTime.fromISO(activityFeed[0].created_at);
 };
@@ -317,7 +319,7 @@ export const getLastUpdateForBudgetStatement = (element: WithActivityFeed, budge
 export const getLast3MonthsWithData = (budgetStatements: BudgetStatement[]) => {
   // The budget statements should be provided in a descending date order but
   // it's better to order it client side to avoid future issues
-  const orderedStatements = _.sortBy(budgetStatements, (bs) => bs.month).reverse();
+  const orderedStatements = sortBy(budgetStatements, (bs) => bs.month).reverse();
 
   for (const bs of orderedStatements) {
     for (const wallet of bs.budgetStatementWallet) {

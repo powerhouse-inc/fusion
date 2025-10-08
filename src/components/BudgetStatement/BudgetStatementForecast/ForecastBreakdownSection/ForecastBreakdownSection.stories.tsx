@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon';
 import { createThemeModeVariants } from '@/core/utils/storybook/factories';
-import { renderWallet } from '@/views/CoreUnitBudgetStatement/BudgetStatementtUtils';
-import ProgressiveIndicator from '../ProgresiveIndicator';
+import { renderWallet } from '@/views/CoreUnitBudgetStatement/BudgetStatementUtils';
+import ProgressiveIndicator from '../ProgressiveIndicator';
 import ForecastBreakdownSection from './ForecastBreakdownSection';
 import type { Meta } from '@storybook/react';
 
