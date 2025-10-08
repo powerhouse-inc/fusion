@@ -6,17 +6,18 @@ import type { ExtendedExecutiveProposal } from '@/core/models/interfaces/makervo
 import type { Roadmap } from '@/core/models/interfaces/roadmaps';
 import type { Team } from '@/core/models/interfaces/team';
 import ContributorsSection from '../Contributors/components/Sections/ContributorsSections';
+import FinancesSection from './components/FinancesSection/FinancesSection';
 import GovernanceSection from './components/GovernanceSection/GovernanceSection';
 import HeaderCard from './components/HeaderCard/HeaderCard';
 import HomeButton from './components/HomeButton/HomeButton';
 import RoadmapSection from './components/RoadmapSection/RoadmapSection';
+import type { FormattedFinancesData } from './api/finances';
+import type { RevenueAndSpendingRecords } from './api/revenueAndSpending';
 import type { FC } from 'react';
 
-// TODO: Re-enable finances data once there's a replacement data source for Makerburn, as it was decommissioned.
-
 export interface HomeViewProps {
-  // revenueAndSpendingData: RevenueAndSpendingRecords;
-  // financesData: FormattedFinancesData;
+  revenueAndSpendingData: RevenueAndSpendingRecords;
+  financesData: FormattedFinancesData;
   teams: Team[];
   governanceProposals: ExtendedExecutiveProposal[];
   roadmaps: Roadmap[];
@@ -24,8 +25,8 @@ export interface HomeViewProps {
 }
 
 const HomeView: FC<HomeViewProps> = ({
-  // revenueAndSpendingData,
-  // financesData,
+  revenueAndSpendingData,
+  financesData,
   teams,
   governanceProposals,
   roadmaps,
@@ -42,7 +43,7 @@ const HomeView: FC<HomeViewProps> = ({
 
     <Container>
       <HeaderCard />
-      {/* <FinancesSection revenueAndSpendingData={revenueAndSpendingData} financesData={financesData} /> */}
+      <FinancesSection revenueAndSpendingData={revenueAndSpendingData} financesData={financesData} />
       <GovernanceSection governanceProposals={governanceProposals} hatAddress={hatAddress} />
       <ContributorsSection teams={teams} />
       <RoadmapSection roadmaps={roadmaps} />
